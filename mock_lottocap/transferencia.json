@@ -1,0 +1,58 @@
+
+{
+    "tranferenciaBancaria": [
+
+        {
+            "dadosUsuario": {
+                "idUsuario": 30,
+                "apelido": "user 1",
+                "nomeCompleto": "Diego Santos Silva",
+                "creditosDisponiveis": 0.000,
+                "premiosGanhos": 8568.866,
+                "saldoTotal": 8619.743,
+                "qtdNotificacoes": 0,
+                "idCarrinho": 9846,
+                "qtdItensCarrinho": 1,
+                "token": "a011159f-8f9d-4815-a9c4-7cb786d8403b",
+                "autenticado": true,
+                "administrador": false,
+                "usuarioApenasPreCadastradoNoFacebook": false,
+                "imagemAvatar": "/api/Usuario/GetFotoUsuario/30",
+                "carrinhoItens": [
+                    {
+                        "idCarrinho": 9846,
+                        "idCarrinhoItem": 13601,
+                        "idProduto": 9,
+                        "nomeProduto": "LottoCap Já 17",
+                        "nmProdutoReduzido": null,
+                        "descricaoSerie": "TesteAplicap",
+                        "idSerie": 53,
+                        "quantidade": 20,
+                        "valorCreditoComprar": 0.0,
+                        "precoUnitario": 1.3,
+                        "numerosSelecionados": null,
+                        "flPromoAtiva": null,
+                        "diferencaPromo": null,
+                        "creditoPromo": null,
+                        "precoUnitarioPromo": 0.0,
+                        "qtdeSorteios": 0,
+                        "vlPremiacaoTotal": 0.0,
+                        "dtInicioConcurso": "0001-01-01T00:00:00",
+                        "dtFimConcurso": "0001-01-01T00:00:00",
+                        "qtdeDezenas": 0,
+                        "flConcursoAprovado": false
+                    }
+                ]
+            },
+            "obj": null,
+            "dataAtual": "2019-11-21T22:37:37.9019832+00:00",
+            "sucesso": false,
+            "erros": [
+                {
+                    "codigo": 1,
+                    "mensagem": "Object reference not set to an instance of an object."
+                }
+            ]
+        }
+    ]
+}

@@ -1,0 +1,17 @@
+source 'http://rubygems.org'
+
+gem 'capybara'
+gem 'webdrivers', '~> 4.0'
+gem 'cucumber'
+gem 'rspec'
+gem 'robocop'
+gem 'selenium-webdriver'
+gem 'fastri'
+gem 'rcodetools'
+gem 'ffi'
+gem 'site_prism'
+gem 'parser', '2.4.0.2'
+gem 'cpf_utils'
+gem 'faker'
+gem 'cielo-api30', git: "https://github.com/developercielo/API-3.0-Ruby"
+gem 'blabla'

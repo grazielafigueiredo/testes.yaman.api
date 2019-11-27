@@ -1,0 +1,13 @@
+version: '3.3'
+services:
+    mssql:
+        environment:
+            - ACCEPT_EULA=Y
+            # - MSSQL_SA_PASSWORD=graziodv
+            - SA_PASSWORD=doc
+        ports:
+            - '1433:1433'
+        container_name: mssql
+        # volumes:
+        #     - $(PWD):/var/opt/mssql
+        image: mcr.microsoft.com/mssql/server:2019-CTP2.1-ubuntu

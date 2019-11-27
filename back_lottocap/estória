@@ -1,0 +1,33 @@
+Funcionalidade: Atualização de produtos e quantidade de títulos do carrinho
+
+
+
+Cenário: Produto vigente com a mesma quantidade de títulos
+Dado que existe produto no carrinho
+Quando o produto estiver na vigência
+Entao deve verificar a quantidade de títulos disponiveis e finalizar a compra
+
+
+Cenário: Produto vigente com quantidade parcial de títulos
+Dado que existe produto no carrinho na vigência
+Quando existir uma quantidade parcial de títulos
+Entao deve atualizar o máximo de títulos
+
+
+Cenário: Produto vigente com quantidade total de títulos indisponíveis
+Dado que existe produto no carrinho na vigência
+Quando não tiver a quantidade total disponivel
+Entao deve remover o produto 
+
+
+Cenário: Produto não vigente quando o cliente vem por rota diferente do site 
+Dado que existe produto no carrinho com vigência encerrada
+Quando for ofertado outros produtos pela rota que o usuário veio para página
+Entao deve deletar o produto antigo e permanecer com o novo produto
+
+
+Cenário: Produto não vigente com susbtituição
+Dado que existe produto no carrinho com vigência encerrada
+Quando existir na vitrine o mesmo produto 
+Entao deve substituir o produto
+

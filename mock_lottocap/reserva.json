@@ -1,0 +1,49 @@
+{
+    "transferencia": {
+
+        "dadosUsuario": {
+            "idUsuario": 30,
+            "apelido": "user 1",
+            "nomeCompleto": "Diego Santos Silva",
+            "creditosDisponiveis": 88.900,
+            "premiosGanhos": 8933.216,
+            "saldoTotal": 9072.993,
+            "qtdNotificacoes": 0,
+            "idCarrinho": 9368,
+            "qtdItensCarrinho": 1,
+            "token": "a5c2b5b2-9083-4241-aa18-14842c202122",
+            "autenticado": true,
+            "administrador": false,
+            "usuarioApenasPreCadastradoNoFacebook": false,
+            "imagemAvatar": "/api/Usuario/GetFotoUsuario/30",
+            "carrinhoItens": [{
+                "idCarrinho": 9368,
+                "idCarrinhoItem": 13030,
+                "idProduto": 1,
+                "nomeProduto": "LottoCap Max",
+                "nmProdutoReduzido": null,
+                "descricaoSerie": "Max Teste",
+                "idSerie": 57,
+                "quantidade": 2,
+                "valorCreditoComprar": 0.0,
+                "precoUnitario": 51.0,
+                "numerosSelecionados": null,
+                "flPromoAtiva": null,
+                "diferencaPromo": null,
+                "creditoPromo": null,
+                "precoUnitarioPromo": 0.0,
+                "qtdeSorteios": 0,
+                "vlPremiacaoTotal": 0.0,
+                "dtInicioConcurso": "0001-01-01T00:00:00",
+                "dtFimConcurso": "0001-01-01T00:00:00",
+                "qtdeDezenas": 0,
+                "flConcursoAprovado": false
+            }]
+        },
+        "obj": [false],
+        "dataAtual": "2019-11-13T14:35:49.188971+00:00",
+        "sucesso": true,
+        "erros": []
+        
+    }
+}

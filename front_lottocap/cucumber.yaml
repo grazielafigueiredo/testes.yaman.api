@@ -1,0 +1,7 @@
+default: -p dev_toolbox -p chrome -p html -p progress
+html: --format html --out=log/report.html
+pretty: --format pretty
+dev_toolbox: ENV_TYPE=dev_toolbox
+chrome: BROWSER=chrome
+progress: --format progress
+

@@ -1,0 +1,65 @@
+{
+    "transferencia": {
+        "id": 1,
+        "dadosUsuario": {
+        "idUsuario": 0,
+        "apelido": "string",
+        "nomeCompleto": "string",
+        "creditosDisponiveis": 0,
+        "premiosGanhos": 0,
+        "saldoTotal": 0,
+        "qtdNotificacoes": 0,
+        "idCarrinho": 0,
+        "qtdItensCarrinho": 0,
+        "token": "string",
+        "autenticado": true,
+        "administrador": true,
+        "usuarioApenasPreCadastradoNoFacebook": true,
+        "imagemAvatar": "string",
+        "carrinhoItens": [
+            {
+            "idCarrinho": 0,
+            "idCarrinhoItem": 0,
+            "idProduto": 1,
+            "nomeProduto": "string",
+            "nmProdutoReduzido": "string",
+            "descricaoSerie": "string",
+            "idSerie": 0,
+            "quantidade": 0,
+            "valorCreditoComprar": 0,
+            "precoUnitario": 0,
+            "numerosSelecionados": [
+                0
+            ],
+            "flPromoAtiva": true,
+            "diferencaPromo": 0,
+            "creditoPromo": 0,
+            "precoUnitarioPromo": 0,
+            "qtdeSorteios": 0,
+            "vlPremiacaoTotal": 0,
+            "dtInicioConcurso": "2019-11-13T02:28:16.789Z",
+            "dtFimConcurso": "2019-11-13T02:28:16.789Z",
+            "qtdeDezenas": 0,
+            "flConcursoAprovado": true
+            }
+        ]
+        },
+        "obj": [
+        true
+        ],
+        "dataAtual": "2019-11-13T02:28:16.789Z",
+        "sucesso": true,
+        "erros": [
+        {
+            "codigo": 0,
+            "mensagem": "string"
+        }
+        ]
+    },
+    "bancos": [
+      { "id": 1, "codigo": "AAAB"},
+      { "id": 2, "codigo": "HSSD"},
+      { "id": 3, "codigo": "ASHD"},
+      { "id": 4, "codigo": "KAGS"}
+    ]
+}

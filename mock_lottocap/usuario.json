@@ -1,0 +1,127 @@
+{
+  "plana": [
+    {
+      "id": 1,
+      "nome": "lindinha"
+    },
+    {
+      "id": 2
+    },
+    {
+      "nome": "sergio",
+      "id": 3
+    },
+    {
+      "dadosUsuario": {
+        "idUsuario": 30,
+        "apelido": "user 1",
+        "nomeCompleto": "Diego Santos Silva",
+        "creditosDisponiveis": 114.9,
+        "premiosGanhos": 8933.216,
+        "saldoTotal": 374834.513,
+        "qtdNotificacoes": 0,
+        "idCarrinho": 0,
+        "qtdItensCarrinho": 0,
+        "token": "a5c2b5b2-9083-4241-aa18-14842c202122",
+        "autenticado": true,
+        "administrador": false,
+        "usuarioApenasPreCadastradoNoFacebook": false,
+        "imagemAvatar": "/api/Usuario/GetFotoUsuario/30",
+        "carrinhoItens": []
+      },
+      "obj": [
+        {
+          "qtd": 419
+        }
+      ],
+      "dataAtual": "2019-11-13T01:51:52.3806399+00:00",
+      "sucesso": true,
+      "erros": [],
+      "id": 4
+    },
+    {
+      "dadosUsuario": {
+        "idUsuario": 30,
+        "apelido": "user 1",
+        "nomeCompleto": "Diego Santos Silva",
+        "creditosDisponiveis": 114.9,
+        "premiosGanhos": 8933.216,
+        "saldoTotal": 9108.513,
+        "qtdNotificacoes": 0,
+        "idCarrinho": 0,
+        "qtdItensCarrinho": 0,
+        "token": "a5c2b5b2-9083-4241-aa18-14842c202122",
+        "autenticado": true,
+        "administrador": false,
+        "usuarioApenasPreCadastradoNoFacebook": false,
+        "imagemAvatar": "/api/Usuario/GetFotoUsuario/30",
+        "carrinhoItens": []
+      },
+      "obj": [
+        {
+          "qtd": 419
+        }
+      ],
+      "dataAtual": "2019-11-13T01:51:52.3806399+00:00",
+      "sucesso": true,
+      "erros": [],
+      "id": 5
+    },
+    {
+      "dadosUsuario": {
+        "idUsuario": 30,
+        "apelido": "user 1",
+        "nomeCompleto": "Diego Santos Silva",
+        "creditosDisponiveis": 114.9,
+        "premiosGanhos": 8933.216,
+        "saldoTotal": 9108.513,
+        "qtdNotificacoes": 0,
+        "idCarrinho": 0,
+        "qtdItensCarrinho": 0,
+        "token": "a5c2b5b2-9083-4241-aa18-14842c202122",
+        "autenticado": true,
+        "administrador": false,
+        "usuarioApenasPreCadastradoNoFacebook": false,
+        "imagemAvatar": "/api/Usuario/GetFotoUsuario/30",
+        "carrinhoItens": []
+      },
+      "obj": [
+        {
+          "qtd": 419
+        }
+      ],
+      "dataAtual": "2019-11-13T01:51:52.3806399+00:00",
+      "sucesso": true,
+      "erros": [],
+      "id": 6
+    },
+    {
+      "dadosUsuario": {
+        "idUsuario": 30,
+        "apelido": "user 1",
+        "nomeCompleto": "Diego Santos Silva",
+        "creditosDisponiveis": 114.9,
+        "premiosGanhos": 8933.216,
+        "saldoTotal": 9108.513,
+        "qtdNotificacoes": 0,
+        "idCarrinho": 0,
+        "qtdItensCarrinho": 0,
+        "token": "a5c2b5b2-9083-4241-aa18-14842c202122",
+        "autenticado": true,
+        "administrador": false,
+        "usuarioApenasPreCadastradoNoFacebook": false,
+        "imagemAvatar": "/api/Usuario/GetFotoUsuario/30",
+        "carrinhoItens": []
+      },
+      "obj": [
+        {
+          "qtd": 419
+        }
+      ],
+      "dataAtual": "2019-11-13T01:51:52.3806399+00:00",
+      "sucesso": true,
+      "erros": [],
+      "id": 7
+    }
+  ]
+}

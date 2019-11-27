@@ -1,0 +1,43 @@
+
+Dado(/ˆque o usuário possa acessar a tela de login do sistema$/) do
+ 
+  visit('https://lottocap.com.br/#faq')
+end
+
+Quando(/ˆeu faço login com um  $/) do |email|
+  #   find('div[class="Header__login"]').click
+#   sleep(1)  
+#   fill_in 'email', with: @email
+
+
+# Dado('que eu tenho') do |table|
+#   @email = table.rows_hash['email']
+#   @senha = table.rows_hash['senha']
+#   @resultado = table.rows_hash['resultado']
+
+#   visit('https://lottocap.com.br/#faq')
+# end
+
+# Quando('eu faço login com um <email>') do
+#   find('div[class="Header__login"]').click
+#   sleep(1)
+#   # element = find('input[type="email"]')
+#   # puts element
+#   fill_in 'email', with: @email
+# E ('uma <senha>')
+#   fill_in 'password', with: @senha
+#   find(:css, 'button[type="submit"]').click
+#   sleep(10)
+# end
+  
+# # Então("verifico  estou logado") do
+# #   @name_user = find('p[class="user-info inline-block color-current"]')
+# #   expect(@name_user.text).to eql 'Maria Silva '
+# #   expect(page).to have_current_path('https://tester.tradeappone.com.br/dashboard', url: true)
+# #   sleep(10)
+# #end
+
+# Então ('verifico <resultado> dos dados inseridos') do 
+#   expect(page).to have_content @resultado
+# end
+

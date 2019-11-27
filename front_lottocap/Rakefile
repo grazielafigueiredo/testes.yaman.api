@@ -1,0 +1,6 @@
+require 'time'
+
+task :specs do 
+    time =  time.now.utc.iso4601
+    puts time
+end
