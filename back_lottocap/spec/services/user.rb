@@ -22,17 +22,26 @@ class ApiUser
 
     end
 
+    def self.Login(token, user)
+        @user = {"obj": user}
+
+        headers[:Authorization] = token
+        
+        post("/Usuario/LogarUsuario", body: @user.to_json, :headers => headers)
+    end
+
     def self.GetToken()
         response_in_json = JSON.parse(get("/Usuario/GerarToken").response.body)
 
         token = response_in_json['dadosUsuario']['token']
-        puts "New Token"
-        puts token
+    
         return token
     end
 
-    def self.get_deslogar
-        get("/Usuario/DeslogarUsuario")
+    def self.get_deslogar(token)
+        headers[:Authorization] = token
+
+        get("/Usuario/DeslogarUsuario", :headers => headers)
     end
 end
 

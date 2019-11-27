@@ -8,7 +8,7 @@ class Constant
     TimeMsg = Time.now.strftime('%d/%m/%Y')
     Authorization = "10b37fe3-504e-446a-aaae-0573d9c98d9a"
 
-
+    User1 = {"usuario": "user1@gmail.com", "senha": "1234"}
     # Cartao de Credito
 
     IdFormaPagamento = 5

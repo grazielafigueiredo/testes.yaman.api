@@ -1,10 +1,16 @@
 # frozen_string_literal: true
+require 'utils/constant'
 
 describe 'Cartão de Crédito' do
   context 'Obter Formas Pagamento Disponiveis' do
     before do
-      ApiCarrinho.post_AdicionarItemCarrinho(3)
-      @result = ApiPagamento.post_ObterFormasPagamentoDisponiveis
+      @token = ApiUser.GetToken
+      ApiUser.Login(@token, Constant::User1)
+  
+      carrinho = ApiCarrinho.post_AdicionarItemCarrinhoParametrizado(@token, 3)
+      @idCarrinho = JSON.parse(carrinho.response.body)['obj'][0]['idCarrinho']
+      
+      @result = ApiPagamento.post_ObterFormasPagamentoDisponiveisParametrizado(@token, @idCarrinho)
     end
     it { expect(@result.response.code).to eql '200' }
     it { expect(JSON.parse(@result.response.body)['obj'][0]['formasPai'][0]['tipo']).to eql 'cartao_credito' }
@@ -215,17 +221,29 @@ describe 'Cartão de Crédito' do
 #   end
 
 
-#   # context 'Adicionar Cartão de Crédito Sucesso' do
-#   #   before do
-#   #     @result = ApiPagamento.post_AdicionarCartaoDeCreditoSucesso
-#   #   end
-#   #   it { expect(@result.response.code).to eql '200' }
-#   #   it { expect(JSON.parse(@result.response.body)['sucesso']).to be true }
-#   # end
+  context 'Adicionar Cartão de Crédito Sucesso' do
+    before do
+      @token = ApiUser.GetToken
+      ApiUser.Login(@token, Constant::User1)
+  
+      carrinho = ApiCarrinho.post_AdicionarItemCarrinhoParametrizado(@token, 3)
+      idCarrinho = JSON.parse(carrinho.response.body)['obj'][0]['idCarrinho']
+      
+      @result = ApiPagamento.post_AdicionarCartaoDeCreditoSucessoParametrizado(@token, idCarrinho)
+    end
 
-#     # after do 
-#     #   ApiCarrinho.post_SetRemoverItemCarrinho
-#     # end 
+    it {
+      expect(@result.response.code).to eql '200'
+    }
+    it { 
+      expect(JSON.parse(@result.response.body)['sucesso']).to be true  
+    }
+
+    after do 
+      ApiCarrinho.post_SetRemoverItemCarrinho
+      ApiUser.get_deslogar(@token)
+    end 
+  end
 end
 
 

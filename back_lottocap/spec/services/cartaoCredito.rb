@@ -20,6 +20,19 @@ class ApiPagamento
     post('/ObterFormasPagamentoDisponiveis', body: @ObterFormasPagamentoDisponiveis.to_json)
   end
 
+  def self.post_ObterFormasPagamentoDisponiveisParametrizado(token, idCarrinho)
+    headers['Authorization'] = token
+    
+    @ObterFormasPagamentoDisponiveis = {
+      "obj": {
+        "idCarrinho": idCarrinho,
+        "flCompraDeCredito": false
+      }
+    }
+
+    post('/ObterFormasPagamentoDisponiveis', body: @ObterFormasPagamentoDisponiveis.to_json)
+  end
+
   # ------------ Cartão de Crédito -----------------------
 
   def self.post_AdicionarCartaoDeCreditoSucesso
@@ -27,6 +40,24 @@ class ApiPagamento
       "obj": {
         "idFormaPagamento": Constant::IdFormaPagamento,
         "idCarrinho": Constant::IdCarrinho,
+        "nomeCompletoTitular": Constant::NomeCompletoTitular,
+        "ccredNumero": Constant::NumeroCartao,
+        "ccredValidadeMes": Constant::ValidadeMesCartao,
+        "ccredValidadeAno": Constant::ValidadeAnoCartao,
+        "ccredCVV": Constant::CartaoCVV
+      }
+    }
+    post('/PagarCarrinho', body: @AdicionarCartaoDeCreditoSucesso.to_json)
+  end
+
+  def self.post_AdicionarCartaoDeCreditoSucessoParametrizado(token, idCarrinho)
+    headers['Authorization'] = token
+
+    ApiCarrinho.get_GetStatusCarrinho
+    @AdicionarCartaoDeCreditoSucesso = {
+      "obj": {
+        "idFormaPagamento": Constant::IdFormaPagamento,
+        "idCarrinho": idCarrinho,
         "nomeCompletoTitular": Constant::NomeCompletoTitular,
         "ccredNumero": Constant::NumeroCartao,
         "ccredValidadeMes": Constant::ValidadeMesCartao,
