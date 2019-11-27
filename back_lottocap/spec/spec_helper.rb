@@ -1,3 +1,5 @@
+require 'cpf_faker'
+require 'faker'
 require "factory_bot"
 require "httparty"
 require 'json'

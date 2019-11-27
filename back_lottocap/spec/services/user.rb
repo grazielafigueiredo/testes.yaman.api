@@ -1,15 +1,17 @@
+require 'utils/constant'
 
 
 
 class ApiUser
     include HTTParty
-    base_uri "https://hmlapi.lottocap.com.br/api/"
+    base_uri Constant::Url
+    # "https://hmlapi.lottocap.com.br/api/"
     headers "Content-Type" => "application/json"
 
     def self.find()
         # headers[:Authorization] = self.GetToken()
         
-        @user = {"obj": {"usuario": "user1@gmail.com", "senha": "1234"}}
+        @user = {"obj": {"usuario": "user22@gmail.com", "senha": "1234"}}
 
         response_in_json = JSON.parse(get("/Usuario/GerarToken").response.body)
         token = response_in_json['dadosUsuario']['token']

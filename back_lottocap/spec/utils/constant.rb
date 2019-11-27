@@ -2,13 +2,15 @@ require "time"
 require "singleton"
 
 class Constant
+
+    Url = "https://hmlapi.lottocap.com.br/api/"
     IdSerie = 86
     IdProduto = 1
     IdCarrinho = 10851
     TimeMsg = Time.now.strftime('%d/%m/%Y')
-    Authorization = "10b37fe3-504e-446a-aaae-0573d9c98d9a"
+    Authorization = "70b90407-f1f6-4868-bad2-dda283b09bf9"
 
-    User1 = {"usuario": "user1@gmail.com", "senha": "1234"}
+    User1 = {"usuario": "user22@gmail.com", "senha": "1234"}
     # Cartao de Credito
 
     IdFormaPagamento = 5
@@ -70,7 +72,7 @@ class Constant
     #         "sessionIdAmplitude": 1574791074147,
     #         "deviceIdAmplitude": "d934a7f5-cc43-437d-bc13-f5f30d8e43c7R"
     #     },
-    #     "atualPagina": 1,
+    #     "atualPagina": 1,   
     #     "tamanhoPagina": 9999
     # }
 

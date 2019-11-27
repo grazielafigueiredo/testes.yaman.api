@@ -2,7 +2,9 @@
 
 source 'https://rubygems.org'
 
+gem 'cpf_faker'
 gem 'factory_bot'
 gem 'httparty'
 gem 'rspec'
 gem 'tiny_tds'
+gem 'faker'

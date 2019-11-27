@@ -27,7 +27,6 @@ class ApiPagamento
   def self.post_AdicionarCartaoDeCreditoSucesso(token, idCarrinho)
     headers['Authorization'] = token
 
-    ApiCarrinho.get_GetStatusCarrinho
     @AdicionarCartaoDeCreditoSucesso = {
       "obj": {
         "idFormaPagamento": Constant::IdFormaPagamento,

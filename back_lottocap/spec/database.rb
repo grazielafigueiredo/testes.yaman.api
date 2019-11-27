@@ -35,7 +35,17 @@ class Database
     end
 
     def update_BloquearPagamento()
-        @connection.execute("UPDATE Serie SET DataFinalVenda = @time where idSerie = 88;")
+        @connection.execute("UPDATE Serie SET DataFinalVenda = @time where idSerie = ;")
+
+    end
+
+    def update_reservarSerie86()
+        @connection.execute("UPDATE TituloMatriz SET reservado = 1 where idSerie = #{Constant::IdSerie};")
+
+    end
+
+    def update_disponibilizarSerie86()
+        @connection.execute("UPDATE TituloMatriz SET reservado = 0 where idSerie = #{Constant::IdSerie};")
 
     end
 
