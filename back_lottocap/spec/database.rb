@@ -16,6 +16,19 @@ class Database
         
     end
 
+    # def initialize
+    #     conn = {
+    #         username: 'prdlottocap_Copy', 
+    #         password: 'Lottocap',  
+    #         host: 'hmllottocap.database.windows.net', 
+    #         port: 1433,  
+    #         database: 'L0ttocap@sql2018', 
+    #         azure:true
+    #     }
+    #     @connection =  TinyTds::Client.new(conn)
+        
+    # end
+
     def update_DataFinalVenda()
         @connection.execute("UPDATE Serie SET DataFinalVenda = '2018-12-25 17:09:00.000' where IdSerie= #{Constant::IdSerie};")
     end
@@ -70,6 +83,14 @@ class Database
     ##### disponibilizar todos os titulos
     puts 'Affected rows' 
     puts res.do
+    end
+
+    def update_insertCreditoLottocap()
+        @connection.execute("UPDATE Usuario SET  SaldoCredito = 100.000  where IdUsuario = #{Constant::UserID};")
+    end
+
+    def update_deleteCreditoLottocap()
+        @connection.execute("UPDATE Usuario SET  SaldoCredito = 0.000  where IdUsuario = #{Constant::UserID};")
     end
 end
 

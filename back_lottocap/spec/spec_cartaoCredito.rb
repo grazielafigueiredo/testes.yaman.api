@@ -10,7 +10,7 @@ describe 'Cartão de Crédito' do
       carrinho = ApiCarrinho.post_AdicionarItemCarrinho(@token, 3)
       @idCarrinho = JSON.parse(carrinho.response.body)['obj'][0]['idCarrinho']
       
-      @result = ApiPagamento.post_ObterFormasPagamentoDisponiveis(@token, @idCarrinho)
+      @result = ApiCartao.post_ObterFormasPagamentoDisponiveis(@token, @idCarrinho)
     end
     it { expect(@result.response.code).to eql '200' }
     it { expect(JSON.parse(@result.response.body)['obj'][0]['formasPai'][0]['tipo']).to eql 'cartao_credito' }
@@ -45,7 +45,7 @@ describe 'Cartão de Crédito' do
       carrinho = ApiCarrinho.post_AdicionarItemCarrinho(@token, 3)
       @idCarrinho = JSON.parse(carrinho.response.body)['obj'][0]['idCarrinho']
 
-      @result = ApiPagamento.post_NomeCartaoDeCreditoInvalido("CARLOS 111111", @token, @idCarrinho)
+      @result = ApiCartao.post_NomeCartaoDeCreditoInvalido("CARLOS 111111", @token, @idCarrinho)
     end
     it { expect(@result.response.code).to eql '200' }
     it { expect(JSON.parse(@result.response.body)['sucesso']).to be true }
@@ -67,7 +67,7 @@ describe 'Cartão de Crédito' do
       carrinho = ApiCarrinho.post_AdicionarItemCarrinho(@token, 3)
       @idCarrinho = JSON.parse(carrinho.response.body)['obj'][0]['idCarrinho']
 
-      @result = ApiPagamento.post_NomeCartaoDeCreditoInvalido("", @token, @idCarrinho)
+      @result = ApiCartao.post_NomeCartaoDeCreditoInvalido("", @token, @idCarrinho)
     end
     it { expect(JSON.parse(@result.response.body)['sucesso']).to be true }
     it { expect(@result.response.code).to eql '200' }
@@ -88,7 +88,7 @@ describe 'Cartão de Crédito' do
       carrinho = ApiCarrinho.post_AdicionarItemCarrinho(@token, 3)
       @idCarrinho = JSON.parse(carrinho.response.body)['obj'][0]['idCarrinho']
 
-      @result = ApiPagamento.post_NumeroCartaoDeCreditoInvalido("erty4567rt567", @token, @idCarrinho)
+      @result = ApiCartao.post_NumeroCartaoDeCreditoInvalido("erty4567rt567", @token, @idCarrinho)
     end
     it { expect(@result.response.code).to eql '200' }
     it { expect(JSON.parse(@result.response.body)['erros'][0]['mensagem']).to eql "Tipo de cartão inválido." }
@@ -109,7 +109,7 @@ describe 'Cartão de Crédito' do
       carrinho = ApiCarrinho.post_AdicionarItemCarrinho(@token, 3)
       @idCarrinho = JSON.parse(carrinho.response.body)['obj'][0]['idCarrinho']
 
-      @result = ApiPagamento.post_NumeroCartaoDeCreditoInvalido("", @token, @idCarrinho)
+      @result = ApiCartao.post_NumeroCartaoDeCreditoInvalido("", @token, @idCarrinho)
     end
     it { expect(@result.response.code).to eql '200' }
     it { expect(JSON.parse(@result.response.body)['erros'][0]['mensagem']).to eql "Tipo de cartão inválido." }
@@ -129,7 +129,7 @@ describe 'Cartão de Crédito' do
       carrinho = ApiCarrinho.post_AdicionarItemCarrinho(@token, 3)
       @idCarrinho = JSON.parse(carrinho.response.body)['obj'][0]['idCarrinho']
 
-      @result = ApiPagamento.post_AnoCartaoDeCreditoInvalido("11aa", @token, @idCarrinho)
+      @result = ApiCartao.post_AnoCartaoDeCreditoInvalido("11aa", @token, @idCarrinho)
     end
     it { expect(@result.response.code).to eql '400' }
   
@@ -148,7 +148,7 @@ describe 'Cartão de Crédito' do
       carrinho = ApiCarrinho.post_AdicionarItemCarrinho(@token, 3)
       @idCarrinho = JSON.parse(carrinho.response.body)['obj'][0]['idCarrinho']
 
-      @result = ApiPagamento.post_AnoCartaoDeCreditoInvalido("11", @token, @idCarrinho)
+      @result = ApiCartao.post_AnoCartaoDeCreditoInvalido("11", @token, @idCarrinho)
     end
     it { expect(@result.response.code).to eql '200' }
     it { expect(JSON.parse(@result.response.body)['erros'][0]['mensagem']).to eql "Erro na confirmação do pagamento: 400 - Data de vencimento do cartão expirada. " }
@@ -171,7 +171,7 @@ describe 'Cartão de Crédito' do
       carrinho = ApiCarrinho.post_AdicionarItemCarrinho(@token, 3)
       @idCarrinho = JSON.parse(carrinho.response.body)['obj'][0]['idCarrinho']
 
-      @result = ApiPagamento.post_AnoCartaoDeCreditoInvalido("", @token, @idCarrinho)
+      @result = ApiCartao.post_AnoCartaoDeCreditoInvalido("", @token, @idCarrinho)
     end
     it { expect(@result.response.code).to eql '400' }
     it { expect(JSON.parse(@result.response.body)['obj.ccredValidadeAno'][0]).to eql "Error converting value {null} to type 'System.Int32'. Path 'obj.ccredValidadeAno', line 1, position 157." }
@@ -192,7 +192,7 @@ describe 'Cartão de Crédito' do
       carrinho = ApiCarrinho.post_AdicionarItemCarrinho(@token, 3)
       @idCarrinho = JSON.parse(carrinho.response.body)['obj'][0]['idCarrinho']
 
-      @result = ApiPagamento.post_MesCartaoDeCreditoInvalido("14", @token, @idCarrinho)
+      @result = ApiCartao.post_MesCartaoDeCreditoInvalido("14", @token, @idCarrinho)
     end
     # it { expect(@result.response.code)['sucesso'].to be false }
     it { expect(@result.response.code).to eql '200' }
@@ -214,7 +214,7 @@ describe 'Cartão de Crédito' do
       carrinho = ApiCarrinho.post_AdicionarItemCarrinho(@token, 3)
       @idCarrinho = JSON.parse(carrinho.response.body)['obj'][0]['idCarrinho']
 
-      @result = ApiPagamento.post_MesCartaoDeCreditoInvalido("", @token, @idCarrinho)
+      @result = ApiCartao.post_MesCartaoDeCreditoInvalido("", @token, @idCarrinho)
     end
     it { expect(@result.response.code).to eql '400' }
     it { expect(JSON.parse(@result.response.body)['obj.ccredValidadeMes'][0]).to eql "Error converting value {null} to type 'System.Int32'. Path 'obj.ccredValidadeMes', line 1, position 133."}
@@ -235,7 +235,7 @@ describe 'Cartão de Crédito' do
       carrinho = ApiCarrinho.post_AdicionarItemCarrinho(@token, 3)
       @idCarrinho = JSON.parse(carrinho.response.body)['obj'][0]['idCarrinho']
 
-      @result = ApiPagamento.post_CVVCartaoDeCreditoInvalido("123ss", @token, @idCarrinho)
+      @result = ApiCartao.post_CVVCartaoDeCreditoInvalido("123ss", @token, @idCarrinho)
     end
     it { expect(@result.response.code).to eql '200' }
     it { expect(JSON.parse(@result.response.body)['erros'][0]['mensagem']).to eql 'Input string was not in a correct format.' }
@@ -256,7 +256,7 @@ describe 'Cartão de Crédito' do
       carrinho = ApiCarrinho.post_AdicionarItemCarrinho(@token, 3)
       @idCarrinho = JSON.parse(carrinho.response.body)['obj'][0]['idCarrinho']
 
-      @result = ApiPagamento.post_CVVCartaoDeCreditoInvalido("112399999999", @token, @idCarrinho)
+      @result = ApiCartao.post_CVVCartaoDeCreditoInvalido("112399999999", @token, @idCarrinho)
     end
     it { expect(@result.response.code).to eql '200' }
     it { expect(JSON.parse(@result.response.body)['erros'][0]['mensagem']).to eql 'Value was either too large or too small for an Int32.' }
@@ -277,7 +277,7 @@ describe 'Cartão de Crédito' do
       carrinho = ApiCarrinho.post_AdicionarItemCarrinho(@token, 3)
       @idCarrinho = JSON.parse(carrinho.response.body)['obj'][0]['idCarrinho']
 
-      @result = ApiPagamento.post_CVVCartaoDeCreditoInvalido("", @token, @idCarrinho)
+      @result = ApiCartao.post_CVVCartaoDeCreditoInvalido("", @token, @idCarrinho)
     end
     it { expect(@result.response.code).to eql '200' }
     it { expect(JSON.parse(@result.response.body)['erros'][0]['mensagem']).to eql 'Input string was not in a correct format.' }
@@ -299,7 +299,7 @@ describe 'Cartão de Crédito' do
       carrinho = ApiCarrinho.post_AdicionarItemCarrinho(@token, 3)
       idCarrinho = JSON.parse(carrinho.response.body)['obj'][0]['idCarrinho']
       
-      @result = ApiPagamento.post_AdicionarCartaoDeCreditoSucesso(@token, idCarrinho)
+      @result = ApiCartao.post_AdicionarCartaoDeCreditoSucesso(@token, idCarrinho)
     end
 
     it {

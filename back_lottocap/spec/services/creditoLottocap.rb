@@ -7,13 +7,15 @@ require 'services/user'
 class ApiCreditoLottocap
   include HTTParty
   base_uri 'https://hmlapi.lottocap.com.br/api/Pagamento'
-  headers 'Content-Type' => 'application/json', 'Authorization' => Constant::Authorization
+  headers 'Content-Type' => 'application/json'
 
-  def self.post_SucessoCreditoLottocap
+  def self.post_SucessoCreditoLottocap(token, idCarrinho)
+    headers[:Authorization] = token
+
     @SucessoCreditoLottocap = {
       "obj": {
         "idFormaPagamento": Constant::IdFormaPagamentoCreditoLottocap,
-        "idCarrinho": Constant::IdCarrinho,
+        "idCarrinho": idCarrinho,
 		"flCompraComCredito": true,
 
       }

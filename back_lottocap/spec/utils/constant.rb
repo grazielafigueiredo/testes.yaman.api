@@ -5,12 +5,15 @@ class Constant
 
     Url = "https://hmlapi.lottocap.com.br/api/"
     IdSerie = 86
+    IdSerie87 = 87
     IdProduto = 1
     IdCarrinho = 10851
     TimeMsg = Time.now.strftime('%d/%m/%Y')
     Authorization = "70b90407-f1f6-4868-bad2-dda283b09bf9"
+    Produto = "LottoCap Max - Max Série Nova (id 86)"
 
     User1 = {"usuario": "user22@gmail.com", "senha": "1234"}
+    UserID = 3661
     # Cartao de Credito
 
     IdFormaPagamento = 5

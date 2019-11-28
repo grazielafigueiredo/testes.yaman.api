@@ -3,7 +3,7 @@
 require 'utils/constant'
 require 'services/user'
 
-class ApiPagamento
+class ApiCartao
   include HTTParty
   base_uri 'https://hmlapi.lottocap.com.br/api/Pagamento'
   headers 'Content-Type' => 'application/json'

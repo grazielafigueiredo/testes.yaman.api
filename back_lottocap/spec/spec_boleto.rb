@@ -11,7 +11,7 @@ describe 'post' do
         @carrinho = ApiBoleto.post_AdicionarItemCarrinho(2)
 
         # Database.new.update_BloquearPagamento
-        @result = ApiPagamento.post_ObterFormasPagamentoDisponiveis
+        @result = ApiCartao.post_ObterFormasPagamentoDisponiveis
 
       end
       it { expect(@carrinho.response.code).to eql '200' }
