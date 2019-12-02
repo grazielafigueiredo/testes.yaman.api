@@ -5,7 +5,6 @@ require 'utils/constant'
 class ApiUser
     include HTTParty
     base_uri Constant::Url
-    # "https://hmlapi.lottocap.com.br/api/"
     headers "Content-Type" => "application/json"
 
     def self.find()
