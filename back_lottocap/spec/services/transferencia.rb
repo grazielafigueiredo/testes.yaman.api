@@ -5,94 +5,26 @@ require 'services/user'
 
 class ApiTransferencia
   include HTTParty
-  base_uri 'https://hmlapi.lottocap.com.br/api/Pagamento'
+  base_uri 'https://hmlapi.lottocap.com.br/api'
   headers 'Content-Type' => 'application/json'
 
   # ------------ Transferência Bancária (Bradesco)-----------------------
 
-  def self.post_TransfSucessoBradesco(token, idCarrinho)
+  def self.post_TransfBradesco(token, idCarrinho, transfAgencia, transfConta, transfContaDigito, nomeCompletoTitular)
     headers['Authorization'] = token
 
-    @TransfSucessoBradesco = {
-      "obj": {
-        "idFormaPagamento": Constant::IdFormaPagamentoTransf,
-        "idCarrinho": idCarrinho,
-        "transfAgencia": Faker::Bank.account_number(digits: 4),
-        "transfConta": Faker::Bank.account_number(digits: 4),
-        "transfContaDigito": Faker::Bank.account_number(digits: 1),
-        "nomeCompletoTitular": Constant::NomeCompletoTitular
-
-      }
-    }
-    post('/PagarCarrinho', body: @TransfSucessoBradesco.to_json)
-  end
-
-  def self.post_TransfContaInvalida(transfConta, token, idCarrinho)
-    headers['Authorization'] = token
-
-    @TransfContaInvalida = {
-      "obj": {
-        "idFormaPagamento": Constant::IdFormaPagamentoTransf,
-        "idCarrinho": idCarrinho,
-        "transfAgencia": Faker::Bank.account_number(digits: 4),
-        "transfConta": transfConta,
-        "transfContaDigito": Faker::Bank.account_number(digits: 1),
-        "nomeCompletoTitular": Constant::NomeCompletoTitular
-
-      }
-    }
-    post('/PagarCarrinho', body: @TransfContaInvalida.to_json)
-  end
-
-  def self.post_TransfDigitoInvalido(transfContaDigito, token, idCarrinho)
-    headers['Authorization'] = token
-
-    @TransfDigitoInvalido = {
-      "obj": {
-        "idFormaPagamento": Constant::IdFormaPagamentoTransf,
-        "idCarrinho": idCarrinho,
-        "transfAgencia": Faker::Bank.account_number(digits: 4),
-        "transfConta": Faker::Bank.account_number(digits: 4),
-        "transfContaDigito": transfContaDigito,
-        "nomeCompletoTitular": Constant::NomeCompletoTitular
-
-      }
-    }
-    post('/PagarCarrinho', body: @TransfDigitoInvalido.to_json)
-  end
-
-  def self.post_TransfNomeInvalido(nomeCompletoTitular, token, idCarrinho)
-    headers['Authorization'] = token
-
-    @TransfNomeInvalido = {
-      "obj": {
-        "idFormaPagamento": Constant::IdFormaPagamentoTransf,
-        "idCarrinho": idCarrinho,
-        "transfAgencia": Faker::Bank.account_number(digits: 4),
-        "transfConta": Faker::Bank.account_number(digits: 4),
-        "transfContaDigito": Faker::Bank.account_number(digits: 1),
-        "nomeCompletoTitular": nomeCompletoTitular
-
-      }
-    }
-    post('/PagarCarrinho', body: @TransfNomeInvalido.to_json)
-  end
-
-  def self.post_TransfAgenciaInvalida(transfAgencia, token, idCarrinho)
-    headers['Authorization'] = token
-
-    @TransfAgenciaInvalida = {
+    @TransfBradesco = {
       "obj": {
         "idFormaPagamento": Constant::IdFormaPagamentoTransf,
         "idCarrinho": idCarrinho,
         "transfAgencia": transfAgencia,
-        "transfConta": Faker::Bank.account_number(digits: 4),
-        "transfContaDigito": Faker::Bank.account_number(digits: 1),
-        "nomeCompletoTitular": Constant::NomeCompletoTitular
+        "transfConta": transfConta,
+        "transfContaDigito": transfContaDigito,
+        "nomeCompletoTitular": nomeCompletoTitular
 
       }
     }
-    post('/PagarCarrinho', body: @TransfAgenciaInvalida.to_json)
+    post('/Pagamento/PagarCarrinho', body: @TransfBradesco.to_json)
   end
 
   # ------------ Transferência Bancária (Itau)-----------------------
@@ -112,37 +44,22 @@ class ApiTransferencia
 
       }
     }
-    post('/PagarCarrinho', body: @TransfSucessoItau.to_json)
+    post('/Pagamento/PagarCarrinho', body: @TransfSucessoItau.to_json)
     end
 
   # ------------ Transferência Bancária (Santander)-----------------------
 
-  def self.post_TransfSucessoSantander(token, idCarrinho)
+  def self.post_TransfSantander(token, idCarrinho, cpf)
     headers['Authorization'] = token
 
-    @TransfSucessoSantander = {
-      "obj": {
-        "idFormaPagamento": Constant::IdFormaPagamentoTransfSantander,
-        "idCarrinho": idCarrinho,
-        "cpf": Faker::CPF.numeric
-
-      }
-    }
-    post('/PagarCarrinho', body: @TransfSucessoSantander.to_json)
-  end
-
-  def self.post_TransfSantanderInvalido(cpf, token, idCarrinho)
-    headers['Authorization'] = token
-
-    @TransfSucessoSantander = {
+    @TransfSantander = {
       "obj": {
         "idFormaPagamento": Constant::IdFormaPagamentoTransfSantander,
         "idCarrinho": idCarrinho,
         "cpf": cpf
-
       }
     }
-    post('/PagarCarrinho', body: @TransfSucessoSantander.to_json)
+    post('/Pagamento/PagarCarrinho', body: @TransfSantander.to_json)
   end
 
   # ------------ Transferência Bancária (Brasil)-----------------------
@@ -162,9 +79,7 @@ class ApiTransferencia
 
       }
     }
-
-
-    post('/PagarCarrinho', body: @TransfSucessoBrasil.to_json)
+    post('/Pagamento/PagarCarrinho', body: @TransfSucessoBrasil.to_json)
   end
   # def self.post_AdicionarContaBancaria()
 
