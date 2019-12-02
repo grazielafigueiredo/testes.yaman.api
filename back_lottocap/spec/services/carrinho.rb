@@ -35,14 +35,14 @@ class ApiCarrinho
         post("/Carrinho/SetQtdItemCarrinho", body: @SetQtdItemCarrinho.to_json)
     end
 
-    def self.post_AdicionarItemCarrinho(qtdItens, token)
+    def self.post_AdicionarItemCarrinho(qtdItens, idProduto, idSerie, token)
         headers['Authorization'] = token
 
         @AdicionarItemCarrinho = { 
             "obj": {
                 "idCarrinho": 0,
-                "idProduto": Constant::IdProduto,
-                "idSerie": Constant::IdSerie,
+                "idProduto": idProduto,
+                "idSerie": idSerie,
                 "qtdItens": qtdItens, 
                 "flPromoAtiva": false
                 },
@@ -51,24 +51,6 @@ class ApiCarrinho
             }
         post("/Carrinho/AdicionarItemCarrinho", body: @AdicionarItemCarrinho.to_json)
     end
-
-    def self.post_AdicionarItemCarrinho87(qtdItens, token)
-        headers['Authorization'] = token
-
-        @AdicionarItemCarrinho87 = { 
-            "obj": {
-                "idCarrinho": 0,
-                "idProduto": Constant::IdProduto,
-                "idSerie": Constant::IdSerie87,
-                "qtdItens": qtdItens, 
-                "flPromoAtiva": false
-                },
-                "atualPagina": 1,
-                "tamanhoPagina": 999
-            }
-        post("/Carrinho/AdicionarItemCarrinho", body: @AdicionarItemCarrinho87.to_json)
-    end
-
 
     def self.post_SetRemoverItemCarrinho(token, idCarrinho)
         headers['Authorization'] = token
