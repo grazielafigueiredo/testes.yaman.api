@@ -7,7 +7,7 @@ require "services/user"
 
 class ApiCarrinho
     include HTTParty
-    base_uri "https://hmlapi.lottocap.com.br/api/Carrinho"
+    base_uri "https://hmlapi.lottocap.com.br/api"
     headers "Content-Type" => "application/json"  
     
 
@@ -15,7 +15,7 @@ class ApiCarrinho
     def self.get_GetStatusCarrinho()
         # headers[:Authorization] = token
 
-        res = get("/GetStatusCarrinho")
+        get("/Carrinho/GetStatusCarrinho")
         # return res[obj][0][idCarrinho]
     end
 
@@ -32,7 +32,7 @@ class ApiCarrinho
                 "tamanhoPagina": 999 }        
         
         
-        post("/SetQtdItemCarrinho", body: @SetQtdItemCarrinho.to_json)
+        post("/Carrinho/SetQtdItemCarrinho", body: @SetQtdItemCarrinho.to_json)
     end
 
     def self.post_AdicionarItemCarrinho(qtdItens, token)
@@ -49,7 +49,7 @@ class ApiCarrinho
                 "atualPagina": 1,
                 "tamanhoPagina": 999
             }
-        post("/AdicionarItemCarrinho", body: @AdicionarItemCarrinho.to_json)
+        post("/Carrinho/AdicionarItemCarrinho", body: @AdicionarItemCarrinho.to_json)
     end
 
     def self.post_AdicionarItemCarrinho87(qtdItens, token)
@@ -66,7 +66,7 @@ class ApiCarrinho
                 "atualPagina": 1,
                 "tamanhoPagina": 999
             }
-        post("/AdicionarItemCarrinho", body: @AdicionarItemCarrinho87.to_json)
+        post("/Carrinho/AdicionarItemCarrinho", body: @AdicionarItemCarrinho87.to_json)
     end
 
 
@@ -82,7 +82,7 @@ class ApiCarrinho
             "atualPagina": 1,
             "tamanhoPagina": 999
         }
-        post("/SetRemoverItemCarrinho", body: @SetRemoverItemCarrinho.to_json)
+        post("/Carrinho/SetRemoverItemCarrinho", body: @SetRemoverItemCarrinho.to_json)
     end
 
 end

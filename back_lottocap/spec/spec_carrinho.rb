@@ -1,8 +1,5 @@
 # frozen_string_literal: true
 
-# login
-
-
 describe 'Carrinho - Reserva' do
 
   context 'Pagar 2 produtos no carrinho' do
@@ -13,7 +10,7 @@ describe 'Carrinho - Reserva' do
       
       ApiCarrinho.post_AdicionarItemCarrinho(1, @token)
       @result = ApiCarrinho.post_AdicionarItemCarrinho87(1, @token)
-      
+
       @idCarrinho = JSON.parse(@result.response.body)['obj'][0]['idCarrinho']
       
       @carrinho = ApiCartao.post_AdicionarCartaoDeCreditoSucesso(@token, @idCarrinho)
@@ -27,7 +24,6 @@ describe 'Carrinho - Reserva' do
       ApiUser.get_deslogar(@token)
     end 
   end
-
 
   context 'Quando o produto estiver na vigência' do
     before do
@@ -279,22 +275,22 @@ describe 'Carrinho - Sem Reserva - Tentar Pagar' do
     end
   end
 
-  context 'Quantidade parcialmente indisponível' do
-    before do
-      @token = ApiUser.GetToken
-      ApiUser.Login(@token, Constant::User1)
+  # context 'Quantidade parcialmente indisponível' do
+  #   before do
+  #     @token = ApiUser.GetToken
+  #     ApiUser.Login(@token, Constant::User1)
 
-      @result = ApiCarrinho.post_AdicionarItemCarrinho(3000000, @token)
-      @idCarrinho = JSON.parse(@result.response.body)['obj'][0]['idCarrinho']
+  #     @result = ApiCarrinho.post_AdicionarItemCarrinho(3000000, @token)
+  #     @idCarrinho = JSON.parse(@result.response.body)['obj'][0]['idCarrinho']
 
-      @carrinho = ApiBoleto.post_SucessoBoleto(@token, @idCarrinho)
-    end
+  #     @carrinho = ApiBoleto.post_SucessoBoleto(@token, @idCarrinho)
+  #   end
 
-    it { expect(JSON.parse(@carrinho.response.body)['erros'][0]['mensagem']).to eql "Não foi possível Reservar os Titulos Solicitados!"}
-    it {puts @carrinho.response.body}
-    after do
-      ApiCarrinho.post_SetRemoverItemCarrinho(@token, @idCarrinho)
-      ApiUser.get_deslogar(@token)
-    end
-  end
+  #   it { expect(JSON.parse(@carrinho.response.body)['erros'][0]['mensagem']).to eql "Não foi possível Reservar os Titulos Solicitados!"}
+  #   it {puts @carrinho.response.body}
+  #   after do
+  #     ApiCarrinho.post_SetRemoverItemCarrinho(@token, @idCarrinho)
+  #     ApiUser.get_deslogar(@token)
+  #   end
+  # end
 end  

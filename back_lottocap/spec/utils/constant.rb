@@ -3,7 +3,7 @@ require "singleton"
 
 class Constant
 
-    Url = "https://hmlapi.lottocap.com.br/api/"
+    Url = "https://hmlapi.lottocap.com.br/api"
     IdSerie = 86
     IdSerie87 = 87
     IdProduto = 1

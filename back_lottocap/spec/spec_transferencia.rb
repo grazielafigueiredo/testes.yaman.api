@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-# # frozen_string_literal: true
 
 describe 'Bradesco' do
   context 'Transferência Bancária Sucesso (Bradesco)' do
