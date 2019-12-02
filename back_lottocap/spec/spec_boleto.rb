@@ -1,26 +1,23 @@
 # frozen_string_literal: true
 
-# boleto - final de serie
-# feriado 
+describe 'Boleto' do
+  context 'Fim da série acaba hoje e forma de pagamento deve está indisponível' do
+    before do
+      @token = ApiUser.GetToken
+      ApiUser.Login(@token, Constant::User1)
 
+      @result = ApiCarrinho.post_AdicionarItemCarrinho(1, @token)
+      @idCarrinho = JSON.parse(@result.response.body)['obj'][0]['idCarrinho']
 
-describe 'post' do
-
-    context 'Fim da série acaba hj e deve mudar no banco e indisponibilizar, bloquear pagamento' do
-      before do
-        @carrinho = ApiBoleto.post_AdicionarItemCarrinho(2)
-
-        # Database.new.update_BloquearPagamento
-        @result = ApiCartao.post_ObterFormasPagamentoDisponiveis
-
-      end
-      it { expect(@carrinho.response.code).to eql '200' }
-      it { expect(JSON.parse(@result.response.body)['obj'][0]['formasPai'][1]['msgErro']).to  "Indisponível para compra de títulos LottoCap Max - Max Série Nova (id 88)devido ao fim da série em '#{Constant::TimeMsg}'. Remova esse título do carrinho ou escolha outra forma de pagamento." }
-
-      after do 
-        #voltar no banco a data futura 
-      end
+      Database.new.update_BloquearPagamento
+      @boleto = ApiBoleto.post_SucessoBoleto(@token, @idCarrinho)
     end
+    it { expect(JSON.parse(@boleto.response.body)['erros'][0]['mensagem']).to eql 'Esta forma de pagamento não está mais disponível, por favor. Selecione outra forma de pagamento.' }
+
+    after do
+      Database.new.update_DataFinalVendaVigente
+      ApiCarrinho.post_SetRemoverItemCarrinho(@token, @idCarrinho)
+      ApiUser.get_deslogar(@token)
+    end
+  end
 end
-
-

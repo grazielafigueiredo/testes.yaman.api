@@ -6,10 +6,8 @@ require 'services/user'
 
 class ApiBoleto
   include HTTParty
-  base_uri 'https://hmlapi.lottocap.com.br/api/Pagamento'
+  base_uri 'https://hmlapi.lottocap.com.br/api'
   headers 'Content-Type' => 'application/json'
-
-  @time = Time.now.strftime('%F')
 
   def self.post_SucessoBoleto(token, idCarrinho)
     headers[:Authorization] = token
@@ -19,9 +17,8 @@ class ApiBoleto
         "idFormaPagamento": Constant::IdFormaPagamentoBoleto,
         "idCarrinho": idCarrinho,
         "boletoSenderHash": '667a4c201f9cdaaa382f6c89180770243d6ca8f01ca6cdcf7a7aed56b684cadc'
-
       }
     }
-    post('/PagarCarrinho', body: @SucessoBoleto.to_json)
+    post('/Pagamento/PagarCarrinho', body: @SucessoBoleto.to_json)
   end
 end

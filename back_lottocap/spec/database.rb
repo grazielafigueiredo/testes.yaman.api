@@ -48,7 +48,8 @@ class Database
     end
 
     def update_BloquearPagamento()
-        @connection.execute("UPDATE Serie SET DataFinalVenda = @time where idSerie = ;")
+        time = Time.now.strftime('%F')
+        @connection.execute("UPDATE Serie SET DataFinalVenda = '#{time}' where idSerie = #{Constant::IdSerie};")
 
     end
 
@@ -91,6 +92,14 @@ class Database
 
     def update_deleteCreditoLottocap()
         @connection.execute("UPDATE Usuario SET  SaldoCredito = 0.000  where IdUsuario = #{Constant::UserID};")
+    end
+
+    def update_PremioResgate(valorBonus)
+        @connection.execute("exec usp_setBonusUsuario @idUsuario = #{Constant::UserID}, @valorBonus = #{valorBonus};")
+    end
+
+    def update_deletePremioResgate()
+        @connection.execute("UPDATE Usuario SET  SaldoPremio = 0.000  where IdUsuario = #{Constant::UserID};")
     end
 end
 
