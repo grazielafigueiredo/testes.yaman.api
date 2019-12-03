@@ -58,11 +58,6 @@ class Database
 
     end
 
-    # def update_disponibilizarSerie86()
-    #     @connection.execute("UPDATE TituloMatriz SET reservado = 0 where idSerie = #{Constant::IdSerie};")
-
-    # end
-
     def update_MaxIndisponiveisVitrine()
         @connection.execute("UPDATE Serie SET DataFinalVenda = '2018-12-25 17:09:00.000' where idSerie in (86,87);")
 
@@ -86,12 +81,8 @@ class Database
     puts res.do
     end
 
-    def update_insertCreditoLottocap()
-        @connection.execute("UPDATE Usuario SET  SaldoCredito = 100.000  where IdUsuario = #{Constant::UserID};")
-    end
-
-    def update_deleteCreditoLottocap()
-        @connection.execute("UPDATE Usuario SET  SaldoCredito = 0.000  where IdUsuario = #{Constant::UserID};")
+    def update_CreditoLottocap(saldoCredito)
+        @connection.execute("UPDATE Usuario SET  SaldoCredito = #{saldoCredito}  where IdUsuario = #{Constant::UserID};")
     end
 
     def update_PremioResgate(valorBonus)
