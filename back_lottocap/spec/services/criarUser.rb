@@ -25,4 +25,19 @@ class ApiCreateUser
         }
         post('/Usuario/CadastrarUsuario', body: @createUser.to_json)
     end
+
+    def self.post_validarUser(token, nomeCompleto, cpf, email)
+        headers['Authorization'] = token
+
+        @validarUser = {
+            "obj": {
+                "nomeCompleto": nomeCompleto,
+                "email": email,
+                "cpf": cpf
+            },
+            "atualPagina": 0,
+            "tamanhoPagina": 0
+        }
+        post('/Usuario/ValidarDadosUsuarioCriacao', body: @validarUser.to_json)
+    end
 end
