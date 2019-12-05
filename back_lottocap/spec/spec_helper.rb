@@ -1,3 +1,4 @@
+require 'blabla'
 require 'cpf_faker'
 require 'faker'
 require "factory_bot"
