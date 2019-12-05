@@ -15,6 +15,7 @@ require_relative "services/cartaoCredito"
 require_relative "services/creditoLottocap"
 require_relative "services/resgate"
 require_relative "services/transferencia"
+require_relative "services/titulos"
 require_relative "services/user"
 
 RSpec.configure do |config|

@@ -4,7 +4,7 @@ require "singleton"
 class Constant
 
     Url = "https://hmlapi.lottocap.com.br/api"
-    IdSerie = 86
+    IdSerie = 87
     IdSerie87 = 87
     IdProduto = 1
     IdCarrinho = 10851
