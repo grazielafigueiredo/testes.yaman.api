@@ -26,6 +26,7 @@ GEM
     mime-types-data (3.2019.1009)
     minitest (5.13.0)
     multi_xml (0.6.0)
+    rake (13.0.1)
     rspec (3.9.0)
       rspec-core (~> 3.9.0)
       rspec-expectations (~> 3.9.0)
@@ -39,6 +40,8 @@ GEM
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.9.0)
     rspec-support (3.9.0)
+    rspec_junit_formatter (0.4.1)
+      rspec-core (>= 2, < 4, != 2.12.0)
     thread_safe (0.3.6)
     tiny_tds (2.1.2)
     tzinfo (1.2.5)
@@ -53,7 +56,9 @@ DEPENDENCIES
   factory_bot
   faker
   httparty
+  rake
   rspec
+  rspec_junit_formatter
   tiny_tds
 
 BUNDLED WITH
