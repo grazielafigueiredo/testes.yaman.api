@@ -12,12 +12,22 @@ class ApiCreditoLottocap
   def self.post_CreditoLottocap(token, idCarrinho)
     headers[:Authorization] = token
 
+    # @CreditoLottocap = {
+    #   "obj": {
+    #     "idFormaPagamento": Constant::IdFormaPagamentoCreditoLottocap,
+    #     "idCarrinho": idCarrinho,
+    #     "flCompraComCredito": true,
+
+    #   }
+    # }
+
     @CreditoLottocap = {
       "obj": {
         "idFormaPagamento": Constant::IdFormaPagamentoCreditoLottocap,
         "idCarrinho": idCarrinho,
         "flCompraComCredito": true,
-
+        "flCompraDeCredito": false,
+        "valorCreditos": 0
       }
     }
     post('/Pagamento/PagarCarrinho', body: @CreditoLottocap.to_json)
@@ -31,12 +41,12 @@ class ApiCreditoLottocap
         "idFormaPagamento": 5,
         "idCarrinho": idCarrinho,
         "nomeCompletoTitular": "FGHJ FGHJKL",
-        "ccredNumero": Faker::CNPJ.numeric,
+        "ccredNumero": Constant::NumeroCartao,
         "ccredValidadeMes": "12",
         "ccredValidadeAno": "34",
         "ccredCVV": "123",
         "flCompraDeCredito": true,
-        "valorCreditos": 250,
+        "valorCreditos": 20,
       }
     }
     post('/Pagamento/PagarCarrinho', body: @comprarCreditoLottocap.to_json)
