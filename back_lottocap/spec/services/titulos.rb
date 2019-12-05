@@ -39,5 +39,38 @@ class ApiTitulos
     }
     post('/Usuario/VerificarPremioTitulo', body: @VerificarPremioTitulo.to_json)
   end
+
+  def self.post_AbrirTitulo(token, idTitulo)
+    headers['Authorization'] = token
+
+    @AbrirTitulo = {
+      "obj": {
+        "idTitulo": idTitulo
+      }
+    }
+    post('/Titulo/AbrirTitulo', body: @AbrirTitulo.to_json)
+  end
+
+  def self.post_BuscarTitulosNaoAbertosUsuario(token)
+    headers['Authorization'] = token
+
+    @BuscarTitulosNaoAbertosUsuario = {
+      "obj": {},
+      "atualPagina": 0,
+      "tamanhoPagina": 0
+    }
+    post('/Usuario/BuscarTitulosNaoAbertosUsuario', body: @BuscarTitulosNaoAbertosUsuario.to_json)
+  end
+
+  def self.post_GetMultiplicador(token)
+    headers['Authorization'] = token
+
+    @GetMultiplicador = {
+      "obj": {
+        "idTitulo": 62178 #titulo JÁ
+      }
+    }
+    post('/Titulo/GetMultiplicador', body: @GetMultiplicador.to_json)
+  end
 end
 

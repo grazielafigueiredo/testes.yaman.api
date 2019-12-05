@@ -8,12 +8,14 @@ class Constant
     IdSerie87 = 87
     IdProduto = 1
     IdCarrinho = 10851
+    IdTitulo = 62101
     TimeMsg = Time.now.strftime('%d/%m/%Y')
     Authorization = "70b90407-f1f6-4868-bad2-dda283b09bf9"
     Produto = "LottoCap Max - Max Série Nova (id 86)"
 
     User1 = {"usuario": "user22@gmail.com", "senha": "1234"}
     UserID = 3661
+    
     # Cartao de Credito
 
     IdFormaPagamento = 5
@@ -40,83 +42,9 @@ class Constant
 
     IdFormaPagamentoTransfItau = 7  #Itau
 
-    # {
-    #     "obj": {
-    #         "idFormaPagamento": 7,
-    #         "idCarrinho": 10846,
-    #         "transfAgencia": "3456",
-    #         "transfAgenciaDigito": "",
-    #         "transfConta": "34567",
-    #         "transfContaDigito": "3",
-    #         "nomeCompletoTitular": "rtyui",
-    #         "flCompraDeCredito": false,
-    #         "valorCreditos": 0,
-    #         "dadosComplementaresUsuario": null,
-    #         "utmCampanhas": "{\"conversao_medium\":\"direto\"}",
-    #         "sessionIdAmplitude": 1574785719863,
-    #         "deviceIdAmplitude": "d934a7f5-cc43-437d-bc13-f5f30d8e43c7R"
-    #     },
-    #     "atualPagina": 1,
-    #     "tamanhoPagina": 9999
-    # }
-
     IdFormaPagamentoTransfSantander = 8 #Santander
      Cpf = "000.000.096-52"
 
-    # {
-    #     "obj": {
-    #         "idFormaPagamento": 8,
-    #         "idCarrinho": 10847,
-    #         "cpf": "000.000.096-52",
-    #         "flCompraDeCredito": false,
-    #         "valorCreditos": 0,
-    #         "dadosComplementaresUsuario": null,
-    #         "utmCampanhas": "{\"conversao_medium\":\"direto\"}",
-    #         "sessionIdAmplitude": 1574791074147,
-    #         "deviceIdAmplitude": "d934a7f5-cc43-437d-bc13-f5f30d8e43c7R"
-    #     },
-    #     "atualPagina": 1,   
-    #     "tamanhoPagina": 9999
-    # }
-
     IdFormaPagamentoTransfBrasil = 9
-
-    # {
-    #     "obj": {
-    #         "idFormaPagamento": 9,
-    #         "idCarrinho": 10848,
-    #         "transfAgencia": "5678",
-    #         "transfAgenciaDigito": "6",
-    #         "transfConta": "1234567891",
-    #         "transfContaDigito": "2",
-    #         "nomeCompletoTitular": "fghj",
-    #         "flCompraDeCredito": false,
-    #         "valorCreditos": 0,
-    #         "dadosComplementaresUsuario": null,
-    #         "utmCampanhas": "{\"conversao_medium\":\"direto\"}",
-    #         "sessionIdAmplitude": 1574791074147,
-    #         "deviceIdAmplitude": "d934a7f5-cc43-437d-bc13-f5f30d8e43c7R"
-    #     },
-    #     "atualPagina": 1,
-    #     "tamanhoPagina": 9999
-    # }
-
-    # payload de dados já salvos no banco
-
-    # {
-    #     "obj": {
-    #         "idFormaPagamento": 9,
-    #         "idCarrinho": 10850,
-    #         "idUsuarioContaCorrente": 1686,
-    #         "flCompraDeCredito": false,
-    #         "valorCreditos": 0,
-    #         "dadosComplementaresUsuario": null,
-    #         "utmCampanhas": "{\"conversao_medium\":\"direto\"}",
-    #         "sessionIdAmplitude": 1574791074147,
-    #         "deviceIdAmplitude": "d934a7f5-cc43-437d-bc13-f5f30d8e43c7R"
-    #     },
-    #     "atualPagina": 1,
-    #     "tamanhoPagina": 9999
-    # }
 end
 
