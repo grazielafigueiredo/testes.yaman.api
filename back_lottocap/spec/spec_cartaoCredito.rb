@@ -7,7 +7,7 @@ describe 'Cartão de Crédito' do
       @token = ApiUser.GetToken
       ApiUser.Login(@token, Constant::User1)
   
-      carrinho = ApiCarrinho.post_AdicionarItemCarrinho(@token, 3)
+      carrinho = ApiCarrinho.post_AdicionarItemCarrinho(1, Constant::IdProduto, Constant::IdSerie, @token)
       @idCarrinho = JSON.parse(carrinho.response.body)['obj'][0]['idCarrinho']
       
       @result = ApiCartao.post_ObterFormasPagamentoDisponiveis(@token, @idCarrinho)
@@ -29,7 +29,8 @@ describe 'Cartão de Crédito' do
     it { expect(JSON.parse(@result.response.body)['obj'][0]['formasPai'][3]['tipo']).to eql 'credito' }
     it { expect(JSON.parse(@result.response.body)['obj'][0]['formasPai'][3]['idFormaPagamento']).to be 4 }
     it { expect(JSON.parse(@result.response.body)['obj'][0]['formasPai'][3]['vlMinimo']).to be >= 0.0 }
-  
+    it { puts @result.response.body}
+
     after do 
       ApiCarrinho.post_SetRemoverItemCarrinho(@token, @idCarrinho)
       ApiUser.get_deslogar(@token)
@@ -42,14 +43,14 @@ describe 'Cartão de Crédito' do
       @token = ApiUser.GetToken
       ApiUser.Login(@token, Constant::User1)
   
-      carrinho = ApiCarrinho.post_AdicionarItemCarrinho(@token, 3)
+      carrinho = ApiCarrinho.post_AdicionarItemCarrinho(1, Constant::IdProduto, Constant::IdSerie, @token)
       @idCarrinho = JSON.parse(carrinho.response.body)['obj'][0]['idCarrinho']
 
-      @result = ApiCartao.post_NomeCartaoDeCreditoInvalido("CARLOS 111111", @token, @idCarrinho)
+      @result = ApiCartao.post_PagarCartaoDeCredito(@token, @idCarrinho, "CARLOS 111111", Constant::NumeroCartao, Constant::ValidadeMesCartao, Constant::ValidadeAnoCartao, Constant::CartaoCVV)
     end
     it { expect(@result.response.code).to eql '200' }
     it { expect(JSON.parse(@result.response.body)['sucesso']).to be true }
-
+    it { puts @result.response.body}
 
     after do 
       ApiCarrinho.post_SetRemoverItemCarrinho(@token, @idCarrinho)
@@ -58,19 +59,20 @@ describe 'Cartão de Crédito' do
     end
   end
 
-  context 'Nome Null Cartão de Crédito' do
+  context 'Nome Vazio Cartão de Crédito' do
     before do
 
       @token = ApiUser.GetToken
       ApiUser.Login(@token, Constant::User1)
   
-      carrinho = ApiCarrinho.post_AdicionarItemCarrinho(@token, 3)
+      carrinho = ApiCarrinho.post_AdicionarItemCarrinho(1, Constant::IdProduto, Constant::IdSerie, @token)
       @idCarrinho = JSON.parse(carrinho.response.body)['obj'][0]['idCarrinho']
 
-      @result = ApiCartao.post_NomeCartaoDeCreditoInvalido("", @token, @idCarrinho)
+      @result = ApiCartao.post_PagarCartaoDeCredito(@token, @idCarrinho, "", Constant::NumeroCartao, Constant::ValidadeMesCartao, Constant::ValidadeAnoCartao, Constant::CartaoCVV)
     end
     it { expect(JSON.parse(@result.response.body)['sucesso']).to be true }
     it { expect(@result.response.code).to eql '200' }
+    it { puts @result.response.body}
 
     after do 
       ApiCarrinho.post_SetRemoverItemCarrinho(@token, @idCarrinho)
@@ -85,13 +87,14 @@ describe 'Cartão de Crédito' do
       @token = ApiUser.GetToken
       ApiUser.Login(@token, Constant::User1)
   
-      carrinho = ApiCarrinho.post_AdicionarItemCarrinho(@token, 3)
+      carrinho = ApiCarrinho.post_AdicionarItemCarrinho(1, Constant::IdProduto, Constant::IdSerie, @token)
       @idCarrinho = JSON.parse(carrinho.response.body)['obj'][0]['idCarrinho']
 
-      @result = ApiCartao.post_NumeroCartaoDeCreditoInvalido("erty4567rt567", @token, @idCarrinho)
+      @result = ApiCartao.post_PagarCartaoDeCredito(@token, @idCarrinho, Constant::NomeCompletoTitular, "erty4567rt567", Constant::ValidadeMesCartao, Constant::ValidadeAnoCartao, Constant::CartaoCVV)
     end
     it { expect(@result.response.code).to eql '200' }
     it { expect(JSON.parse(@result.response.body)['erros'][0]['mensagem']).to eql "Tipo de cartão inválido." }
+    it { puts @result.response.body}
 
     after do 
       ApiCarrinho.post_SetRemoverItemCarrinho(@token, @idCarrinho)
@@ -101,19 +104,20 @@ describe 'Cartão de Crédito' do
   end
 
 
-  context 'Número Null Cartão de Crédito' do
+  context 'Número Vazio Cartão de Crédito' do
     before do
       @token = ApiUser.GetToken
       ApiUser.Login(@token, Constant::User1)
   
-      carrinho = ApiCarrinho.post_AdicionarItemCarrinho(@token, 3)
+      carrinho = ApiCarrinho.post_AdicionarItemCarrinho(1, Constant::IdProduto, Constant::IdSerie, @token)
       @idCarrinho = JSON.parse(carrinho.response.body)['obj'][0]['idCarrinho']
 
-      @result = ApiCartao.post_NumeroCartaoDeCreditoInvalido("", @token, @idCarrinho)
+      @result = ApiCartao.post_PagarCartaoDeCredito(@token, @idCarrinho, Constant::NomeCompletoTitular, "", Constant::ValidadeMesCartao, Constant::ValidadeAnoCartao, Constant::CartaoCVV)
     end
     it { expect(@result.response.code).to eql '200' }
     it { expect(JSON.parse(@result.response.body)['erros'][0]['mensagem']).to eql "Tipo de cartão inválido." }
-  
+    it { puts @result.response.body}
+
     after do 
       ApiCarrinho.post_SetRemoverItemCarrinho(@token, @idCarrinho)
       ApiUser.get_deslogar(@token)
@@ -126,13 +130,14 @@ describe 'Cartão de Crédito' do
       @token = ApiUser.GetToken
       ApiUser.Login(@token, Constant::User1)
   
-      carrinho = ApiCarrinho.post_AdicionarItemCarrinho(@token, 3)
+      carrinho = ApiCarrinho.post_AdicionarItemCarrinho(1, Constant::IdProduto, Constant::IdSerie, @token)
       @idCarrinho = JSON.parse(carrinho.response.body)['obj'][0]['idCarrinho']
 
-      @result = ApiCartao.post_AnoCartaoDeCreditoInvalido("11aa", @token, @idCarrinho)
+      @result = ApiCartao.post_PagarCartaoDeCredito(@token, @idCarrinho, Constant::NomeCompletoTitular, Constant::NumeroCartao, Constant::ValidadeMesCartao, "11aa", Constant::CartaoCVV)
     end
     it { expect(@result.response.code).to eql '400' }
-  
+    it { puts @result.response.body}
+
     after do 
       ApiCarrinho.post_SetRemoverItemCarrinho(@token, @idCarrinho)
       ApiUser.get_deslogar(@token)
@@ -140,18 +145,19 @@ describe 'Cartão de Crédito' do
     end
   end
 
-  context 'Ano Menor que a atual Cartão de Crédito' do
+  context 'Ano Menor que o atual' do
     before do
       @token = ApiUser.GetToken
       ApiUser.Login(@token, Constant::User1)
   
-      carrinho = ApiCarrinho.post_AdicionarItemCarrinho(@token, 3)
+      carrinho = ApiCarrinho.post_AdicionarItemCarrinho(1, Constant::IdProduto, Constant::IdSerie, @token)
       @idCarrinho = JSON.parse(carrinho.response.body)['obj'][0]['idCarrinho']
 
-      @result = ApiCartao.post_AnoCartaoDeCreditoInvalido("11", @token, @idCarrinho)
+      @result = ApiCartao.post_PagarCartaoDeCredito(@token, @idCarrinho, Constant::NomeCompletoTitular, Constant::NumeroCartao, Constant::ValidadeMesCartao, "11", Constant::CartaoCVV)
     end
     it { expect(@result.response.code).to eql '200' }
     it { expect(JSON.parse(@result.response.body)['erros'][0]['mensagem']).to eql "Erro na confirmação do pagamento: 400 - Data de vencimento do cartão expirada. " }
+    it { puts @result.response.body}
 
   
     after do 
@@ -162,20 +168,21 @@ describe 'Cartão de Crédito' do
   end
 
 
-  context 'Ano Null Cartão de Crédito' do
+  context 'Ano Vazio Cartão de Crédito' do
     before do
 
       @token = ApiUser.GetToken
       ApiUser.Login(@token, Constant::User1)
   
-      carrinho = ApiCarrinho.post_AdicionarItemCarrinho(@token, 3)
+      carrinho = ApiCarrinho.post_AdicionarItemCarrinho(1, Constant::IdProduto, Constant::IdSerie, @token)
       @idCarrinho = JSON.parse(carrinho.response.body)['obj'][0]['idCarrinho']
 
-      @result = ApiCartao.post_AnoCartaoDeCreditoInvalido("", @token, @idCarrinho)
+      @result = ApiCartao.post_PagarCartaoDeCredito(@token, @idCarrinho, Constant::NomeCompletoTitular, Constant::NumeroCartao, Constant::ValidadeMesCartao, "", Constant::CartaoCVV)
     end
     it { expect(@result.response.code).to eql '400' }
     it { expect(JSON.parse(@result.response.body)['obj.ccredValidadeAno'][0]).to eql "Error converting value {null} to type 'System.Int32'. Path 'obj.ccredValidadeAno', line 1, position 157." }
-  
+    it { puts @result.response.body}
+
     after do 
       ApiCarrinho.post_SetRemoverItemCarrinho(@token, @idCarrinho)
       ApiUser.get_deslogar(@token)
@@ -189,15 +196,16 @@ describe 'Cartão de Crédito' do
       @token = ApiUser.GetToken
       ApiUser.Login(@token, Constant::User1)
   
-      carrinho = ApiCarrinho.post_AdicionarItemCarrinho(@token, 3)
+      carrinho = ApiCarrinho.post_AdicionarItemCarrinho(1, Constant::IdProduto, Constant::IdSerie, @token)
       @idCarrinho = JSON.parse(carrinho.response.body)['obj'][0]['idCarrinho']
 
-      @result = ApiCartao.post_MesCartaoDeCreditoInvalido("14", @token, @idCarrinho)
+      @result = ApiCartao.post_PagarCartaoDeCredito(@token, @idCarrinho, Constant::NomeCompletoTitular, Constant::NumeroCartao, "14", Constant::ValidadeAnoCartao, Constant::CartaoCVV)
     end
     # it { expect(@result.response.code)['sucesso'].to be false }
     it { expect(@result.response.code).to eql '200' }
     it { expect(JSON.parse(@result.response.body)['erros'][0]['mensagem']).to eql "Erro na confirmação do pagamento: 400 - O mês de expiração do cartão deve ser maior que 0 e menor que 13. 400 - Data de vencimento do cartão inválida. "}
-    
+    it { puts @result.response.body}
+
     after do 
       ApiCarrinho.post_SetRemoverItemCarrinho(@token, @idCarrinho)
       ApiUser.get_deslogar(@token)
@@ -205,19 +213,20 @@ describe 'Cartão de Crédito' do
     end
   end
 
-  context 'Mês Null Cartão de Crédito' do
+  context 'Mês Vazio Cartão de Crédito' do
     before do
 
       @token = ApiUser.GetToken
       ApiUser.Login(@token, Constant::User1)
   
-      carrinho = ApiCarrinho.post_AdicionarItemCarrinho(@token, 3)
+      carrinho = ApiCarrinho.post_AdicionarItemCarrinho(1, Constant::IdProduto, Constant::IdSerie, @token)
       @idCarrinho = JSON.parse(carrinho.response.body)['obj'][0]['idCarrinho']
 
-      @result = ApiCartao.post_MesCartaoDeCreditoInvalido("", @token, @idCarrinho)
+      @result = ApiCartao.post_PagarCartaoDeCredito(@token, @idCarrinho, Constant::NomeCompletoTitular, Constant::NumeroCartao, "", Constant::ValidadeAnoCartao, Constant::CartaoCVV)
     end
     it { expect(@result.response.code).to eql '400' }
     it { expect(JSON.parse(@result.response.body)['obj.ccredValidadeMes'][0]).to eql "Error converting value {null} to type 'System.Int32'. Path 'obj.ccredValidadeMes', line 1, position 133."}
+    it { puts @result.response.body}
 
     after do 
       ApiCarrinho.post_SetRemoverItemCarrinho(@token, @idCarrinho)
@@ -232,14 +241,15 @@ describe 'Cartão de Crédito' do
       @token = ApiUser.GetToken
       ApiUser.Login(@token, Constant::User1)
   
-      carrinho = ApiCarrinho.post_AdicionarItemCarrinho(@token, 3)
+      carrinho = ApiCarrinho.post_AdicionarItemCarrinho(1, Constant::IdProduto, Constant::IdSerie, @token)
       @idCarrinho = JSON.parse(carrinho.response.body)['obj'][0]['idCarrinho']
 
-      @result = ApiCartao.post_CVVCartaoDeCreditoInvalido("123ss", @token, @idCarrinho)
+      @result = ApiCartao.post_PagarCartaoDeCredito(@token, @idCarrinho, Constant::NomeCompletoTitular, Constant::NumeroCartao, Constant::ValidadeMesCartao, Constant::ValidadeAnoCartao, "123ss")
     end
     it { expect(@result.response.code).to eql '200' }
     it { expect(JSON.parse(@result.response.body)['erros'][0]['mensagem']).to eql 'Input string was not in a correct format.' }
- 
+    it { puts @result.response.body}
+
     after do 
       ApiCarrinho.post_SetRemoverItemCarrinho(@token, @idCarrinho)
       ApiUser.get_deslogar(@token)
@@ -247,19 +257,20 @@ describe 'Cartão de Crédito' do
     end
   end
 
-  context 'CVV > 4 Cartão de Crédito' do
+  context 'CVV > 10 Cartão de Crédito' do
     before do
 
       @token = ApiUser.GetToken
       ApiUser.Login(@token, Constant::User1)
   
-      carrinho = ApiCarrinho.post_AdicionarItemCarrinho(@token, 3)
+      carrinho = ApiCarrinho.post_AdicionarItemCarrinho(1, Constant::IdProduto, Constant::IdSerie, @token)
       @idCarrinho = JSON.parse(carrinho.response.body)['obj'][0]['idCarrinho']
 
-      @result = ApiCartao.post_CVVCartaoDeCreditoInvalido("112399999999", @token, @idCarrinho)
+      @result = ApiCartao.post_PagarCartaoDeCredito(@token, @idCarrinho, Constant::NomeCompletoTitular, Constant::NumeroCartao, Constant::ValidadeMesCartao, Constant::ValidadeAnoCartao, "112399999999")
     end
     it { expect(@result.response.code).to eql '200' }
     it { expect(JSON.parse(@result.response.body)['erros'][0]['mensagem']).to eql 'Value was either too large or too small for an Int32.' }
+    it { puts @result.response.body}
 
     after do 
       ApiCarrinho.post_SetRemoverItemCarrinho(@token, @idCarrinho)
@@ -268,19 +279,20 @@ describe 'Cartão de Crédito' do
     end
   end
 
-  context 'CVV Null Cartão de Crédito' do
+  context 'CVV Vazio Cartão de Crédito' do
     before do
 
       @token = ApiUser.GetToken
       ApiUser.Login(@token, Constant::User1)
   
-      carrinho = ApiCarrinho.post_AdicionarItemCarrinho(@token, 3)
+      carrinho = ApiCarrinho.post_AdicionarItemCarrinho(1, Constant::IdProduto, Constant::IdSerie, @token)
       @idCarrinho = JSON.parse(carrinho.response.body)['obj'][0]['idCarrinho']
 
-      @result = ApiCartao.post_CVVCartaoDeCreditoInvalido("", @token, @idCarrinho)
+      @result = ApiCartao.post_PagarCartaoDeCredito(@token, @idCarrinho, Constant::NomeCompletoTitular, Constant::NumeroCartao, Constant::ValidadeMesCartao, Constant::ValidadeAnoCartao, "")
     end
     it { expect(@result.response.code).to eql '200' }
     it { expect(JSON.parse(@result.response.body)['erros'][0]['mensagem']).to eql 'Input string was not in a correct format.' }
+    it { puts @result.response.body}
 
   
     after do 
@@ -296,18 +308,15 @@ describe 'Cartão de Crédito' do
       @token = ApiUser.GetToken
       ApiUser.Login(@token, Constant::User1)
   
-      carrinho = ApiCarrinho.post_AdicionarItemCarrinho(@token, 3)
-      idCarrinho = JSON.parse(carrinho.response.body)['obj'][0]['idCarrinho']
+      carrinho = ApiCarrinho.post_AdicionarItemCarrinho(1, Constant::IdProduto, Constant::IdSerie, @token)
+      @idCarrinho = JSON.parse(carrinho.response.body)['obj'][0]['idCarrinho']
       
-      @result = ApiCartao.post_AdicionarCartaoDeCreditoSucesso(@token, idCarrinho)
+      @result = ApiCartao.post_PagarCartaoDeCredito(@token, @idCarrinho, Constant::NomeCompletoTitular, Constant::NumeroCartao, Constant::ValidadeMesCartao, Constant::ValidadeAnoCartao, Constant::CartaoCVV)
     end
 
-    it {
-      expect(@result.response.code).to eql '200'
-    }
-    it { 
-      expect(JSON.parse(@result.response.body)['sucesso']).to be true  
-    }
+    it { expect(@result.response.code).to eql '200'}
+    it { expect(JSON.parse(@result.response.body)['sucesso']).to be true }
+    it { puts @result.response.body}
 
     after do 
       ApiCarrinho.post_SetRemoverItemCarrinho(@token, @idCarrinho)
