@@ -20,13 +20,13 @@ class ApiCarrinho
     end
 
     #Enviar quantidade além da permitida
-    def self.post_SetQtdItemCarrinho(qtdItens, token)
+    def self.post_SetQtdItemCarrinho(qtdItens, token, idSerie)
             headers[:Authorization] = token
 
             
             @SetQtdItemCarrinho = { "obj": {
                 "novaQtdItem": qtdItens, 
-                "idSerie": Constant::IdSerie,
+                "idSerie": idSerie,
                 "flPromoAtiva": false },
                 "atualPagina": 1,
                 "tamanhoPagina": 999 }        
