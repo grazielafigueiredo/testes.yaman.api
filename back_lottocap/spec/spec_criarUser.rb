@@ -115,11 +115,13 @@ describe 'Alterar dados Usuário' do
       @token = ApiUser.GetToken
       ApiUser.Login(@token, Constant::User1)
 
-      @alterar = ApiCreateUser.post_AlterarDadosUsuario(@token)
+      @carrinho = ApiCreateUser.post_AlterarDadosUsuario(@token)
     end 
 
-    it { puts @alterar.response.body}
-    it { expect(JSON.parse(@alterar.response.body)['sucesso']).to be true}
+    it { puts @carrinho.response.body}
+    it { expect(JSON.parse(@carrinho.response.body)['sucesso']).to be true}
   end
-
+  after do
+    ApiUser.get_deslogar(@token)
+  end
 end

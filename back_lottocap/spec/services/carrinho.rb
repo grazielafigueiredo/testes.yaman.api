@@ -7,7 +7,7 @@ require "services/user"
 
 class ApiCarrinho
     include HTTParty
-    base_uri "https://hmlapi.lottocap.com.br/api"
+    base_uri Constant::Url
     headers "Content-Type" => "application/json"  
     
 

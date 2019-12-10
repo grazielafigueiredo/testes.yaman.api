@@ -5,7 +5,7 @@ require 'services/user'
 
 class ApiTitulos
   include HTTParty
-  base_uri 'https://hmlapi.lottocap.com.br/api'
+  base_uri Constant::Url
   headers 'Content-Type' => 'application/json'
 
 
@@ -71,6 +71,12 @@ class ApiTitulos
       }
     }
     post('/Titulo/GetMultiplicador', body: @GetMultiplicador.to_json)
+  end
+
+  def self.get_GetQtdTitulosUsuario(token)
+    headers['Authorization'] = token
+
+    get('/Usuario/GetQtdTitulosUsuario', body: @GetQtdTitulosUsuario.to_json)
   end
 end
 

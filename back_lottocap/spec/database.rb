@@ -5,8 +5,10 @@ require 'tiny_tds'
 class Database
     def initialize
         conn = {
-            username: 'graziela', 
-            password: '4KoNxOHqNtTd6zZ',  
+            # username: 'graziela', 
+            # password: '4KoNxOHqNtTd6zZ',  
+            username: 'Lottocap', 
+            password: 'L0ttocap@sql2018',  
             host: 'hmllottocap.database.windows.net', 
             port: 1433,  
             database: 'hmllottocap', 
@@ -25,25 +27,15 @@ class Database
     #         database: 'L0ttocap@sql2018', 
     #         azure:true
     #     }
-    #     @connection =  TinyTds::Client.new(conn)
-        
+    #     @connection =  TinyTds::Client.new(conn)      
     # end
 
-    def update_DataFinalVenda()
-        @connection.execute("UPDATE Serie SET DataFinalVenda = '2018-12-25 17:09:00.000' where IdSerie= #{Constant::IdSerie};")
-    end
-
-    def update_DataFinalVendaVigente()
-        @connection.execute("UPDATE Serie SET DataFinalVenda = '2020-12-25 17:09:00.000' where IdSerie= #{Constant::IdSerie};")
+    def update_DataFinalVendaVigente(dataFinalVenda)
+        @connection.execute("UPDATE Serie SET DataFinalVenda = #{dataFinalVenda} where IdSerie= #{Constant::IdSerie};")
     end
 
     def update_TodosProdutosIndisponiveisVitrine()
         @connection.execute("UPDATE Serie SET DataFinalVenda = '2018-12-25 17:09:00.000';")
-
-    end
-
-    def update_AtualizarSerieAndamento()
-        @connection.execute("UPDATE Serie SET DataFinalVenda = '2018-12-25 17:09:00.000' where idSerie = #{Constant::IdSerie};")
 
     end
 
@@ -92,5 +84,18 @@ class Database
     def update_deletePremioResgate()
         @connection.execute("UPDATE Usuario SET  SaldoPremio = 0.000  where IdUsuario = #{Constant::UserID};")
     end
+
+    def select_GetQtdTitulosUsuario()
+        @connection.execute("SELECT COUNT(tm.idTituloMatriz)
+        FROM dbo.TituloMatriz tm
+             INNER JOIN dbo.Titulo t ON t.IdTituloMatriz = tm.IdTituloMatriz
+             INNER JOIN dbo.SERIE s ON tm.idSerie = s.IdSerie
+        WHERE tm.idUsuarioCliente = #{Constant::UserID}
+              AND t.DataVisualizacao IS NULL
+              AND S.Aprovado = 1
+              AND S.Ativo = 1
+              AND S.idSerieEstado = 4;")
+    end
 end
 
+# DELETE from TokenUsuario where IdUsuario = 3661
