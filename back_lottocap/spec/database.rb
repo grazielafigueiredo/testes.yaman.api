@@ -1,7 +1,6 @@
 require 'tiny_tds'    
 
 
-# https://docs.microsoft.com/pt-br/sql/connect/ruby/step-3-proof-of-concept-connecting-to-sql-using-ruby?view=sql-server-ver15
 class Database
     def initialize
         conn = {
@@ -11,7 +10,7 @@ class Database
             password: 'L0ttocap@sql2018',  
             host: 'hmllottocap.database.windows.net', 
             port: 1433,  
-            database: 'hmllottocap', 
+            database: 'hmllottocaptests', 
             azure:true
         }
         @connection =  TinyTds::Client.new(conn)
@@ -31,7 +30,8 @@ class Database
     # end
 
     def update_DataFinalVendaVigente(dataFinalVenda)
-        @connection.execute("UPDATE Serie SET DataFinalVenda = #{dataFinalVenda} where IdSerie= #{Constant::IdSerie};")
+        t = @connection.execute("UPDATE Serie SET DataFinalVenda = '#{dataFinalVenda}' where IdSerie= #{Constant::IdSerie};")
+        puts t.do
     end
 
     def update_TodosProdutosIndisponiveisVitrine()
@@ -74,7 +74,9 @@ class Database
     end
 
     def update_CreditoLottocap(saldoCredito)
-        @connection.execute("UPDATE Usuario SET  SaldoCredito = #{saldoCredito}  where IdUsuario = #{Constant::UserID};")
+        rs = @connection.execute("UPDATE Usuario SET  SaldoCredito = #{saldoCredito}  where IdUsuario = #{Constant::UserID};")
+        # puts 'Affected rows' 
+        puts rs
     end
 
     def update_PremioResgate(valorBonus)
@@ -86,7 +88,7 @@ class Database
     end
 
     def select_GetQtdTitulosUsuario()
-        @connection.execute("SELECT COUNT(tm.idTituloMatriz)
+        t = @connection.execute("SELECT COUNT(tm.idTituloMatriz)
         FROM dbo.TituloMatriz tm
              INNER JOIN dbo.Titulo t ON t.IdTituloMatriz = tm.IdTituloMatriz
              INNER JOIN dbo.SERIE s ON tm.idSerie = s.IdSerie
@@ -95,7 +97,9 @@ class Database
               AND S.Aprovado = 1
               AND S.Ativo = 1
               AND S.idSerieEstado = 4;")
+
+        return t
     end
+
 end
 
-# DELETE from TokenUsuario where IdUsuario = 3661

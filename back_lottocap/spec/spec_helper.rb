@@ -37,5 +37,6 @@ RSpec.configure do |config|
 
   config.include FactoryBot::Syntax::Methods
 
+  timeout = default_max_wait_time = 5
 
 end
