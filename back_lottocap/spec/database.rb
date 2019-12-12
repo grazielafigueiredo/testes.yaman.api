@@ -46,8 +46,9 @@ class Database
     end
 
     def update_reservarSerie(reservado)
-        @connection.execute("UPDATE TituloMatriz SET reservado = #{reservado} where idSerie = #{Constant::IdSerie};")
-
+       t = @connection.execute("UPDATE TituloMatriz SET reservado = #{reservado} where idSerie = #{Constant::IdSerie};")
+       sleep 5
+        puts t.do
     end
 
     def update_MaxIndisponiveisVitrine()

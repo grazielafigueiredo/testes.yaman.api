@@ -11,8 +11,8 @@ describe 'Bradesco' do
       @idCarrinho = JSON.parse(carrinho.response.body)['obj'][0]['idCarrinho']
 
       @result = ApiTransferencia.post_TransfBradesco(@token, @idCarrinho, Faker::Bank.account_number(digits: 4), Faker::Bank.account_number(digits: 4), Faker::Bank.account_number(digits: 1), Constant::NomeCompletoTitular)
+      puts @result
     end
-    it { expect(@result.response.code).to eql '200' }
     it { expect(JSON.parse(@result.response.body)['sucesso']).to be true }
     it { expect(JSON.parse(@result.response.body)['obj'][0]['nomeBanco']).to eql 'Bradesco' }
     it { expect(JSON.parse(@result.response.body)['obj'][0]['idTipoFormaPagamentoFeito']).to be 6 }
@@ -32,19 +32,18 @@ describe 'Bradesco' do
       @idCarrinho = JSON.parse(carrinho.response.body)['obj'][0]['idCarrinho']
 
       Database.new.update_reservarSerie(1)
+      # sleep 10
       @result = ApiTransferencia.post_TransfBradesco(@token, @idCarrinho, Faker::Bank.account_number(digits: 4), Faker::Bank.account_number(digits: 4), Faker::Bank.account_number(digits: 1), Constant::NomeCompletoTitular)
-      sleep(5)
-      
+      puts @result
     end
 
     it { expect(@result.response.code).to eql '200' }
     it { expect(JSON.parse(@result.response.body)['erros'][0]['mensagem']).to eql 'Não foi possível Reservar os Titulos Solicitados!' }
 
-    it { puts @result.response.body}
     
     after do
       Database.new.update_reservarSerie(0)
-      sleep(5)
+      # sleep 10
       ApiCarrinho.post_SetRemoverItemCarrinho(@token, @idCarrinho)
       ApiUser.get_deslogar(@token)
     end
@@ -61,6 +60,7 @@ describe 'Bradesco' do
       @idCarrinho = JSON.parse(carrinho.response.body)['obj'][0]['idCarrinho']
 
       @result = ApiTransferencia.post_TransfBradesco(@token, @idCarrinho, Faker::Bank.account_number(digits: 4), Faker::Bank.account_number(digits: 4), '', Constant::NomeCompletoTitular)
+      puts @result
     end
     it { expect(@result.response.code).to eql '200' }
     it { expect(JSON.parse(@result.response.body)['obj'][0]['digitoAgencia']).to eql '' }
@@ -80,6 +80,7 @@ describe 'Bradesco' do
       @idCarrinho = JSON.parse(carrinho.response.body)['obj'][0]['idCarrinho']
 
       @result = ApiTransferencia.post_TransfBradesco(@token, @idCarrinho, Faker::Bank.account_number(digits: 4), Faker::Bank.account_number(digits: 4), Faker::Bank.account_number(digits: 3), Constant::NomeCompletoTitular)
+      puts @result
     end
     it { expect(@result.response.code).to eql '400' }
     it { expect(JSON.parse(@result.response.body)['obj.transfContaDigito'][0]).to eql "The field transfContaDigito must be a string or array type with a maximum length of '1'." }
@@ -101,6 +102,7 @@ describe 'Bradesco' do
       @idCarrinho = JSON.parse(carrinho.response.body)['obj'][0]['idCarrinho']
 
       @result = ApiTransferencia.post_TransfBradesco(@token, @idCarrinho, Faker::Bank.account_number(digits: 4), Faker::Bank.account_number(digits: 4), Faker::Bank.account_number(digits: 1), "")
+      puts @result
     end
     it { expect(@result.response.code).to eql '200' }
     it { expect(JSON.parse(@result.response.body)['erros'][0]['mensagem']).to eql 'Bradesco: Agencia e Nome do Titular são obrigatórios' }
@@ -122,6 +124,7 @@ describe 'Bradesco' do
       @idCarrinho = JSON.parse(carrinho.response.body)['obj'][0]['idCarrinho']
 
       @result = ApiTransferencia.post_TransfBradesco(@token, @idCarrinho, Faker::Bank.account_number(digits: 1), Faker::Bank.account_number(digits: 4), Faker::Bank.account_number(digits: 1), Constant::NomeCompletoTitular)
+      puts @result
     end
     it { expect(@result.response.code).to eql '200' }
 
@@ -140,6 +143,7 @@ describe 'Bradesco' do
       @idCarrinho = JSON.parse(carrinho.response.body)['obj'][0]['idCarrinho']
 
       @result = ApiTransferencia.post_TransfBradesco(@token, @idCarrinho, Faker::Bank.account_number(digits: 11), Faker::Bank.account_number(digits: 4), Faker::Bank.account_number(digits: 1), Constant::NomeCompletoTitular)
+      puts @result
     end
     it { expect(@result.response.code).to eql '400' }
     it { expect(JSON.parse(@result.response.body)['obj.transfAgencia'][0]).to eql "The field transfAgencia must be a string or array type with a maximum length of '10'." }
@@ -159,6 +163,7 @@ describe 'Bradesco' do
       @idCarrinho = JSON.parse(carrinho.response.body)['obj'][0]['idCarrinho']
 
       @result = ApiTransferencia.post_TransfBradesco(@token, @idCarrinho, '', Faker::Bank.account_number(digits: 4), Faker::Bank.account_number(digits: 1), Constant::NomeCompletoTitular)
+      puts @result
     end
     it { expect(@result.response.code).to eql '200' }
     it { expect(JSON.parse(@result.response.body)['erros'][0]['mensagem']).to eql 'Bradesco: Agencia e Nome do Titular são obrigatórios' }
@@ -179,6 +184,7 @@ describe 'Bradesco' do
       @idCarrinho = JSON.parse(carrinho.response.body)['obj'][0]['idCarrinho']
 
       @result = ApiTransferencia.post_TransfBradesco(@token, @idCarrinho, Faker::Bank.account_number(digits: 4), Faker::Bank.account_number(digits: 20), Faker::Bank.account_number(digits: 1), Constant::NomeCompletoTitular)
+      puts @result
     end
     it { expect(@result.response.code).to eql '400' }
     it { expect(JSON.parse(@result.response.body)['obj.transfConta'][0]).to eql "The field transfConta must be a string or array type with a maximum length of '10'." }
@@ -198,6 +204,7 @@ describe 'Bradesco' do
       @idCarrinho = JSON.parse(carrinho.response.body)['obj'][0]['idCarrinho']
 
       @result = ApiTransferencia.post_TransfBradesco(@token, @idCarrinho, Faker::Bank.account_number(digits: 4), Faker::Bank.account_number(digits: 2), Faker::Bank.account_number(digits: 1), Constant::NomeCompletoTitular)
+      puts @result
     end
     it { expect(@result.response.code).to eql '200' }
 
@@ -216,6 +223,7 @@ describe 'Bradesco' do
       @idCarrinho = JSON.parse(carrinho.response.body)['obj'][0]['idCarrinho']
 
       @result = ApiTransferencia.post_TransfBradesco(@token, @idCarrinho, Faker::Bank.account_number(digits: 4), '', Faker::Bank.account_number(digits: 1), Constant::NomeCompletoTitular)
+      puts @result
     end
     it { expect(@result.response.code).to eql '200' }
 
@@ -238,6 +246,7 @@ describe 'Itau' do
       @idCarrinho = JSON.parse(carrinho.response.body)['obj'][0]['idCarrinho']
 
       @result = ApiTransferencia.post_TransfSucessoItau(@token, @idCarrinho)
+      puts @result
     end
     it { expect(@result.response.code).to eql '200' }
     it { expect(JSON.parse(@result.response.body)['sucesso']).to be true }
@@ -260,6 +269,7 @@ describe 'Santander' do
       @idCarrinho = JSON.parse(carrinho.response.body)['obj'][0]['idCarrinho']
 
       @result = ApiTransferencia.post_TransfSantander(@token, @idCarrinho, Faker::CPF.numeric)
+      puts @result
     end
     it { expect(@result.response.code).to eql '200' }
     it { expect(JSON.parse(@result.response.body)['sucesso']).to be true }
@@ -280,6 +290,7 @@ describe 'Santander' do
       @idCarrinho = JSON.parse(carrinho.response.body)['obj'][0]['idCarrinho']
 
       @result = ApiTransferencia.post_TransfSantander(@token, @idCarrinho, Faker::Bank.account_number(digits: 11))
+      puts @result
     end
     it { expect(@result.response.code).to eql '200' }
 
@@ -300,6 +311,7 @@ describe 'Brasil' do
       @idCarrinho = JSON.parse(carrinho.response.body)['obj'][0]['idCarrinho']
 
       @result = ApiTransferencia.post_TransfSucessoBrasil(@token, @idCarrinho)
+      puts @result
     end
     it { expect(@result.response.code).to eql '200' }
     it { expect(JSON.parse(@result.response.body)['sucesso']).to be true }
