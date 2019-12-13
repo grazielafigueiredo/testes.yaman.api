@@ -29,17 +29,17 @@ class ApiTransferencia
 
   # ------------ Transferência Bancária (Itau)-----------------------
 
-  def self.post_TransfSucessoItau(token, idCarrinho)
+  def self.post_TransfItau(token, idCarrinho, transfAgencia, transfConta, transfContaDigito)
     headers['Authorization'] = token
 
     @TransfSucessoItau = {
       "obj": {
         "idFormaPagamento": Constant::IdFormaPagamentoTransfItau,
         "idCarrinho": idCarrinho,
-        "transfAgencia": Faker::Bank.account_number(digits: 4),
+        "transfAgencia": transfAgencia,
         "transfAgenciaDigito": '',
-        "transfConta": Faker::Bank.account_number(digits: 4),
-        "transfContaDigito": Faker::Bank.account_number(digits: 1),
+        "transfConta": transfConta,
+        "transfContaDigito": transfContaDigito,
         "nomeCompletoTitular": Constant::NomeCompletoTitular
 
       }
@@ -64,17 +64,17 @@ class ApiTransferencia
 
   # ------------ Transferência Bancária (Brasil)-----------------------
 
-  def self.post_TransfSucessoBrasil(token, idCarrinho)
+  def self.post_TransfSucessoBrasil(token, idCarrinho, transfAgencia, transfAgenciaDigito, transfConta, transfContaDigito)
     headers['Authorization'] = token
 
     @TransfSucessoBrasil = {
       "obj": {
         "idFormaPagamento": Constant::IdFormaPagamentoTransfBrasil,
         "idCarrinho": idCarrinho,
-        "transfAgencia": Faker::Bank.account_number(digits: 4),
-        "transfAgenciaDigito": Faker::Bank.account_number(digits: 1),
-        "transfConta": Faker::Bank.account_number(digits: 10),
-        "transfContaDigito": Faker::Bank.account_number(digits: 1),
+        "transfAgencia": transfAgencia,
+        "transfAgenciaDigito": transfAgenciaDigito,
+        "transfConta": transfConta,
+        "transfContaDigito": transfContaDigito,
         "nomeCompletoTitular": Constant::NomeCompletoTitular
 
       }
