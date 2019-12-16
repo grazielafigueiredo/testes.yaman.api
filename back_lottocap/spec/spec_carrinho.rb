@@ -68,25 +68,23 @@ describe 'Carrinho - Reserva' do
     end 
   end
 
-  # context 'Enviar quantidade acima de 299 para pagamento' do
-  #   before do
-  #     @token = ApiUser.GetToken
-  #     ApiUser.Login(@token, Constant::User1)
+  context 'Enviar quantidade acima de 299 para pagamento' do
+    before do
+      @token = ApiUser.GetToken
+      ApiUser.Login(@token, Constant::User1)
 
-  #     ApiCarrinho.post_AdicionarItemCarrinho(1, Constant::IdProduto, Constant::IdSerie, @token)
-  #     @carrinho = ApiCarrinho.post_SetQtdItemCarrinho(300, @token, Constant::IdSerie)
-  #     @result = ApiCarrinho.get_GetStatusCarrinho
+      # ApiCarrinho.post_AdicionarItemCarrinho(300, Constant::IdProduto, Constant::IdSerie, @token)
+      @carrinho = ApiCarrinho.post_SetQtdItemCarrinho(300, @token, Constant::IdSerie)
+      puts @carrinho
+    end
 
-  #   end
+    it { expect(JSON.parse(@carrinho.response.body)['erros'][0]['mensagem']).to eql 'Quantidade limite de titulos para compra atingida!' }
 
-  #   it { expect(JSON.parse(@result.response.body)['erros'][0]['mensagem']).to eql 'Quantidade limite de titulos para compra atingida!' }
-  #   it { puts @result.response.body}
-
-  #   after do 
-  #     ApiCarrinho.post_SetRemoverItemCarrinho(@token, @idCarrinho)
-  #     ApiUser.get_deslogar(@token)
-  #   end 
-  # end
+    after do 
+      ApiCarrinho.post_SetRemoverItemCarrinho(@token, @idCarrinho)
+      ApiUser.get_deslogar(@token)
+    end 
+  end
 
 
   context 'Quantidade parcialmente indisponível' do
@@ -131,33 +129,30 @@ describe 'Carrinho - Reserva' do
     end
   end
   # TESTE COM TIMEOUT
-  # context 'Quantidade total indisponível ' do
-  #   before do
-  #     @token = ApiUser.GetToken
-  #     ApiUser.Login(@token, Constant::User1)
+  context 'Quantidade total indisponível ' do
+    before do
+      @token = ApiUser.GetToken
+      ApiUser.Login(@token, Constant::User1)
   
-  #     @result = ApiCarrinho.post_AdicionarItemCarrinho(1000, Constant::IdProduto, Constant::IdSerie, @token)
-  #     @idCarrinho = JSON.parse(@result.response.body)['obj'][0]['idCarrinho']
+      @result = ApiCarrinho.post_AdicionarItemCarrinho(1000, Constant::IdProduto, Constant::IdSerie, @token)
+      @idCarrinho = JSON.parse(@result.response.body)['obj'][0]['idCarrinho']
 
-  #     Database.new.update_MaxIndisponiveisVitrine
-  #     sleep 2
-  #     Database.new.update_MaxReservadosIndisponiveis
-  #     sleep 5
+      Database.new.update_MaxNaVitrine('2018-12-25')
+      Database.new.update_MaxReservados(1)
 
-  #     @carrinho = ApiCarrinho.get_GetStatusCarrinho
-  #   end
+      @carrinho = ApiCarrinho.get_GetStatusCarrinho
+    end
 
-  #   it { expect(JSON.parse(@carrinho.response.body)['erros'][0]['mensagem']).to eql 'Não há mais títulos disponíveis para o "#{Constant::Produto}". Tente adicionar um novo produto ao carrinho.' }
+    it { expect(JSON.parse(@carrinho.response.body)['erros'][0]['mensagem']).to eql "Não há mais títulos disponíveis para o #{Constant::Produto}. Tente adicionar um novo produto ao carrinho."}
 
-  #   after do
-  #     Database.new.update_MaxReservadosDisponiveis 
-  #     sleep 10
-  #     Database.new.update_VendaFinalDisponiveisVitrine
-  #     sleep 2
-  #     ApiCarrinho.post_SetRemoverItemCarrinho(@token, @idCarrinho)
-  #     ApiUser.get_deslogar(@token)
-  #   end
-  # end
+    after do
+      Database.new.update_MaxNaVitrine('2020-12-25')
+      Database.new.update_MaxReservados(0)
+
+      ApiCarrinho.post_SetRemoverItemCarrinho(@token, @idCarrinho)
+      ApiUser.get_deslogar(@token)
+    end
+  end
 end
 
 describe 'Carrinho - Sem Reserva - Tentar Pagar' do
@@ -288,14 +283,15 @@ describe 'Carrinho - Sem Reserva - Tentar Pagar' do
   #     @token = ApiUser.GetToken
   #     ApiUser.Login(@token, Constant::User1)
 
-  #     @carrinho = ApiCarrinho.post_AdicionarItemCarrinho(3000000, Constant::IdProduto, Constant::IdSerie, @token)
+  #     @carrinho = ApiCarrinho.post_AdicionarItemCarrinho(300, Constant::IdProduto, Constant::IdSerie, @token)
   #     @idCarrinho = JSON.parse(@carrinho.response.body)['obj'][0]['idCarrinho']
-
+  #     puts @carrinho
   #     @result = ApiBoleto.post_SucessoBoleto(@token, @idCarrinho)
+  #     puts @result
   #   end
 
-  #   it { puts @result.response.body}
   #   it { expect(JSON.parse(@result.response.body)['erros'][0]['mensagem']).to eql "Não foi possível Reservar os Titulos Solicitados!"}
+    
   #   after do
   #     ApiCarrinho.post_SetRemoverItemCarrinho(@token, @idCarrinho)
   #     ApiUser.get_deslogar(@token)

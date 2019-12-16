@@ -51,27 +51,20 @@ class Database
         puts t.do
     end
 
-    def update_MaxIndisponiveisVitrine()
-        @connection.execute("UPDATE Serie SET DataFinalVenda = '2018-12-25 17:09:00.000' where idSerie in (86,87);")
-
+    def update_MaxNaVitrine(dataFinalVenda)
+        @connection.execute("UPDATE Serie SET DataFinalVenda = '#{dataFinalVenda}' where IdProduto = 1;")
+        # sleep 2
     end
 
-    def update_VendaFinalDisponiveisVitrine()
-        @connection.execute("UPDATE Serie SET DataFinalVenda = '2020-12-25 17:09:00.000';")
-    end
-
-    def update_MaxReservadosDisponiveis()
-      res =  @connection.execute("UPDATE TituloMatriz SET reservado = 0 where idSerie in (86, 87);")
-    ##### reservar todos os titulos da série MAX
-    puts 'Affected rows' 
-    puts res.do
-    end
-
-    def update_MaxReservadosIndisponiveis()
-      res =  @connection.execute("UPDATE TituloMatriz SET reservado = 1 where idSerie in (86, 87);")
-    ##### disponibilizar todos os titulos
-    puts 'Affected rows' 
-    puts res.do
+    def update_MaxReservados(reservado)     ##### reservar todos os titulos da série MAX
+        res =  @connection.execute("UPDATE TituloMatriz 
+                                    SET reservado = #{reservado}
+                                    FROM TituloMatriz as T
+                                    INNER JOIN Serie as S ON T.idSerie = S.IdSerie
+                                    WHERE IdProduto = 1")
+        sleep 30
+        puts 'Affected rows' 
+        puts res.do
     end
 
     def update_CreditoLottocap(saldoCredito)

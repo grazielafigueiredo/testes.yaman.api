@@ -4,10 +4,10 @@ describe 'Criar usuário' do
       before do
         @token = ApiUser.GetToken
         @create = ApiCreateUser.post_CadastrarUsuario(@token, Faker::Name.name,Faker::CPF.numeric, Faker::Internet.email)
-    end
+        puts @create
+      end
 
       it { expect(JSON.parse(@create.response.body)['sucesso']).to be true}
-      it { puts @create.response.body}
 
       after do
         ApiUser.get_deslogar(@token)
@@ -114,14 +114,32 @@ describe 'Alterar dados Usuário' do
     before do
       @token = ApiUser.GetToken
       ApiUser.Login(@token, Constant::User1)
+      puts @token
 
-      @carrinho = ApiCreateUser.post_AlterarDadosUsuario(@token)
+      # @create = ApiCreateUser.post_AlterarDadosUsuario(@token, "user22@gmail.com")
+      @create = ApiCreateUser.post_AlterarDadosUsuario(@token)
+      puts @create
     end 
 
-    it { puts @carrinho.response.body}
-    it { expect(JSON.parse(@carrinho.response.body)['sucesso']).to be true}
+    it { expect(JSON.parse(@create.response.body)['erros'][0]['mensagem']).to eql "Este e-mail já está cadastrado. Informe um outro e-mail ou clique em 'Esqueci a minha senha'."}
   end
   after do
     ApiUser.get_deslogar(@token)
   end
+
+  # context 'Alterar e-mail para um e-mail já existente no banco de dados' do
+  #   before do
+  #     @token = ApiUser.GetToken
+  #     ApiUser.Login(@token, Constant::User1)
+
+  #     @cre = ApiCreateUser.post_AlterarDadosUsuario(@token, "user1@gmail.com")
+  #     puts @cre
+  #   end 
+
+  #   it { expect(JSON.parse(@cre.response.body)['erros'][1]['mensagem']).to eql "Não foi possível atualizar seus dados, tente novamente se o erro persistir entre em contato conosco"}
+  # it { puts @cre}
+  # end
+  # after do
+  #   ApiUser.get_deslogar(@token)
+  # end
 end
