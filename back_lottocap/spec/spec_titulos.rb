@@ -7,10 +7,10 @@ describe 'Títulos' do
       ApiUser.Login(@token, Constant::User1)
 
       @result = ApiTitulos.post_BuscarTitulosAgrupadosPorSerie(@token)
+      puts @result
     end
     sleep 5
     it { expect(JSON.parse(@result.response.body)['sucesso']).to be true }
-    # it { puts @token }
 
     after do
       ApiUser.get_deslogar(@token)
@@ -23,10 +23,10 @@ describe 'Títulos' do
       ApiUser.Login(@token, Constant::User1)
 
       @result = ApiTitulos.post_GetTitulosNovos(@token)
+      puts @result
     end
 
     it { expect(JSON.parse(@result.response.body)['sucesso']).to be true }
-    it { puts @result.response.body }
 
     after do
       ApiUser.get_deslogar(@token)
@@ -36,16 +36,47 @@ end
 
 
 describe 'Verificar Premio Titulo' do
-  context 'Sucesso' do
+  context 'Abrindo MAX id86' do
     before do
       @token = ApiUser.GetToken
       ApiUser.Login(@token, Constant::User1)
 
-      @result = ApiTitulos.post_VerificarPremioTitulo(@token, Constant::IdTitulo)
+      @tituloJa = ApiTitulos.post_GetTitulosNovos(@token)
+      @idTitulo = JSON.parse(@tituloJa.response.body)['obj'][0]['novosTitulos'][0]['idTitulo']
+      @result = ApiTitulos.post_VerificarPremioTitulo(@token, @idTitulo)
+      ApiTitulos.post_AbrirTitulo(@token, @idTitulo)
+      puts @idTitulo
+      puts @result
     end
 
     it { expect(JSON.parse(@result.response.body)['sucesso']).to be true}
-    it { puts @result.response.body }
+
+    after do
+      ApiUser.get_deslogar(@token)
+    end
+  end
+
+  context 'Abrindo JÁ 17' do
+    before do
+      @token = ApiUser.GetToken
+      ApiUser.Login(@token, Constant::User1)
+
+      # Comprar JÁ 17
+      carrinho = ApiCarrinho.post_AdicionarItemCarrinho(1, Constant::IdProdutoJa, Constant::IdSerieJa, @token)
+      @idCarrinho = JSON.parse(carrinho.response.body)['obj'][0]['idCarrinho']
+      ApiCartao.post_PagarCartaoDeCredito(@token, @idCarrinho, Constant::NomeCompletoTitular, Constant::NumeroCartao, Constant::ValidadeMesCartao, Constant::ValidadeAnoCartao, Constant::CartaoCVV)
+      
+      # Abrir JÁ 17
+      @tituloJa = ApiTitulos.post_GetTitulosNovos(@token)
+      @idTitulo = JSON.parse(@tituloJa.response.body)['obj'][2]['novosTitulos'][0]['idTitulo']
+      @result = ApiTitulos.post_VerificarPremioTitulo(@token, @idTitulo)
+      @multiplicador = ApiTitulos.post_GetMultiplicador(@token, @idTitulo)
+      puts @idTitulo
+      puts @result
+    
+    end
+
+    it { expect(JSON.parse(@result.response.body)['sucesso']).to be true}
 
     after do
       ApiUser.get_deslogar(@token)
@@ -58,10 +89,10 @@ describe 'Verificar Premio Titulo' do
       ApiUser.Login(@token, Constant::User1)
 
       @result = ApiTitulos.post_VerificarPremioTitulo(@token, 89)
+      puts @result
     end
 
     it { expect(JSON.parse(@result.response.body)['erros'][0]['mensagem']).to eql "Este título não pertence ao usuário!" }
-    it { puts @result.response.body }
 
     after do
       ApiUser.get_deslogar(@token)
@@ -73,11 +104,11 @@ describe 'Verificar Premio Titulo' do
   #     @token = ApiUser.GetToken
   #     ApiUser.Login(@token, Constant::User1)
 
-  #     @result = ApiTitulos.post_VerificarPremioTitulo(@token, nil)
-  #   end
+  #     @result = ApiTitulos.post_VerificarPremioTitulo(@token, nil) 
+  #     puts @result
+#     end
 
   #   it { expect(JSON.parse(@result.response.body)['obj.idTitulo'][0]).to eql "Unexpected character encountered while parsing value: }. Path 'obj.idTitulo', line 4, position 2."}
-  #   it { puts @result.response.body }
 
   #   after do
   #     ApiUser.get_deslogar(@token)
@@ -90,10 +121,10 @@ describe 'Verificar Premio Titulo' do
       ApiUser.Login(@token, Constant::User1)
 
       @result = ApiTitulos.post_VerificarPremioTitulo(@token, 12345678901)
+      puts @result
     end
 
     it { expect(JSON.parse(@result.response.body)['obj.idTitulo'][0]).to eql "JSON integer 12345678901 is too large or small for an Int32. Path 'obj.idTitulo', line 1, position 30."}
-    it { puts @result.response.body }
 
     after do
       ApiUser.get_deslogar(@token)
@@ -105,36 +136,16 @@ end
 
 describe 'Abrir Título' do
 
-  context 'Sucesso' do
-    before do
-      @token = ApiUser.GetToken
-      ApiUser.Login(@token, Constant::User1)
-
-      @result = ApiTitulos.post_AbrirTitulo(@token, Constant::IdTitulo)
-      @titulos = ApiTitulos.get_GetQtdTitulosUsuario(@token)
-      @getTitulos1 = JSON.parse(@titulos.response.body)['obj'][0]['qtd']
-    
-    end
-
-    it { expect(JSON.parse(@result.response.body)['sucesso']).to be true}
-    it { puts @result.response.body }
-    it { puts @titulos.response.body }
-
-    after do
-      ApiUser.get_deslogar(@token)
-    end
-  end
-
   context 'Título outro usuário' do
     before do
       @token = ApiUser.GetToken
       ApiUser.Login(@token, Constant::User1)
 
       @result = ApiTitulos.post_AbrirTitulo(@token, 89)
+      puts @result
     end
 
     it { expect(JSON.parse(@result.response.body)['erros'][0]['mensagem']).to eql "Título não pertence ao usuário!" }
-    it { puts @result.response.body }
 
     after do
       ApiUser.get_deslogar(@token)
@@ -163,10 +174,10 @@ describe 'Abrir Título' do
       ApiUser.Login(@token, Constant::User1)
 
       @result = ApiTitulos.post_AbrirTitulo(@token, 12345678901)
+      puts @result
     end
 
     it { expect(JSON.parse(@result.response.body)['obj.idTitulo'][0]).to eql "JSON integer 12345678901 is too large or small for an Int32. Path 'obj.idTitulo', line 1, position 30."}
-    it { puts @result.response.body }
 
     after do
       ApiUser.get_deslogar(@token)
@@ -181,10 +192,10 @@ describe 'BuscarTitulosNaoAbertosUsuario' do
       ApiUser.Login(@token, Constant::User1)
 
       @result = ApiTitulos.post_BuscarTitulosNaoAbertosUsuario(@token)
+      puts @result
     end
 
     it { expect(JSON.parse(@result.response.body)['sucesso']).to be true }
-    it { puts @result.response.body }
 
     after do
       ApiUser.get_deslogar(@token)
@@ -192,23 +203,6 @@ describe 'BuscarTitulosNaoAbertosUsuario' do
   end
 end
 
-describe 'GetMultiplicador' do
-  context 'Sucesso' do
-    before do
-      @token = ApiUser.GetToken
-      ApiUser.Login(@token, Constant::User1)
-
-      @result = ApiTitulos.post_GetMultiplicador(@token)
-    end
-
-    it { expect(JSON.parse(@result.response.body)['sucesso']).to be true }
-    it { puts @result.response.body }
-
-    after do
-      ApiUser.get_deslogar(@token)
-    end
-  end
-end
 
 
 context 'Comprar com Cartao de Credito e verificar se o título foi atribuído' do 

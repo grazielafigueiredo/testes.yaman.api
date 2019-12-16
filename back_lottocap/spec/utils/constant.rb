@@ -9,6 +9,9 @@ class Constant
     IdProduto = 1
     IdCarrinho = 10851
     IdTitulo = 62290
+    IdSerieJa = 88
+    IdProdutoJa = 9
+    
     TimeMsg = Time.now.strftime('%d/%m/%Y')
     Authorization = "70b90407-f1f6-4868-bad2-dda283b09bf9"
     Produto = "LottoCap Max - Max Série Nova (id 86)"

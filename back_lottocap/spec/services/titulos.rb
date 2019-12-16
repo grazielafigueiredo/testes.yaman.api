@@ -62,12 +62,12 @@ class ApiTitulos
     post('/Usuario/BuscarTitulosNaoAbertosUsuario', body: @BuscarTitulosNaoAbertosUsuario.to_json)
   end
 
-  def self.post_GetMultiplicador(token)
+  def self.post_GetMultiplicador(token, idTitulo)
     headers['Authorization'] = token
 
     @GetMultiplicador = {
       "obj": {
-        "idTitulo": 62178 #titulo JÁ
+        "idTitulo": idTitulo #titulo JÁ
       }
     }
     post('/Titulo/GetMultiplicador', body: @GetMultiplicador.to_json)
