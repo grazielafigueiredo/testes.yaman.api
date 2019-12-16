@@ -43,16 +43,15 @@ class ApiCreateUser
     post('/Usuario/ValidarDadosUsuarioCriacao', body: @validarUser.to_json)
   end
 
-  def self.post_AlterarDadosUsuario(token)
+  def self.post_AlterarDadosUsuario(token, email, cpf)
     headers['Authorization'] = token
 
     @AlterarDadosUsuario = {
       "obj": {
         "apelido": 'grazi',
         "nomeCompleto": 'grazi a',
-        # "email": email,
-        "email": 'user1@gmail.com',
-        "cpf": '44302702010',
+        "email": email,
+        "cpf": cpf,
         "idNacionalidade": 32,
         "sexo": 3,
         "telefoneDDD": '11',

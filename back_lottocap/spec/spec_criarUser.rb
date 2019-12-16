@@ -116,30 +116,58 @@ describe 'Alterar dados Usuário' do
       ApiUser.Login(@token, Constant::User1)
       puts @token
 
-      # @create = ApiCreateUser.post_AlterarDadosUsuario(@token, "user22@gmail.com")
-      @create = ApiCreateUser.post_AlterarDadosUsuario(@token)
+      @create = ApiCreateUser.post_AlterarDadosUsuario(@token, "user22@gmail.com", "44302702010")
       puts @create
     end 
 
-    it { expect(JSON.parse(@create.response.body)['erros'][0]['mensagem']).to eql "Este e-mail já está cadastrado. Informe um outro e-mail ou clique em 'Esqueci a minha senha'."}
+    it { expect(JSON.parse(@create.response.body)['sucesso']).to be true}
   end
   after do
     ApiUser.get_deslogar(@token)
   end
 
-  # context 'Alterar e-mail para um e-mail já existente no banco de dados' do
-  #   before do
-  #     @token = ApiUser.GetToken
-  #     ApiUser.Login(@token, Constant::User1)
+  context 'Alterar e-mail para um e-mail já existente no banco de dados' do
+    before do
+      @token = ApiUser.GetToken
+      ApiUser.Login(@token, Constant::User1)
 
-  #     @cre = ApiCreateUser.post_AlterarDadosUsuario(@token, "user1@gmail.com")
-  #     puts @cre
-  #   end 
+      @create = ApiCreateUser.post_AlterarDadosUsuario(@token, "user1@gmail.com", "00000000000")
+      puts @create
+    end 
 
-  #   it { expect(JSON.parse(@cre.response.body)['erros'][1]['mensagem']).to eql "Não foi possível atualizar seus dados, tente novamente se o erro persistir entre em contato conosco"}
-  # it { puts @cre}
-  # end
-  # after do
-  #   ApiUser.get_deslogar(@token)
-  # end
+    it { expect(JSON.parse(@create.response.body)['erros'][0]['mensagem']).to eql "Não foi possível atualizar seus dados, tente novamente se o erro persistir entre em contato conosco"}
+  end
+  after do
+    ApiUser.get_deslogar(@token)
+  end
+
+  context 'Alterar cpf para número inválido' do
+    before do
+      @token = ApiUser.GetToken
+      ApiUser.Login(@token, Constant::User1)
+
+      @create = ApiCreateUser.post_AlterarDadosUsuario(@token, "user1@gmail.com", "00000000000")
+      puts @create
+    end 
+
+    it { expect(JSON.parse(@create.response.body)['obj.cpf'][0]).to eql "O campo cpf contém dados inválidos."}
+  end
+  after do
+    ApiUser.get_deslogar(@token)
+  end
+
+  context 'Alterar CEP' do
+    before do
+      @token = ApiUser.GetToken
+      ApiUser.Login(@token, Constant::User1)
+
+      @create = ApiCreateUser.post_AlterarDadosUsuario(@token, "user1@gmail.com", "44302702010", )
+      puts @create
+    end 
+
+    it { expect(JSON.parse(@create.response.body)['obj.cpf'][0]).to eql "O campo cpf contém dados inválidos."}
+  end
+  after do
+    ApiUser.get_deslogar(@token)
+  end
 end
