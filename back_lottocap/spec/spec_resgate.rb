@@ -1,24 +1,47 @@
+# frozen_string_literal: true
+
 describe 'Resgate' do
+  context 'Sucesso com verificação de valor sacado' do
+    before do
+      @token = ApiUser.GetToken
+      ApiUser.Login(@token, Constant::User1)
 
-    context 'Sucesso com verificação de valor sacado' do
-      before do
-        @token = ApiUser.GetToken
-        ApiUser.Login(@token, Constant::User1)
-  
-        Database.new.update_PremioResgate(50.000)
-        @res = ApiResgate.post_ResgateSucesso(10.000, @token)
-        puts @res
-        @resgate = ApiResgate.get_StatusResgate
-        puts @resgate
-      end
-
-      # it { expect(JSON.parse(@resgate.response.body)['dadosUsuario']['premiosGanhos']).to be == 40.000}
-      it { expect(JSON.parse(@resgate.response.body)['obj']['saldoResgatavel']).to be 50.0}
-
-      after do
-        # Database.new.update_PremioResgate(0.000)
-        ApiUser.get_deslogar(@token)
-      end
-
+      Database.new.update_PremioResgate(50.000)
+      @pedidoResgate = ApiResgate.post_SetResgate(10.000, @token, Faker::Bank.account_number(digits: 4), Faker::Bank.account_number(digits: 1), Faker::Bank.account_number(digits: 10), Faker::Bank.account_number(digits: 1))
+      puts @pedidoResgate
+      @statusResgate = ApiResgate.get_StatusResgate(@token)
+      # puts @resgate
     end
+
+    # it { expect(JSON.parse(@resgate.response.body)['dadosUsuario']['premiosGanhos']).to be == 40.000}
+    it 'Sucesso com verificação de valor sacado' do 
+      expect(JSON.parse(@statusResgate.response.body)['obj'][0]['saldoCapitalizacao']).to be 40.0 
+      expect(JSON.parse(@statusResgate.response.body)['sucesso']).to be true
+      expect(JSON.parse(@pedidoResgate.response.body)['obj'][0]['valor']).to be 5.25 #valor irá alterar conforme taxa de resgate
+      expect(JSON.parse(@pedidoResgate.response.body)['sucesso']).to be true
+    end
+
+    after do
+      Database.new.update_PremioResgate(0.000)
+      ApiUser.get_deslogar(@token)
+    end
+  end
+
+  context 'Conta existente para saca' do
+    before do
+      @token = ApiUser.GetToken
+      ApiUser.Login(@token, Constant::User1)
+
+      Database.new.update_PremioResgate(50.000)
+      @res = ApiResgate.post_SetResgate(10.000, @token, 1234, 1, 1234567890, 1)
+      puts @res
+    end
+
+    it { expect(JSON.parse(@res.response.body)['erros'][0]['mensagem']).to eql "Essa conta bancária já foi adicionada anteriormente."}
+
+    after do
+      Database.new.update_PremioResgate(0.000)
+      ApiUser.get_deslogar(@token)
+    end
+  end
 end
