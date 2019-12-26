@@ -5,6 +5,7 @@ require 'services/user'
 
 class ApiTransferencia
   include HTTParty
+  # base_uri "https://hmlapi2.lottocap.com.br/api"
   base_uri Constant::Url
   headers 'Content-Type' => 'application/json'
 

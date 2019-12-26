@@ -13,23 +13,24 @@ describe 'Cartão de Crédito' do
       @result = ApiCartao.post_ObterFormasPagamentoDisponiveis(@token, @idCarrinho)
       puts @result
     end
-    it { expect(JSON.parse(@result.response.body)['obj'][0]['formasPai'][0]['tipo']).to eql 'cartao_credito' }
-    it { expect(JSON.parse(@result.response.body)['obj'][0]['formasPai'][0]['nome']).to eql 'Cartão de Crédito' }
-    it { expect(JSON.parse(@result.response.body)['obj'][0]['formasPai'][0]['idFormaPagamento'][0]).to be 1 }
-    it { expect(JSON.parse(@result.response.body)['obj'][0]['formasPai'][0]['vlMinimo']).to be >= 5.0 }
+    it 'tipo de pagamentos e valores minimos para cada modalidade' do
+        expect(JSON.parse(@result.response.body)['obj'][0]['formasPai'][0]['tipo']).to eql 'cartao_credito' 
+        expect(JSON.parse(@result.response.body)['obj'][0]['formasPai'][0]['nome']).to eql 'Cartão de Crédito' 
+        expect(JSON.parse(@result.response.body)['obj'][0]['formasPai'][0]['idFormaPagamento'][0]).to be 1 
+        expect(JSON.parse(@result.response.body)['obj'][0]['formasPai'][0]['vlMinimo']).to be >= 5.0 
 
-    it { expect(JSON.parse(@result.response.body)['obj'][0]['formasPai'][1]['tipo']).to eql 'transf_bancaria' }
-    it { expect(JSON.parse(@result.response.body)['obj'][0]['formasPai'][1]['idFormaPagamento']).to be 2 }
-    it { expect(JSON.parse(@result.response.body)['obj'][0]['formasPai'][1]['vlMinimo']).to be >= 5.0 }
+        expect(JSON.parse(@result.response.body)['obj'][0]['formasPai'][1]['tipo']).to eql 'transf_bancaria' 
+        expect(JSON.parse(@result.response.body)['obj'][0]['formasPai'][1]['idFormaPagamento']).to be 2 
+        expect(JSON.parse(@result.response.body)['obj'][0]['formasPai'][1]['vlMinimo']).to be >= 5.0 
 
-    it { expect(JSON.parse(@result.response.body)['obj'][0]['formasPai'][2]['tipo']).to eql 'boleto' }
-    it { expect(JSON.parse(@result.response.body)['obj'][0]['formasPai'][2]['idFormaPagamento']).to be 3 }
-    it { expect(JSON.parse(@result.response.body)['obj'][0]['formasPai'][2]['vlMinimo']).to be >= 20.0 }
+        expect(JSON.parse(@result.response.body)['obj'][0]['formasPai'][2]['tipo']).to eql 'boleto' 
+        expect(JSON.parse(@result.response.body)['obj'][0]['formasPai'][2]['idFormaPagamento']).to be 3 
+        expect(JSON.parse(@result.response.body)['obj'][0]['formasPai'][2]['vlMinimo']).to be >= 20.0 
 
-    it { expect(JSON.parse(@result.response.body)['obj'][0]['formasPai'][3]['tipo']).to eql 'credito' }
-    it { expect(JSON.parse(@result.response.body)['obj'][0]['formasPai'][3]['idFormaPagamento']).to be 4 }
-    it { expect(JSON.parse(@result.response.body)['obj'][0]['formasPai'][3]['vlMinimo']).to be >= 0.0 }
-
+        expect(JSON.parse(@result.response.body)['obj'][0]['formasPai'][3]['tipo']).to eql 'credito' 
+        expect(JSON.parse(@result.response.body)['obj'][0]['formasPai'][3]['idFormaPagamento']).to be 4 
+        expect(JSON.parse(@result.response.body)['obj'][0]['formasPai'][3]['vlMinimo']).to be >= 0.0 
+    end
     after do 
       ApiCarrinho.post_SetRemoverItemCarrinho(@token, @idCarrinho)
       ApiUser.get_deslogar(@token)
@@ -41,10 +42,11 @@ describe 'Cartão de Crédito' do
 
       @token = ApiUser.GetToken
       ApiUser.Login(@token, Constant::User1)
-  
-      carrinho = ApiCarrinho.post_AdicionarItemCarrinho(1, Constant::IdProduto, Constant::IdSerie, @token)
-      @idCarrinho = JSON.parse(carrinho.response.body)['obj'][0]['idCarrinho']
+      Database.new.update_DataFinalVendaVigente('2020-12-25')
 
+      @carrinho = ApiCarrinho.post_AdicionarItemCarrinho(1, Constant::IdProduto, Constant::IdSerie, @token)
+      @idCarrinho = JSON.parse(@carrinho.response.body)['obj'][0]['idCarrinho']
+      puts @carrinho
       @result = ApiCartao.post_PagarCartaoDeCredito(@token, @idCarrinho, "CARLOS 111111", Constant::NumeroCartao, Constant::ValidadeMesCartao, Constant::ValidadeAnoCartao, Constant::CartaoCVV)
       puts @result
     end
@@ -62,7 +64,8 @@ describe 'Cartão de Crédito' do
 
       @token = ApiUser.GetToken
       ApiUser.Login(@token, Constant::User1)
-  
+      Database.new.update_DataFinalVendaVigente('2020-12-25')
+
       carrinho = ApiCarrinho.post_AdicionarItemCarrinho(1, Constant::IdProduto, Constant::IdSerie, @token)
       @idCarrinho = JSON.parse(carrinho.response.body)['obj'][0]['idCarrinho']
 
@@ -83,7 +86,8 @@ describe 'Cartão de Crédito' do
     before do
       @token = ApiUser.GetToken
       ApiUser.Login(@token, Constant::User1)
-  
+      Database.new.update_DataFinalVendaVigente('2020-12-25')
+
       carrinho = ApiCarrinho.post_AdicionarItemCarrinho(1, Constant::IdProduto, Constant::IdSerie, @token)
       @idCarrinho = JSON.parse(carrinho.response.body)['obj'][0]['idCarrinho']
 
@@ -104,7 +108,8 @@ describe 'Cartão de Crédito' do
     before do
       @token = ApiUser.GetToken
       ApiUser.Login(@token, Constant::User1)
-  
+      Database.new.update_DataFinalVendaVigente('2020-12-25')
+
       carrinho = ApiCarrinho.post_AdicionarItemCarrinho(1, Constant::IdProduto, Constant::IdSerie, @token)
       @idCarrinho = JSON.parse(carrinho.response.body)['obj'][0]['idCarrinho']
 
@@ -124,7 +129,8 @@ describe 'Cartão de Crédito' do
     before do
       @token = ApiUser.GetToken
       ApiUser.Login(@token, Constant::User1)
-  
+      Database.new.update_DataFinalVendaVigente('2020-12-25')
+
       carrinho = ApiCarrinho.post_AdicionarItemCarrinho(1, Constant::IdProduto, Constant::IdSerie, @token)
       @idCarrinho = JSON.parse(carrinho.response.body)['obj'][0]['idCarrinho']
 
@@ -144,7 +150,8 @@ describe 'Cartão de Crédito' do
     before do
       @token = ApiUser.GetToken
       ApiUser.Login(@token, Constant::User1)
-  
+      Database.new.update_DataFinalVendaVigente('2020-12-25')
+
       carrinho = ApiCarrinho.post_AdicionarItemCarrinho(1, Constant::IdProduto, Constant::IdSerie, @token)
       @idCarrinho = JSON.parse(carrinho.response.body)['obj'][0]['idCarrinho']
 
@@ -167,7 +174,8 @@ describe 'Cartão de Crédito' do
 
       @token = ApiUser.GetToken
       ApiUser.Login(@token, Constant::User1)
-  
+      Database.new.update_DataFinalVendaVigente('2020-12-25')
+
       carrinho = ApiCarrinho.post_AdicionarItemCarrinho(1, Constant::IdProduto, Constant::IdSerie, @token)
       @idCarrinho = JSON.parse(carrinho.response.body)['obj'][0]['idCarrinho']
 
@@ -189,7 +197,8 @@ describe 'Cartão de Crédito' do
 
       @token = ApiUser.GetToken
       ApiUser.Login(@token, Constant::User1)
-  
+      Database.new.update_DataFinalVendaVigente('2020-12-25')
+
       carrinho = ApiCarrinho.post_AdicionarItemCarrinho(1, Constant::IdProduto, Constant::IdSerie, @token)
       @idCarrinho = JSON.parse(carrinho.response.body)['obj'][0]['idCarrinho']
 
@@ -211,7 +220,8 @@ describe 'Cartão de Crédito' do
 
       @token = ApiUser.GetToken
       ApiUser.Login(@token, Constant::User1)
-  
+      Database.new.update_DataFinalVendaVigente('2020-12-25')
+
       carrinho = ApiCarrinho.post_AdicionarItemCarrinho(1, Constant::IdProduto, Constant::IdSerie, @token)
       @idCarrinho = JSON.parse(carrinho.response.body)['obj'][0]['idCarrinho']
 
@@ -233,7 +243,8 @@ describe 'Cartão de Crédito' do
 
       @token = ApiUser.GetToken
       ApiUser.Login(@token, Constant::User1)
-  
+      Database.new.update_DataFinalVendaVigente('2020-12-25')
+
       carrinho = ApiCarrinho.post_AdicionarItemCarrinho(1, Constant::IdProduto, Constant::IdSerie, @token)
       @idCarrinho = JSON.parse(carrinho.response.body)['obj'][0]['idCarrinho']
 
@@ -254,7 +265,8 @@ describe 'Cartão de Crédito' do
 
       @token = ApiUser.GetToken
       ApiUser.Login(@token, Constant::User1)
-  
+      Database.new.update_DataFinalVendaVigente('2020-12-25')
+
       carrinho = ApiCarrinho.post_AdicionarItemCarrinho(1, Constant::IdProduto, Constant::IdSerie, @token)
       @idCarrinho = JSON.parse(carrinho.response.body)['obj'][0]['idCarrinho']
 
@@ -275,7 +287,8 @@ describe 'Cartão de Crédito' do
 
       @token = ApiUser.GetToken
       ApiUser.Login(@token, Constant::User1)
-  
+      Database.new.update_DataFinalVendaVigente('2020-12-25')
+
       carrinho = ApiCarrinho.post_AdicionarItemCarrinho(1, Constant::IdProduto, Constant::IdSerie, @token)
       @idCarrinho = JSON.parse(carrinho.response.body)['obj'][0]['idCarrinho']
 
@@ -297,7 +310,9 @@ describe 'Cartão de Crédito' do
     before do
       @token = ApiUser.GetToken
       ApiUser.Login(@token, Constant::User1)
-  
+
+      Database.new.update_DataFinalVendaVigente('2020-12-25')
+
       carrinho = ApiCarrinho.post_AdicionarItemCarrinho(1, Constant::IdProduto, Constant::IdSerie, @token)
       @idCarrinho = JSON.parse(carrinho.response.body)['obj'][0]['idCarrinho']
       

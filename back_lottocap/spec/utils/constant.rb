@@ -6,11 +6,13 @@ class Constant
     Url = "https://hmlapi.lottocap.com.br/api"
     IdSerie = 86
     IdSerie87 = 87
+    IdSerieJa17 = 88
+    IdSerieJa18 = 89
+    IdProdutoJa18 = 10
     IdProduto = 1
+    IdProdutoJa = 9
     IdCarrinho = 10851
     IdTitulo = 62290
-    IdSerieJa = 88
-    IdProdutoJa = 9
     
     TimeMsg = Time.now.strftime('%d/%m/%Y')
     Authorization = "70b90407-f1f6-4868-bad2-dda283b09bf9"

@@ -67,7 +67,7 @@ class ApiCarrinho
         post("/Carrinho/SetRemoverItemCarrinho", body: @SetRemoverItemCarrinho.to_json)
     end
 
-    def self.post_AdicionarItemCarrinhoAfiliados(idProduto, idSerie87, qtdItens, token)
+    def self.post_AdicionarItemCarrinhoAfiliados(token, idProduto, idSerie87, qtdItens)
         headers['Authorization'] = token
 
         @AdicionarItemCarrinhoAfiliados = {
@@ -82,6 +82,18 @@ class ApiCarrinho
             "tamanhoPagina": 999
         }
         post("/Carrinho/AdicionarItemCarrinhoAfiliados", body: @AdicionarItemCarrinhoAfiliados.to_json)
+    end
+
+    def self.post_GetCarrinhoItens(token)
+        headers['Authorization'] = token
+       
+        @GetCarrinhoItens = {
+            "obj": {
+                "flPromoAtiva": false
+            }
+        }
+
+        post("Carrinho/GetCarrinhoItens", body: @GetCarrinhoItens.to_json)
     end
 end
 

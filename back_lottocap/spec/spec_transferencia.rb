@@ -8,15 +8,18 @@ describe 'Bradesco' do
       ApiUser.Login(@token, Constant::User1)
       Database.new.update_DataFinalVendaVigente('2020-12-25')
 
-      carrinho = ApiCarrinho.post_AdicionarItemCarrinho(1, Constant::IdProduto, Constant::IdSerie, @token)
-      @idCarrinho = JSON.parse(carrinho.response.body)['obj'][0]['idCarrinho']
-
+      @carrinho = ApiCarrinho.post_AdicionarItemCarrinho(1, Constant::IdProduto, Constant::IdSerie, @token)
+      puts @carrinho
+      @idCarrinho = JSON.parse(@carrinho.response.body)['obj'][0]['idCarrinho']
       @result = ApiTransferencia.post_TransfBradesco(@token, @idCarrinho, Faker::Bank.account_number(digits: 4), Faker::Bank.account_number(digits: 4), Faker::Bank.account_number(digits: 1), Constant::NomeCompletoTitular)
       puts @result
     end
-    it { expect(JSON.parse(@result.response.body)['sucesso']).to be true }
-    it { expect(JSON.parse(@result.response.body)['obj'][0]['nomeBanco']).to eql 'Bradesco' }
-    it { expect(JSON.parse(@result.response.body)['obj'][0]['idTipoFormaPagamentoFeito']).to be 6 }
+
+    it 'validaçåo tipo de transf. Bradesco' do 
+      expect(JSON.parse(@result.response.body)['sucesso']).to be true 
+      expect(JSON.parse(@result.response.body)['obj'][0]['nomeBanco']).to eql 'Bradesco' 
+      expect(JSON.parse(@result.response.body)['obj'][0]['idTipoFormaPagamentoFeito']).to be 6 
+    end 
 
     after do
       ApiCarrinho.post_SetRemoverItemCarrinho(@token, @idCarrinho)
@@ -169,9 +172,10 @@ describe 'Bradesco' do
       @result = ApiTransferencia.post_TransfBradesco(@token, @idCarrinho, Faker::Bank.account_number(digits: 11), Faker::Bank.account_number(digits: 4), Faker::Bank.account_number(digits: 1), Constant::NomeCompletoTitular)
       puts @result
     end
-    it { expect(@result.response.code).to eql '400' }
-    it { expect(JSON.parse(@result.response.body)['obj.transfAgencia'][0]).to eql "The field transfAgencia must be a string or array type with a maximum length of '10'." }
-
+    it 'Transferência Bancária Agencia > que 4 dígitos' do
+      expect(@result.response.code).to eql '400' 
+      expect(JSON.parse(@result.response.body)['obj.transfAgencia'][0]).to eql "The field transfAgencia must be a string or array type with a maximum length of '10'." 
+    end
     after do
       ApiCarrinho.post_SetRemoverItemCarrinho(@token, @idCarrinho)
       ApiUser.get_deslogar(@token)
@@ -276,8 +280,12 @@ describe 'Itau' do
       @result = ApiTransferencia.post_TransfItau(@token, @idCarrinho, Faker::Bank.account_number(digits: 4), Faker::Bank.account_number(digits: 4), Faker::Bank.account_number(digits: 1))
       puts @result
     end
-    it { expect(JSON.parse(@result.response.body)['sucesso']).to be true }
-    it { expect(JSON.parse(@result.response.body)['obj'][0]['nomeBanco']).to eql 'Itaú' }
+
+    it 'validaçåo tipo de transf. Banco Itaú' do 
+      expect(JSON.parse(@result.response.body)['sucesso']).to be true 
+      expect(JSON.parse(@result.response.body)['obj'][0]['nomeBanco']).to eql 'Itaú'
+      expect(JSON.parse(@result.response.body)['obj'][0]['idTipoFormaPagamentoFeito']).to be 7
+    end
 
     after do
       ApiCarrinho.post_SetRemoverItemCarrinho(@token, @idCarrinho)
@@ -319,8 +327,12 @@ describe 'Santander' do
       @result = ApiTransferencia.post_TransfSantander(@token, @idCarrinho, Faker::CPF.numeric)
       puts @result
     end
-    it { expect(JSON.parse(@result.response.body)['sucesso']).to be true }
-    it { expect(JSON.parse(@result.response.body)['obj'][0]['nomeBanco']).to eql 'Banco Santander' }
+
+    it 'validaçåo tipo de transf. Banco Santander' do 
+      expect(JSON.parse(@result.response.body)['sucesso']).to be true 
+      expect(JSON.parse(@result.response.body)['obj'][0]['nomeBanco']).to eql 'Banco Santander'
+      expect(JSON.parse(@result.response.body)['obj'][0]['idTipoFormaPagamentoFeito']).to be 8
+    end
 
     after do
       ApiCarrinho.post_SetRemoverItemCarrinho(@token, @idCarrinho)
@@ -382,8 +394,11 @@ describe 'Brasil' do
       @result = ApiTransferencia.post_TransfSucessoBrasil(@token, @idCarrinho, Faker::Bank.account_number(digits: 4), Faker::Bank.account_number(digits: 1), Faker::Bank.account_number(digits: 10), Faker::Bank.account_number(digits: 1) )
       puts @result
     end
-    it { expect(JSON.parse(@result.response.body)['sucesso']).to be true }
-    it { expect(JSON.parse(@result.response.body)['obj'][0]['nomeBanco']).to eql 'Banco do Brasil' }
+    it 'validaçåo tipo de transf. Banco do Brasil' do 
+      expect(JSON.parse(@result.response.body)['sucesso']).to be true 
+      expect(JSON.parse(@result.response.body)['obj'][0]['nomeBanco']).to eql 'Banco do Brasil'
+      expect(JSON.parse(@result.response.body)['obj'][0]['idTipoFormaPagamentoFeito']).to be 9 
+    end
 
     after do
       ApiCarrinho.post_SetRemoverItemCarrinho(@token, @idCarrinho)

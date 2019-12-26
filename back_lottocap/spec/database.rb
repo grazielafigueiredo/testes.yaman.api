@@ -34,8 +34,8 @@ class Database
         puts t.do
     end
 
-    def update_TodosProdutosIndisponiveisVitrine()
-        @connection.execute("UPDATE Serie SET DataFinalVenda = '2018-12-25 17:09:00.000';")
+    def update_TodosProdutosIndisponiveisVitrine(dataFinalVenda)
+        @connection.execute("UPDATE Serie SET DataFinalVenda = '#{dataFinalVenda}';")
 
     end
 
@@ -73,16 +73,117 @@ class Database
         puts rs
     end
 
+    # def update_PremioResgate(valorBonus)
+    #     @connection.execute("exec usp_setBonusUsuario @idUsuario = #{Constant::UserID}, @valorBonus = #{valorBonus};")
+    # end
     def update_PremioResgate(valorBonus)
-        @connection.execute("exec usp_setBonusUsuario @idUsuario = #{Constant::UserID}, @valorBonus = #{valorBonus};")
+        @connection.execute("UPDATE Usuario set SaldoCapitalizacao = #{valorBonus} where IdUsuario = #{Constant::UserID};")
     end
+    # def update_PremioResgate(valorBonus)
+    #     @connection.execute("BEGIN 
+    #         DECLARE @saldoTotal decimal(18, 3);
+    #         DECLARE @saldoPremio decimal(18, 3);
+    #         DECLARE @saldoCredito decimal(18, 3);
+    #         DECLARE @saldoCapitalizacao decimal(18, 3);
+    
+    #         SELECT
+    #             @saldoTotal = saldoTotal,
+    #             @saldoPremio = saldoPremio,
+    #             @saldoCredito = saldoCredito,
+    #             @saldoCapitalizacao = saldoCapitalizacao
+    #         FROM USUARIO
+    #         WHERE
+    #             idUsuario = #{Constant::UserID};
+    
+    #         INSERT INTO [dbo].[UsuarioCredito] (
+    #             [idUsuario],
+    #             [dtCredito],
+    #             [valor],
+    #             [flPremio],
+    #             [flCredito],
+    #             [flDebito],
+    #             [flResgate],
+    #             [flEstorno],
+    #             [idStatus],
+    #             [idTituloMatrizApuracaoConcurso],
+    #             [idPagamento],
+    #             [idTituloMatriz],
+    #             [idConcurso],
+    #             [idResgate],
+    #             [idPromocao],
+    #             [idPromocaoUsuario],
+    #             [idPromocaoUsuarioItem],
+    #             [saldo],
+    #             [saldoPremio],
+    #             [saldoCredito],
+    #             [saldoCapitalizacao],
+    #             [utilizadoPremio],
+    #             [utilizadoCredito],
+    #             [utilizadoCapitalizacao],
+    #             [dsTipoCredito],
+    #             [dsTipoCreditoWeb],
+    #             [nmConcurso],
+    #             [dtConcurso],
+    #             [nmTipoPremio],
+    #             [nmProdutoSerie]
+    #         )
+    #         VALUES
+    #         (
+    #             #{Constant::UserID},
+    #             --idUsuario
+    #             [dbo].fn_GETDATE(),
+    #             #{valorBonus},
+    #             --vlTransação
+    #             0,
+    #             1,
+    #             --flCrédito
+    #             0,
+    #             0,
+    #             0,
+    #             1,
+    #             --Status
+    #             NULL,
+    #             NULL,
+    #             NULL,
+    #             NULL,
+    #             NULL,
+    #             0,
+    #             0,
+    #             0,
+    #             @saldoTotal + #{valorBonus},
+    #             --saldo
+    #             @saldoPremio,
+    #             --saldoPremio
+    #             @saldoCredito + #{valorBonus},
+    #             --saldoCrédito
+    #             @saldoCapitalizacao,
+    #             --saldoCapitalização
+    #             0,
+    #             0,
+    #             0,
+    #             'Bônus',
+    #             'Bônus',
+    #             NULL,
+    #             NULL,
+    #             NULL,
+    #             NULL
+    #         );
+    
+    #         UPDATE Usuario
+    #         SET
+    #             SaldoCredito = SaldoCredito + #{valorBonus},
+    #             SaldoTotal = SaldoTotal + #{valorBonus}
+    #         WHERE
+    #             IdUsuario = #{Constant::UserID};
+    #     END;")
+    # end
 
     def update_deletePremioResgate()
         @connection.execute("UPDATE Usuario SET  SaldoPremio = 0.000  where IdUsuario = #{Constant::UserID};")
     end
 
     def select_GetQtdTitulosUsuario()
-        t = @connection.execute("SELECT COUNT(tm.idTituloMatriz)
+        t = @connection.execute("SELECT COUNT(tm.idTituloMatriz) AS TOTAL
         FROM dbo.TituloMatriz tm
              INNER JOIN dbo.Titulo t ON t.IdTituloMatriz = tm.IdTituloMatriz
              INNER JOIN dbo.SERIE s ON tm.idSerie = s.IdSerie
