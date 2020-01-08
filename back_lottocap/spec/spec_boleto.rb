@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 describe 'Boleto' do
-  context 'Fim da série acaba hoje e forma de pagamento deve está indisponível' do
+  context 'Fim da série acaba hoje e forma de pagamento deve ficar indisponível' do
     before do
       @token = ApiUser.GetToken
       ApiUser.Login(@token, Constant::User1)

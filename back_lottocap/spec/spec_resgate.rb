@@ -6,23 +6,42 @@ describe 'Resgate' do
       @token = ApiUser.GetToken
       ApiUser.Login(@token, Constant::User1)
 
-      Database.new.update_PremioResgate(50.000)
+      Database.new.update_PremioResgate(50)
       @pedidoResgate = ApiResgate.post_SetResgate(10.000, @token, Faker::Bank.account_number(digits: 4), Faker::Bank.account_number(digits: 1), Faker::Bank.account_number(digits: 10), Faker::Bank.account_number(digits: 1))
       puts @pedidoResgate
       @statusResgate = ApiResgate.get_StatusResgate(@token)
-      # puts @resgate
+      # puts @statusResgate
     end
 
-    # it { expect(JSON.parse(@resgate.response.body)['dadosUsuario']['premiosGanhos']).to be == 40.000}
     it 'Sucesso com verificação de valor sacado' do 
-      expect(JSON.parse(@statusResgate.response.body)['obj'][0]['saldoCapitalizacao']).to be 40.0 
+      expect(JSON.parse(@statusResgate.response.body)['dadosUsuario']['premiosGanhos']).to be 40.0 
       expect(JSON.parse(@statusResgate.response.body)['sucesso']).to be true
       expect(JSON.parse(@pedidoResgate.response.body)['obj'][0]['valor']).to be 5.25 #valor irá alterar conforme taxa de resgate
       expect(JSON.parse(@pedidoResgate.response.body)['sucesso']).to be true
     end
 
     after do
-      Database.new.update_PremioResgate(0.000)
+      Database.new.update_PremioResgate(0)
+      ApiUser.get_deslogar(@token)
+    end
+  end
+
+  context 'Sacar saldo insuficiente' do
+    before do
+      @token = ApiUser.GetToken
+      ApiUser.Login(@token, Constant::User1)
+
+      Database.new.update_PremioResgate(50)
+      @pedidoResgate = ApiResgate.post_SetResgate(100.000, @token, Faker::Bank.account_number(digits: 4), Faker::Bank.account_number(digits: 1), Faker::Bank.account_number(digits: 10), Faker::Bank.account_number(digits: 1))
+      puts @pedidoResgate
+    end
+
+    it 'Sacar saldo insuficiente' do 
+      expect(JSON.parse(@pedidoResgate.response.body)['erros'][0]['mensagem']).to eql "Não é possível resgatar o valor solicitado (saldo insuficiente)"
+    end
+
+    after do
+      Database.new.update_PremioResgate(0)
       ApiUser.get_deslogar(@token)
     end
   end
@@ -37,7 +56,7 @@ describe 'Resgate' do
       puts @res
     end
 
-    it { expect(JSON.parse(@res.response.body)['erros'][0]['mensagem']).to eql "Essa conta bancária já foi adicionada anteriormente."}
+    it { expect(JSON.parse(@res.response.body)['sucesso']).to be true}
 
     after do
       Database.new.update_PremioResgate(0.000)

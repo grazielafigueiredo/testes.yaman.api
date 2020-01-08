@@ -88,21 +88,23 @@ describe 'Verificar Premio Titulo' do
       ApiUser.Login(@token, Constant::User1)
 
       # Comprar JÁ 18
-      carrinho = ApiCarrinho.post_AdicionarItemCarrinho(1, Constant::IdProdutoJa18, Constant::IdSerieJa18, @token)
-      @idCarrinho = JSON.parse(carrinho.response.body)['obj'][0]['idCarrinho']
+      @carrinho = ApiCarrinho.post_AdicionarItemCarrinho(1, Constant::IdProdutoJa18, Constant::IdSerieJa18, @token)
+      @idCarrinho = JSON.parse(@carrinho.response.body)['obj'][0]['idCarrinho']
       ApiCartao.post_PagarCartaoDeCredito(@token, @idCarrinho, Constant::NomeCompletoTitular, Constant::NumeroCartao, Constant::ValidadeMesCartao, Constant::ValidadeAnoCartao, Constant::CartaoCVV)
       
       # Abrir JÁ 18
       @tituloJa = ApiTitulos.post_GetTitulosNovos(@token)
-      @idTitulo = JSON.parse(@tituloJa.response.body)['obj'][2]['novosTitulos'][0]['idTitulo']
+      @idTitulo = JSON.parse(@tituloJa.response.body)['obj'][1]['novosTitulos'][0]['idTitulo']
       @result = ApiTitulos.post_VerificarPremioTitulo(@token, @idTitulo)
       @multiplicador = ApiTitulos.post_GetMultiplicador(@token, @idTitulo)
       puts @idTitulo
       puts @result
     end
 
-    it { expect(JSON.parse(@result.response.body)['sucesso']).to be true}
-    it { expect(JSON.parse(@result.response.body)['obj'][0]['idSerie']).to be 89}
+    it "Abrindo JÁ 18" do 
+      expect(JSON.parse(@result.response.body)['sucesso']).to be true
+      expect(JSON.parse(@result.response.body)['obj'][0]['idSerie']).to be 89
+    end
 
     after do
       ApiUser.get_deslogar(@token)
@@ -240,7 +242,7 @@ context 'Comprar com Cartao de Credito e verificar se o título foi atribuído' 
     puts("tituloAntesCompra", @tituloAntesCompra)
     
     #Pagando o carrinho com cartao de credito
-    @carrinho = ApiCarrinho.post_AdicionarItemCarrinho(10, Constant::IdProduto, Constant::IdSerie, @token)
+    @carrinho = ApiCarrinho.post_AdicionarItemCarrinho(1, Constant::IdProduto, Constant::IdSerie, @token)
     @idCarrinho = JSON.parse(@carrinho.response.body)['obj'][0]['idCarrinho']
     @result = ApiCartao.post_PagarCartaoDeCredito(@token, @idCarrinho, Constant::NomeCompletoTitular, Constant::NumeroCartao, Constant::ValidadeMesCartao, Constant::ValidadeAnoCartao, Constant::CartaoCVV)
     
@@ -271,7 +273,7 @@ context 'Comprar com CLottocap e verificar se o título foi atribuído' do
     #Atribuindo credito lottocap e pagando o carrinho
     @rs = Database.new.update_CreditoLottocap(100)
     puts @rs
-    @carrinho = ApiCarrinho.post_AdicionarItemCarrinho(1, Constant::IdProduto, Constant::IdSerie, @token)
+    @carrinho = ApiCarrinho.post_AdicionarItemCarrinho(2, Constant::IdProduto, Constant::IdSerie, @token)
     @idCarrinho = JSON.parse(@carrinho.response.body)['obj'][0]['idCarrinho']
     @result = ApiCreditoLottocap.post_CreditoLottocap(@token, @idCarrinho)
     

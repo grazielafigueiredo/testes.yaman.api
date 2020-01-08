@@ -12,7 +12,9 @@ describe 'Carrinho - Reserva' do
       puts @result
     end
 
-    it { expect(JSON.parse(@result.response.body)['erros'][0]['mensagem']).to eql 'A quantidade de títulos que você deseja para o LottoCap Max - Max Série Nova (id 86) não está mais disponível. Atualizamos seu carrinho com a quantidade disponível!' }
+    it 'Quantidade parcialmente indisponível' do
+       expect(JSON.parse(@result.response.body)['erros'][0]['mensagem']).to eql "A quantidade de títulos que você deseja para o #{Constant::Produto} não está mais disponível. Atualizamos seu carrinho com a quantidade disponível!"
+    end
    
     after do
       ApiCarrinho.post_SetRemoverItemCarrinho(@token, @idCarrinho)
@@ -28,7 +30,6 @@ describe 'Carrinho - Reserva' do
       @idCarrinho = JSON.parse(@carrinho.response.body)['obj'][0]['idCarrinho']
       
       Database.new.update_DataFinalVendaVigente('2018-12-25')
-      sleep 2
       @result = ApiCarrinho.get_GetStatusCarrinho
       puts @result
     end
@@ -37,7 +38,6 @@ describe 'Carrinho - Reserva' do
   
     after do
       Database.new.update_DataFinalVendaVigente('2020-12-25')
-      sleep 2
       ApiCarrinho.post_SetRemoverItemCarrinho(@token, @idCarrinho)
       ApiUser.get_deslogar(@token)
     end
@@ -300,7 +300,6 @@ describe 'Carrinho - Sem Reserva - Tentar Pagar' do
     
     it 'j' do
       expect(JSON.parse(@resultGetCarrinho.response.body)['erros'][0]['mensagem']).to eql "Atualizamos o carrinho mantendo apenas as série em andamento"
-      puts @result
     end
     after do
       Database.new.update_DataFinalVendaVigente('2020-12-25')
