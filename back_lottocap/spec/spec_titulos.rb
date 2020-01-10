@@ -36,26 +36,27 @@ end
 
 
 describe 'Verificar Premio Titulo' do
-  context 'Abrindo MAX id86' do
-    before do
-      @token = ApiUser.GetToken
-      ApiUser.Login(@token, Constant::User1)
+  900.times do
+    context 'Abrindo MAX id86' do
+      before do
+        @token = ApiUser.GetToken
+        ApiUser.Login(@token, Constant::User1)
 
-      @tituloJa = ApiTitulos.post_GetTitulosNovos(@token)
-      @idTitulo = JSON.parse(@tituloJa.response.body)['obj'][0]['novosTitulos'][0]['idTitulo']
-      @result = ApiTitulos.post_VerificarPremioTitulo(@token, @idTitulo)
-      ApiTitulos.post_AbrirTitulo(@token, @idTitulo)
-      puts @idTitulo
-      puts @result
-    end
+        @tituloJa = ApiTitulos.post_GetTitulosNovos(@token)
+        @idTitulo = JSON.parse(@tituloJa.response.body)['obj'][0]['novosTitulos'][0]['idTitulo']
+        @result = ApiTitulos.post_VerificarPremioTitulo(@token, @idTitulo)
+        ApiTitulos.post_AbrirTitulo(@token, @idTitulo)
+        puts @idTitulo
+        puts @result
+      end
 
-    it { expect(JSON.parse(@result.response.body)['sucesso']).to be true}
+      it { expect(JSON.parse(@result.response.body)['sucesso']).to be true}
 
-    after do
-      ApiUser.get_deslogar(@token)
+      after do
+        ApiUser.get_deslogar(@token)
+      end
     end
   end
-
   context 'Abrindo JÁ 17' do
     before do
       @token = ApiUser.GetToken
