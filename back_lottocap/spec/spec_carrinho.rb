@@ -8,12 +8,14 @@ describe 'Carrinho - Reserva' do
   
       @carrinho = ApiCarrinho.post_AdicionarItemCarrinho(3000000, Constant::IdProduto, Constant::IdSerie, @token)
       @idCarrinho = JSON.parse(@carrinho.response.body)['obj'][0]['idCarrinho']
+      @nomeProduto = JSON.parse(@carrinho.response.body)['dadosUsuario']['carrinhoItens'][0]['nomeProduto']
+      @descricaoSerie = JSON.parse(@carrinho.response.body)['dadosUsuario']['carrinhoItens'][0]['descricaoSerie']
       @result = ApiCarrinho.get_GetStatusCarrinho
-      puts @result
+      # puts @nomeProduto
     end
 
     it 'Quantidade parcialmente indisponível' do
-       expect(JSON.parse(@result.response.body)['erros'][0]['mensagem']).to eql "A quantidade de títulos que você deseja para o #{Constant::Produto} não está mais disponível. Atualizamos seu carrinho com a quantidade disponível!"
+       expect(JSON.parse(@result.response.body)['erros'][0]['mensagem']).to eql "A quantidade de títulos que você deseja para o #{@nomeProduto} - #{@descricaoSerie} não está mais disponível. Atualizamos seu carrinho com a quantidade disponível!"
     end
    
     after do
@@ -134,15 +136,17 @@ describe 'Carrinho - Reserva' do
       ApiUser.Login(@token, Constant::User1)
   
       @result = ApiCarrinho.post_AdicionarItemCarrinho(1000, Constant::IdProduto, Constant::IdSerie, @token)
-      @idCarrinho = JSON.parse(@result.response.body)['obj'][0]['idCarrinho']
-
+        @idCarrinho = JSON.parse(@result.response.body)['obj'][0]['idCarrinho']
+        @nomeProduto = JSON.parse(@result.response.body)['dadosUsuario']['carrinhoItens'][0]['nomeProduto']
+        @descricaoSerie = JSON.parse(@result.response.body)['dadosUsuario']['carrinhoItens'][0]['descricaoSerie']
+   
       Database.new.update_MaxNaVitrine('2018-12-25')
       Database.new.update_MaxReservados(1)
 
       @carrinho = ApiCarrinho.get_GetStatusCarrinho
     end
 
-    it { expect(JSON.parse(@carrinho.response.body)['erros'][0]['mensagem']).to eql "Não há mais títulos disponíveis para o #{Constant::Produto}. Tente adicionar um novo produto ao carrinho."}
+    it { expect(JSON.parse(@carrinho.response.body)['erros'][0]['mensagem']).to eql "Não há mais títulos disponíveis para o #{@nomeProduto} - #{@descricaoSerie}. Tente adicionar um novo produto ao carrinho."}
 
     after do
       Database.new.update_MaxNaVitrine('2020-12-25')

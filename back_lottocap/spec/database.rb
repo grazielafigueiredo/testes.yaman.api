@@ -62,7 +62,7 @@ class Database
                                     FROM TituloMatriz as T
                                     INNER JOIN Serie as S ON T.idSerie = S.IdSerie
                                     WHERE IdProduto = 1")
-        sleep 30
+        sleep 40
         puts 'Affected rows' 
         puts res.do
     end
