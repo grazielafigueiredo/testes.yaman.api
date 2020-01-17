@@ -9,6 +9,7 @@ class Constant
     IdSerie87 = 87
     IdSerieJa17 = 88
     IdSerieJa18 = 89
+    IdSerieMaxPreVenda = 93
     IdProdutoJa18 = 10
     IdProduto = 1
     IdProdutoJa = 9

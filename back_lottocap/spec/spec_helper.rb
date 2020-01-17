@@ -1,5 +1,6 @@
 # require 'blabla'
 require 'cpf_faker'
+require 'date'
 require 'faker'
 require "factory_bot"
 require "httparty"
@@ -15,6 +16,7 @@ require_relative "services/criarUser"
 require_relative "services/cartaoCredito"
 require_relative "services/creditoLottocap"
 require_relative "services/landing"
+require_relative "services/preVenda"
 require_relative "services/producao"
 require_relative "services/resgate"
 require_relative "services/resultados"
