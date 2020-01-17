@@ -27,7 +27,7 @@ class ApiProducao
     post('/Usuario/CadastrarUsuario', body: @createUser.to_json)
   end
 
-  def self.post_ValidarDadosUsuarioCriacao(token, nomeCompleto, cpf, email)
+  def self.post_validarDadosUsuarioCriacao(token, nomeCompleto, cpf, email)
     headers['Authorization'] = token
 
     @validarUser = {

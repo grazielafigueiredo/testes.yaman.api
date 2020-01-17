@@ -17,7 +17,7 @@ describe 'Criar usuário' do
     context 'CPF já cadastrado' do
         before do
             @token = ApiUser.GetToken
-            @create = ApiCreateUser.post_CadastrarUsuario(@token, Faker::Name.name, "00000009652", Faker::Internet.email)
+            @create = ApiCreateUser.post_ValidarDadosUsuarioCriacao(@token, Faker::Name.name, "00000009652", Faker::Internet.email)
         end
   
         it { expect(JSON.parse(@create.response.body)['erros'][0]['mensagem']).to eql "Este CPF já está cadastrado. Informe um outro CPF ou clique em 'Esqueci a minha senha'."}

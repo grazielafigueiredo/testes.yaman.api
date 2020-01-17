@@ -41,40 +41,42 @@ describe 'Criar usuário' do
 
     context 'CPF já cadastrado' do
         before do
-            @token = ApiUser.GetToken
-            @create = ApiProducao.post_CadastrarUsuario(@token, Faker::Name.name, "00000009652", Faker::Internet.email)
+            @token = ApiProducao.GetToken
+            @create = ApiProducao.post_validarDadosUsuarioCriacao(@token, Faker::Name.name, "00000009652", Faker::Internet.email)
+        puts @create  
+        puts @token
         end
   
         it { expect(JSON.parse(@create.response.body)['erros'][0]['mensagem']).to eql "Este CPF já está cadastrado. Informe um outro CPF ou clique em 'Esqueci a minha senha'."}
   
         after do
-          ApiUser.get_deslogar(@token)
+          ApiProducao.get_deslogar(@token)
         end
     end
 
     context 'CPF inválido' do
         before do
-          @token = ApiUser.GetToken
+          @token = ApiProducao.GetToken
           @create = ApiProducao.post_CadastrarUsuario(@token, Faker::Name.name, "00000000000", Faker::Internet.email)
         end
   
         it { expect(JSON.parse(@create.response.body)['obj.CPF'][0]).to eql "O campo CPF contém dados inválidos."}
   
         after do
-          ApiUser.get_deslogar(@token)
+          ApiProducao.get_deslogar(@token)
         end
     end
 
     context 'Email já cadastrado' do
         before do
-          @token = ApiUser.GetToken
+          @token = ApiProducao.GetToken
           @create = ApiProducao.post_CadastrarUsuario(@token, Faker::Name.name, Faker::CPF.numeric, "graziela@lottocap.com.br")
         end
   
         it { expect(JSON.parse(@create.response.body)['erros'][0]['mensagem']).to eql "Este e-mail já está cadastrado. Informe um outro e-mail ou clique em 'Esqueci a minha senha'."}
   
         after do
-          ApiUser.get_deslogar(@token)
+          ApiProducao.get_deslogar(@token)
         end
     end
 end
@@ -95,40 +97,40 @@ describe 'Validador - 1 passo de criação de usuário' do
 
     context 'CPF já cadastrado' do
         before do
-            @token = ApiUser.GetToken
-            @create = ApiProducao.post_ValidarDadosUsuarioCriacao(@token, Faker::Name.name, "00000009652", Faker::Internet.email)
+            @token = ApiProducao.GetToken
+            @create = ApiProducao.post_validarDadosUsuarioCriacao(@token, Faker::Name.name, "00000009652", Faker::Internet.email)
         end
   
         it { expect(JSON.parse(@create.response.body)['erros'][0]['mensagem']).to eql "Este CPF já está cadastrado. Informe um outro CPF ou clique em 'Esqueci a minha senha'."}
   
         after do
-          ApiUser.get_deslogar(@token)
+          ApiProducao.get_deslogar(@token)
         end
     end
 
     context 'CPF inválido' do
         before do
-          @token = ApiUser.GetToken
-          @create = ApiProducao.post_ValidarDadosUsuarioCriacao(@token, Faker::Name.name, "00000000000", Faker::Internet.email)
+          @token = ApiProducao.GetToken
+          @create = ApiProducao.post_validarDadosUsuarioCriacao(@token, Faker::Name.name, "00000000000", Faker::Internet.email)
         end
   
         it { expect(JSON.parse(@create.response.body)['obj.CPF'][0]).to eql "O campo CPF contém dados inválidos."}
   
         after do
-          ApiUser.get_deslogar(@token)
+          ApiProducao.get_deslogar(@token)
         end
     end
 
     context 'Email já cadastrado' do
         before do
-          @token = ApiUser.GetToken
-          @create = ApiProducao.post_ValidarDadosUsuarioCriacao(@token, Faker::Name.name, Faker::CPF.numeric, "graziela@lottocap.com.br")
+          @token = ApiProducao.GetToken
+          @create = ApiProducao.post_validarDadosUsuarioCriacao(@token, Faker::Name.name, Faker::CPF.numeric, "graziela@lottocap.com.br")
         end
   
         it { expect(JSON.parse(@create.response.body)['erros'][0]['mensagem']).to eql "Este e-mail já está cadastrado. Informe um outro e-mail ou clique em 'Esqueci a minha senha'."}
   
         after do
-          ApiUser.get_deslogar(@token)
+          ApiProducao.get_deslogar(@token)
         end
     end
 end 
@@ -153,23 +155,23 @@ describe 'Alterar dados Usuário' do
 
   context 'Alterar e-mail para um e-mail já existente no banco de dados' do
     before do
-      @token = ApiUser.GetToken
-      ApiUser.Login(@token, Constant::User1)
+      @token = ApiProducao.GetToken
+      ApiProducao.Login(@token, Constant::User1)
 
-      @create = ApiProducao.post_AlterarDadosUsuario(@token, "user1@gmail.com", "00000000000")
+      @create = ApiProducao.post_AlterarDadosUsuario(@token, "user1@gmail.com", "00000009652")
       puts @create
     end 
 
     it { expect(JSON.parse(@create.response.body)['erros'][0]['mensagem']).to eql "Não foi possível atualizar seus dados, tente novamente se o erro persistir entre em contato conosco"}
   end
   after do
-    ApiUser.get_deslogar(@token)
+    ApiProducao.get_deslogar(@token)
   end
 
   context 'Alterar cpf para número inválido' do
     before do
-      @token = ApiUser.GetToken
-      ApiUser.Login(@token, Constant::User1)
+      @token = ApiProducao.GetToken
+      ApiProducao.Login(@token, Constant::User1)
 
       @create = ApiProducao.post_AlterarDadosUsuario(@token, "graziela@lottocap.com.br", "00000000000")
       puts @create
@@ -178,13 +180,13 @@ describe 'Alterar dados Usuário' do
     it { expect(JSON.parse(@create.response.body)['obj.cpf'][0]).to eql "O campo cpf contém dados inválidos."}
   end
   after do
-    ApiUser.get_deslogar(@token)
+    ApiProducao.get_deslogar(@token)
   end
 
   context 'Alterar CPF' do
     before do
-      @token = ApiUser.GetToken
-      ApiUser.Login(@token, Constant::User1)
+      @token = ApiProducao.GetToken
+      ApiProducao.Login(@token, Constant::User1)
 
       @create = ApiProducao.post_AlterarDadosUsuario(@token, "graziela@lottocap.com.br", "44302702010", )
       puts @create
@@ -193,6 +195,6 @@ describe 'Alterar dados Usuário' do
     it { expect(JSON.parse(@create.response.body)['obj.cpf'][0]).to eql "O campo cpf contém dados inválidos."}
   end
   after do
-    ApiUser.get_deslogar(@token)
+    ApiProducao.get_deslogar(@token)
   end
 end
