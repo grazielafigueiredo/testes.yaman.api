@@ -9,13 +9,13 @@ class ApiResgate
   headers 'Content-Type' => 'application/json'
 
 
-  def self.post_SetResgate(valor, token, agenciaNumero, agenciaDigito,contaNumero, contaDigito)
+  def self.post_SetResgate(valor, token, idBanco, agenciaNumero, agenciaDigito,contaNumero, contaDigito)
     headers['Authorization'] = token
 
     @SetResgate = {
         "obj": {
             "valor": valor,
-            "idBanco": 1,
+            "idBanco": idBanco,
             "idTipoConta": "1",
             "agenciaNumero": agenciaNumero,
             "agenciaDigito": agenciaDigito,

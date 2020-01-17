@@ -7,11 +7,12 @@ describe 'Carrinho - Reserva' do
       ApiUser.Login(@token, Constant::User1)
   
       @carrinho = ApiCarrinho.post_AdicionarItemCarrinho(3000000, Constant::IdProduto, Constant::IdSerie, @token)
-      @idCarrinho = JSON.parse(@carrinho.response.body)['obj'][0]['idCarrinho']
-      @nomeProduto = JSON.parse(@carrinho.response.body)['dadosUsuario']['carrinhoItens'][0]['nomeProduto']
-      @descricaoSerie = JSON.parse(@carrinho.response.body)['dadosUsuario']['carrinhoItens'][0]['descricaoSerie']
+        # @idCarrinho = JSON.parse(@carrinho.response.body)['obj'][0]['idCarrinho']
+        @idCarrinho = JSON.parse(@carrinho.response.body)['dadosUsuario']['carrinhoItens'][0]['idCarrinho']
+        @nomeProduto = JSON.parse(@carrinho.response.body)['dadosUsuario']['carrinhoItens'][0]['nomeProduto']
+        @descricaoSerie = JSON.parse(@carrinho.response.body)['dadosUsuario']['carrinhoItens'][0]['descricaoSerie']
       @result = ApiCarrinho.get_GetStatusCarrinho
-      # puts @nomeProduto
+      puts @carrinho
     end
 
     it 'Quantidade parcialmente indisponível' do
@@ -133,10 +134,12 @@ describe 'Carrinho - Reserva' do
   context 'Quantidade total indisponível ' do
     before do
       @token = ApiUser.GetToken
-      ApiUser.Login(@token, Constant::User1)
+        ApiUser.Login(@token, Constant::User1)
   
-      @result = ApiCarrinho.post_AdicionarItemCarrinho(1000, Constant::IdProduto, Constant::IdSerie, @token)
+      @result = ApiCarrinho.post_AdicionarItemCarrinho(500, Constant::IdProduto, Constant::IdSerie, @token)
+      puts @result
         @idCarrinho = JSON.parse(@result.response.body)['obj'][0]['idCarrinho']
+        # @idCarrinho = JSON.parse(@result.response.body)['dadosUsuario']['carrinhoItens'][0]['idCarrinho']
         @nomeProduto = JSON.parse(@result.response.body)['dadosUsuario']['carrinhoItens'][0]['nomeProduto']
         @descricaoSerie = JSON.parse(@result.response.body)['dadosUsuario']['carrinhoItens'][0]['descricaoSerie']
    
@@ -147,7 +150,8 @@ describe 'Carrinho - Reserva' do
     end
 
     it { expect(JSON.parse(@carrinho.response.body)['erros'][0]['mensagem']).to eql "Não há mais títulos disponíveis para o #{@nomeProduto} - #{@descricaoSerie}. Tente adicionar um novo produto ao carrinho."}
-
+    # it { expect(JSON.parse(@carrinho.response.body)['erros'][0]['mensagem']).to eql "Não há mais títulos disponíveis para o LottoCap Max - Max Série Nova (id 86). Tente adicionar um novo produto ao carrinho."}
+   
     after do
       Database.new.update_MaxNaVitrine('2020-12-25')
       Database.new.update_MaxReservados(0)
@@ -165,7 +169,7 @@ describe 'Carrinho - Sem Reserva - Tentar Pagar' do
       ApiUser.Login(@token, Constant::User1)
 
       @carrinho = ApiCarrinho.post_AdicionarItemCarrinho(1, Constant::IdProduto, Constant::IdSerie, @token)
-      @idCarrinho = JSON.parse(@carrinho.response.body)['obj'][0]['idCarrinho']
+        @idCarrinho = JSON.parse(@carrinho.response.body)['obj'][0]['idCarrinho']
 
       Database.new.update_DataFinalVendaVigente('2018-12-25')
 
@@ -188,7 +192,7 @@ describe 'Carrinho - Sem Reserva - Tentar Pagar' do
       ApiUser.Login(@token, Constant::User1)
 
       @carrinho = ApiCarrinho.post_AdicionarItemCarrinho(1, Constant::IdProduto, Constant::IdSerie, @token)
-      @idCarrinho = JSON.parse(@carrinho.response.body)['obj'][0]['idCarrinho']
+        @idCarrinho = JSON.parse(@carrinho.response.body)['obj'][0]['idCarrinho']
 
       Database.new.update_DataFinalVendaVigente('2018-12-25')
 
@@ -211,7 +215,7 @@ describe 'Carrinho - Sem Reserva - Tentar Pagar' do
       ApiUser.Login(@token, Constant::User1)
 
       @carrinho = ApiCarrinho.post_AdicionarItemCarrinho(1, Constant::IdProduto, Constant::IdSerie, @token)
-      @idCarrinho = JSON.parse(@carrinho.response.body)['obj'][0]['idCarrinho']
+        @idCarrinho = JSON.parse(@carrinho.response.body)['obj'][0]['idCarrinho']
 
       Database.new.update_DataFinalVendaVigente('2018-12-25')
 
@@ -236,7 +240,7 @@ describe 'Carrinho - Sem Reserva - Tentar Pagar' do
       Database.new.update_CreditoLottocap(100.000)
 
       @carrinho = ApiCarrinho.post_AdicionarItemCarrinho(1, Constant::IdProduto, Constant::IdSerie, @token)
-      @idCarrinho = JSON.parse(@carrinho.response.body)['obj'][0]['idCarrinho']
+        @idCarrinho = JSON.parse(@carrinho.response.body)['obj'][0]['idCarrinho']
 
       Database.new.update_DataFinalVendaVigente('2018-12-25')
 
@@ -262,7 +266,7 @@ describe 'Carrinho - Sem Reserva - Tentar Pagar' do
       ApiUser.Login(@token, Constant::User1)
       
       @carrinho = ApiCarrinho.post_AdicionarItemCarrinho(1, Constant::IdProduto, Constant::IdSerie, @token)
-      @idCarrinho = JSON.parse(@carrinho.response.body)['obj'][0]['idCarrinho']
+        @idCarrinho = JSON.parse(@carrinho.response.body)['obj'][0]['idCarrinho']
       
       Database.new.update_DataFinalVendaVigente('2018-12-25')
       
@@ -288,7 +292,7 @@ describe 'Carrinho - Sem Reserva - Tentar Pagar' do
 
       ApiCarrinho.post_AdicionarItemCarrinho(1, Constant::IdProduto, Constant::IdSerie, @token)
       @carrinho = ApiCarrinho.post_AdicionarItemCarrinho(1, Constant::IdProduto, Constant::IdSerie87, @token)
-      @idCarrinho = JSON.parse(@carrinho.response.body)['obj'][0]['idCarrinho']
+        @idCarrinho = JSON.parse(@carrinho.response.body)['obj'][0]['idCarrinho']
       
       Database.new.update_DataFinalVendaVigente('2018-12-25')
       @resultGetCarrinho = ApiCarrinho.get_GetStatusCarrinho
@@ -341,7 +345,7 @@ describe 'Carrinho - Sem Reserva - Tentar Pagar' do
       ApiUser.Login(@token, Constant::User1)
       
       @carrinho = ApiCarrinho.post_AdicionarItemCarrinho(5, Constant::IdProduto, Constant::IdSerie, @token)
-      @idCarrinho = JSON.parse(@carrinho.response.body)['obj'][0]['idCarrinho']
+        @idCarrinho = JSON.parse(@carrinho.response.body)['obj'][0]['idCarrinho']
       # puts @carrinho 
       puts @token
       
@@ -368,8 +372,8 @@ describe 'Carrinho - Sem Reserva - Tentar Pagar' do
       @token = ApiUser.GetToken
 
       @carrinho = ApiCarrinho.post_AdicionarItemCarrinho(5, Constant::IdProduto, Constant::IdSerie, @token)
-      @idCarrinho = JSON.parse(@carrinho.response.body)['obj'][0]['idCarrinho']
-      puts @carrinho 
+        @idCarrinho = JSON.parse(@carrinho.response.body)['obj'][0]['idCarrinho']
+        puts @carrinho 
       
       ApiUser.Login(@token, Constant::User1)
       
