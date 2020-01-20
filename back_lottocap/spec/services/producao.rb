@@ -42,10 +42,10 @@ class ApiProducao
     post('/Usuario/ValidarDadosUsuarioCriacao', body: @validarUser.to_json)
   end
 
-  def self.post_AlterarDadosUsuario(token, email, cpf)
+  def self.post_alterarDadosUsuario(token, email, cpf)
     headers['Authorization'] = token
 
-    @AlterarDadosUsuario = {
+    @alterarDadosUsuario = {
       "obj": {
         "apelido": 'grazi',
         "nomeCompleto": 'grazi a',
@@ -71,7 +71,7 @@ class ApiProducao
       "atualPagina": 0,
       "tamanhoPagina": 0
     }
-    post('/Usuario/AlterarDadosUsuario', body: @AlterarDadosUsuario.to_json)
+    post('/Usuario/AlterarDadosUsuario', body: @alterarDadosUsuario.to_json)
   end
 
   def self.find

@@ -137,28 +137,12 @@ end
 
 
 describe 'Alterar dados Usuário' do 
-#   context 'Sucesso' do
-#     before do
-#       @token = ApiUser.GetToken
-#       ApiUser.Login(@token, Constant::User1)
-#       puts @token
-
-#       @create = ApiProducao.post_AlterarDadosUsuario(@token, "user22@gmail.com", "44302702010")
-#       puts @create
-#     end 
-
-#     it { expect(JSON.parse(@create.response.body)['sucesso']).to be true}
-#   end
-#   after do
-#     ApiUser.get_deslogar(@token)
-#   end
-
   context 'Alterar e-mail para um e-mail já existente no banco de dados' do
     before do
       @token = ApiProducao.GetToken
       ApiProducao.Login(@token, Constant::User1)
 
-      @create = ApiProducao.post_AlterarDadosUsuario(@token, "user1@gmail.com", "00000009652")
+      @create = ApiProducao.post_alterarDadosUsuario(@token, "gupossari28@gmail.com", "00000009652")
       puts @create
     end 
 
@@ -173,7 +157,7 @@ describe 'Alterar dados Usuário' do
       @token = ApiProducao.GetToken
       ApiProducao.Login(@token, Constant::User1)
 
-      @create = ApiProducao.post_AlterarDadosUsuario(@token, "graziela@lottocap.com.br", "00000000000")
+      @create = ApiProducao.post_alterarDadosUsuario(@token, "graziela@lottocap.com.br", "00000000000")
       puts @create
     end 
 
@@ -188,7 +172,7 @@ describe 'Alterar dados Usuário' do
       @token = ApiProducao.GetToken
       ApiProducao.Login(@token, Constant::User1)
 
-      @create = ApiProducao.post_AlterarDadosUsuario(@token, "graziela@lottocap.com.br", "44302702010", )
+      @create = ApiProducao.post_alterarDadosUsuario(@token, "graziela@lottocap.com.br", "44302702010", )
       puts @create
     end 
 
