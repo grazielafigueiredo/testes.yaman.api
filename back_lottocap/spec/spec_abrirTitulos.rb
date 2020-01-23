@@ -1,4 +1,3 @@
-# # frozen_string_literal: true
 
 # context 'Loop' do
 #   before do

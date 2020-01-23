@@ -3,13 +3,14 @@ require "singleton"
 
 class Constant
 
-    Url = "https://lottocap-hml-server01-api.azurewebsites.net/api"
+    # Url = "https://lottocap-hml-server01-api.azurewebsites.net/api"
     # "https://hmlapi.lottocap.com.br/api"
+    Url = "https://lottocap-hml-server01-api-staging.azurewebsites.net/api"
     IdSerie = 86
     IdSerie87 = 87
     IdSerieJa17 = 88
     IdSerieJa18 = 89
-    IdSerieMaxPreVenda = 93
+    IdSerieMaxPreVenda = 92
     IdProdutoJa18 = 10
     IdProduto = 1
     IdProdutoJa = 9

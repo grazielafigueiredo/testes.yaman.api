@@ -288,11 +288,11 @@ class Database
 
     def update_preVenda()
         today = Date.today
-        today_add_3_days = today + 3
+        today_add_3_days = today + 1
         today_add_6_days = today + 6
         today_add_9_days = today + 9
 
-        ta = @connection.execute("UPDATE Serie SET DataInicialPreVenda= #{today},  
+        ta = @connection.execute("UPDATE Serie SET DataInicialPreVenda= '#{today}',  
                                                   DataFinalPreVenda= '#{today_add_3_days}', 
                                                   DataInicialVenda= '#{today_add_6_days}',
                                                   DataFinalVenda= '#{today_add_9_days}' 

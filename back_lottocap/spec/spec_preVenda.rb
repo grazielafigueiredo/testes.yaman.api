@@ -7,7 +7,7 @@ context 'Config pré-venda' do
 
     Database.new.update_preVenda
 
-    @carrinho = ApiCarrinho.post_AdicionarItemCarrinho(100, Constant::IdProduto, Constant::IdSerieMaxPreVenda, @token)
+    @carrinho = ApiCarrinho.post_AdicionarItemCarrinho(10, Constant::IdProduto, Constant::IdSerieMaxPreVenda, @token)
         @idCarrinho = JSON.parse(@carrinho.response.body)['obj'][0]['idCarrinho']
         @idCarrinhoItem = JSON.parse(@carrinho.response.body)['obj'][0]['idCarrinhoItem']
     puts @idCarrinhoItem
