@@ -15,10 +15,7 @@ context 'Erro 400 API Logar Usuário - só resolveu limpando service worker' do
     @login = ApiUser.Login(@token, Constant::User1)
       expect(JSON.parse(@login.response.code)).to be 401
 
-        def reload! (print = Constant::Url)
-          puts 'Reloading ...' if print
-
-        end
+  
     @token = ApiUser.GetToken
     @loginNovamente = ApiUser.Login(@token, Constant::User1)
   end
