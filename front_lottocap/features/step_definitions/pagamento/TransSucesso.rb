@@ -1,5 +1,5 @@
 Dado("que o usuário contenha {string} no carrinho") do |titulos|
-    visit 'https://homolog.lottocap.com.br'
+    visit '/homolog'
 
     produto = all('div[class="card-vitrine__pacote"]')[0].click # Escolha do produto para compra
     comprar = all('button[class="btn btn-secondary"]')[0].click # click Comprar Créditos
