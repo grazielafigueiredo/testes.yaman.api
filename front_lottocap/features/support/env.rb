@@ -1,13 +1,16 @@
 require 'capybara'
 require 'capybara/dsl'
 require 'capybara/rspec/matchers'
+require 'cielo/api30'
+require 'cpf_utils'
+require 'faker'
 require 'rspec'
 require 'selenium-webdriver'
 require 'site_prism'
-require 'cpf_utils'
-require 'faker'
-require 'cielo/api30'
 require 'version'
+require 'tiny_tds'    
+
+require_relative "database"
 
 World(Capybara::DSL)
 World(Capybara::RSpecMatchers)
@@ -35,7 +38,7 @@ end
 Capybara.configure do |config|
     config.default_driver = :selenium
     config.default_max_wait_time = 10
-    config.app_host = 'https://homolog.lottocap.com.br'
+    config.app_host = 'https://lottocap-hml-server01-front.azurewebsites.net/'
 end
 
 

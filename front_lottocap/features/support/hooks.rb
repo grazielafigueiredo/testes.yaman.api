@@ -4,12 +4,12 @@ require 'base64'
 Before('@login') do
     visit '/homolog'
     find('div[class="Header__login"]').click
-    sleep(2)
+    # sleep(2)
     fill_in 'email', with: "user22@gmail.com"
     fill_in 'password', with: "1234"
     find(:css, 'button[type="submit"]').click
     exists_modal = page.has_selector?('#onesignal-popover-container')
-    sleep(2)
+    # sleep(2)
 
     # page.driver.browser.witch_to.alert.dismiss
     exists_modal = page.has_selector?('#onesignal-popover-container')
@@ -52,12 +52,16 @@ After('@deslogar') do
     sleep (6)
 end 
 
-# After do |scenario|
+Before ('@vitrine') do 
+    # produto = all('div[class="card-vitrine__pacote"]')[3].click # Escolha do produto para compra
+    comprar = all('div[class="card-vitrine__pacote"]')[8].click # click Comprar Créditos
+    carrinho = find(:css, 'a[href="/carrinho"]').click # Finalizar compra no carrinho
+    # sleep(1)
+    titulo = find("#qtdSelect > option:nth-child("+ titulos +")").click # Escolher quantidade de títulos
+    # sleep(2)
+    # page.has_selector?('span[class="cart-item__total-price"]') # Verificando preço na página
+    # expect(page.has_css?('span[class="cart-item__total-price"]')).to eql true
     
-#     if screenshot.failed?
-#         shot_file  = page.save_screenshot("log/screenshot.png")
-#         shot_b64 = Base64.encode64(File.open(shot_file, "rb").read)
-#         embed(shot_b64, "image/png", "Screenshot") #cucumber anexa screenshot no report
-#     end
-# end
+end
+
 
