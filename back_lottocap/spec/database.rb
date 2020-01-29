@@ -1,5 +1,5 @@
 require 'tiny_tds'    
-
+require 'timeout'
 
 class Database
     def initialize
@@ -62,7 +62,8 @@ class Database
                                     FROM TituloMatriz as T
                                     INNER JOIN Serie as S ON T.idSerie = S.IdSerie
                                     WHERE IdProduto = 1")
-        sleep 45
+        sleep (45)
+        # Timeout::timeout 10
         puts 'Affected rows' 
         puts res.do
     end

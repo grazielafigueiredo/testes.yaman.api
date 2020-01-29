@@ -1,8 +1,6 @@
 # language: pt
 
-@login @deslogar 
-
-@payment
+@login @produto @deslogar @c
 Funcionalidade: Modalidade de Pagamento - Crédito Lottocap
 
 # Exceção: Expiração e reserva/disponíveis
@@ -16,7 +14,6 @@ Então deve analisar que as seguintes <forma_pagamento_desabilitada> estão desa
 
 Exemplos:
 | titulos    | forma_pagamento_desabilitada |
-| "19"       | "" |
+| "28"       | "" |
 | "1"        | "Cartão de crédito,Boleto Bancário,Transferência bancária" |
-| "6"        | "Boleto Bancário" |
 

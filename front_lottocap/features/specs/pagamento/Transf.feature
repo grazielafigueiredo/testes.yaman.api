@@ -1,6 +1,6 @@
 # language: pt
 
-@payment @login @deslogar
+@login @produto @deslogar
 Funcionalidade: Modalidade de Pagamento - Transferência Bancária
 
 # Exceção: Expiração e reserva/disponíveis   

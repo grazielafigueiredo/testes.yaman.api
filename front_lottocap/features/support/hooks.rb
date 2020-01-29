@@ -38,11 +38,11 @@ Before('@loginboleto') do
 end
 
 After('@deslogar') do
-    exists_modal = page.has_selector?('#onesignal-popover-container')
-    if exists_modal
-        popover_no = find('#onesignal-popover-cancel-button')
-        popover_no.click
-    end
+    # exists_modal = page.has_selector?('#onesignal-popover-container')
+    # if exists_modal
+    #     popover_no = find('#onesignal-popover-cancel-button')
+    #     popover_no.click
+    # end
 
     # page.driver.browser.witch_to.alert.dismiss
 
@@ -52,16 +52,12 @@ After('@deslogar') do
     sleep (6)
 end 
 
-Before ('@vitrine') do 
-    # produto = all('div[class="card-vitrine__pacote"]')[3].click # Escolha do produto para compra
+Before('@produto') do 
     comprar = all('div[class="card-vitrine__pacote"]')[8].click # click Comprar Créditos
     carrinho = find(:css, 'a[href="/carrinho"]').click # Finalizar compra no carrinho
-    # sleep(1)
-    titulo = find("#qtdSelect > option:nth-child("+ titulos +")").click # Escolher quantidade de títulos
-    # sleep(2)
-    # page.has_selector?('span[class="cart-item__total-price"]') # Verificando preço na página
-    # expect(page.has_css?('span[class="cart-item__total-price"]')).to eql true
-    
+    sleep 30
+    page.has_selector?('span[class="cart-item__total-price"]') # Verificando preço na página
+    expect(page.has_css?('span[class="cart-item__total-price"]')).to eql true
 end
 
 

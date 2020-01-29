@@ -1,10 +1,6 @@
 Dado("que o usuário possua {string} no carrinho") do |titulos|
-    visit 'https://homolog.lottocap.com.br'
+    visit '/homolog'
 
-    produto = all('div[class="card-vitrine__pacote"]')[0].click # Escolha do produto para compra
-    comprar = all('button[class="btn btn-secondary"]')[0].click # click Comprar Créditos
-    carrinho = find(:css, 'a[href="/carrinho"]').click # Finalizar compra no carrinho
-    sleep(1)
     titulo = find("#qtdSelect > option:nth-child("+ titulos + ")").click # Escolher quantidade de títulos
     sleep(2)
     page.has_selector?('span[class="cart-item__total-price"]') # Verificando preço na página
