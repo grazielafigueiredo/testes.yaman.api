@@ -1,6 +1,6 @@
 # language: pt
 
-@loginboleto  @produto @deslogar @a
+@login  @produto @deslogar
 Funcionalidade: Modalidade de Pagamento - Cartão de Crédito 
 
 # Exceção: Expiração e reserva/disponíveis   

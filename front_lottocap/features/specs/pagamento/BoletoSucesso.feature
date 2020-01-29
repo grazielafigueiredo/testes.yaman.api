@@ -1,6 +1,6 @@
     # language: pt
 
-@payment @loginboleto @produto @deslogar 
+@login @produto @deslogar @py
 Funcionalidade: Modalidade de Pagamento - Boleto 
 
 # Exceção: Expiração e reserva/disponíveis   
@@ -15,5 +15,5 @@ Então liberar o pagamento com boleto e <resultado> da confirmação
 
 Exemplos:
 | titulos    | resultado |
-| "19"       | "ATENÇÃO: Confirmação em até 3 dias."|
+| "28"       | "ATENÇÃO: Confirmação em até 3 dias."|
 
