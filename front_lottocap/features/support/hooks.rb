@@ -55,7 +55,7 @@ end
 Before('@produto') do 
     comprar = all('div[class="card-vitrine__pacote"]')[8].click # click Comprar Créditos
     carrinho = find(:css, 'a[href="/carrinho"]').click # Finalizar compra no carrinho
-    sleep 30
+    sleep 10
     page.has_selector?('span[class="cart-item__total-price"]') # Verificando preço na página
     expect(page.has_css?('span[class="cart-item__total-price"]')).to eql true
 end

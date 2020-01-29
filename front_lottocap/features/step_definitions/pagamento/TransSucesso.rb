@@ -1,10 +1,6 @@
 Dado("que o usuário contenha {string} no carrinho") do |titulos|
-    visit '/homolog'
 
     titulo = find("#qtdSelect > option:nth-child("+ titulos + ")").click # Escolher quantidade de títulos
-    sleep(2)
-    page.has_selector?('span[class="cart-item__total-price"]') # Verificando preço na página
-    expect(page.has_css?('span[class="cart-item__total-price"]')).to eql true
 
 end
 

@@ -1,5 +1,4 @@
 Dado("que o usuário disponha de {string} no carrinho.") do |titulos|
-    visit '/homolog'
 
         Database.new.update_creditoLottocap(100)
 

@@ -1,12 +1,7 @@
 Dado("que o usuário disponha de {string} no carrinho") do |titulos|
-        visit '/homolog'
-
     Database.new.update_creditoLottocap(100)
 
-    @produto
-
     titulo = find("#qtdSelect > option:nth-child("+ titulos +")").click # Escolher quantidade de títulos
- 
 end
 
 Então('liberar o pagamento com crédito lottocap') do
