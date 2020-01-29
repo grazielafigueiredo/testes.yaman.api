@@ -15,6 +15,7 @@ Então("liberar o pagamento com transferência {string}, {string}, {string}, {st
     find('input[name="agencia"]').set agencia
     find('input[name="conta"]').set conta
     find('input[name="digitoConta"]').set digitoConta
+    sleep 10
 
     botao_pagar = find('button[class="btn btn-secondary"]').click
     sleep(3)
