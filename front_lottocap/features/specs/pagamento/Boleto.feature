@@ -17,7 +17,7 @@ Então deve verificar que as seguintes <forma_pagamento_desabilitada> estão des
 Exemplos:
 | titulos    | forma_pagamento_desabilitada | 
 | "2"        | "Cartão de crédito,Boleto Bancário,Transferência bancária" |
-| "19"       | "" | 
+| "28"       | "" | 
 
 
 

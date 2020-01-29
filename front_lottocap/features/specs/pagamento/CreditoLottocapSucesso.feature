@@ -1,6 +1,6 @@
 # language: pt
 
-@login    @deslogar  @py
+@login @produto   @deslogar  @py
 Funcionalidade: Modalidade de Pagamento - Crédito Lottocap
 
 # Exceção: Expiração e reserva/disponíveis

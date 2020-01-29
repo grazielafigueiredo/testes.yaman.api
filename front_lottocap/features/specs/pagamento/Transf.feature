@@ -11,7 +11,7 @@ Então deve apresentar as seguintes <forma_pagamento_desabilitada>
 
 Exemplos:
 | titulos    | forma_pagamento_desabilitada |
-| "19"       | "" |
+| "28"       | "" |
 | "1"        | "Cartão de crédito,Boleto Bancário,Transferência bancária" |
 | "6"        | "Boleto Bancário" |
 
