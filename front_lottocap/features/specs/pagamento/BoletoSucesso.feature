@@ -1,6 +1,6 @@
     # language: pt
 
-@login @produto @deslogar @py
+@login @produto @deslogar
 Funcionalidade: Modalidade de Pagamento - Boleto 
 
 # Exceção: Expiração e reserva/disponíveis   
