@@ -61,7 +61,7 @@ context 'Pagar - Teste de compra com JÁ18' do
   
   it 'Pagar - Teste de compra com JÁ18' do
    expect(JSON.parse(@result.response.body)['sucesso']).to be true
-   expect(JSON.parse(@result.response.body)['dadosUsuario']['creditosDisponiveis']).to eql 25.000
+   expect(JSON.parse(@result.response.body)['dadosUsuario']['creditosDisponiveis']).to eql 70.000
   end
   
   after do
