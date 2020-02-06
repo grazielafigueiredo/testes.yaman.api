@@ -2,7 +2,9 @@
 
 Funcionalidade: Comprar produto Pré Venda
 
-@login @py @deslogar
+# @login 
+@py 
+# @deslogar
 
 Cenário:
 Dado que existe um produto em pré venda
