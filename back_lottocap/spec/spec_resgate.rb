@@ -10,8 +10,8 @@ describe 'Resgate' do
         ApiUser.Login(@token, Constant::User1)
         
         Database.new.update_PremioResgate(5000)
-        puts bancos
-        @pedidoResgate = ApiResgate.post_SetResgate(10.000, @token, bancos.to_s, Faker::Bank.account_number(digits: 4), Faker::Bank.account_number(digits: 1), Faker::Bank.account_number(digits: 10), Faker::Bank.account_number(digits: 1))
+
+        @pedidoResgate = ApiResgate.post_SetResgate(10.000, @token, 3, Faker::Bank.account_number(digits: 4), Faker::Bank.account_number(digits: 1), Faker::Bank.account_number(digits: 10), Faker::Bank.account_number(digits: 1))
         puts @pedidoResgate
         @statusResgate = ApiResgate.get_StatusResgate(@token)
         # puts @statusResgate
