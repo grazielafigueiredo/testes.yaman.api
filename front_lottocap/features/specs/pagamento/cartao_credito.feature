@@ -1,4 +1,5 @@
 # language: pt
+@cartao_credito
 
 @login @produto  @deslogar 
 Funcionalidade: Modalidade de Pagamento - Cartão de Crédito 

@@ -1,4 +1,5 @@
 # language: pt
+@transf_sucesso
 
 @login @produto  @deslogar 
 Funcionalidade: Modalidade de Pagamento - Transferência Bancária

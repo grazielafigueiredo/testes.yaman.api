@@ -1,4 +1,5 @@
     # language: pt
+@boleto
 
 @login @produto @deslogar @boleto 
 Funcionalidade: Modalidade de Pagamento - Boleto 

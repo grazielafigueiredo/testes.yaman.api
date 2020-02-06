@@ -1,4 +1,5 @@
 # language: pt
+@credito_lottocap
 
 @login @produto @deslogar 
 Funcionalidade: Modalidade de Pagamento - Crédito Lottocap
