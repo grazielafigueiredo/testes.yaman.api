@@ -10,7 +10,7 @@ describe 'Boleto' do
       @idCarrinho = JSON.parse(@carrinho.response.body)['obj'][0]['idCarrinho']
 
       Database.new.update_BloquearPagamento
-      @boleto = ApiBoleto.post_SucessoBoleto(@token, @idCarrinho)
+      @boleto = ApiBoleto.post_sucessoBoleto(@token, @idCarrinho)
     end
     it { expect(JSON.parse(@boleto.response.body)['erros'][0]['mensagem']).to eql 'Esta forma de pagamento não está mais disponível, por favor. Selecione outra forma de pagamento.' }
 
