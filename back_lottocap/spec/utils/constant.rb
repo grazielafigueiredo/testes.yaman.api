@@ -6,6 +6,7 @@ class Constant
     Url = "https://lottocap-hml-server01-api.azurewebsites.net/api"
     # "https://hmlapi.lottocap.com.br/api"
     # Url = "https://lottocap-hml-server01-api-staging.azurewebsites.net/api"
+
     IdSerie = 86
     IdSerie87 = 87
     IdSerieJa17 = 88
@@ -16,14 +17,11 @@ class Constant
     IdProdutoJa = 9
     IdCarrinho = 10851
     IdTitulo = 62290
-    
-    TimeMsg = Time.now.strftime('%d/%m/%Y')
-    Authorization = "70b90407-f1f6-4868-bad2-dda283b09bf9"
-    Produto = "LottoCap Max - Max Série Nova (id 86)"
+    Dezenas = ["04 13 30"]
 
-    User1 = {"usuario": "user22@gmail.com", "senha": "1234"}
+    User1 = {"usuario": "user666@gmail.com", "senha": "1234"}
     UserID = 3661
-    # User1 = {"usuario": "user22@gmail.com", "senha": "1234"}
+    User2 = {"usuario": "user22@gmail.com", "senha": "1234"}
     # UserID = 3705
     
     # Cartao de Credito

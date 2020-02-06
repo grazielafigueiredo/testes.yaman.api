@@ -289,7 +289,7 @@ class Database
 
     def update_preVenda()
         today = Date.today
-        today_add_3_days = today + 1
+        today_add_3_days = today + 4
         today_add_6_days = today + 6
         today_add_9_days = today + 9
 
