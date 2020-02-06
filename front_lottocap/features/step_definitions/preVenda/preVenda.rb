@@ -1,38 +1,31 @@
 Dado("que existe um produto em pré venda") do
     Database.new.update_preVenda
     visit '/homolog'
+end
+  
+Quando("escolho as dezenas e confirmo") do
 
-
-    # find('div.card-vitrine__bottom > div.card-vitrine__escolha > button]').click #escolha dezenas
-    all('div.card-vitrine__bottom > div.card-vitrine__escolha > button')[0].click #escolha dezenas
+    all('div.card-vitrine__bottom > div.card-vitrine__escolha > button')[0].click #escolher dezenas
     find('div.escolhaModal__body.escolhaModal__body--escolha > ul > li:nth-child(19)').click
     find('div.escolhaModal__body.escolhaModal__body--escolha > ul > li:nth-child(01)').click
-    find('div.escolhaModal__body.escolhaModal__body--escolha > ul > li:nth-child(14)').click
+    find('div.escolhaModal__body.escolhaModal__body--escolha > ul > li:nth-child(80)').click
 
     sleep 2
 
     click_button 'Confirmar escolha'
-    
     click_button '+ Adicionar título'
+end
+  
+Então("adiciono as mesmas dezenas e sou impedida de confirmar") do
     
     find('div.escolhaModal__body.escolhaModal__body--escolha > ul > li:nth-child(19)').click
     find('div.escolhaModal__body.escolhaModal__body--escolha > ul > li:nth-child(01)').click
-    find('div.escolhaModal__body.escolhaModal__body--escolha > ul > li:nth-child(14)').click
-    # find('button[class="escolhaModal__btn escolhaModal__btn--escolha"]').click
-    # select 'ul > li:nth-child(5)', from: '5'
+    find('div.escolhaModal__body.escolhaModal__body--escolha > ul > li:nth-child(80)').click
+
     click_button 'Confirmar escolha'
     sleep 5
 
-
-    find('div[class="Toastify__toast-body"]').hover
-    # expect(page).to 
-    
-end
-  
-Quando("escolho as dezenas, volto para vitrine e add mais títulos") do
-
-
-end
-  
-Então("finalizo a venda") do
+    toasti = find('div[class="Toastify__toast-body"]')
+    toasti.hover
+    # expect(toasti).to have_text('Você já adicionou um título com essas dezenas. Faça uma nova escolha.').trim()
 end
