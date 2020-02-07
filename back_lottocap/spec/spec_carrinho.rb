@@ -245,7 +245,7 @@ describe 'Carrinho - Sem Reserva - Tentar Pagar' do
 
       Database.new.update_DataFinalVendaVigente('2018-12-25')
 
-      @result = ApiBoleto.post_SucessoBoleto(@token, @idCarrinho)
+      @result = ApiBoleto.post_sucessoBoleto(@token, @idCarrinho)
       puts @result
     end
 
@@ -300,7 +300,7 @@ describe 'Carrinho - Sem Reserva - Tentar Pagar' do
 
       Database.new.update_DataFinalVendaVigente('2018-12-25')
 
-      @result = ApiBoleto.post_SucessoBoleto(@token, @idCarrinho)
+      @result = ApiBoleto.post_sucessoBoleto(@token, @idCarrinho)
       puts @result
     end
 

@@ -4,20 +4,22 @@ describe 'Landing MAX' do
   context 'Sucesso' do
     before do
 
-      @result = ApiLanding.get_landingPageMax()
-      puts @result
+      @landingMax = ApiLanding.get_landingPageMax
+      puts @landingMax
     end
-    it { expect(JSON.parse(@result.response.body)['sucesso']).to be true }
+    it { expect(JSON.parse(@landingMax.response.body)['sucesso']).to be true }
   end
 end
 
 describe 'Landing JÁ' do
   context 'Sucesso' do
     before do
+      @token = ApiUser.GetToken()
 
-      @result = ApiLanding.get_landingPageJa()
-      puts @result
+      @landingJa = ApiLanding.get_landingPageJa(@token)
+      puts @landingJa
     end
-    it { expect(JSON.parse(@result.response.body)['sucesso']).to be true }
+    # it { expect(JSON.parse(@landingJa.response.body)['sucesso']).to be true }
+    it { expect(JSON.parse(@landingJa.response.body)['sucesso']).to be true }
   end
 end

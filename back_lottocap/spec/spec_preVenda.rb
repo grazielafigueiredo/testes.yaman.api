@@ -83,7 +83,7 @@ context 'Colocar no carrinho Título já reservado' do
     @token = ApiUser.GetToken
     ApiUser.Login(@token, Constant::User1)
 
-    @preVenda = ApiPreVenda.post_adicionarItemCarrinhoPreVenda(1, Constant::IdProduto, Constant::IdSerieMaxPreVenda, @token)
+    @preVenda = ApiPreVenda.post_adicionarItemCarrinhoPreVenda(@token)
     puts @preVenda
 
 

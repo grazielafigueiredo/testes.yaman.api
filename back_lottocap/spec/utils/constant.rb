@@ -11,7 +11,7 @@ class Constant
     IdSerie87 = 87
     IdSerieJa17 = 88
     IdSerieJa18 = 89
-    IdSerieMaxPreVenda = 93
+    IdSerieMaxPreVenda = 96
     IdProdutoJa18 = 10
     IdProduto = 1
     IdProdutoJa = 9
@@ -19,9 +19,9 @@ class Constant
     IdTitulo = 62290
     Dezenas = ["04 13 30"]
 
-    User1 = {"usuario": "user666@gmail.com", "senha": "1234"}
+    User1 = {"usuario": "user22@gmail.com", "senha": "1234"}
     UserID = 3661
-    User2 = {"usuario": "user22@gmail.com", "senha": "1234"}
+    # User2 = {"usuario": "user666@gmail.com", "senha": "1234"}
     # UserID = 3705
     
     # Cartao de Credito
