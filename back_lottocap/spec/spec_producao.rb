@@ -137,42 +137,12 @@ end
 
 
 describe 'Alterar dados Usuário' do 
-  context 'Alterar e-mail para um e-mail já existente no banco de dados' do
-    before do
-      @token = ApiProducao.GetToken
-      ApiProducao.Login(@token, Constant::User1)
-
-      @create = ApiProducao.post_alterarDadosUsuario(@token, "gupossari28@gmail.com", "00000009652")
-      puts @create
-    end 
-
-    it { expect(JSON.parse(@create.response.body)['erros'][0]['mensagem']).to eql "Não foi possível atualizar seus dados, tente novamente se o erro persistir entre em contato conosco"}
-  end
-  after do
-    ApiProducao.get_deslogar(@token)
-  end
-
   context 'Alterar cpf para número inválido' do
     before do
       @token = ApiProducao.GetToken
       ApiProducao.Login(@token, Constant::User1)
 
       @create = ApiProducao.post_alterarDadosUsuario(@token, "graziela@lottocap.com.br", "00000000000")
-      puts @create
-    end 
-
-    it { expect(JSON.parse(@create.response.body)['obj.cpf'][0]).to eql "O campo cpf contém dados inválidos."}
-  end
-  after do
-    ApiProducao.get_deslogar(@token)
-  end
-
-  context 'Alterar CPF' do
-    before do
-      @token = ApiProducao.GetToken
-      ApiProducao.Login(@token, Constant::User1)
-
-      @create = ApiProducao.post_alterarDadosUsuario(@token, "graziela@lottocap.com.br", "44302702010", )
       puts @create
     end 
 

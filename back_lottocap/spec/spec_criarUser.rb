@@ -131,7 +131,7 @@ describe 'Alterar dados Usuário' do
       @token = ApiUser.GetToken
       ApiUser.Login(@token, Constant::User1)
 
-      @create = ApiCreateUser.post_AlterarDadosUsuario(@token, "user1@gmail.com", "00000000000")
+      @create = ApiCreateUser.post_AlterarDadosUsuario(@token, "user1@gmail.com", "00000009652")
       puts @create
     end 
 
@@ -156,12 +156,12 @@ describe 'Alterar dados Usuário' do
     ApiUser.get_deslogar(@token)
   end
 
-  context 'Alterar CEP' do
+  context 'Alterar CPF' do
     before do
       @token = ApiUser.GetToken
       ApiUser.Login(@token, Constant::User1)
 
-      @create = ApiCreateUser.post_AlterarDadosUsuario(@token, "user1@gmail.com", "44302702010", )
+      @create = ApiCreateUser.post_AlterarDadosUsuario(@token, "user1@gmail.com", "00000000000", )
       puts @create
     end 
 
