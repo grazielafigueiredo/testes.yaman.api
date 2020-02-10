@@ -9,6 +9,6 @@ Funcionalidade: editar dezenas geradas e excluir
 
 Cenário:
 Dado que adiciono mais um título de pré venda 
-E escolho as dezenas de forma aleatória
+# E escolho as dezenas de forma aleatória
 Quando edito as dezenas mudam
 Então posso excluir

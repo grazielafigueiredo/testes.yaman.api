@@ -25,11 +25,25 @@ Dado("que adiciono mais um título de pré venda") do
 
     mensagem_modal = find('div.escolhaModal__bottom > span')
     # mensagem_modal.hover
-    expect(mensagem_modal).to content_text('2\ntítulos')
+    # expect(page).to have_text '\n2\ntítulos'
 end
   
 Quando("edito as dezenas mudam") do
+   all("body > div.ReactModalPortal > div > div > div.escolhaModal__body.escolhaModal__body--lista > ul > li > span:nth-child(3)")[1].click
+
+   sleep 3
+    click_button 'Aleatório'
+
+    click_button 'Confirmar escolha'
 end
   
 Então("posso excluir") do
+    all("body > div.ReactModalPortal > div > div > div.escolhaModal__body.escolhaModal__body--lista > ul > li > span:nth-child(4)")[1].click
+    sleep 3
+    click_button 'Cancelar'
+
+    all("body > div.ReactModalPortal > div > div > div.escolhaModal__body.escolhaModal__body--lista > ul > li > span:nth-child(4)")[1].click
+    click_button 'Excluir'
+    sleep 3
+
 end
