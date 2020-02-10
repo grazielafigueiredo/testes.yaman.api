@@ -127,7 +127,7 @@ context 'Concorrencia no pagamento Título já reservado' do
 
   end
 
-  it 'Comprar um Título reservado' do
+  it 'Concorrencia no pagamento Título já reservado' do
     expect(JSON.parse(@boleto2.response.body)['sucesso']).to eql false
     expect(JSON.parse(@boleto2.response.body)['erros'][0]['mensagem']).to eql "Reserva de titulos já foi solicitada para as dezenas #{@conjuntosDezenas}"
   end
