@@ -21,7 +21,7 @@ class Constant
 
     User1 = {"usuario": "user22@gmail.com", "senha": "1234"}
     UserID = 3661
-    # User2 = {"usuario": "user666@gmail.com", "senha": "1234"}
+    User2 = {"usuario": "user666@gmail.com", "senha": "1234"}
     # UserID = 3705
     
     # Cartao de Credito

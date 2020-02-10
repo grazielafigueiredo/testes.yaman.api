@@ -7,21 +7,21 @@ class ApiUser
     base_uri Constant::Url
     headers "Content-Type" => "application/json"
 
-    def self.find()
-        # headers[:Authorization] = self.GetToken()
+    # def self.find()
+    #     # headers[:Authorization] = self.GetToken()
         
-        @user = {"obj": {"usuario": "user22@gmail.com", "senha": "1234"}}
+    #     @user = {"obj": {"usuario": "user22@gmail.com", "senha": "1234"}}
 
-        response_in_json = JSON.parse(get("/Usuario/GerarToken").response.body)
-        token = response_in_json['dadosUsuario']['token']
+    #     response_in_json = JSON.parse(get("/Usuario/GerarToken").response.body)
+    #     token = response_in_json['dadosUsuario']['token']
 
 
-        headers[:Authorization] = token
-        post("/Usuario/LogarUsuario", body: @user.to_json, :headers => headers)
+    #     headers[:Authorization] = token
+    #     post("/Usuario/LogarUsuario", body: @user.to_json, :headers => headers)
 
-        return token
+    #     return token
 
-    end
+    # end
 
     def self.Login(token, user)
         @user = {"obj": user}

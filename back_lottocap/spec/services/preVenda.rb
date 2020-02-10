@@ -28,13 +28,13 @@ class ApiPreVenda
     post("/Produto/BuscarDezenas", body: @buscarDezenas.to_json)
   end
 
-  def self.post_adicionarItemCarrinhoPreVenda(token)
+  def self.post_adicionarItemCarrinhoPreVenda(token, lstDezenas)
     headers['Authorization'] = token
 
     @adicionarItemCarrinhoPreVenda = {
       "obj": {
-        "idSerie": Constant::IdSerieMaxPreVenda,
-        "lstDezenas": ["08 12 63"],
+        "idSerie": 96,
+        "lstDezenas": lstDezenas,
         "flPromoAtiva": false
       },
       "atualPagina": 1,

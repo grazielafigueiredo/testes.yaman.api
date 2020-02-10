@@ -83,7 +83,7 @@ context 'Colocar no carrinho Título já reservado' do
     @token = ApiUser.GetToken
     ApiUser.Login(@token, Constant::User1)
 
-    @preVenda = ApiPreVenda.post_adicionarItemCarrinhoPreVenda(@token)
+    @preVenda = ApiPreVenda.post_adicionarItemCarrinhoPreVenda(@token, ["01 02 03"])
     puts @preVenda
 
 
@@ -99,40 +99,40 @@ context 'Colocar no carrinho Título já reservado' do
   end
 end
 
-# context 'Concorrencia no pagamento Título já reservado' do
-#   before do
-#     @token = ApiUser.GetToken
-#     ApiUser.Login(@token, Constant::User1)
+context 'Concorrencia no pagamento Título já reservado' do
+  before do
+    @token1 = ApiUser.GetToken
+    ApiUser.Login(@token1, Constant::User1)
+    
+    @buscarDezenas = ApiPreVenda.post_buscarDezenas(@token1)
+    @conjuntosDezenas = JSON.parse(@buscarDezenas.response.body)['obj'][0]
 
-#       @buscarDezenas = ApiPreVenda.post_buscarDezenas(@token, @idCarrinhoItem)
-#       @conjuntosDezenas = JSON.parse(@buscarDezenas.response.body)['obj']
-
-
-#       @preVenda = ApiPreVenda.post_adicionarItemCarrinhoPreVenda(@conjuntosDezenas, @token)
-#       @idCarrinhoUser1 = JSON.parse(@preVenda.response.body)['obj'][0]['idCarrinho']
-#       puts @preVenda1
+    @lstDezenas = ApiPreVenda.post_adicionarItemCarrinhoPreVenda(@token1, [@conjuntosDezenas])
+    @idCarrinhoUser1 = JSON.parse(@lstDezenas.response.body)['obj'][0]['idCarrinho']
+    puts @lstDezenas
 
       
-#     @token = ApiUser.GetToken
-#     ApiUser.Login(@token, Constant::User2)
-      
-#       @buscarDezenas = ApiPreVenda.post_buscarDezenas(@token, @idCarrinhoItem)
-#       @conjuntosDezenas = JSON.parse(@buscarDezenas.response.body)['obj']
-      
-#       @preVenda = ApiPreVenda.post_adicionarItemCarrinhoPreVenda(@conjuntosDezenas, @token)
-#       @idCarrinhoUser2 = JSON.parse(@preVenda.response.body)['obj'][0]['idCarrinho']
-#       puts @preVenda
-      
-#       @boleto = ApiBoleto.post_sucessoBoleto(@token, @idCarrinhoUser1)
-#       @boleto = ApiBoleto.post_sucessoBoleto(@token, @idCarrinhoUser2)
-#   end
+    @token2 = ApiUser.GetToken
+    ApiUser.Login(@token2, Constant::User2)
 
-#   it 'Comprar um Título reservado' do
-#     expect(JSON.parse(@preVenda.response.body)['sucesso']).to eql false
-#     expect(JSON.parse(@preVenda.response.body)['erros'][0]['mensagem']).to eql "Não foi possível adicionar o título escolhido ao carrinho."
-#   end
+    @lstDezenas = ApiPreVenda.post_adicionarItemCarrinhoPreVenda(@token2, [@conjuntosDezenas])
+    @idCarrinhoUser2 = JSON.parse(@lstDezenas.response.body)['obj'][0]['idCarrinho']
+    puts @lstDezenas
 
-#   after do
-#     ApiUser.get_deslogar(@token)
-#   end
-# end
+
+      @boleto1 = ApiBoleto.post_sucessoBoleto(@token1, @idCarrinhoUser1)
+      puts @boleto1
+      @boleto2 = ApiBoleto.post_sucessoBoleto(@token2, @idCarrinhoUser2)
+      puts @boleto2
+
+  end
+
+  it 'Comprar um Título reservado' do
+    expect(JSON.parse(@boleto2.response.body)['sucesso']).to eql false
+    expect(JSON.parse(@boleto2.response.body)['erros'][0]['mensagem']).to eql "Reserva de titulos já foi solicitada para as dezenas #{@conjuntosDezenas}"
+  end
+
+  after do
+    ApiUser.get_deslogar(@token)
+  end
+end
