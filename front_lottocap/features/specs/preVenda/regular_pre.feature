@@ -13,5 +13,5 @@ Então compro os títulos no cartão de crédito
 
 Exemplos:
 | forma_pagamento_desabilitada | 
-| "Boleto Bancário,Transferência bancária" |
+| "Transferência bancária,Boleto Bancário" |
 
