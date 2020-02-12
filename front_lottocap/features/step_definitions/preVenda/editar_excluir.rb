@@ -25,7 +25,7 @@ Dado("que adiciono mais um título de pré venda") do
 
     mensagem_modal = find('div.escolhaModal__bottom > span')
     # mensagem_modal.hover
-    # expect(page).to have_text '\n2\ntítulos'
+    expect(page).to have_content 'títulos'
 end
   
 Quando("edito as dezenas mudam") do

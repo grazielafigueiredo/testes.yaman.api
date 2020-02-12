@@ -106,6 +106,7 @@ context 'Concorrencia no pagamento Título já reservado' do
     
     @buscarDezenas = ApiPreVenda.post_buscarDezenas(@token1)
     @conjuntosDezenas = JSON.parse(@buscarDezenas.response.body)['obj'][0]
+    puts @conjuntosDezenas
 
     @lstDezenas = ApiPreVenda.post_adicionarItemCarrinhoPreVenda(@token1, [@conjuntosDezenas])
     @idCarrinhoUser1 = JSON.parse(@lstDezenas.response.body)['obj'][0]['idCarrinho']
@@ -117,7 +118,7 @@ context 'Concorrencia no pagamento Título já reservado' do
 
     @lstDezenas = ApiPreVenda.post_adicionarItemCarrinhoPreVenda(@token2, [@conjuntosDezenas])
     @idCarrinhoUser2 = JSON.parse(@lstDezenas.response.body)['obj'][0]['idCarrinho']
-    puts @lstDezenas
+    # puts @lstDezenas
 
 
       @boleto1 = ApiBoleto.post_sucessoBoleto(@token1, @idCarrinhoUser1)

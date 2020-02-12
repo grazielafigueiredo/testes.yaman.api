@@ -19,7 +19,8 @@ class Constant
     IdTitulo = 62290
     Dezenas = ["04 13 30"]
 
-    User1 = {"usuario": "user22@gmail.com", "senha": "1234"}
+    # User1 = {"usuario": "user22@gmail.com", "senha": "1234"}
+    User1 = {"usuario": "user1@gmail.com", "senha": "1234"}
     UserID = 3661
     User2 = {"usuario": "user666@gmail.com", "senha": "1234"}
     # UserID = 3705
