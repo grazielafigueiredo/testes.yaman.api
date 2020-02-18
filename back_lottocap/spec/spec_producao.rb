@@ -1,3 +1,4 @@
+#frozen_string_literal: true
 
 describe 'Criar usuário' do
 
@@ -103,7 +104,6 @@ describe 'Alterar dados Usuário' do
 end
 
 
-#frozen_string_literal: true
 
 context 'Resultados' do
   before do
@@ -111,13 +111,7 @@ context 'Resultados' do
 
     @getSerieResultados = ApiResultados.get_getSerieResultados(@token)
     @vlPremioAcerto = JSON.parse(@getSerieResultados.response.body)['obj'][0]['resultadoConcurso']['resultadosConcursos']
-    puts @vlPremioAcerto.count 
-    # vazio = { 'vlPremioAcerto' => 1.0, 'vlPremioConcurso' => 1.0 }
-    # vazio = { 'vlPremioAcerto' => 0.0, 'vlPremioConcurso' => 0.0 }
-    # vazio = [:vlPremioAcerto]
-    # @vlPremioAcerto = []
-    # @vlPremioAcerto.push(vazio) 
-    # puts @vlPremioAcerto
+    puts @vlPremioAcerto.count
   end
   
   it 'Premio total e por acertos nao pode retornar Zero' do 

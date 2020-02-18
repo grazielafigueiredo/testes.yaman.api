@@ -4,7 +4,7 @@ describe 'Boleto' do
   context 'Fim da série acaba hoje e forma de pagamento deve ficar indisponível' do
     before do
       @token = ApiUser.GetToken
-      ApiUser.Login(@token, Constant::User1)
+      ApiUser.Login(@token, user[:email, :senha])
 
       @carrinho = ApiCarrinho.post_AdicionarItemCarrinho(1, Constant::IdProduto, Constant::IdSerie, @token)
       @idCarrinho = JSON.parse(@carrinho.response.body)['obj'][0]['idCarrinho']
