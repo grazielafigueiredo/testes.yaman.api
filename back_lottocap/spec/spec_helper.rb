@@ -23,6 +23,7 @@ require_relative "services/resultados"
 require_relative "services/transferencia"
 require_relative "services/titulos"
 require_relative "services/user"
+# require_relative "utils/hashes"
 
 RSpec.configure do |config|
  

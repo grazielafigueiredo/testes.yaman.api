@@ -28,10 +28,20 @@ context 'loops' do
 
     Database.new.update_DataFinalVendaVigente('2020-12-25')
 
-    carrinho = ApiCarrinho.post_AdicionarItemCarrinho(1, Constant::IdProduto, Constant::IdSerie, @token)
+    carrinho = ApiCarrinho.post_AdicionarItemCarrinho(1, 
+                                                      Constant::IdProduto, 
+                                                      Constant::IdSerie, 
+                                                      @token)
+
     @idCarrinho = JSON.parse(carrinho.response.body)['obj'][0]['idCarrinho']
 
-    @result = ApiCartao.post_PagarCartaoDeCredito(@token, @idCarrinho, Constant::NomeCompletoTitular, Constant::NumeroCartao, Constant::ValidadeMesCartao, Constant::ValidadeAnoCartao, Constant::CartaoCVV)
+    @result = ApiCartao.post_PagarCartaoDeCredito(@token, 
+                                                  @idCarrinho, 
+                                                  Constant::NomeCompletoTitular, 
+                                                  Constant::NumeroCartao, 
+                                                  Constant::ValidadeMesCartao, 
+                                                  Constant::ValidadeAnoCartao, 
+                                                  Constant::CartaoCVV)
 
     @tituloJa = ApiTitulos.post_GetTitulosNovos(@token)
     idTitulo = expect(JSON.parse(@tituloJa.response.body)['obj'][0]['novosTitulos'][0]['idTitulo']).to be_a Integer

@@ -382,9 +382,18 @@ describe 'Carrinho - Sem Reserva - Tentar Pagar' do
       # puts @carrinho
       puts @token
 
-      @endpointAfiliados = ApiCarrinho.post_AdicionarItemCarrinhoAfiliados(@token, Constant::IdProduto, Constant::IdSerie87, 2)
+      @endpointAfiliados = ApiCarrinho.post_AdicionarItemCarrinhoAfiliados(@token, 
+                                                                           Constant::IdProduto, 
+                                                                           Constant::IdSerie87, 
+                                                                           2)
       # puts @endpointAfiliados
-      @result = ApiCartao.post_PagarCartaoDeCredito(@token, @idCarrinho, Constant::NomeCompletoTitular, Constant::NumeroCartao, Constant::ValidadeMesCartao, Constant::ValidadeAnoCartao, Constant::CartaoCVV)
+      @result = ApiCartao.post_PagarCartaoDeCredito(@token, 
+                                                    @idCarrinho, 
+                                                    Constant::NomeCompletoTitular, 
+                                                    Constant::NumeroCartao, 
+                                                    Constant::ValidadeMesCartao, 
+                                                    Constant::ValidadeAnoCartao, 
+                                                    Constant::CartaoCVV)
       puts @result
     end
 
@@ -403,15 +412,28 @@ describe 'Carrinho - Sem Reserva - Tentar Pagar' do
     before do
       @token = ApiUser.GetToken
 
-      @carrinho = ApiCarrinho.post_AdicionarItemCarrinho(5, Constant::IdProduto, Constant::IdSerie, @token)
+      @carrinho = ApiCarrinho.post_AdicionarItemCarrinho(5, 
+                                                         Constant::IdProduto, 
+                                                         Constant::IdSerie, 
+                                                         @token)
+
         @idCarrinho = JSON.parse(@carrinho.response.body)['obj'][0]['idCarrinho']
         puts @carrinho 
 
       ApiUser.Login(@token, Constant::User1)
 
-      @endpointAfiliados = ApiCarrinho.post_AdicionarItemCarrinhoAfiliados(@token, Constant::IdProduto, Constant::IdSerie87, 2)
+      @endpointAfiliados = ApiCarrinho.post_AdicionarItemCarrinhoAfiliados(@token, 
+                                                                           Constant::IdProduto, 
+                                                                           Constant::IdSerie87, 
+                                                                           2)
       puts @endpointAfiliados
-      @result = ApiCartao.post_PagarCartaoDeCredito(@token, @idCarrinho, Constant::NomeCompletoTitular, Constant::NumeroCartao, Constant::ValidadeMesCartao, Constant::ValidadeAnoCartao, Constant::CartaoCVV)
+      @result = ApiCartao.post_PagarCartaoDeCredito(@token, 
+                                                    @idCarrinho, 
+                                                    Constant::NomeCompletoTitular, 
+                                                    Constant::NumeroCartao, 
+                                                    Constant::ValidadeMesCartao, 
+                                                    Constant::ValidadeAnoCartao, 
+                                                    Constant::CartaoCVV)
       puts @result
     end
 

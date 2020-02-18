@@ -1,43 +1,5 @@
-# context 'Pagar 2 produtos no carrinho' do
-#     before do
-#       @token = ApiUser.GetToken
-#       ApiUser.Login(@token, Constant::User1)
-  
-      
-#       ApiCarrinho.post_AdicionarItemCarrinho(1, Constant::IdProduto, Constant::IdSerie, @token)
-#       @carrinho = ApiCarrinho.post_AdicionarItemCarrinho(1, Constant::IdProduto, Constant::IdSerie87, @token)
-#       puts @carrinho
-#       @idCarrinho = JSON.parse(@carrinho.response.body)['obj'][0]['idCarrinho']
-#       @result = ApiCartao.post_PagarCartaoDeCredito(@token, @idCarrinho, Constant::NomeCompletoTitular, Constant::NumeroCartao, Constant::ValidadeMesCartao, Constant::ValidadeAnoCartao, Constant::CartaoCVV)
-#       puts @result
-#     end
-    
-#     it 'verificando se o carrinho tem 2 produtos para pagamento' do 
-#      expect(JSON.parse(@carrinho.response.body)['dadosUsuario']['qtdItensCarrinho']).to be >= 2
-#      expect(JSON.parse(@result.response.body)['sucesso']).to be true 
-#     end
-    
-#     after do 
-#       ApiCarrinho.post_SetRemoverItemCarrinho(@token, @idCarrinho)
-#       ApiUser.get_deslogar(@token)
-#     end 
-#   end
 
 describe 'Criar usuário' do
-
-    # context 'Sucesso' do
-    #   before do
-    #     @token = ApiUser.GetToken
-    #     @create = ApiProducao.post_CadastrarUsuario(@token, Faker::Name.name,Faker::CPF.numeric, Faker::Internet.email)
-    #     puts @create
-    #   end
-
-    #   it { expect(JSON.parse(@create.response.body)['sucesso']).to be true}
-
-    #   after do
-    #     ApiUser.get_deslogar(@token)
-    #   end
-    # end
 
     context 'CPF já cadastrado' do
         before do
@@ -82,19 +44,6 @@ describe 'Criar usuário' do
 end
 
 describe 'Validador - 1 passo de criação de usuário' do 
-    # context 'Sucesso' do
-    #     before do
-    #       @token = ApiUser.GetToken
-    #       @create = ApiProducao.post_ValidarDadosUsuarioCriacao(@token, Faker::Name.name, Faker::CPF.numeric, Faker::Internet.email)
-    #     end
-  
-    #     it { expect(JSON.parse(@create.response.body)['sucesso']).to be true}
-  
-    #     after do
-    #       ApiUser.get_deslogar(@token)
-    #     end
-    # end
-
     context 'CPF já cadastrado' do
         before do
             @token = ApiProducao.GetToken
@@ -150,5 +99,37 @@ describe 'Alterar dados Usuário' do
   end
   after do
     ApiProducao.get_deslogar(@token)
+  end
+end
+
+
+#frozen_string_literal: true
+
+context 'Resultados' do
+  before do
+    @token = ApiUser.GetToken
+
+    @getSerieResultados = ApiResultados.get_getSerieResultados(@token)
+    @vlPremioAcerto = JSON.parse(@getSerieResultados.response.body)['obj'][0]['resultadoConcurso']['resultadosConcursos']
+    puts @vlPremioAcerto.count 
+    # vazio = { 'vlPremioAcerto' => 1.0, 'vlPremioConcurso' => 1.0 }
+    # vazio = { 'vlPremioAcerto' => 0.0, 'vlPremioConcurso' => 0.0 }
+    # vazio = [:vlPremioAcerto]
+    # @vlPremioAcerto = []
+    # @vlPremioAcerto.push(vazio) 
+    # puts @vlPremioAcerto
+  end
+  
+  it 'Premio total e por acertos nao pode retornar Zero' do 
+    @vlPremioAcerto.each do | premio|
+      expect(premio['vlPremioAcerto']).to be_a Float
+      expect(premio['vlPremioAcerto']).to be >= 1.0
+      expect(premio['vlPremioConcurso']).to be_a Float
+      expect(premio['vlPremioConcurso']).to be >= 1.0
+    end
+  end
+
+  after do
+    ApiUser.get_deslogar(@token)
   end
 end

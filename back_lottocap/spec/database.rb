@@ -1,80 +1,79 @@
-require 'tiny_tds'    
+# frozen_string_literal: true
+
+require 'tiny_tds'
 require 'timeout'
 
 class Database
-    def initialize
-        conn = {
-            # username: 'graziela', 
-            # password: '4KoNxOHqNtTd6zZ',  
-            username: 'Lottocap', 
-            password: 'L0ttocap@sql2018',  
-            host: 'hmllottocap.database.windows.net', 
-            port: 1433,  
-            database: 'hmllottocaptests', 
-            azure:true
-        }
-        @connection =  TinyTds::Client.new(conn)
-        
-    end
+  def initialize
+    conn = {
+      # username: 'graziela',
+      # password: '4KoNxOHqNtTd6zZ',
+      username: 'Lottocap',
+      password: 'L0ttocap@sql2018',
+      host: 'hmllottocap.database.windows.net',
+      port: 1433,
+      database: 'hmllottocaptests',
+      azure: true
+    }
+    @connection = TinyTds::Client.new(conn)
+  end
 
-    # def initialize
-    #     conn = {
-    #         username: 'prdlottocap_Copy', 
-    #         password: 'Lottocap',  
-    #         host: 'hmllottocap.database.windows.net', 
-    #         port: 1433,  
-    #         database: 'L0ttocap@sql2018', 
-    #         azure:true
-    #     }
-    #     @connection =  TinyTds::Client.new(conn)      
-    # end
+  # def initialize
+  #     conn = {
+  #         username: 'prdlottocap_Copy',
+  #         password: 'Lottocap',
+  #         host: 'hmllottocap.database.windows.net',
+  #         port: 1433,
+  #         database: 'L0ttocap@sql2018',
+  #         azure:true
+  #     }
+  #     @connection =  TinyTds::Client.new(conn)
+  # end
 
-    def update_DataFinalVendaVigente(dataFinalVenda)
-        t = @connection.execute("UPDATE Serie SET DataFinalVenda = '#{dataFinalVenda}' where IdSerie= #{Constant::IdSerie};")
-        puts t.do
-    end
+  def update_DataFinalVendaVigente(dataFinalVenda)
+    t = @connection.execute("UPDATE Serie SET DataFinalVenda = '#{dataFinalVenda}' where IdSerie= #{Constant::IdSerie};")
+    puts t.do
+  end
 
-    def update_TodosProdutosIndisponiveisVitrine(dataFinalVenda)
-        @connection.execute("UPDATE Serie SET DataFinalVenda = '#{dataFinalVenda}';")
+  def update_TodosProdutosIndisponiveisVitrine(dataFinalVenda)
+    @connection.execute("UPDATE Serie SET DataFinalVenda = '#{dataFinalVenda}';")
+  end
 
-    end
+  def update_BloquearPagamento
+    time = Time.now.strftime('%F')
+    @connection.execute("UPDATE Serie SET DataFinalVenda = '#{time}' where idSerie = #{Constant::IdSerie};")
+  end
 
-    def update_BloquearPagamento()
-        time = Time.now.strftime('%F')
-        @connection.execute("UPDATE Serie SET DataFinalVenda = '#{time}' where idSerie = #{Constant::IdSerie};")
+  def update_reservarSerie(reservado)
+    t = @connection.execute("UPDATE TituloMatriz SET reservado = #{reservado} where idSerie = #{Constant::IdSerie};")
+    sleep 5
+    puts t.do
+  end
 
-    end
+  def update_MaxNaVitrine(dataFinalVenda)
+    @connection.execute("UPDATE Serie SET DataFinalVenda = '#{dataFinalVenda}' where IdProduto = 1;")
+    # sleep 2
+  end
 
-    def update_reservarSerie(reservado)
-       t = @connection.execute("UPDATE TituloMatriz SET reservado = #{reservado} where idSerie = #{Constant::IdSerie};")
-       sleep 5
-        puts t.do
-    end
-
-    def update_MaxNaVitrine(dataFinalVenda)
-        @connection.execute("UPDATE Serie SET DataFinalVenda = '#{dataFinalVenda}' where IdProduto = 1;")
-        # sleep 2
-    end
-
-    def update_MaxReservados(reservado)     ##### reservar todos os titulos da série MAX
-        res =  @connection.execute("UPDATE TituloMatriz 
+  def update_MaxReservados(reservado) ##### reservar todos os titulos da série MAX
+    res = @connection.execute("UPDATE TituloMatriz
                                     SET reservado = #{reservado}
                                     FROM TituloMatriz as T
                                     INNER JOIN Serie as S ON T.idSerie = S.IdSerie
                                     WHERE IdProduto = 1")
-        sleep 55
-        # Timeout::timeout 10
-        puts 'Affected rows' 
-        puts res.do
-    end
+    sleep 55
+    # Timeout::timeout 10
+    puts 'Affected rows'
+    puts res.do
+  end
 
-    def update_CreditoLottocap(saldoCredito)
-        @connection.execute("BEGIN 
+  def update_CreditoLottocap(saldoCredito)
+    @connection.execute("BEGIN
             DECLARE @saldoTotal decimal(18, 3);
             DECLARE @saldoPremio decimal(18, 3);
             DECLARE @saldoCredito decimal(18, 3);
             DECLARE @saldoCapitalizacao decimal(18, 3);
-    
+
             SELECT
                 @saldoTotal = saldoTotal,
                 @saldoPremio = saldoPremio,
@@ -83,7 +82,7 @@ class Database
             FROM USUARIO
             WHERE
                 idUsuario = #{Constant::UserID};
-    
+
             INSERT INTO [dbo].[UsuarioCredito] (
                 [idUsuario],
                 [dtCredito],
@@ -157,7 +156,7 @@ class Database
                 NULL,
                 NULL
             );
-    
+
             UPDATE Usuario
             SET
                 SaldoCredito = #{saldoCredito},
@@ -166,16 +165,15 @@ class Database
                 IdUsuario = #{Constant::UserID};
         END;")
     # end        puts rs
-    end
+  end
 
-    def update_PremioResgate(valorBonus)
-
-        @connection.execute("BEGIN 
+  def update_PremioResgate(valorBonus)
+    @connection.execute("BEGIN
             DECLARE @saldoTotal decimal(18, 3);
             DECLARE @saldoPremio decimal(18, 3);
             DECLARE @saldoCredito decimal(18, 3);
             DECLARE @saldoCapitalizacao decimal(18, 3);
-    
+
             SELECT
                 @saldoTotal = saldoTotal,
                 @saldoPremio = saldoPremio,
@@ -184,7 +182,7 @@ class Database
             FROM USUARIO
             WHERE
                 idUsuario = #{Constant::UserID};
-    
+
             INSERT INTO [dbo].[UsuarioCredito] (
                 [idUsuario],
                 [dtCredito],
@@ -258,7 +256,7 @@ class Database
                 NULL,
                 NULL
             );
-    
+
             UPDATE Usuario
             SET
                 SaldoCredito = #{valorBonus},
@@ -267,14 +265,14 @@ class Database
             WHERE
                 IdUsuario = #{Constant::UserID};
         END;")
-    end
+  end
 
-    def update_deletePremioResgate()
-        @connection.execute("UPDATE Usuario SET  SaldoPremio = 0.000  where IdUsuario = #{Constant::UserID};")
-    end
+  def update_deletePremioResgate
+    @connection.execute("UPDATE Usuario SET  SaldoPremio = 0.000  where IdUsuario = #{Constant::UserID};")
+  end
 
-    def select_GetQtdTitulosUsuario()
-        t = @connection.execute("SELECT COUNT(tm.idTituloMatriz) AS TOTAL
+  def select_GetQtdTitulosUsuario
+    t = @connection.execute("SELECT COUNT(tm.idTituloMatriz) AS TOTAL
         FROM dbo.TituloMatriz tm
              INNER JOIN dbo.Titulo t ON t.IdTituloMatriz = tm.IdTituloMatriz
              INNER JOIN dbo.SERIE s ON tm.idSerie = s.IdSerie
@@ -284,26 +282,27 @@ class Database
               AND S.Ativo = 1
               AND S.idSerieEstado = 4;")
 
-        return t
-    end
+    t
+  end
 
-    def update_preVenda()
-        today = Date.today
-        today_add_3_days = today + 4
-        today_add_6_days = today + 6
-        today_add_9_days = today + 9
+  def update_preVenda
+    today = Date.today
+    today_add_3_days = today + 4
+    today_add_6_days = today + 6
+    today_add_9_days = today + 9
 
-        ta = @connection.execute("UPDATE Serie SET DataInicialPreVenda= '#{today}',  
-                                                  DataFinalPreVenda= '#{today_add_3_days}', 
-                                                  DataInicialVenda= '#{today_add_6_days}',
-                                                  DataFinalVenda= '#{today_add_9_days}' 
-                                WHERE IdSerie= #{Constant::IdSerieMaxPreVenda};")
-        puts ta.do
+    ta = @connection.execute(
+        "UPDATE Serie SET DataInicialPreVenda= '#{today}',
+        DataFinalPreVenda= '#{today_add_3_days}',
+        DataInicialVenda= '#{today_add_6_days}',
+        DataFinalVenda= '#{today_add_9_days}'
+        WHERE IdSerie= #{Constant::IdSerieMaxPreVenda};"
+    )
+    puts ta.do
 
-        puts today
-        puts today_add_3_days
-        puts today_add_6_days
-        puts today_add_9_days
-    end
+    puts today
+    puts today_add_3_days
+    puts today_add_6_days
+    puts today_add_9_days
+  end
 end
-

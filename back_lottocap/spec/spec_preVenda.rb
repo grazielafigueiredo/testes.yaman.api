@@ -7,7 +7,11 @@ context 'Config pré-venda' do
 
     Database.new.update_preVenda
 
-    @carrinho = ApiCarrinho.post_AdicionarItemCarrinho(10, Constant::IdProduto, Constant::IdSerieMaxPreVenda, @token)
+    @carrinho = ApiCarrinho.post_AdicionarItemCarrinho(10, 
+                                                       Constant::IdProduto, 
+                                                       Constant::IdSerieMaxPreVenda, 
+                                                       @token)
+
     @idCarrinho = JSON.parse(@carrinho.response.body)['obj'][0]['idCarrinho']
     @idCarrinhoItem = JSON.parse(@carrinho.response.body)['obj'][0]['idCarrinhoItem']
     puts @idCarrinhoItem
@@ -58,7 +62,11 @@ context 'escolha de dezenas nao pode trazer qndo a série nao estiver em pré ve
     @token = ApiUser.GetToken
     ApiUser.Login(@token, Constant::User1)
 
-    @carrinho = ApiCarrinho.post_AdicionarItemCarrinho(10, Constant::IdProduto, Constant::IdSerie, @token)
+    @carrinho = ApiCarrinho.post_AdicionarItemCarrinho(10, 
+                                                       Constant::IdProduto, 
+                                                       Constant::IdSerie, 
+                                                       @token)
+                                                       
     @idCarrinho = JSON.parse(@carrinho.response.body)['obj'][0]['idCarrinho']
     @idCarrinhoItem = JSON.parse(@carrinho.response.body)['obj'][0]['idCarrinhoItem']
     puts @idCarrinhoItem

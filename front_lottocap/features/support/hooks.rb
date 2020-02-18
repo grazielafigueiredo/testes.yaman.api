@@ -8,9 +8,16 @@ Before('@login') do
     fill_in 'email', with: "user22@gmail.com"
     fill_in 'password', with: "1234"
     find(:css, 'button[type="submit"]').click
-    exists_modal = page.has_selector?('#onesignal-popover-container')
+    # exists_modal = page.has_selector?('#onesignal-popover-container')
     # sleep(2)
-
+    erro_login = page.has_selector?('div.ModalBody > div > form > span')
+    if erro_login
+        find('div[class="Header__login"]').click
+        # sleep(2)
+        fill_in 'email', with: "user22@gmail.com"
+        fill_in 'password', with: "1234"
+        find(:css, 'button[type="submit"]').click
+    end
     # page.driver.browser.witch_to.alert.dismiss
     exists_modal = page.has_selector?('#onesignal-popover-container')
     if exists_modal

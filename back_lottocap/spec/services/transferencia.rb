@@ -11,7 +11,12 @@ class ApiTransferencia
 
   # ------------ Transferência Bancária (Bradesco)-----------------------
 
-  def self.post_TransfBradesco(token, idCarrinho, transfAgencia, transfConta, transfContaDigito, nomeCompletoTitular)
+  def self.post_TransfBradesco(token, 
+                               idCarrinho, 
+                               transfAgencia, 
+                               transfConta, 
+                               transfContaDigito, 
+                               nomeCompletoTitular)
     headers['Authorization'] = token
 
     @TransfBradesco = {
@@ -30,7 +35,11 @@ class ApiTransferencia
 
   # ------------ Transferência Bancária (Itau)-----------------------
 
-  def self.post_TransfItau(token, idCarrinho, transfAgencia, transfConta, transfContaDigito)
+  def self.post_TransfItau(token, 
+                           idCarrinho, 
+                           transfAgencia, 
+                           transfConta, 
+                           transfContaDigito)
     headers['Authorization'] = token
 
     @TransfSucessoItau = {
@@ -50,7 +59,9 @@ class ApiTransferencia
 
   # ------------ Transferência Bancária (Santander)-----------------------
 
-  def self.post_TransfSantander(token, idCarrinho, cpf)
+  def self.post_TransfSantander(token, 
+                                idCarrinho, 
+                                cpf)
     headers['Authorization'] = token
 
     @TransfSantander = {
@@ -65,7 +76,12 @@ class ApiTransferencia
 
   # ------------ Transferência Bancária (Brasil)-----------------------
 
-  def self.post_TransfSucessoBrasil(token, idCarrinho, transfAgencia, transfAgenciaDigito, transfConta, transfContaDigito)
+  def self.post_TransfSucessoBrasil(token, 
+                                    idCarrinho, 
+                                    transfAgencia, 
+                                    transfAgenciaDigito, 
+                                    transfConta, 
+                                    transfContaDigito)
     headers['Authorization'] = token
 
     @TransfSucessoBrasil = {
