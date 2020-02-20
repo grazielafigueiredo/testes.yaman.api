@@ -305,4 +305,136 @@ class Database
     puts today_add_6_days
     puts today_add_9_days
   end
+
+  def select_count_generated_titulos
+    t = @connection.execute(
+        "SELECT COUNT (*) FROM TituloMatriz as T
+        INNER JOIN Serie as S ON T.idSerie = S.IdSerie
+        WHERE IdProduto = 1
+        and T.idSerie = 86"
+      )
+        puts 'Affected rows'
+        puts t.do            
+  end
+
+  def insert_create_concursos
+    @today = Date.today
+    monday = Time.now.strftime('%m')
+
+    datas_prevista_concurso = [
+      # 01,
+      # 03,
+      # 05,
+      # 07,
+      # 15,
+      20
+    ]
+
+    @concursos_inseridos = []
+
+    datas_prevista_concurso.each do |data|
+      dezena_nova = ((0..4).map{Random.new.rand(10..80)}).sort().join(' ')
+      
+      query = "INSERT INTO Concurso(idLoteria, nmConcurso, dtSorteio, resultado, aprovado, dtCriacao, idUsuarioCriacao)
+      VALUES(4, #{Faker::Bank.account_number(digits: 4)}, '2020-04-#{data}', '#{dezena_nova}', 1, '#{@today}', 1)"
+      
+      result_insert = @connection.execute(query)
+      # puts 'Affected rows'
+      result = @connection.execute("SELECT SCOPE_IDENTITY()")
+      
+      result.each do |row|
+        @concursos_inseridos.push(row[''].to_i)
+      end
+
+      # result.each do |row|
+      #   puts row['idConcurso']
+      #   puts row['idLoteria']
+      #   puts row['dtSorteio']
+      # end
+    end
+
+    puts @concursos_inseridos
+  end
+
+
+  def insert_create_serie
+    today = Date.today
+
+    @serie_inserida = []
+
+    t = @connection.execute(
+      create_serie = "INSERT Serie(IdProduto, Nome, Preco, DataInicialVigencia, DataFinalVigencia, DataInicialVenda, DataFinalVenda, Aprovado, Ativo, DataCriacao, idSerieEstado,IdUsuarioCriacao, PacoteTitulos, CorSerie)
+        VALUES (1, 'MAX - #{today}', 50.000, '2020-04-01', '2020-04-30', '2020-04-30', '2020-04-30', 1, 1, '#{today}', 1, 1, '1,3', '#000000')"
+      )
+        puts 'Affected rows'
+        puts t.do          
+              
+      # result_insert = @connection.execute(create_serie)
+      # puts 'Affected rows'
+      result = @connection.execute("SELECT SCOPE_IDENTITY()")
+      
+      result.each do |row|
+        @serie_inserida.push(row[''].to_i)
+      end
+      puts @serie_inserida
+
+  end
+
+  def relacionamento_serie_concurso
+    today = Date.today
+
+    datas_prevista_concurso = [
+      # 01,
+      # 03,
+      # 05,
+      # 07,
+      # 15,
+      20
+    ]
+
+    concursos_inseridos = []
+
+    datas_prevista_concurso.each do |data|
+      dezena_nova = ((0..4).map{Random.new.rand(10..80)}).sort().join(' ')
+      
+      query = "INSERT INTO Concurso(idLoteria, nmConcurso, dtSorteio, resultado, aprovado, dtCriacao, idUsuarioCriacao)
+      VALUES(4, #{Faker::Bank.account_number(digits: 4)}, '2020-04-#{data}', '#{dezena_nova}', 1, '#{today}', 1)"
+      
+      result_insert = @connection.execute(query)
+      # puts 'Affected rows'
+      results_concurso = @connection.execute("SELECT SCOPE_IDENTITY()")
+      
+      results_concurso.each do |concurso|
+        concursos_inseridos.push(concurso[''].to_i)
+      end
+    end
+
+    puts concursos_inseridos
+
+
+    serie_inserida = []
+
+    t = @connection.execute(
+      create_serie = "INSERT Serie(IdProduto, Nome, Preco, DataInicialVigencia, DataFinalVigencia, DataInicialVenda, DataFinalVenda, Aprovado, Ativo, DataCriacao, idSerieEstado,IdUsuarioCriacao, PacoteTitulos, CorSerie)
+        VALUES (1, 'MAX - #{today}', 50.000, '2020-04-01', '2020-04-30', '2020-04-30', '2020-04-30', 1, 1, '#{today}', 1, 1, '1,3', '#000000')"
+      )
+        puts 'Affected rows'
+        puts t.do
+
+      result = @connection.execute("SELECT SCOPE_IDENTITY()")
+
+      result.each do |row|
+        serie_inserida.push(row[''].to_i)
+      end
+      puts serie_inserida
+
+      # teste1.each do
+    quu = @connection.execute(
+      "INSERT SerieConcurso(idSerie, idConcurso, idAdminUsuario, dtCriacao, apurado)
+      VALUES ('#{result}', '#{result}', 1, '#{today}', 0)"
+    )
+    puts 'Affected rows'
+    puts quu.do
+  end
 end
+
