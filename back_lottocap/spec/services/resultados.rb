@@ -8,18 +8,18 @@ class ApiResultados
   base_uri Constant::Url
   headers 'Content-Type' => 'application/json'
 
-  def self.get_getSeriesListResultados(token)
+  def self.get_seriesListResultados(token)
     headers[:Authorization] = token
 
     # get('Produto/GetSeriesListResultados', body: @GetSeriesListResultados.to_json)
     get('/Produto/getSeriesListResultados')
   end
 
-  def self.get_getSerieResultados(token)
+  def self.get_serieResultados(token, idSerie)
     headers[:Authorization] = token
         @getSerieResultados = {
           "obj": {
-            "idSerie": "91"
+            "idSerie": "#{idSerie}"
           }
         }
     post('/Produto/GetSerieResultados', body: @getSerieResultados.to_json)
