@@ -11,7 +11,15 @@ describe 'Resgate' do
         
         Database.new.update_PremioResgate(5000)
 
-        @pedidoResgate = ApiResgate.post_SetResgate(10.000, @token, 3, Faker::Bank.account_number(digits: 4), Faker::Bank.account_number(digits: 1), Faker::Bank.account_number(digits: 10), Faker::Bank.account_number(digits: 1))
+        @pedidoResgate = ApiResgate.post_SetResgate(
+          10.000,
+          @token,
+          3,
+          Faker::Bank.account_number(digits: 4),
+          Faker::Bank.account_number(digits: 1),
+          Faker::Bank.account_number(digits: 10),
+          Faker::Bank.account_number(digits: 1)
+        )
         puts @pedidoResgate
         @statusResgate = ApiResgate.get_StatusResgate(@token)
         # puts @statusResgate
@@ -38,7 +46,15 @@ describe 'Resgate' do
       ApiUser.Login(@token, Constant::User1)
 
       Database.new.update_PremioResgate(50)
-      @pedidoResgate = ApiResgate.post_SetResgate(10.000, @token, 3, Faker::Bank.account_number(digits: 4), Faker::Bank.account_number(digits: 1), Faker::Bank.account_number(digits: 10), Faker::Bank.account_number(digits: 1))
+      @pedidoResgate = ApiResgate.post_SetResgate(
+        10.000,
+        @token,
+        3,
+        Faker::Bank.account_number(digits: 4),
+        Faker::Bank.account_number(digits: 1),
+        Faker::Bank.account_number(digits: 10),
+        Faker::Bank.account_number(digits: 1)
+      )
       puts @pedidoResgate
       @statusResgate = ApiResgate.get_StatusResgate(@token)
       # puts @statusResgate
@@ -63,7 +79,15 @@ describe 'Resgate' do
       ApiUser.Login(@token, Constant::User1)
 
       Database.new.update_PremioResgate(50)
-      @pedidoResgate = ApiResgate.post_SetResgate(100.000, @token, 1, Faker::Bank.account_number(digits: 4), Faker::Bank.account_number(digits: 1), Faker::Bank.account_number(digits: 10), Faker::Bank.account_number(digits: 1))
+      @pedidoResgate = ApiResgate.post_SetResgate(
+        100.000,
+        @token,
+        1,
+        Faker::Bank.account_number(digits: 4),
+        Faker::Bank.account_number(digits: 1),
+        Faker::Bank.account_number(digits: 10),
+        Faker::Bank.account_number(digits: 1)
+      )
       puts @pedidoResgate
     end
 
@@ -83,7 +107,15 @@ describe 'Resgate' do
       ApiUser.Login(@token, Constant::User1)
 
       Database.new.update_PremioResgate(50.000)
-      @res = ApiResgate.post_SetResgate(10.000, @token, 1, 1234, 1, 1234567890, 1)
+      @res = ApiResgate.post_SetResgate(
+        10.000,
+        @token,
+        1,
+        1234,
+        1,
+        1234567890,
+        1
+      )
       puts @res
     end
 

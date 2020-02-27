@@ -4,15 +4,9 @@ context 'Resultados' do
   before do
     @token = ApiUser.GetToken
 
-    @getSerieResultados = ApiResultados.get_getSerieResultados(@token)
+    @getSerieResultados = ApiResultados.get_serieResultados(@token, 91)
     @vlPremioAcerto = JSON.parse(@getSerieResultados.response.body)['obj'][0]['resultadoConcurso']['resultadosConcursos']
     puts @vlPremioAcerto.count 
-    # vazio = { 'vlPremioAcerto' => 1.0, 'vlPremioConcurso' => 1.0 }
-    # vazio = { 'vlPremioAcerto' => 0.0, 'vlPremioConcurso' => 0.0 }
-    # vazio = [:vlPremioAcerto]
-    # @vlPremioAcerto = []
-    # @vlPremioAcerto.push(vazio) 
-    # puts @vlPremioAcerto
   end
   
   it 'Premio total e por acertos nao pode retornar Zero' do 

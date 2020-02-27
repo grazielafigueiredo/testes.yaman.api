@@ -8,7 +8,12 @@ describe 'Bradesco' do
       ApiUser.Login(@token, Constant::User1)
       Database.new.update_DataFinalVendaVigente('2020-12-25')
 
-      @carrinho = ApiCarrinho.post_AdicionarItemCarrinho(1, Constant::IdProduto, Constant::IdSerie, @token)
+      @carrinho = ApiCarrinho.post_AdicionarItemCarrinho(
+        1,
+        Constant::IdProduto,
+        Constant::IdSerie,
+        @token
+      )
       puts @carrinho
       @idCarrinho = JSON.parse(@carrinho.response.body)['obj'][0]['idCarrinho']
       @result = ApiTransferencia.post_TransfBradesco(@token, @idCarrinho, Faker::Bank.account_number(digits: 4), Faker::Bank.account_number(digits: 4), Faker::Bank.account_number(digits: 1), Constant::NomeCompletoTitular)
@@ -33,7 +38,12 @@ describe 'Bradesco' do
       ApiUser.Login(@token, Constant::User1)
       Database.new.update_DataFinalVendaVigente('2020-12-25')
 
-      carrinho = ApiCarrinho.post_AdicionarItemCarrinho(1, Constant::IdProduto, Constant::IdSerie, @token)
+      carrinho = ApiCarrinho.post_AdicionarItemCarrinho(
+        1,
+        Constant::IdProduto,
+        Constant::IdSerie,
+        @token
+      )
       @idCarrinho = JSON.parse(carrinho.response.body)['obj'][0]['idCarrinho']
 
       @result = ApiTransferencia.post_TransfBradesco(@token, @idCarrinho, '1234', '5678', '9', Constant::NomeCompletoTitular)
@@ -53,12 +63,24 @@ describe 'Bradesco' do
       ApiUser.Login(@token, Constant::User1)
       Database.new.update_DataFinalVendaVigente('2020-12-25')
 
-      carrinho = ApiCarrinho.post_AdicionarItemCarrinho(1, Constant::IdProduto, Constant::IdSerie, @token)
+      carrinho = ApiCarrinho.post_AdicionarItemCarrinho(
+        1,
+        Constant::IdProduto,
+        Constant::IdSerie,
+        @token
+      )
       @idCarrinho = JSON.parse(carrinho.response.body)['obj'][0]['idCarrinho']
 
       Database.new.update_reservarSerie(1)
       # sleep 10
-      @result = ApiTransferencia.post_TransfBradesco(@token, @idCarrinho, Faker::Bank.account_number(digits: 4), Faker::Bank.account_number(digits: 4), Faker::Bank.account_number(digits: 1), Constant::NomeCompletoTitular)
+      @result = ApiTransferencia.post_TransfBradesco(
+        @token,
+        @idCarrinho,
+        Faker::Bank.account_number(digits: 4),
+        Faker::Bank.account_number(digits: 4),
+        Faker::Bank.account_number(digits: 1),
+        Constant::NomeCompletoTitular
+      )
       puts @result
     end
 
@@ -81,10 +103,22 @@ describe 'Bradesco' do
       ApiUser.Login(@token, Constant::User1)
       Database.new.update_DataFinalVendaVigente('2020-12-25')
 
-      carrinho = ApiCarrinho.post_AdicionarItemCarrinho(1, Constant::IdProduto, Constant::IdSerie, @token)
+      carrinho = ApiCarrinho.post_AdicionarItemCarrinho(
+        1,
+        Constant::IdProduto,
+        Constant::IdSerie,
+        @token
+      )
       @idCarrinho = JSON.parse(carrinho.response.body)['obj'][0]['idCarrinho']
 
-      @result = ApiTransferencia.post_TransfBradesco(@token, @idCarrinho, Faker::Bank.account_number(digits: 4), Faker::Bank.account_number(digits: 4), '', Constant::NomeCompletoTitular)
+      @result = ApiTransferencia.post_TransfBradesco(
+        @token,
+        @idCarrinho,
+        Faker::Bank.account_number(digits: 4),
+        Faker::Bank.account_number(digits: 4),
+        '',
+        Constant::NomeCompletoTitular
+      )
       puts @result
     end
     it { expect(JSON.parse(@result.response.body)['obj'][0]['digitoAgencia']).to eql '' }
@@ -101,10 +135,22 @@ describe 'Bradesco' do
       ApiUser.Login(@token, Constant::User1)
       Database.new.update_DataFinalVendaVigente('2020-12-25')
 
-      carrinho = ApiCarrinho.post_AdicionarItemCarrinho(1, Constant::IdProduto, Constant::IdSerie, @token)
+      carrinho = ApiCarrinho.post_AdicionarItemCarrinho(
+        1,
+        Constant::IdProduto,
+        Constant::IdSerie,
+        @token
+      )
       @idCarrinho = JSON.parse(carrinho.response.body)['obj'][0]['idCarrinho']
 
-      @result = ApiTransferencia.post_TransfBradesco(@token, @idCarrinho, Faker::Bank.account_number(digits: 4), Faker::Bank.account_number(digits: 4), Faker::Bank.account_number(digits: 3), Constant::NomeCompletoTitular)
+      @result = ApiTransferencia.post_TransfBradesco(
+        @token,
+        @idCarrinho,
+        Faker::Bank.account_number(digits: 4),
+        Faker::Bank.account_number(digits: 4),
+        Faker::Bank.account_number(digits: 3),
+        Constant::NomeCompletoTitular
+      )
       puts @result
     end
     it { expect(@result.response.code).to eql '400' }

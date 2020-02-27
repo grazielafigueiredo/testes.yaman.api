@@ -4,7 +4,12 @@ context 'Comprar créditos Lottocap' do
     @token = ApiUser.GetToken
     ApiUser.Login(@token, Constant::User1)
 
-    @carrinho = ApiCarrinho.post_AdicionarItemCarrinho(1, Constant::IdProduto, Constant::IdSerie, @token)
+    @carrinho = ApiCarrinho.post_AdicionarItemCarrinho(
+      1,
+      Constant::IdProduto,
+      Constant::IdSerie,
+      @token
+    )
     @idCarrinho = JSON.parse(@carrinho.response.body)['obj'][0]['idCarrinho']
 
     @result = ApiCreditoLottocap.post_comprarCreditoLottocap(@token, @idCarrinho)
@@ -26,7 +31,12 @@ context 'Pagar - Sucesso com Crédito Lottocap' do
 
     Database.new.update_CreditoLottocap(100)
 
-    @carrinho = ApiCarrinho.post_AdicionarItemCarrinho(3, Constant::IdProduto, Constant::IdSerie, @token)
+    @carrinho = ApiCarrinho.post_AdicionarItemCarrinho(
+      3,
+      Constant::IdProduto,
+      Constant::IdSerie,
+      @token
+    )
     @idCarrinho = JSON.parse(@carrinho.response.body)['obj'][0]['idCarrinho']
 
     @result = ApiCreditoLottocap.post_CreditoLottocap(@token, @idCarrinho)
@@ -52,7 +62,12 @@ context 'Pagar - Teste de compra com JÁ18' do
 
     Database.new.update_CreditoLottocap(100.000)
 
-    @carrinho = ApiCarrinho.post_AdicionarItemCarrinho(3, Constant::IdProdutoJa18, Constant::IdSerieJa18, @token)
+    @carrinho = ApiCarrinho.post_AdicionarItemCarrinho(
+      3,
+      Constant::IdProdutoJa18,
+      Constant::IdSerieJa18,
+      @token
+    )
     @idCarrinho = JSON.parse(@carrinho.response.body)['obj'][0]['idCarrinho']
     puts @carrinho
     @result = ApiCreditoLottocap.post_CreditoLottocap(@token, @idCarrinho)

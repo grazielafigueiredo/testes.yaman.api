@@ -161,9 +161,22 @@ context 'Comprar com Cartao de Credito e verificar se o título foi atribuído' 
     puts('tituloAntesCompra', @tituloAntesCompra)
 
     # Pagando o carrinho com cartao de credito
-    @carrinho = ApiCarrinho.post_AdicionarItemCarrinho(1, Constant::IdProduto, Constant::IdSerie, @token)
+    @carrinho = ApiCarrinho.post_AdicionarItemCarrinho(
+      1,
+      Constant::IdProduto,
+      Constant::IdSerie,
+      @token
+    )
     @idCarrinho = JSON.parse(@carrinho.response.body)['obj'][0]['idCarrinho']
-    @result = ApiCartao.post_PagarCartaoDeCredito(@token, @idCarrinho, Constant::NomeCompletoTitular, Constant::NumeroCartao, Constant::ValidadeMesCartao, Constant::ValidadeAnoCartao, Constant::CartaoCVV)
+    @result = ApiCartao.post_PagarCartaoDeCredito(
+      @token,
+      @idCarrinho,
+      Constant::NomeCompletoTitular,
+      Constant::NumeroCartao,
+      Constant::ValidadeMesCartao,
+      Constant::ValidadeAnoCartao,
+      Constant::CartaoCVV
+    )
 
     @tituloDepoisCompra = ApiTitulos.get_GetQtdTitulosUsuario(@token)['obj'][0]['qtd']
     puts('tituloDepoisCompra', @tituloDepoisCompra)
@@ -191,7 +204,12 @@ context 'Comprar com CLottocap e verificar se o título foi atribuído' do
     # Atribuindo credito lottocap e pagando o carrinho
     @rs = Database.new.update_CreditoLottocap(100)
     puts @rs
-    @carrinho = ApiCarrinho.post_AdicionarItemCarrinho(2, Constant::IdProduto, Constant::IdSerie, @token)
+    @carrinho = ApiCarrinho.post_AdicionarItemCarrinho(
+      2,
+      Constant::IdProduto,
+      Constant::IdSerie,
+      @token
+    )
     @idCarrinho = JSON.parse(@carrinho.response.body)['obj'][0]['idCarrinho']
     @result = ApiCreditoLottocap.post_CreditoLottocap(@token, @idCarrinho)
 

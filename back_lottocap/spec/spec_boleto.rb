@@ -6,7 +6,12 @@ describe 'Boleto' do
       @token = ApiUser.GetToken
       ApiUser.Login(@token, user[:email, :senha])
 
-      @carrinho = ApiCarrinho.post_AdicionarItemCarrinho(1, Constant::IdProduto, Constant::IdSerie, @token)
+      @carrinho = ApiCarrinho.post_AdicionarItemCarrinho(
+        1,
+        Constant::IdProduto,
+        Constant::IdSerie,
+        @token
+      )
       @idCarrinho = JSON.parse(@carrinho.response.body)['obj'][0]['idCarrinho']
 
       Database.new.update_BloquearPagamento
