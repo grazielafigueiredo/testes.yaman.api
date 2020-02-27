@@ -9,6 +9,7 @@ require 'rspec'
 require 'tiny_tds'    
 
 require_relative "database"
+require_relative "databases/titulo_matrizDb"
 require_relative "factories"
 require_relative "services/boleto"
 require_relative "services/carrinho"
