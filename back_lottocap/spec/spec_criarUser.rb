@@ -2,8 +2,16 @@ describe 'Criar usuário' do
 
     context 'Sucesso' do
       before do
-        @token = ApiUser.GetToken
-        @create = ApiCreateUser.post_CadastrarUsuario(@token, Faker::Name.name,Faker::CPF.numeric, Faker::Internet.email)
+        # @token = ApiUser.GetToken
+        @create = ApiCreateUser.post_CadastrarUsuario(
+          "82e2cda1-79ff-42c3-9dbf-80b9d21ea09c",
+          # @token,
+          Faker::Name.name,
+          "00000009652",
+          # Faker::CPF.numeric,
+          # Faker::Internet.email
+          "user22@gmail.com"
+        )
         puts @create
       end
 
@@ -17,7 +25,12 @@ describe 'Criar usuário' do
     context 'CPF já cadastrado' do
         before do
             @token = ApiUser.GetToken
-            @create = ApiCreateUser.post_ValidarDadosUsuarioCriacao(@token, Faker::Name.name, "00000009652", Faker::Internet.email)
+            @create = ApiCreateUser.post_ValidarDadosUsuarioCriacao(
+              @token, 
+              Faker::Name.name, 
+              "00000009652", 
+              Faker::Internet.email
+            )
         end
   
         it { expect(JSON.parse(@create.response.body)['erros'][0]['mensagem']).to eql "Este CPF já está cadastrado. Informe um outro CPF ou clique em 'Esqueci a minha senha'."}
@@ -30,7 +43,12 @@ describe 'Criar usuário' do
     context 'CPF inválido' do
         before do
           @token = ApiUser.GetToken
-          @create = ApiCreateUser.post_CadastrarUsuario(@token, Faker::Name.name, "00000000000", Faker::Internet.email)
+          @create = ApiCreateUser.post_CadastrarUsuario(
+            @token, 
+            Faker::Name.name, 
+            "00000000000", 
+            Faker::Internet.email
+          )
         end
   
         it { expect(JSON.parse(@create.response.body)['obj.CPF'][0]).to eql "O campo CPF contém dados inválidos."}
@@ -43,7 +61,12 @@ describe 'Criar usuário' do
     context 'Email já cadastrado' do
         before do
           @token = ApiUser.GetToken
-          @create = ApiCreateUser.post_CadastrarUsuario(@token, Faker::Name.name, Faker::CPF.numeric, "hklhl@hkhllk.com")
+          @create = ApiCreateUser.post_CadastrarUsuario(
+            @token, 
+            Faker::Name.name, 
+            Faker::CPF.numeric, 
+            "hklhl@hkhllk.com"
+          )
         end
   
         it { expect(JSON.parse(@create.response.body)['erros'][0]['mensagem']).to eql "Este e-mail já está cadastrado. Informe um outro e-mail ou clique em 'Esqueci a minha senha'."}
@@ -58,7 +81,12 @@ describe 'Validador - 1 passo de criação de usuário' do
     context 'Sucesso' do
         before do
           @token = ApiUser.GetToken
-          @create = ApiCreateUser.post_ValidarDadosUsuarioCriacao(@token, Faker::Name.name, Faker::CPF.numeric, Faker::Internet.email)
+          @create = ApiCreateUser.post_ValidarDadosUsuarioCriacao(
+            @token, 
+            Faker::Name.name, 
+            Faker::CPF.numeric, 
+            Faker::Internet.email
+          )
         end
   
         it { expect(JSON.parse(@create.response.body)['sucesso']).to be true}
@@ -71,7 +99,12 @@ describe 'Validador - 1 passo de criação de usuário' do
     context 'CPF já cadastrado' do
         before do
             @token = ApiUser.GetToken
-            @create = ApiCreateUser.post_ValidarDadosUsuarioCriacao(@token, Faker::Name.name, "00000009652", Faker::Internet.email)
+            @create = ApiCreateUser.post_ValidarDadosUsuarioCriacao(
+              @token, 
+              Faker::Name.name, 
+              "00000009652", 
+              Faker::Internet.email
+            )
         end
   
         it { expect(JSON.parse(@create.response.body)['erros'][0]['mensagem']).to eql "Este CPF já está cadastrado. Informe um outro CPF ou clique em 'Esqueci a minha senha'."}
@@ -84,7 +117,12 @@ describe 'Validador - 1 passo de criação de usuário' do
     context 'CPF inválido' do
         before do
           @token = ApiUser.GetToken
-          @create = ApiCreateUser.post_ValidarDadosUsuarioCriacao(@token, Faker::Name.name, "00000000000", Faker::Internet.email)
+          @create = ApiCreateUser.post_ValidarDadosUsuarioCriacao(
+            @token, 
+            Faker::Name.name, 
+            "00000000000", 
+            Faker::Internet.email
+          )
         end
   
         it { expect(JSON.parse(@create.response.body)['obj.CPF'][0]).to eql "O campo CPF contém dados inválidos."}
@@ -97,7 +135,12 @@ describe 'Validador - 1 passo de criação de usuário' do
     context 'Email já cadastrado' do
         before do
           @token = ApiUser.GetToken
-          @create = ApiCreateUser.post_ValidarDadosUsuarioCriacao(@token, Faker::Name.name, Faker::CPF.numeric, "hklhl@hkhllk.com")
+          @create = ApiCreateUser.post_ValidarDadosUsuarioCriacao(
+            @token, 
+            Faker::Name.name, 
+            Faker::CPF.numeric, 
+            "hklhl@hkhllk.com"
+          )
         end
   
         it { expect(JSON.parse(@create.response.body)['erros'][0]['mensagem']).to eql "Este e-mail já está cadastrado. Informe um outro e-mail ou clique em 'Esqueci a minha senha'."}
@@ -116,7 +159,11 @@ describe 'Alterar dados Usuário' do
       ApiUser.Login(@token, Constant::User1)
       puts @token
 
-      @create = ApiCreateUser.post_AlterarDadosUsuario(@token, "user22@gmail.com", "44302702010")
+      @create = ApiCreateUser.post_AlterarDadosUsuario(
+        @token, 
+        "user22@gmail.com", 
+        "44302702010"
+      )
       puts @create
     end 
 
@@ -131,7 +178,11 @@ describe 'Alterar dados Usuário' do
       @token = ApiUser.GetToken
       ApiUser.Login(@token, Constant::User1)
 
-      @create = ApiCreateUser.post_AlterarDadosUsuario(@token, "user1@gmail.com", "00000009652")
+      @create = ApiCreateUser.post_AlterarDadosUsuario(
+        @token, 
+        "user1@gmail.com", 
+        "00000009652"
+      )
       puts @create
     end 
 
@@ -146,7 +197,11 @@ describe 'Alterar dados Usuário' do
       @token = ApiUser.GetToken
       ApiUser.Login(@token, Constant::User1)
 
-      @create = ApiCreateUser.post_AlterarDadosUsuario(@token, "user1@gmail.com", "00000000000")
+      @create = ApiCreateUser.post_AlterarDadosUsuario(
+        @token, 
+        "user1@gmail.com", 
+        "00000000000"
+      )
       puts @create
     end 
 
@@ -161,7 +216,11 @@ describe 'Alterar dados Usuário' do
       @token = ApiUser.GetToken
       ApiUser.Login(@token, Constant::User1)
 
-      @create = ApiCreateUser.post_AlterarDadosUsuario(@token, "user1@gmail.com", "00000000000", )
+      @create = ApiCreateUser.post_AlterarDadosUsuario(
+        @token, 
+        "user1@gmail.com", 
+        "00000000000"
+      )
       puts @create
     end 
 

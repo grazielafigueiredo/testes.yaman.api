@@ -4,7 +4,8 @@ require "singleton"
 class Constant
 
     Url = "https://lottocap-hml-server01-api.azurewebsites.net/api"
-    # "https://hmlapi.lottocap.com.br/api"
+    # Url = "http://localhost:8080/api"
+
     # Url = "https://lottocap-hml-server01-api-staging.azurewebsites.net/api"
 
     IdSerie = 86

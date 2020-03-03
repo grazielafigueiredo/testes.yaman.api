@@ -9,7 +9,7 @@ class Database
       # username: 'graziela',
       # password: '4KoNxOHqNtTd6zZ',
       username: 'Lottocap',
-      password: 'L0ttocap@sql2018',
+      password: 'L0ttocap19!12@',
       host: 'hmllottocap.database.windows.net',
       port: 1433,
       database: 'hmllottocaptests',
