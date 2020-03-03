@@ -11,7 +11,8 @@ class DbBase
       host: 'hmllottocap.database.windows.net',
       port: 1433,
       database: 'hmllottocaptests',
-      azure: true
+      azure: true,
+      timeout: 30
     }
     @connection = TinyTds::Client.new(conn)
   end

@@ -6,7 +6,9 @@ require "factory_bot"
 require "httparty"
 require 'json'
 require 'rspec'
-require 'tiny_tds'    
+require 'tiny_tds'   
+require 'timeout'
+
 
 require_relative "database"
 require_relative "databases/titulo_matrizDb"

@@ -51,14 +51,15 @@ class TituloMatrizDB < DbBase
 
   def get_titulos_duplicados_by_idserie(idSerie)
     query = "SELECT count(*), dezenas FROM TituloMatriz WHERE idSerie = #{idSerie} GROUP BY dezenas HAVING count(*) > 1"
-
     result = @connection.execute(query)
 
-    result.each do |row|
-      puts row
-    end
-
-    return result.do
+  
+      result.each do |row|
+        puts row
+      end
+  
+      return result.do
+    
   end
 
   def relacionamento_serie_concurso(month)
@@ -203,7 +204,7 @@ class TituloMatrizDB < DbBase
     today_add_10_days = today + 10
 
     datas_prevista_concurso = [
-      05,06
+      05
     ]
 
     concursos_inseridos = []
