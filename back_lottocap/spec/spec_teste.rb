@@ -31,7 +31,7 @@ context 'Verificar quantidade de títulos gerados do MAX, JA17, JA18' do
       end
 
     #JA17
-    idSerie_ja17 = 88
+    idSerie_ja17 = 94
     quantidade_matriz_ja17 = TituloMatrizDB.new.select_count_matriz(idSerie_ja17)
 
     dezena_concurso = [

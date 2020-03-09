@@ -2,17 +2,19 @@ describe 'Criar usuário' do
 
     context 'Sucesso' do
       before do
-        # @token = ApiUser.GetToken
-        @create = ApiCreateUser.post_CadastrarUsuario(
-          "82e2cda1-79ff-42c3-9dbf-80b9d21ea09c",
-          # @token,
-          Faker::Name.name,
-          "00000009652",
-          # Faker::CPF.numeric,
-          # Faker::Internet.email
-          "user22@gmail.com"
-        )
-        puts @create
+        @token = ApiUser.GetToken
+
+        (0..50).each do |data|
+          email = Faker::Internet.email
+          @create = ApiCreateUser.post_CadastrarUsuario(
+            @token,
+            Faker::Name.name,
+            Faker::CPF.numeric,
+            email
+          )
+          puts "#{email},1234"
+        end
+        
       end
 
       it { expect(JSON.parse(@create.response.body)['sucesso']).to be true}
