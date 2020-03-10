@@ -4,7 +4,7 @@ describe 'Criar usuário' do
       before do
         @token = ApiUser.GetToken
 
-        (0..50).each do |data|
+        (0..100).each do |data|
           email = Faker::Internet.email
           @create = ApiCreateUser.post_CadastrarUsuario(
             @token,
