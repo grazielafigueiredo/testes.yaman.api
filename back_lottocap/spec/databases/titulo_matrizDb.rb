@@ -197,7 +197,80 @@ class TituloMatrizDB < DbBase
       puts 'Affected rows'
       puts quu.do
     end
+
+    valores = ['SEG', 'TER', 'QUA', 'QUI', 'SEX', 'SAB']
+    
+    
+    ############# MULTIPLICADOR
+#     concursos_inseridos = [ 
+#       1364,
+# 1365,
+# 1366,
+# 1367,
+# 1368,
+# 1369,
+# 1370,
+# 1371,
+# 1372,
+# 1373,
+# 1374,
+# 1375,
+# 1376,
+# 1377,
+# 1378,
+# 1379,
+# 1380,
+# 1381,
+# 1382,
+# 1383,
+# 1384,
+# 1385,
+# 1386,
+# 1387
+#     ]
+#     serie_inserida = [5 ]
+
+
+
+    contador = 0
+    dia_da_semana = 0
+    cont_data_concurso = 0
+    
+    concursos_inseridos.each do |concurso|
+      # puts "#{concurso} - #{contador} - #{valores[dia_da_semana]}"
+      
+      query_ = "INSERT INTO TituloMatrizMultiplicador(
+        idSerie,
+        cdMultiplicador,
+        valor,
+        dtValor,
+        dtCriacao,
+        idConcurso
+        )
+        VALUES(
+            #{serie_inserida[0]},
+            'diadesorte',
+            '#{valores[dia_da_semana]}',
+            '2020-#{month}-#{datas_prevista_concurso[cont_data_concurso]}',
+            '#{today}',
+            #{concurso}
+        )"
+
+      res = @connection.execute( query_)
+      puts 'TituloMatrizMultiplicador Affected rows'
+      puts res.do
+
+      cont_data_concurso += 1
+      contador +=1
+      if contador == 4
+        contador = 0
+        dia_da_semana += 1
+      end
+
+    end 
   end
+
+
 
   def relacionamento_serie_concurso_ja(month, idProduto_ja)
     today = Date.today

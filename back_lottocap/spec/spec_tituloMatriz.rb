@@ -3,7 +3,7 @@
 
 context 'Criação de série/concurso MAX' do
     #parametro mês da série/concurso
-    mes = 04
+    mes = 03
     TituloMatrizDB.new.relacionamento_serie_concurso(mes)
 end
 
