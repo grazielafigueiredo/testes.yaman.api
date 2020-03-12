@@ -46,11 +46,6 @@
       <hashTree/>
       <Arguments guiclass="ArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
         <collectionProp name="Arguments.arguments">
-          <elementProp name="BASE_URL_1" elementType="Argument">
-            <stringProp name="Argument.name">BASE_URL_1</stringProp>
-            <stringProp name="Argument.value"></stringProp>
-            <stringProp name="Argument.metadata">=</stringProp>
-          </elementProp>
           <elementProp name="user" elementType="Argument">
             <stringProp name="Argument.name">user</stringProp>
             <stringProp name="Argument.value">user22@gmail.com</stringProp>
@@ -124,7 +119,7 @@
           <boolProp name="LoopController.continue_forever">false</boolProp>
           <stringProp name="LoopController.loops">1</stringProp>
         </elementProp>
-        <stringProp name="ThreadGroup.num_threads">1</stringProp>
+        <stringProp name="ThreadGroup.num_threads">200</stringProp>
         <stringProp name="ThreadGroup.ramp_time">1</stringProp>
         <boolProp name="ThreadGroup.scheduler">false</boolProp>
         <stringProp name="ThreadGroup.duration">0</stringProp>
@@ -446,7 +441,7 @@
                 <stringProp name="RegexExtractor.refname">idCarrinho</stringProp>
                 <stringProp name="RegexExtractor.regex">{&quot;idCarrinho&quot;:(.+?)&quot;</stringProp>
                 <stringProp name="RegexExtractor.template">$1$</stringProp>
-                <stringProp name="RegexExtractor.default">idCarrinho nao encontrado</stringProp>
+                <stringProp name="RegexExtractor.default">0</stringProp>
                 <stringProp name="RegexExtractor.match_number">0</stringProp>
               </RegexExtractor>
               <hashTree/>
@@ -455,7 +450,7 @@
                 <stringProp name="RegexExtractor.refname">idCarrinhoItem</stringProp>
                 <stringProp name="RegexExtractor.regex">&quot;idCarrinhoItem&quot;:(.+?)</stringProp>
                 <stringProp name="RegexExtractor.template">$1$</stringProp>
-                <stringProp name="RegexExtractor.default">idCarrinhoItem nao encontrado</stringProp>
+                <stringProp name="RegexExtractor.default">0</stringProp>
                 <stringProp name="RegexExtractor.match_number">0</stringProp>
               </RegexExtractor>
               <hashTree/>
@@ -630,6 +625,24 @@
                 <boolProp name="Assertion.assume_success">false</boolProp>
                 <intProp name="Assertion.test_type">2</intProp>
               </ResponseAssertion>
+              <hashTree/>
+              <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="Extractor de Expressão Regular" enabled="true">
+                <stringProp name="RegexExtractor.useHeaders">false</stringProp>
+                <stringProp name="RegexExtractor.refname">idCarrinho</stringProp>
+                <stringProp name="RegexExtractor.regex">{&quot;idCarrinho&quot;:(.+?)&quot;</stringProp>
+                <stringProp name="RegexExtractor.template">$1$</stringProp>
+                <stringProp name="RegexExtractor.default">0</stringProp>
+                <stringProp name="RegexExtractor.match_number">0</stringProp>
+              </RegexExtractor>
+              <hashTree/>
+              <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="Extractor de Expressão Regular" enabled="true">
+                <stringProp name="RegexExtractor.useHeaders">false</stringProp>
+                <stringProp name="RegexExtractor.refname">idCarrinhoItem</stringProp>
+                <stringProp name="RegexExtractor.regex">&quot;idCarrinhoItem&quot;:(.+?)</stringProp>
+                <stringProp name="RegexExtractor.template">$1$</stringProp>
+                <stringProp name="RegexExtractor.default">0</stringProp>
+                <stringProp name="RegexExtractor.match_number">0</stringProp>
+              </RegexExtractor>
               <hashTree/>
             </hashTree>
             <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="AdicionarItemCarrinho" enabled="true">
@@ -980,7 +993,7 @@
           <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="Configuração dos dados CSV" enabled="true">
             <stringProp name="delimiter">,</stringProp>
             <stringProp name="fileEncoding"></stringProp>
-            <stringProp name="filename">/Users/grazielafigueiredo/Documents/lottocap-qa/testes-jmx/users-jmeter - Página1.csv</stringProp>
+            <stringProp name="filename">/Users/grazielafigueiredo/Documents/lottocap-qa/testes-jmx/users-para-logar.csv</stringProp>
             <boolProp name="ignoreFirstLine">true</boolProp>
             <boolProp name="quotedData">false</boolProp>
             <boolProp name="recycle">true</boolProp>
@@ -1056,6 +1069,7 @@
                 <sentBytes>true</sentBytes>
                 <url>true</url>
                 <threadCounts>true</threadCounts>
+                <sampleCount>true</sampleCount>
                 <idleTime>true</idleTime>
                 <connectTime>true</connectTime>
               </value>
