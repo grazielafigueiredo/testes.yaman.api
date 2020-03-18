@@ -161,7 +161,7 @@ context 'Comprar com Cartao de Credito e verificar se o título foi atribuído' 
     puts('tituloAntesCompra', @tituloAntesCompra)
 
     # Pagando o carrinho com cartao de credito
-    @carrinho = ApiCarrinho.post_AdicionarItemCarrinho(
+    @carrinho = ApiCarrinho.post_adicionarItemCarrinho(
       1,
       Constant::IdProduto,
       Constant::IdSerie,
@@ -204,7 +204,7 @@ context 'Comprar com CLottocap e verificar se o título foi atribuído' do
     # Atribuindo credito lottocap e pagando o carrinho
     @rs = Database.new.update_CreditoLottocap(100)
     puts @rs
-    @carrinho = ApiCarrinho.post_AdicionarItemCarrinho(
+    @carrinho = ApiCarrinho.post_adicionarItemCarrinho(
       2,
       Constant::IdProduto,
       Constant::IdSerie,

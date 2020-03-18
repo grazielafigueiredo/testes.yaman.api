@@ -8,11 +8,10 @@ class Constant
 
     # Url = "https://lottocap-hml-server01-api-staging.azurewebsites.net/api"
 
-    IdSerie = 86
-    IdSerie87 = 87
+    IdSerie = 215
     IdSerieJa17 = 88
     IdSerieJa18 = 89
-    IdSerieMaxPreVenda = 96
+    IdSerieMaxPreVenda = 218
     IdProdutoJa18 = 10
     IdProduto = 1
     IdProdutoJa = 9
@@ -21,7 +20,7 @@ class Constant
     Dezenas = ["04 13 30"]
 
     # User1 = {"usuario": "user22@gmail.com", "senha": "1234"}
-    User1 = {"usuario": "user1@gmail.com", "senha": "1234"}
+    User1 = {"usuario": "user22@gmail.com", "senha": "1234"}
     UserID = 3661
     User2 = {"usuario": "user666@gmail.com", "senha": "1234"}
     # UserID = 3705

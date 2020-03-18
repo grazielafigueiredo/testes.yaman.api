@@ -1,36 +1,41 @@
 # frozen_string_literal: true
 
 describe 'Resgate' do
+
   context 'Sucesso com verificação de valor sacado' do
-    # while bancos <= 0
-    #   bancos = 0
-    #   bancos += 1
+    valor = 10.000
+    idBanco = 1
+    agenciaNumero = Faker::Bank.account_number(digits: 4)
+    agenciaDigito = Faker::Bank.account_number(digits: 1)
+    contaNumero = Faker::Bank.account_number(digits: 10)
+    contaDigito = Faker::Bank.account_number(digits: 1)
+
       before do
         @token = ApiUser.GetToken
         ApiUser.Login(@token, Constant::User1)
         
-        Database.new.update_PremioResgate(5000)
+        Database.new.update_PremioResgate(50)
 
-        @pedidoResgate = ApiResgate.post_SetResgate(
-          10.000,
+        @pedidoResgate = ApiResgate.post_setResgate(
+          valor,
           @token,
-          3,
-          Faker::Bank.account_number(digits: 4),
-          Faker::Bank.account_number(digits: 1),
-          Faker::Bank.account_number(digits: 10),
-          Faker::Bank.account_number(digits: 1)
+          idBanco,
+          agenciaNumero,
+          agenciaDigito,
+          contaNumero,
+          contaDigito
         )
         puts @pedidoResgate
-        @statusResgate = ApiResgate.get_StatusResgate(@token)
+        @statusResgate = ApiResgate.get_statusResgate(@token)
         # puts @statusResgate
       end
     # end 
       
       
       it 'Sucesso com verificação de valor sacado -  Bradesco' do 
-        # expect(JSON.parse(@statusResgate.response.body)['dadosUsuario']['premiosGanhos']).to be 40.0 
+        expect(JSON.parse(@statusResgate.response.body)['obj'][0]['saldoPremio']).to be 40.0 
         expect(JSON.parse(@statusResgate.response.body)['sucesso']).to be true
-        # expect(JSON.parse(@pedidoResgate.response.body)['obj'][0]['valor']).to be 5.25 #valor irá alterar conforme taxa de resgate
+        expect(JSON.parse(@pedidoResgate.response.body)['obj'][0]['valor']).to be 5.25 #valor irá alterar conforme taxa de resgate
         expect(JSON.parse(@pedidoResgate.response.body)['sucesso']).to be true
       end
       
@@ -41,27 +46,35 @@ describe 'Resgate' do
   end
 
   context 'Sucesso com verificação de valor sacado' do
+    valor = 10.000
+    idBanco = 3
+    agenciaNumero = Faker::Bank.account_number(digits: 4)
+    agenciaDigito = Faker::Bank.account_number(digits: 1)
+    contaNumero = Faker::Bank.account_number(digits: 10)
+    contaDigito = Faker::Bank.account_number(digits: 1)
+
+
     before do
       @token = ApiUser.GetToken
       ApiUser.Login(@token, Constant::User1)
 
       Database.new.update_PremioResgate(50)
-      @pedidoResgate = ApiResgate.post_SetResgate(
-        10.000,
-        @token,
-        3,
-        Faker::Bank.account_number(digits: 4),
-        Faker::Bank.account_number(digits: 1),
-        Faker::Bank.account_number(digits: 10),
-        Faker::Bank.account_number(digits: 1)
+      @pedidoResgate = ApiResgate.post_setResgate(
+          valor,
+          @token,
+          idBanco,
+          agenciaNumero,
+          agenciaDigito,
+          contaNumero,
+          contaDigito
       )
       puts @pedidoResgate
-      @statusResgate = ApiResgate.get_StatusResgate(@token)
-      # puts @statusResgate
+      @statusResgate = ApiResgate.get_statusResgate(@token)
+      puts @token
     end
 
     it 'Sucesso com verificação de valor sacado -  Santander' do 
-      expect(JSON.parse(@statusResgate.response.body)['dadosUsuario']['premiosGanhos']).to be 40.0 
+      expect(JSON.parse(@statusResgate.response.body)['obj'][0]['saldoPremio']).to be 40.0 
       expect(JSON.parse(@statusResgate.response.body)['sucesso']).to be true
       expect(JSON.parse(@pedidoResgate.response.body)['obj'][0]['valor']).to be 5.25 #valor irá alterar conforme taxa de resgate
       expect(JSON.parse(@pedidoResgate.response.body)['sucesso']).to be true
@@ -74,19 +87,26 @@ describe 'Resgate' do
   end
 
   context 'Sacar saldo insuficiente' do
+    valor = 100.000
+    idBanco = 1
+    agenciaNumero = Faker::Bank.account_number(digits: 4)
+    agenciaDigito = Faker::Bank.account_number(digits: 1)
+    contaNumero = Faker::Bank.account_number(digits: 10)
+    contaDigito = Faker::Bank.account_number(digits: 1)
+
     before do
       @token = ApiUser.GetToken
       ApiUser.Login(@token, Constant::User1)
 
       Database.new.update_PremioResgate(50)
-      @pedidoResgate = ApiResgate.post_SetResgate(
-        100.000,
+      @pedidoResgate = ApiResgate.post_setResgate(
+        valor,
         @token,
-        1,
-        Faker::Bank.account_number(digits: 4),
-        Faker::Bank.account_number(digits: 1),
-        Faker::Bank.account_number(digits: 10),
-        Faker::Bank.account_number(digits: 1)
+        idBanco,
+        agenciaNumero,
+        agenciaDigito,
+        contaNumero,
+        contaDigito
       )
       puts @pedidoResgate
     end
@@ -102,19 +122,26 @@ describe 'Resgate' do
   end
 
   context 'Conta existente para saca' do
+    valor = 10.000
+    idBanco = 1
+    agenciaNumero = 123
+    agenciaDigito = 1
+    contaNumero = 1234567890
+    contaDigito = 1
+
     before do
       @token = ApiUser.GetToken
       ApiUser.Login(@token, Constant::User1)
 
       Database.new.update_PremioResgate(50.000)
-      @res = ApiResgate.post_SetResgate(
-        10.000,
+      @res = ApiResgate.post_setResgate(
+        valor,
         @token,
-        1,
-        1234,
-        1,
-        1234567890,
-        1
+        idBanco,
+        agenciaNumero,
+        agenciaDigito,
+        contaNumero,
+        contaDigito
       )
       puts @res
     end

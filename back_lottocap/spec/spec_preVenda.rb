@@ -5,9 +5,9 @@ context 'Config pré-venda' do
     @token = ApiUser.GetToken
     ApiUser.Login(@token, Constant::User1)
 
-    Database.new.update_preVenda
+    PreVenda.new.update_preVenda
 
-    @carrinho = ApiCarrinho.post_AdicionarItemCarrinho(
+    @carrinho = ApiCarrinho.post_adicionarItemCarrinho(
       10, 
       Constant::IdProduto, 
       Constant::IdSerieMaxPreVenda, 
@@ -16,7 +16,7 @@ context 'Config pré-venda' do
 
     @idCarrinho = JSON.parse(@carrinho.response.body)['obj'][0]['idCarrinho']
     @idCarrinhoItem = JSON.parse(@carrinho.response.body)['obj'][0]['idCarrinhoItem']
-    puts @idCarrinhoItem
+    # puts @idCarrinhoItem
 
     @exibirDezenas = ApiPreVenda.get_exibirDezenas(@token, @idCarrinhoItem)
     conjuntos = JSON.parse(@exibirDezenas.response.body)['obj']
@@ -47,9 +47,7 @@ context 'Config pré-venda' do
   end
 
   it 'exibirDezenas' do
-    expect(JSON.parse(@exibirDezenas.response.body)['dadosUsuario']['carrinhoItens'][0]['idCarrinhoItem']).to eql @idCarrinhoItem
-    expect(JSON.parse(@exibirDezenas.response.body)['dadosUsuario']['carrinhoItens'][0]['flPreVenda']).to be true
-    # expect(JSON.parse(@exibirDezenas.response.body)['obj'][0]['idDezenas']).to be_a Integer
+    expect(JSON.parse(@exibirDezenas.response.body)['obj'][0]['idDezenas']).to be_a Integer
     expect(JSON.parse(@exibirDezenas.response.body)['obj'][0]['dezenas']).to be_a String
     expect(JSON.parse(@exibirDezenas.response.body)['sucesso']).to be true
   end
@@ -64,25 +62,24 @@ context 'escolha de dezenas nao pode trazer qndo a série nao estiver em pré ve
     @token = ApiUser.GetToken
     ApiUser.Login(@token, Constant::User1)
 
-    @carrinho = ApiCarrinho.post_AdicionarItemCarrinho(
+    @carrinho = ApiCarrinho.post_adicionarItemCarrinho(
       10, 
       Constant::IdProduto, 
       Constant::IdSerie, 
       @token
     )
-                                                       
+     puts @token                                                  
     @idCarrinho = JSON.parse(@carrinho.response.body)['obj'][0]['idCarrinho']
     @idCarrinhoItem = JSON.parse(@carrinho.response.body)['obj'][0]['idCarrinhoItem']
     puts @idCarrinhoItem
 
     @exibirDezenas = ApiPreVenda.get_exibirDezenas(@token, @idCarrinhoItem)
-    # conjuntos = JSON.parse(@exibirDezenas.response.body)['obj']
+
     puts @exibirDezenas
   end
 
   it 'não exibirDezenas' do
     expect(JSON.parse(@exibirDezenas.response.body)['obj']).to eql []
-    expect(JSON.parse(@exibirDezenas.response.body)['dadosUsuario']['carrinhoItens'][0]['flPreVenda']).to eql false
   end
 
   after do
@@ -130,7 +127,7 @@ context 'Concorrencia no pagamento Título já reservado' do
 
     @lstDezenas = ApiPreVenda.post_adicionarItemCarrinhoPreVenda(@token2, [@conjuntosDezenas])
     @idCarrinhoUser2 = JSON.parse(@lstDezenas.response.body)['obj'][0]['idCarrinho']
-    # puts @lstDezenas
+    puts @lstDezenas
 
 
       @boleto1 = ApiBoleto.post_sucessoBoleto(@token1, @idCarrinhoUser1)

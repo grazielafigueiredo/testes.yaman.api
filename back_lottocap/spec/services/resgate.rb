@@ -9,10 +9,10 @@ class ApiResgate
   headers 'Content-Type' => 'application/json'
 
 
-  def self.post_SetResgate(valor, token, idBanco, agenciaNumero, agenciaDigito,contaNumero, contaDigito)
+  def self.post_setResgate(valor, token, idBanco, agenciaNumero, agenciaDigito,contaNumero, contaDigito)
     headers['Authorization'] = token
 
-    @SetResgate = {
+    @setResgate = {
         "obj": {
             "valor": valor,
             "idBanco": idBanco,
@@ -25,12 +25,12 @@ class ApiResgate
             "nomeTitular": "grazi a"
         }
     }
-    post('/Pagamento/SetResgate', body: @SetResgate.to_json)
+    post('/Pagamento/SetResgate', body: @setResgate.to_json)
   end
 
-  def self.get_StatusResgate(token)
+  def self.get_statusResgate(token)
     headers['Authorization'] = token
-    get('/Usuario/GetDadosUsuarioParaResgate', body: @StatusResgate.to_json)
+    get('/Usuario/GetDadosUsuarioParaResgate', body: @statusResgate.to_json)
   end
 end
 

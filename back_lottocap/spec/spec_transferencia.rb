@@ -2,13 +2,16 @@
 
 
 describe 'Bradesco' do
+
+  dataVincenda = '2020-12-25'
+
   context 'Transferência Bancária Sucesso (Bradesco)' do
     before do
       @token = ApiUser.GetToken
       ApiUser.Login(@token, Constant::User1)
-      Database.new.update_DataFinalVendaVigente('2020-12-25')
+      CarrinhoDb.new.update_dataFinalVendaVigente(dataVincenda)
 
-      @carrinho = ApiCarrinho.post_AdicionarItemCarrinho(
+      @carrinho = ApiCarrinho.post_adicionarItemCarrinho(
         1,
         Constant::IdProduto,
         Constant::IdSerie,
@@ -36,9 +39,9 @@ describe 'Bradesco' do
     before do
       @token = ApiUser.GetToken
       ApiUser.Login(@token, Constant::User1)
-      Database.new.update_DataFinalVendaVigente('2020-12-25')
+      CarrinhoDb.new.update_dataFinalVendaVigente(dataVincenda)
 
-      carrinho = ApiCarrinho.post_AdicionarItemCarrinho(
+      carrinho = ApiCarrinho.post_adicionarItemCarrinho(
         1,
         Constant::IdProduto,
         Constant::IdSerie,
@@ -46,7 +49,14 @@ describe 'Bradesco' do
       )
       @idCarrinho = JSON.parse(carrinho.response.body)['obj'][0]['idCarrinho']
 
-      @result = ApiTransferencia.post_TransfBradesco(@token, @idCarrinho, '1234', '5678', '9', Constant::NomeCompletoTitular)
+      @result = ApiTransferencia.post_TransfBradesco(
+        @token, 
+        @idCarrinho, 
+        '1234', 
+        '5678', 
+        '9', 
+        Constant::NomeCompletoTitular
+      )
       puts @result
     end
     it { expect(JSON.parse(@result.response.body)['erros'][0]['mensagem']).to eql 'Essa conta bancária já foi adicionada anteriormente.' }
@@ -61,9 +71,9 @@ describe 'Bradesco' do
     before do
       @token = ApiUser.GetToken
       ApiUser.Login(@token, Constant::User1)
-      Database.new.update_DataFinalVendaVigente('2020-12-25')
+      CarrinhoDb.new.update_dataFinalVendaVigente(dataVincenda)
 
-      carrinho = ApiCarrinho.post_AdicionarItemCarrinho(
+      carrinho = ApiCarrinho.post_adicionarItemCarrinho(
         1,
         Constant::IdProduto,
         Constant::IdSerie,
@@ -101,9 +111,9 @@ describe 'Bradesco' do
     before do
       @token = ApiUser.GetToken
       ApiUser.Login(@token, Constant::User1)
-      Database.new.update_DataFinalVendaVigente('2020-12-25')
+      CarrinhoDb.new.update_dataFinalVendaVigente(dataVincenda)
 
-      carrinho = ApiCarrinho.post_AdicionarItemCarrinho(
+      carrinho = ApiCarrinho.post_adicionarItemCarrinho(
         1,
         Constant::IdProduto,
         Constant::IdSerie,
@@ -133,9 +143,9 @@ describe 'Bradesco' do
     before do
       @token = ApiUser.GetToken
       ApiUser.Login(@token, Constant::User1)
-      Database.new.update_DataFinalVendaVigente('2020-12-25')
+      CarrinhoDb.new.update_dataFinalVendaVigente(dataVincenda)
 
-      carrinho = ApiCarrinho.post_AdicionarItemCarrinho(
+      carrinho = ApiCarrinho.post_adicionarItemCarrinho(
         1,
         Constant::IdProduto,
         Constant::IdSerie,
@@ -168,12 +178,24 @@ describe 'Bradesco' do
     before do
       @token = ApiUser.GetToken
       ApiUser.Login(@token, Constant::User1)
-      Database.new.update_DataFinalVendaVigente('2020-12-25')
+      CarrinhoDb.new.update_dataFinalVendaVigente(dataVincenda)
 
-      carrinho = ApiCarrinho.post_AdicionarItemCarrinho(1, Constant::IdProduto, Constant::IdSerie, @token)
+      carrinho = ApiCarrinho.post_adicionarItemCarrinho(
+        1, 
+        Constant::IdProduto, 
+        Constant::IdSerie, 
+        @token
+      )
       @idCarrinho = JSON.parse(carrinho.response.body)['obj'][0]['idCarrinho']
 
-      @result = ApiTransferencia.post_TransfBradesco(@token, @idCarrinho, Faker::Bank.account_number(digits: 4), Faker::Bank.account_number(digits: 4), Faker::Bank.account_number(digits: 1), "")
+      @result = ApiTransferencia.post_TransfBradesco(
+        @token, 
+        @idCarrinho, 
+        Faker::Bank.account_number(digits: 4), 
+        Faker::Bank.account_number(digits: 4), 
+        Faker::Bank.account_number(digits: 1), 
+        ""
+      )
       puts @result
     end
     it { expect(JSON.parse(@result.response.body)['erros'][0]['mensagem']).to eql 'Bradesco: Agencia e Nome do Titular são obrigatórios' }
@@ -190,12 +212,24 @@ describe 'Bradesco' do
     before do
       @token = ApiUser.GetToken
       ApiUser.Login(@token, Constant::User1)
-      Database.new.update_DataFinalVendaVigente('2020-12-25')
+      CarrinhoDb.new.update_dataFinalVendaVigente(dataVincenda)
 
-      carrinho = ApiCarrinho.post_AdicionarItemCarrinho(1, Constant::IdProduto, Constant::IdSerie, @token)
+      carrinho = ApiCarrinho.post_adicionarItemCarrinho(
+        1, 
+        Constant::IdProduto, 
+        Constant::IdSerie, 
+        @token
+      )
       @idCarrinho = JSON.parse(carrinho.response.body)['obj'][0]['idCarrinho']
 
-      @result = ApiTransferencia.post_TransfBradesco(@token, @idCarrinho, Faker::Bank.account_number(digits: 1), Faker::Bank.account_number(digits: 4), Faker::Bank.account_number(digits: 1), Constant::NomeCompletoTitular)
+      @result = ApiTransferencia.post_TransfBradesco(
+        @token, 
+        @idCarrinho, 
+        Faker::Bank.account_number(digits: 1), 
+        Faker::Bank.account_number(digits: 4), 
+        Faker::Bank.account_number(digits: 1), 
+        Constant::NomeCompletoTitular
+      )
       puts @result
     end
     it { expect(JSON.parse(@result.response.body)['sucesso']).to be true }
@@ -210,12 +244,24 @@ describe 'Bradesco' do
     before do
       @token = ApiUser.GetToken
       ApiUser.Login(@token, Constant::User1)
-      Database.new.update_DataFinalVendaVigente('2020-12-25')
+      CarrinhoDb.new.update_dataFinalVendaVigente(dataVincenda)
 
-      carrinho = ApiCarrinho.post_AdicionarItemCarrinho(1, Constant::IdProduto, Constant::IdSerie, @token)
+      carrinho = ApiCarrinho.post_adicionarItemCarrinho(
+        1, 
+        Constant::IdProduto, 
+        Constant::IdSerie, 
+        @token
+      )
       @idCarrinho = JSON.parse(carrinho.response.body)['obj'][0]['idCarrinho']
 
-      @result = ApiTransferencia.post_TransfBradesco(@token, @idCarrinho, Faker::Bank.account_number(digits: 11), Faker::Bank.account_number(digits: 4), Faker::Bank.account_number(digits: 1), Constant::NomeCompletoTitular)
+      @result = ApiTransferencia.post_TransfBradesco(
+        @token, 
+        @idCarrinho, 
+        Faker::Bank.account_number(digits: 11), 
+        Faker::Bank.account_number(digits: 4), 
+        Faker::Bank.account_number(digits: 1), 
+        Constant::NomeCompletoTitular
+      )
       puts @result
     end
     it 'Transferência Bancária Agencia > que 4 dígitos' do
@@ -232,12 +278,25 @@ describe 'Bradesco' do
     before do
       @token = ApiUser.GetToken
       ApiUser.Login(@token, Constant::User1)
-      Database.new.update_DataFinalVendaVigente('2020-12-25')
+      CarrinhoDb.new.update_dataFinalVendaVigente(dataVincenda)
 
-      carrinho = ApiCarrinho.post_AdicionarItemCarrinho(1, Constant::IdProduto, Constant::IdSerie, @token)
+      carrinho = ApiCarrinho.post_adicionarItemCarrinho(
+        1, 
+        Constant::IdProduto, 
+        Constant::IdSerie, 
+        @token
+      )
       @idCarrinho = JSON.parse(carrinho.response.body)['obj'][0]['idCarrinho']
 
-      @result = ApiTransferencia.post_TransfBradesco(@token, @idCarrinho, '', Faker::Bank.account_number(digits: 4), Faker::Bank.account_number(digits: 1), Constant::NomeCompletoTitular)
+      @result = ApiTransferencia.post_TransfBradesco(
+        @token, 
+        @idCarrinho, 
+        '', 
+        Faker::Bank.account_number(digits: 4), 
+        Faker::Bank.account_number(digits: 1), 
+        Constant::NomeCompletoTitular
+      )
+
       puts @result
     end
     it { expect(JSON.parse(@result.response.body)['erros'][0]['mensagem']).to eql 'Bradesco: Agencia e Nome do Titular são obrigatórios' }
@@ -253,12 +312,24 @@ describe 'Bradesco' do
     before do
       @token = ApiUser.GetToken
       ApiUser.Login(@token, Constant::User1)
-      Database.new.update_DataFinalVendaVigente('2020-12-25')
+      CarrinhoDb.new.update_dataFinalVendaVigente(dataVincenda)
 
-      carrinho = ApiCarrinho.post_AdicionarItemCarrinho(1, Constant::IdProduto, Constant::IdSerie, @token)
+      carrinho = ApiCarrinho.post_adicionarItemCarrinho(
+        1, 
+        Constant::IdProduto, 
+        Constant::IdSerie, 
+        @token
+      )
       @idCarrinho = JSON.parse(carrinho.response.body)['obj'][0]['idCarrinho']
 
-      @result = ApiTransferencia.post_TransfBradesco(@token, @idCarrinho, Faker::Bank.account_number(digits: 4), Faker::Bank.account_number(digits: 20), Faker::Bank.account_number(digits: 1), Constant::NomeCompletoTitular)
+      @result = ApiTransferencia.post_TransfBradesco(
+        @token, 
+        @idCarrinho, 
+        Faker::Bank.account_number(digits: 4), 
+        Faker::Bank.account_number(digits: 20), 
+        Faker::Bank.account_number(digits: 1), 
+        Constant::NomeCompletoTitular
+      )
       puts @result
     end
     it { expect(@result.response.code).to eql '400' }
@@ -274,12 +345,24 @@ describe 'Bradesco' do
     before do
       @token = ApiUser.GetToken
       ApiUser.Login(@token, Constant::User1)
-      Database.new.update_DataFinalVendaVigente('2020-12-25')
+      CarrinhoDb.new.update_dataFinalVendaVigente(dataVincenda)
 
-      carrinho = ApiCarrinho.post_AdicionarItemCarrinho(1, Constant::IdProduto, Constant::IdSerie, @token)
+      carrinho = ApiCarrinho.post_adicionarItemCarrinho(
+        1, 
+        Constant::IdProduto, 
+        Constant::IdSerie, 
+        @token
+      )
       @idCarrinho = JSON.parse(carrinho.response.body)['obj'][0]['idCarrinho']
 
-      @result = ApiTransferencia.post_TransfBradesco(@token, @idCarrinho, Faker::Bank.account_number(digits: 4), Faker::Bank.account_number(digits: 2), Faker::Bank.account_number(digits: 1), Constant::NomeCompletoTitular)
+      @result = ApiTransferencia.post_TransfBradesco(
+        @token, 
+        @idCarrinho, 
+        Faker::Bank.account_number(digits: 4), 
+        Faker::Bank.account_number(digits: 2), 
+        Faker::Bank.account_number(digits: 1), 
+        Constant::NomeCompletoTitular
+      )
       puts @result
     end
     it { expect(JSON.parse(@result.response.body)['sucesso']).to be true }
@@ -294,9 +377,14 @@ describe 'Bradesco' do
     before do
       @token = ApiUser.GetToken
       ApiUser.Login(@token, Constant::User1)
-      Database.new.update_DataFinalVendaVigente('2020-12-25')
+      CarrinhoDb.new.update_dataFinalVendaVigente(dataVincenda)
 
-      carrinho = ApiCarrinho.post_AdicionarItemCarrinho(1, Constant::IdProduto, Constant::IdSerie, @token)
+      carrinho = ApiCarrinho.post_adicionarItemCarrinho(
+        1, 
+        Constant::IdProduto, 
+        Constant::IdSerie, 
+        @token
+      )
       @idCarrinho = JSON.parse(carrinho.response.body)['obj'][0]['idCarrinho']
 
       @result = ApiTransferencia.post_TransfBradesco(@token, @idCarrinho, Faker::Bank.account_number(digits: 4), '', Faker::Bank.account_number(digits: 1), Constant::NomeCompletoTitular)
@@ -314,16 +402,30 @@ describe 'Bradesco' do
 end
 
 describe 'Itau' do
+
+  dataVincenda = '2020-12-25'
+
   context 'Transferência Bancária Sucesso (Itau)' do
     before do
       @token = ApiUser.GetToken
       ApiUser.Login(@token, Constant::User1)
-      Database.new.update_DataFinalVendaVigente('2020-12-25')
+      CarrinhoDb.new.update_dataFinalVendaVigente(dataVincenda)
 
-      carrinho = ApiCarrinho.post_AdicionarItemCarrinho(1, Constant::IdProduto, Constant::IdSerie, @token)
+      carrinho = ApiCarrinho.post_adicionarItemCarrinho(
+        1, 
+        Constant::IdProduto, 
+        Constant::IdSerie, 
+        @token
+      )
       @idCarrinho = JSON.parse(carrinho.response.body)['obj'][0]['idCarrinho']
 
-      @result = ApiTransferencia.post_TransfItau(@token, @idCarrinho, Faker::Bank.account_number(digits: 4), Faker::Bank.account_number(digits: 4), Faker::Bank.account_number(digits: 1))
+      @result = ApiTransferencia.post_TransfItau(
+        @token, 
+        @idCarrinho, 
+        Faker::Bank.account_number(digits: 4), 
+        Faker::Bank.account_number(digits: 4), 
+        Faker::Bank.account_number(digits: 1)
+      )
       puts @result
     end
 
@@ -343,12 +445,23 @@ describe 'Itau' do
     before do
       @token = ApiUser.GetToken
       ApiUser.Login(@token, Constant::User1)
-      Database.new.update_DataFinalVendaVigente('2020-12-25')
+      CarrinhoDb.new.update_dataFinalVendaVigente(dataVincenda)
 
-      carrinho = ApiCarrinho.post_AdicionarItemCarrinho(1, Constant::IdProduto, Constant::IdSerie, @token)
+      carrinho = ApiCarrinho.post_adicionarItemCarrinho(
+        1, 
+        Constant::IdProduto, 
+        Constant::IdSerie, 
+        @token
+      )
       @idCarrinho = JSON.parse(carrinho.response.body)['obj'][0]['idCarrinho']
 
-      @result = ApiTransferencia.post_TransfItau(@token, @idCarrinho, '1111', '1234', '1')
+      @result = ApiTransferencia.post_TransfItau(
+        @token, 
+        @idCarrinho, 
+        '1111', 
+        '1234', 
+        '1'
+      )
       puts @result
     end
     it { expect(JSON.parse(@result.response.body)['erros'][0]['mensagem']).to eql 'Essa conta bancária já foi adicionada anteriormente.' }
@@ -361,16 +474,28 @@ describe 'Itau' do
 end
 
 describe 'Santander' do
+
+  dataVincenda = '2020-12-25'
+
   context 'Transferência Bancária Sucesso (Santander)' do
     before do
       @token = ApiUser.GetToken
       ApiUser.Login(@token, Constant::User1)
-      Database.new.update_DataFinalVendaVigente('2020-12-25')
+      CarrinhoDb.new.update_dataFinalVendaVigente(dataVincenda)
 
-      carrinho = ApiCarrinho.post_AdicionarItemCarrinho(1, Constant::IdProduto, Constant::IdSerie, @token)
+      carrinho = ApiCarrinho.post_adicionarItemCarrinho(
+        1, 
+        Constant::IdProduto, 
+        Constant::IdSerie, 
+        @token
+      )
       @idCarrinho = JSON.parse(carrinho.response.body)['obj'][0]['idCarrinho']
 
-      @result = ApiTransferencia.post_TransfSantander(@token, @idCarrinho, Faker::CPF.numeric)
+      @result = ApiTransferencia.post_TransfSantander(
+        @token, 
+        @idCarrinho, 
+        Faker::CPF.numeric
+      )
       puts @result
     end
 
@@ -390,12 +515,21 @@ describe 'Santander' do
     before do
       @token = ApiUser.GetToken
       ApiUser.Login(@token, Constant::User1)
-      Database.new.update_DataFinalVendaVigente('2020-12-25')
+      CarrinhoDb.new.update_dataFinalVendaVigente(dataVincenda)
 
-      carrinho = ApiCarrinho.post_AdicionarItemCarrinho(1, Constant::IdProduto, Constant::IdSerie, @token)
+      carrinho = ApiCarrinho.post_adicionarItemCarrinho(
+        1, 
+        Constant::IdProduto, 
+        Constant::IdSerie, 
+        @token
+      )
       @idCarrinho = JSON.parse(carrinho.response.body)['obj'][0]['idCarrinho']
 
-      @result = ApiTransferencia.post_TransfSantander(@token, @idCarrinho, '00000009652')
+      @result = ApiTransferencia.post_TransfSantander(
+        @token, 
+        @idCarrinho, 
+        '00000009652'
+      )
       puts @result
     end
     it { expect(JSON.parse(@result.response.body)['erros'][0]['mensagem']).to eql 'Essa conta bancária já foi adicionada anteriormente.' }
@@ -410,12 +544,21 @@ describe 'Santander' do
     before do
       @token = ApiUser.GetToken
       ApiUser.Login(@token, Constant::User1)
-      Database.new.update_DataFinalVendaVigente('2020-12-25')
+      CarrinhoDb.new.update_dataFinalVendaVigente(dataVincenda)
 
-      carrinho = ApiCarrinho.post_AdicionarItemCarrinho(1, Constant::IdProduto, Constant::IdSerie, @token)
+      carrinho = ApiCarrinho.post_adicionarItemCarrinho(
+        1, 
+        Constant::IdProduto, 
+        Constant::IdSerie, 
+        @token
+      )
       @idCarrinho = JSON.parse(carrinho.response.body)['obj'][0]['idCarrinho']
 
-      @result = ApiTransferencia.post_TransfSantander(@token, @idCarrinho, Faker::Bank.account_number(digits: 11))
+      @result = ApiTransferencia.post_TransfSantander(
+        @token, 
+        @idCarrinho, 
+        Faker::Bank.account_number(digits: 11)
+      )
       puts @result
     end
     it { expect(JSON.parse(@result.response.body)['sucesso']).to be true }
@@ -428,16 +571,31 @@ describe 'Santander' do
 end
 
 describe 'Brasil' do
+
+  dataVincenda = '2020-12-25'
+
   context 'Transferência Bancária Sucesso (Brasil)' do
     before do
       @token = ApiUser.GetToken
       ApiUser.Login(@token, Constant::User1)
-      Database.new.update_DataFinalVendaVigente('2020-12-25')
+      CarrinhoDb.new.update_dataFinalVendaVigente(dataVincenda)
 
-      carrinho = ApiCarrinho.post_AdicionarItemCarrinho(1, Constant::IdProduto, Constant::IdSerie, @token)
+      carrinho = ApiCarrinho.post_adicionarItemCarrinho(
+        1, 
+        Constant::IdProduto, 
+        Constant::IdSerie, 
+        @token
+      )
       @idCarrinho = JSON.parse(carrinho.response.body)['obj'][0]['idCarrinho']
 
-      @result = ApiTransferencia.post_TransfSucessoBrasil(@token, @idCarrinho, Faker::Bank.account_number(digits: 4), Faker::Bank.account_number(digits: 1), Faker::Bank.account_number(digits: 10), Faker::Bank.account_number(digits: 1) )
+      @result = ApiTransferencia.post_TransfSucessoBrasil(
+        @token, 
+        @idCarrinho, 
+        Faker::Bank.account_number(digits: 4), 
+        Faker::Bank.account_number(digits: 1), 
+        Faker::Bank.account_number(digits: 10), 
+        Faker::Bank.account_number(digits: 1) 
+      )
       puts @result
     end
     it 'validaçåo tipo de transf. Banco do Brasil' do 
@@ -456,12 +614,24 @@ describe 'Brasil' do
     before do
       @token = ApiUser.GetToken
       ApiUser.Login(@token, Constant::User1)
-      Database.new.update_DataFinalVendaVigente('2020-12-25')
+      CarrinhoDb.new.update_dataFinalVendaVigente(dataVincenda)
 
-      carrinho = ApiCarrinho.post_AdicionarItemCarrinho(1, Constant::IdProduto, Constant::IdSerie, @token)
+      carrinho = ApiCarrinho.post_adicionarItemCarrinho(
+        1, 
+        Constant::IdProduto, 
+        Constant::IdSerie, 
+        @token
+      )
       @idCarrinho = JSON.parse(carrinho.response.body)['obj'][0]['idCarrinho']
 
-      @result = ApiTransferencia.post_TransfSucessoBrasil(@token, @idCarrinho, '1069', '3', '20262', '2')
+      @result = ApiTransferencia.post_TransfSucessoBrasil(
+        @token, 
+        @idCarrinho, 
+        '1069', 
+        '3', 
+        '20262', 
+        '2'
+      )
       puts @result
     end
     it { expect(JSON.parse(@result.response.body)['erros'][0]['mensagem']).to eql 'Essa conta bancária já foi adicionada anteriormente.' }

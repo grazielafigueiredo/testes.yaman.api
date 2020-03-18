@@ -2,12 +2,15 @@
 require 'utils/constant'
 
 describe 'Cartão de Crédito' do
+  
+  dataVincenda = '2020-12-25'
+
   context 'Obter Formas Pagamento Disponiveis' do
     before do
       @token = ApiUser.GetToken
       ApiUser.Login(@token, Constant::User1)
   
-      carrinho = ApiCarrinho.post_AdicionarItemCarrinho(
+      carrinho = ApiCarrinho.post_adicionarItemCarrinho(
         1,
         Constant::IdProduto,
         Constant::IdSerie,
@@ -48,9 +51,9 @@ describe 'Cartão de Crédito' do
 
       @token = ApiUser.GetToken
       ApiUser.Login(@token, Constant::User1)
-      Database.new.update_DataFinalVendaVigente('2020-12-25')
+      CarrinhoDb.new.update_dataFinalVendaVigente(dataVincenda)
 
-      @carrinho = ApiCarrinho.post_AdicionarItemCarrinho(
+      @carrinho = ApiCarrinho.post_adicionarItemCarrinho(
         1,
         Constant::IdProduto,
         Constant::IdSerie,
@@ -85,9 +88,9 @@ describe 'Cartão de Crédito' do
 
       @token = ApiUser.GetToken
       ApiUser.Login(@token, Constant::User1)
-      Database.new.update_DataFinalVendaVigente('2020-12-25')
+      CarrinhoDb.new.update_dataFinalVendaVigente(dataVincenda)
 
-      carrinho = ApiCarrinho.post_AdicionarItemCarrinho(
+      carrinho = ApiCarrinho.post_adicionarItemCarrinho(
         1,
         Constant::IdProduto,
         Constant::IdSerie,
@@ -120,9 +123,9 @@ describe 'Cartão de Crédito' do
     before do
       @token = ApiUser.GetToken
       ApiUser.Login(@token, Constant::User1)
-      Database.new.update_DataFinalVendaVigente('2020-12-25')
+      CarrinhoDb.new.update_dataFinalVendaVigente(dataVincenda)
 
-      carrinho = ApiCarrinho.post_AdicionarItemCarrinho(
+      carrinho = ApiCarrinho.post_adicionarItemCarrinho(
         1,
         Constant::IdProduto,
         Constant::IdSerie,
@@ -155,9 +158,9 @@ describe 'Cartão de Crédito' do
     before do
       @token = ApiUser.GetToken
       ApiUser.Login(@token, Constant::User1)
-      Database.new.update_DataFinalVendaVigente('2020-12-25')
+      CarrinhoDb.new.update_dataFinalVendaVigente(dataVincenda)
 
-      carrinho = ApiCarrinho.post_AdicionarItemCarrinho(
+      carrinho = ApiCarrinho.post_adicionarItemCarrinho(
         1,
         Constant::IdProduto,
         Constant::IdSerie,
@@ -189,9 +192,9 @@ describe 'Cartão de Crédito' do
     before do
       @token = ApiUser.GetToken
       ApiUser.Login(@token, Constant::User1)
-      Database.new.update_DataFinalVendaVigente('2020-12-25')
+      CarrinhoDb.new.update_dataFinalVendaVigente(dataVincenda)
 
-      carrinho = ApiCarrinho.post_AdicionarItemCarrinho(
+      carrinho = ApiCarrinho.post_adicionarItemCarrinho(
         1,
         Constant::IdProduto,
         Constant::IdSerie,
@@ -223,9 +226,9 @@ describe 'Cartão de Crédito' do
     before do
       @token = ApiUser.GetToken
       ApiUser.Login(@token, Constant::User1)
-      Database.new.update_DataFinalVendaVigente('2020-12-25')
+      CarrinhoDb.new.update_dataFinalVendaVigente(dataVincenda)
 
-      carrinho = ApiCarrinho.post_AdicionarItemCarrinho(
+      carrinho = ApiCarrinho.post_adicionarItemCarrinho(
         1,
         Constant::IdProduto,
         Constant::IdSerie,
@@ -260,9 +263,9 @@ describe 'Cartão de Crédito' do
 
       @token = ApiUser.GetToken
       ApiUser.Login(@token, Constant::User1)
-      Database.new.update_DataFinalVendaVigente('2020-12-25')
+      CarrinhoDb.new.update_dataFinalVendaVigente(dataVincenda)
 
-      carrinho = ApiCarrinho.post_AdicionarItemCarrinho(
+      carrinho = ApiCarrinho.post_adicionarItemCarrinho(
         1,
         Constant::IdProduto,
         Constant::IdSerie,
@@ -296,9 +299,9 @@ describe 'Cartão de Crédito' do
 
       @token = ApiUser.GetToken
       ApiUser.Login(@token, Constant::User1)
-      Database.new.update_DataFinalVendaVigente('2020-12-25')
+      CarrinhoDb.new.update_dataFinalVendaVigente(dataVincenda)
 
-      carrinho = ApiCarrinho.post_AdicionarItemCarrinho(
+      carrinho = ApiCarrinho.post_adicionarItemCarrinho(
         1, 
         Constant::IdProduto, 
         Constant::IdSerie, 
@@ -332,9 +335,9 @@ describe 'Cartão de Crédito' do
 
       @token = ApiUser.GetToken
       ApiUser.Login(@token, Constant::User1)
-      Database.new.update_DataFinalVendaVigente('2020-12-25')
+      CarrinhoDb.new.update_dataFinalVendaVigente(dataVincenda)
 
-      carrinho = ApiCarrinho.post_AdicionarItemCarrinho(
+      carrinho = ApiCarrinho.post_adicionarItemCarrinho(
         1, 
         Constant::IdProduto, 
         Constant::IdSerie, 
@@ -368,9 +371,9 @@ describe 'Cartão de Crédito' do
 
       @token = ApiUser.GetToken
       ApiUser.Login(@token, Constant::User1)
-      Database.new.update_DataFinalVendaVigente('2020-12-25')
+      CarrinhoDb.new.update_dataFinalVendaVigente(dataVincenda)
 
-      carrinho = ApiCarrinho.post_AdicionarItemCarrinho(
+      carrinho = ApiCarrinho.post_adicionarItemCarrinho(
         1, 
         Constant::IdProduto, 
         Constant::IdSerie, 
@@ -403,9 +406,9 @@ describe 'Cartão de Crédito' do
 
       @token = ApiUser.GetToken
       ApiUser.Login(@token, Constant::User1)
-      Database.new.update_DataFinalVendaVigente('2020-12-25')
+      CarrinhoDb.new.update_dataFinalVendaVigente(dataVincenda)
 
-      carrinho = ApiCarrinho.post_AdicionarItemCarrinho(
+      carrinho = ApiCarrinho.post_adicionarItemCarrinho(
         1, 
         Constant::IdProduto, 
         Constant::IdSerie, 
@@ -438,9 +441,9 @@ describe 'Cartão de Crédito' do
 
       @token = ApiUser.GetToken
       ApiUser.Login(@token, Constant::User1)
-      Database.new.update_DataFinalVendaVigente('2020-12-25')
+      CarrinhoDb.new.update_dataFinalVendaVigente(dataVincenda)
 
-      carrinho = ApiCarrinho.post_AdicionarItemCarrinho(
+      carrinho = ApiCarrinho.post_adicionarItemCarrinho(
         1, 
         Constant::IdProduto, 
         Constant::IdSerie, 
@@ -475,9 +478,9 @@ describe 'Cartão de Crédito' do
       @token = ApiUser.GetToken
       ApiUser.Login(@token, Constant::User1)
 
-      Database.new.update_DataFinalVendaVigente('2020-12-25')
+      CarrinhoDb.new.update_dataFinalVendaVigente(dataVincenda)
 
-      carrinho = ApiCarrinho.post_AdicionarItemCarrinho(
+      carrinho = ApiCarrinho.post_adicionarItemCarrinho(
         1, 
         Constant::IdProduto, 
         Constant::IdSerie, 

@@ -35,10 +35,10 @@ class ApiCarrinho
         post("/Carrinho/SetQtdItemCarrinho", body: @SetQtdItemCarrinho.to_json)
     end
 
-    def self.post_AdicionarItemCarrinho(qtdItens, idProduto, idSerie, token)
+    def self.post_adicionarItemCarrinho(qtdItens, idProduto, idSerie, token)
         headers['Authorization'] = token
 
-        @AdicionarItemCarrinho = { 
+        @adicionarItemCarrinho = { 
             "obj": {
                 "idCarrinho": 0,
                 "idProduto": idProduto,
@@ -49,7 +49,7 @@ class ApiCarrinho
                 "atualPagina": 1,
                 "tamanhoPagina": 999
             }
-        post("/Carrinho/AdicionarItemCarrinho", body: @AdicionarItemCarrinho.to_json)
+        post("/Carrinho/AdicionarItemCarrinho", body: @adicionarItemCarrinho.to_json)
     end
 
     def self.post_SetRemoverItemCarrinho(token, idCarrinho)
@@ -67,10 +67,10 @@ class ApiCarrinho
         post("/Carrinho/SetRemoverItemCarrinho", body: @SetRemoverItemCarrinho.to_json)
     end
 
-    def self.post_AdicionarItemCarrinhoAfiliados(token, idProduto, idSerie87, qtdItens)
+    def self.post_adicionarItemCarrinhoAfiliados(token, idProduto, idSerie87, qtdItens)
         headers['Authorization'] = token
 
-        @AdicionarItemCarrinhoAfiliados = {
+        @adicionarItemCarrinhoAfiliados = {
             "obj": {
                 "idCarrinho": 0,
                 "idProduto": idProduto, #neste endpoint o front ignora a id série
@@ -81,7 +81,7 @@ class ApiCarrinho
             "atualPagina": 1,
             "tamanhoPagina": 999
         }
-        post("/Carrinho/AdicionarItemCarrinhoAfiliados", body: @AdicionarItemCarrinhoAfiliados.to_json)
+        post("/Carrinho/AdicionarItemCarrinhoAfiliados", body: @adicionarItemCarrinhoAfiliados.to_json)
     end
 
     def self.post_GetCarrinhoItens(token)

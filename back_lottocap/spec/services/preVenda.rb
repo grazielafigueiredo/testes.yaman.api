@@ -33,7 +33,7 @@ class ApiPreVenda
 
     @adicionarItemCarrinhoPreVenda = {
       "obj": {
-        "idSerie": 96,
+        "idSerie": Constant::IdSerieMaxPreVenda,
         "lstDezenas": lstDezenas,
         "flPromoAtiva": false
       },

@@ -4,7 +4,7 @@ context 'Comprar créditos Lottocap' do
     @token = ApiUser.GetToken
     ApiUser.Login(@token, Constant::User1)
 
-    @carrinho = ApiCarrinho.post_AdicionarItemCarrinho(
+    @carrinho = ApiCarrinho.post_adicionarItemCarrinho(
       1,
       Constant::IdProduto,
       Constant::IdSerie,
@@ -31,7 +31,7 @@ context 'Pagar - Sucesso com Crédito Lottocap' do
 
     Database.new.update_CreditoLottocap(100)
 
-    @carrinho = ApiCarrinho.post_AdicionarItemCarrinho(
+    @carrinho = ApiCarrinho.post_adicionarItemCarrinho(
       3,
       Constant::IdProduto,
       Constant::IdSerie,
@@ -62,7 +62,7 @@ context 'Pagar - Teste de compra com JÁ18' do
 
     Database.new.update_CreditoLottocap(100.000)
 
-    @carrinho = ApiCarrinho.post_AdicionarItemCarrinho(
+    @carrinho = ApiCarrinho.post_adicionarItemCarrinho(
       3,
       Constant::IdProdutoJa18,
       Constant::IdSerieJa18,

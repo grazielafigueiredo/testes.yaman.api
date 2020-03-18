@@ -109,7 +109,7 @@ context 'Resultados' do
   before do
     @token = ApiUser.GetToken
 
-    @getSerieResultados = ApiResultados.get_getSerieResultados(@token)
+    @getSerieResultados = ApiResultados.get_serieResultados(@token, 29)
     @vlPremioAcerto = JSON.parse(@getSerieResultados.response.body)['obj'][0]['resultadoConcurso']['resultadosConcursos']
     puts @vlPremioAcerto.count
   end

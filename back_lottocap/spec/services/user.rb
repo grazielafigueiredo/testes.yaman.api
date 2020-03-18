@@ -34,7 +34,7 @@ class ApiUser
     def self.GetToken()
         response_in_json = JSON.parse(get("/Usuario/GerarToken").response.body)
 
-        token = response_in_json['dadosUsuario']['token']
+        token = response_in_json['obj'][0]['token'] 
     
         return token
     end
@@ -46,14 +46,14 @@ class ApiUser
     end
 end
 
-class Token
-    include Singleton
+# class Token
+#     include Singleton
 
-    def initialize()
-        @token = ApiUser.GetToken()
-    end
+#     def initialize()
+#         @token = ApiUser.GetToken()
+#     end
 
-    def get()
-        return @token
-    end
-end
+#     def get()
+#         return @token
+#     end
+# end

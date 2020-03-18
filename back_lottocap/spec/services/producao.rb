@@ -99,7 +99,7 @@ class ApiProducao
   def self.GetToken
     response_in_json = JSON.parse(get('/Usuario/GerarToken').response.body)
 
-    token = response_in_json['dadosUsuario']['token']
+    token = response_in_json['obj'][0]['token']
 
     token
   end
