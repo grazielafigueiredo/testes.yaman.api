@@ -9,28 +9,25 @@ class ApiCreditoLottocap
   base_uri Constant::Url
   headers 'Content-Type' => 'application/json'
 
-  def self.post_CreditoLottocap(token, idCarrinho)
+  def self.post_pagarCarrinhoComCreditoLottocap(token, idCarrinho)
     headers[:Authorization] = token
 
-    # @CreditoLottocap = {
-    #   "obj": {
-    #     "idFormaPagamento": Constant::IdFormaPagamentoCreditoLottocap,
-    #     "idCarrinho": idCarrinho,
-    #     "flCompraComCredito": true,
-
-    #   }
-    # }
-
-    @CreditoLottocap = {
-      "obj": {
-        "idFormaPagamento": Constant::IdFormaPagamentoCreditoLottocap,
-        "idCarrinho": idCarrinho,
-        "flCompraComCredito": true,
-        "flCompraDeCredito": false,
-        "valorCreditos": 0
-      }
+    @creditoLottocap = {
+        "obj": {
+          "idFormaPagamento": 11,
+          "idCarrinho": idCarrinho,
+          "flCompraComCredito": true,
+          "flCompraDeCredito": false,
+          "valorCreditos": 0,
+          "dadosComplementaresUsuario": nil,
+          "utmCampanhas": "{\"conversao_medium\":\"direto\"}",
+          "sessionIdAmplitude": 1584628273657,
+          "deviceIdAmplitude": "b5b37a42-c1a0-4687-bd02-8a44257a4f20R"
+        },
+        "atualPagina": 1,
+        "tamanhoPagina": 9999
     }
-    post('/Pagamento/PagarCarrinho', body: @CreditoLottocap.to_json)
+    post('/Pagamento/PagarCarrinho', body: @creditoLottocap.to_json)
   end
 
   def self.post_comprarCreditoLottocap(token, idCarrinho)

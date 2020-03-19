@@ -202,7 +202,7 @@ context 'Comprar com CLottocap e verificar se o título foi atribuído' do
     @tituloAntesCompra = ApiTitulos.get_GetQtdTitulosUsuario(@token)
 
     # Atribuindo credito lottocap e pagando o carrinho
-    @rs = Database.new.update_CreditoLottocap(100)
+    @rs = CreditoLotto.new.update_creditoLottocap(100)
     puts @rs
     @carrinho = ApiCarrinho.post_adicionarItemCarrinho(
       2,
@@ -211,7 +211,7 @@ context 'Comprar com CLottocap e verificar se o título foi atribuído' do
       @token
     )
     @idCarrinho = JSON.parse(@carrinho.response.body)['obj'][0]['idCarrinho']
-    @result = ApiCreditoLottocap.post_CreditoLottocap(@token, @idCarrinho)
+    @result = ApiCreditoLottocap.post_pagarCarrinhoComCreditoLottocap(@token, @idCarrinho)
 
     sleep 3
     @tituloDepoisCompra = ApiTitulos.get_GetQtdTitulosUsuario(@token)
@@ -227,7 +227,7 @@ context 'Comprar com CLottocap e verificar se o título foi atribuído' do
   it { puts @rs }
 
   after do
-    Database.new.update_CreditoLottocap(0)
+    CreditoLotto.new.update_creditoLottocap(0)
     ApiUser.get_deslogar(@token)
   end
 end

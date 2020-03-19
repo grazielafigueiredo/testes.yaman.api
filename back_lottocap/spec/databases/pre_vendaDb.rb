@@ -19,4 +19,14 @@ class PreVenda < DbBase
         puts today_add_6_days
         puts today_add_9_days
     end
+
+    def update_reservar_titulo
+       t = @connection.execute(
+           "UPDATE TituloMatriz set reservado = 1 
+            where idSerie = #{Constant::IdSerieMaxPreVenda}
+            and dezenas = '01 02 03'"
+        )
+        puts t.do
+    end
+
 end

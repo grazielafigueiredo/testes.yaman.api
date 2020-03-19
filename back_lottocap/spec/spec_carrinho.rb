@@ -60,7 +60,7 @@ describe 'Carrinho - Reserva' do
       )
       @idCarrinho = JSON.parse(@carrinho.response.body)['obj'][0]['idCarrinho']
 
-      Database.new.update_dataFinalVendaVigente(dataVencida)
+      CarrinhoDb.new.update_dataFinalVendaVigente(dataVencida)
       @result = ApiCarrinho.get_GetStatusCarrinho
       puts @result
     end
@@ -79,8 +79,8 @@ describe 'Carrinho - Reserva' do
       @token = ApiUser.GetToken
       ApiUser.Login(@token, Constant::User1)
 
-      # CarrinhoDb.new.update_dataFinalVendaVigente(dataVincenda)
-      # CarrinhoDb.new.update_maxReservados(naoReservado)
+      CarrinhoDb.new.update_dataFinalVendaVigente(dataVincenda)
+      CarrinhoDb.new.update_maxReservados(naoReservado)
 
       ApiCarrinho.post_adicionarItemCarrinho(
         1,
@@ -134,10 +134,10 @@ describe 'Carrinho - Reserva' do
         @token
       )
       @idCarrinho = JSON.parse(@carrinho.response.body)['obj'][0]['idCarrinho']
-      @idCarrinho = JSON.parse(@carrinho.response.body)['obj'][0]['dtFimConcurso']
+      @dtFimConcurso = JSON.parse(@carrinho.response.body)['obj'][0]['dtFimConcurso']
 
     end
-    it { expect(JSON.parse(@idCarrinho.response.body)['obj'][0]['dtFimConcurso']).to != '0001-01-01T00:00:00' }
+    it { expect(@dtFimConcurso).not_to be '0001-01-01T00:00:00' }
 
     after do 
       ApiCarrinho.post_SetRemoverItemCarrinho(@token, @idCarrinho)
@@ -256,7 +256,7 @@ describe 'Carrinho - Sem Reserva - Tentar Pagar' do
       )
       @idCarrinho = JSON.parse(@carrinho.response.body)['obj'][0]['idCarrinho']
 
-      Database.new.update_dataFinalVendaVigente(dataVencida)
+      CarrinhoDb.new.update_dataFinalVendaVigente(dataVencida)
 
       @result = ApiCartao.post_PagarCartaoDeCredito(
         @token, 
@@ -295,7 +295,7 @@ describe 'Carrinho - Sem Reserva - Tentar Pagar' do
       )
       @idCarrinho = JSON.parse(@carrinho.response.body)['obj'][0]['idCarrinho']
 
-      Database.new.update_dataFinalVendaVigente(dataVencida)
+      CarrinhoDb.new.update_dataFinalVendaVigente(dataVencida)
 
       @result = ApiTransferencia.post_TransfBradesco(@token, @idCarrinho, Faker::Bank.account_number(digits: 4), Faker::Bank.account_number(digits: 4), Faker::Bank.account_number(digits: 1), Constant::NomeCompletoTitular)
       puts @result
@@ -326,17 +326,17 @@ describe 'Carrinho - Sem Reserva - Tentar Pagar' do
       )
       @idCarrinho = JSON.parse(@carrinho.response.body)['obj'][0]['idCarrinho']
 
-      Database.new.update_dataFinalVendaVigente(dataVencida)
+      CarrinhoDb.new.update_dataFinalVendaVigente(dataVencida)
 
 
-      @result = ApiBoleto.post_sucessoBoleto(@token, @idCarrinho)
+      @result = ApiBoleto.post_pagarCarrinhoComBoleto(@token, @idCarrinho)
       puts @result
     end
 
     it { expect(JSON.parse(@result.response.body)['erros'][0]['mensagem']).to eql "Esta forma de pagamento não está mais disponível, por favor. Selecione outra forma de pagamento."}
 
     after do
-      Database.new.update_dataFinalVendaVigente(dataVincenda)
+      CarrinhoDb.new.update_dataFinalVendaVigente(dataVincenda)
       ApiCarrinho.post_SetRemoverItemCarrinho(@token, @idCarrinho)
       ApiUser.get_deslogar(@token)
     end
@@ -349,7 +349,7 @@ describe 'Carrinho - Sem Reserva - Tentar Pagar' do
 
       CarrinhoDb.new.update_dataFinalVendaVigente(dataVincenda)
       CarrinhoDb.new.update_maxReservados(naoReservado)
-      Database.new.update_CreditoLottocap(100.000)
+      CreditoLotto.new.update_creditoLottocap(100.000)
 
       @carrinho = ApiCarrinho.post_adicionarItemCarrinho(
         1,
@@ -359,9 +359,9 @@ describe 'Carrinho - Sem Reserva - Tentar Pagar' do
       )
       @idCarrinho = JSON.parse(@carrinho.response.body)['obj'][0]['idCarrinho']
 
-      Database.new.update_dataFinalVendaVigente(dataVencida)
+      CarrinhoDb.new.update_dataFinalVendaVigente(dataVencida)
 
-      @result = ApiCreditoLottocap.post_CreditoLottocap(@token, @idCarrinho)
+      @result = ApiCreditoLottocap.post_pagarCarrinhoComCreditoLottocap(@token, @idCarrinho)
       puts @result
     end
 
@@ -369,7 +369,7 @@ describe 'Carrinho - Sem Reserva - Tentar Pagar' do
 
     after do
       CarrinhoDb.new.update_dataFinalVendaVigente(dataVincenda)
-      Database.new.update_CreditoLottocap(0.000)
+      CreditoLotto.new.update_creditoLottocap(0.000)
 
       ApiCarrinho.post_SetRemoverItemCarrinho(@token, @idCarrinho)
       ApiUser.get_deslogar(@token)
@@ -395,7 +395,7 @@ describe 'Carrinho - Sem Reserva - Tentar Pagar' do
       CarrinhoDb.new.update_dataFinalVendaVigente(dataVencida)
 
 
-      @result = ApiBoleto.post_sucessoBoleto(@token, @idCarrinho)
+      @result = ApiBoleto.post_pagarCarrinhoComBoleto(@token, @idCarrinho)
       puts @result
     end
 
@@ -488,8 +488,8 @@ describe 'Carrinho - Sem Reserva - Tentar Pagar' do
       @token = ApiUser.GetToken
       ApiUser.Login(@token, Constant::User1)
 
-      # CarrinhoDb.new.update_dataFinalVendaVigente(dataVincenda)
-      # CarrinhoDb.new.update_maxReservados(naoReservado)
+      CarrinhoDb.new.update_dataFinalVendaVigente(dataVincenda)
+      CarrinhoDb.new.update_maxReservados(naoReservado)
 
       @carrinho = ApiCarrinho.post_adicionarItemCarrinho(
         5,
@@ -521,7 +521,7 @@ describe 'Carrinho - Sem Reserva - Tentar Pagar' do
     it 'validando série e quantidade de itens no carrinho' do
       expect(JSON.parse(@endpointAfiliados.response.body)['obj'][0]['descricaoSerie']).to eql "17test (grazi não me mata - by wes)"
       expect(JSON.parse(@endpointAfiliados.response.body)['obj'][0]['idCarrinho']).to be_a Integer
-      expect(JSON.parse(@endpointAfiliados.response.body)['obj'][1]['idCarrinho']).not_to exist
+      expect(JSON.parse(@endpointAfiliados.response.body)['obj'].count).to eq(1)
     end
 
     after do
@@ -568,7 +568,7 @@ describe 'Carrinho - Sem Reserva - Tentar Pagar' do
     it 'validando série e quantidade de itens no carrinho' do
       expect(JSON.parse(@endpointAfiliados.response.body)['obj'][0]['descricaoSerie']).to eql "17test (grazi não me mata - by wes)"
       expect(JSON.parse(@endpointAfiliados.response.body)['obj'][0]['idCarrinho']).to be_a Integer
-      expect(JSON.parse(@endpointAfiliados.response.body)['obj'][1]['idCarrinho']).not_to exist
+      expect(JSON.parse(@endpointAfiliados.response.body)['obj'].count).to eq(1)
     end
 
     after do

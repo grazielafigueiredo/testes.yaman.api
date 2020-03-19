@@ -89,13 +89,14 @@ end
 
 context 'Colocar no carrinho Título já reservado' do
   before do
+    PreVenda.new.update_reservar_titulo
+    
     @token = ApiUser.GetToken
     ApiUser.Login(@token, Constant::User1)
 
+
     @preVenda = ApiPreVenda.post_adicionarItemCarrinhoPreVenda(@token, ["01 02 03"])
     puts @preVenda
-
-
   end
 
   it 'Comprar um Título reservado' do
@@ -119,8 +120,6 @@ context 'Concorrencia no pagamento Título já reservado' do
 
     @lstDezenas = ApiPreVenda.post_adicionarItemCarrinhoPreVenda(@token1, [@conjuntosDezenas])
     @idCarrinhoUser1 = JSON.parse(@lstDezenas.response.body)['obj'][0]['idCarrinho']
-    puts @lstDezenas
-
       
     @token2 = ApiUser.GetToken
     ApiUser.Login(@token2, Constant::User2)
@@ -129,17 +128,33 @@ context 'Concorrencia no pagamento Título já reservado' do
     @idCarrinhoUser2 = JSON.parse(@lstDezenas.response.body)['obj'][0]['idCarrinho']
     puts @lstDezenas
 
+      @pagarCarrinho1 = ApiCartao.post_PagarCartaoDeCredito(
+        @token1,
+        @idCarrinhoUser1,
+        Constant::NomeCompletoTitular,
+        Constant::NumeroCartao,
+        Constant::ValidadeMesCartao,
+        Constant::ValidadeAnoCartao,
+        Constant::CartaoCVV
+      )
+      puts @pagarCarrinho1
 
-      @boleto1 = ApiBoleto.post_sucessoBoleto(@token1, @idCarrinhoUser1)
-      puts @boleto1
-      @boleto2 = ApiBoleto.post_sucessoBoleto(@token2, @idCarrinhoUser2)
-      puts @boleto2
+      @pagarCarrinho2 = ApiCartao.post_PagarCartaoDeCredito(
+        @token2,
+        @idCarrinhoUser2,
+        Constant::NomeCompletoTitular,
+        Constant::NumeroCartao,
+        Constant::ValidadeMesCartao,
+        Constant::ValidadeAnoCartao,
+        Constant::CartaoCVV
+      )
+      puts @pagarCarrinho2
 
   end
 
   it 'Concorrencia no pagamento Título já reservado' do
-    expect(JSON.parse(@boleto2.response.body)['sucesso']).to eql false
-    expect(JSON.parse(@boleto2.response.body)['erros'][0]['mensagem']).to eql "Reserva de titulos já foi solicitada para as dezenas #{@conjuntosDezenas}"
+    expect(JSON.parse(@pagarCarrinho2.response.body)['sucesso']).to eql false
+    expect(JSON.parse(@pagarCarrinho2.response.body)['erros'][0]['mensagem']).to eql "Reserva de titulos já foi solicitada para as dezenas #{@conjuntosDezenas}"
   end
 
   after do

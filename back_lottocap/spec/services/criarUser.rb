@@ -20,7 +20,7 @@ class ApiCreateUser
         "email": email,
         "aceitaReceberMensagemDeMarketingPorEmail": false,
         "aceitaOsTermosECondicoesDeUso": true,
-        # "cdPromocaoUsuario": null,
+        "cdPromocaoUsuario": nil,
         "senha": '1234',
         "metodo_de_cadastro": 'email'
       }
@@ -46,7 +46,7 @@ class ApiCreateUser
   def self.post_AlterarDadosUsuario(token, email, cpf)
     headers['Authorization'] = token
 
-    @AlterarDadosUsuario = {
+    @alterarDadosUsuario = {
       "obj": {
         "apelido": 'grazi',
         "nomeCompleto": 'grazi a',
@@ -72,6 +72,11 @@ class ApiCreateUser
       "atualPagina": 0,
       "tamanhoPagina": 0
     }
-    post('/Usuario/AlterarDadosUsuario', body: @AlterarDadosUsuario.to_json)
+    post('/Usuario/AlterarDadosUsuario', body: @alterarDadosUsuario.to_json)
+  end
+
+  def self.get_buscarDadosUsuario(token)
+    headers['Authorization'] = token
+    get('/Usuario/BuscarDadosUsuario', body: @buscarDadosUsuario.to_json)
   end
 end

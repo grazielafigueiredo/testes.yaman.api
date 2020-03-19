@@ -11,6 +11,7 @@ require 'timeout'
 
 
 require_relative "database"
+require_relative "databases/credito_lottocapDb"
 require_relative "databases/carrinhoDb"
 require_relative "databases/pre_vendaDb"
 require_relative "databases/titulo_matrizDb"

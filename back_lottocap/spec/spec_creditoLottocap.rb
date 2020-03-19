@@ -12,13 +12,13 @@ context 'Comprar créditos Lottocap' do
     )
     @idCarrinho = JSON.parse(@carrinho.response.body)['obj'][0]['idCarrinho']
 
-    @result = ApiCreditoLottocap.post_comprarCreditoLottocap(@token, @idCarrinho)
-    puts @result
+    @responseCarrinho = ApiCreditoLottocap.post_comprarCreditoLottocap(@token, @idCarrinho)
+    puts @responseCarrinho
   end
-  it { expect(JSON.parse(@result.response.body)['sucesso']).to be true}
+  it { expect(JSON.parse(@responseCarrinho.response.body)['sucesso']).to be true}
  
   after do
-    Database.new.update_CreditoLottocap(0.000)
+    CreditoLotto.new.update_creditoLottocap(0.000)
     ApiCarrinho.post_SetRemoverItemCarrinho(@token, @idCarrinho)
     ApiUser.get_deslogar(@token)
   end
@@ -29,27 +29,29 @@ context 'Pagar - Sucesso com Crédito Lottocap' do
     @token = ApiUser.GetToken
     ApiUser.Login(@token, Constant::User1)
 
-    Database.new.update_CreditoLottocap(100)
+    CreditoLotto.new.update_creditoLottocap(100)
 
     @carrinho = ApiCarrinho.post_adicionarItemCarrinho(
-      3,
+      1,
       Constant::IdProduto,
       Constant::IdSerie,
       @token
     )
     @idCarrinho = JSON.parse(@carrinho.response.body)['obj'][0]['idCarrinho']
+  
+    @responseCarrinho = ApiCreditoLottocap.post_pagarCarrinhoComCreditoLottocap(@token, @idCarrinho)
 
-    @result = ApiCreditoLottocap.post_CreditoLottocap(@token, @idCarrinho)
-    puts @result
+    @responseDadosUsuario = ApiCreateUser.get_buscarDadosUsuario(@token)
+    puts @responseDadosUsuario
   end
 
   it 'Pagar - Sucesso com Crédito Lottocap' do
-     expect(JSON.parse(@result.response.body)['sucesso']).to be true
-     expect(JSON.parse(@result.response.body)['dadosUsuario']['creditosDisponiveis']).to eql 70.000
-  end
+     expect(JSON.parse(@responseCarrinho.response.body)['sucesso']).to be true
+     expect(JSON.parse(@responseDadosUsuario.response.body)['obj'][0]['dadosUsuario']['creditosDisponiveis']).to eql 50.000
+    end
   
   after do
-    Database.new.update_CreditoLottocap(0)
+    CreditoLotto.new.update_creditoLottocap(0)
     ApiCarrinho.post_SetRemoverItemCarrinho(@token, @idCarrinho)
     ApiUser.get_deslogar(@token)
   end
@@ -60,27 +62,29 @@ context 'Pagar - Teste de compra com JÁ18' do
     @token = ApiUser.GetToken
     ApiUser.Login(@token, Constant::User1)
 
-    Database.new.update_CreditoLottocap(100.000)
+    CreditoLotto.new.update_creditoLottocap(100.000)
 
     @carrinho = ApiCarrinho.post_adicionarItemCarrinho(
-      3,
+      1,
       Constant::IdProdutoJa18,
       Constant::IdSerieJa18,
       @token
     )
     @idCarrinho = JSON.parse(@carrinho.response.body)['obj'][0]['idCarrinho']
-    puts @carrinho
-    @result = ApiCreditoLottocap.post_CreditoLottocap(@token, @idCarrinho)
-    puts @result
+
+    @responseCarrinho = ApiCreditoLottocap.post_pagarCarrinhoComCreditoLottocap(@token, @idCarrinho)
+
+    @responseDadosUsuario = ApiCreateUser.get_buscarDadosUsuario(@token)
+    puts @responseDadosUsuario
   end
   
   it 'Pagar - Teste de compra com JÁ18' do
-   expect(JSON.parse(@result.response.body)['sucesso']).to be true
-   expect(JSON.parse(@result.response.body)['dadosUsuario']['creditosDisponiveis']).to eql 70.000
+   expect(JSON.parse(@responseCarrinho.response.body)['sucesso']).to be true
+   expect(JSON.parse(@responseDadosUsuario.response.body)['obj'][0]['dadosUsuario']['creditosDisponiveis']).to eql 99.000
   end
   
   after do
-    Database.new.update_CreditoLottocap(0.000)
+    CreditoLotto.new.update_creditoLottocap(0.000)
     ApiCarrinho.post_SetRemoverItemCarrinho(@token, @idCarrinho)
     ApiUser.get_deslogar(@token)
   end

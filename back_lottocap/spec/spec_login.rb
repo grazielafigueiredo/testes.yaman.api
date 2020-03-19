@@ -17,10 +17,11 @@ context 'Erro 400 API Logar Usuário - só resolveu limpando service worker' do
 
     @token = ApiUser.GetToken
     @loginNovamente = ApiUser.Login(@token, Constant::User1)
+    puts @loginNovamente
   end
 
   it 'validacao de login' do
-    expect(JSON.parse(@loginNovamente.response.body)['obj'][0]).to be true
+    expect(JSON.parse(@loginNovamente.response.body)['erros']).to eql []
     expect(JSON.parse(@loginNovamente.response.body)['sucesso']).to eql true
     expect(JSON.parse(@loginNovamente.response.code)).to be 200
   end

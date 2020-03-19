@@ -9,12 +9,12 @@ class ApiBoleto
   base_uri Constant::Url
   headers 'Content-Type' => 'application/json'
 
-  def self.post_sucessoBoleto(token, idCarrinho)
+  def self.post_pagarCarrinhoComBoleto(token, idCarrinho)
     headers[:Authorization] = token
 
     @sucessoBoleto = {
       "obj": {
-        "idFormaPagamento": Constant::IdFormaPagamentoBoleto,
+        "idFormaPagamento": 10,
         "idCarrinho": idCarrinho,
         "boletoSenderHash": '667a4c201f9cdaaa382f6c89180770243d6ca8f01ca6cdcf7a7aed56b684cadc'
       }
