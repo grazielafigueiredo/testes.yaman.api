@@ -64,11 +64,11 @@ context 'escolha de dezenas nao pode trazer qndo a série nao estiver em pré ve
 
     @carrinho = ApiCarrinho.post_adicionarItemCarrinho(
       10, 
-      Constant::IdProduto, 
-      Constant::IdSerie, 
+      Constant::IdProduto,
+      Constant::IdSerie,
       @token
     )
-     puts @token                                                  
+     puts @token
     @idCarrinho = JSON.parse(@carrinho.response.body)['obj'][0]['idCarrinho']
     @idCarrinhoItem = JSON.parse(@carrinho.response.body)['obj'][0]['idCarrinhoItem']
     puts @idCarrinhoItem
@@ -90,7 +90,7 @@ end
 context 'Colocar no carrinho Título já reservado' do
   before do
     PreVenda.new.update_reservar_titulo
-    
+
     @token = ApiUser.GetToken
     ApiUser.Login(@token, Constant::User1)
 
