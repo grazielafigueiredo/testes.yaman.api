@@ -21,7 +21,7 @@ class ApiTransferencia
 
     @TransfBradesco = {
       "obj": {
-        "idFormaPagamento": Constant::IdFormaPagamentoTransf,
+        "idFormaPagamento": 6,
         "idCarrinho": idCarrinho,
         "transfAgencia": transfAgencia,
         "transfConta": transfConta,
@@ -44,13 +44,13 @@ class ApiTransferencia
 
     @TransfSucessoItau = {
       "obj": {
-        "idFormaPagamento": Constant::IdFormaPagamentoTransfItau,
+        "idFormaPagamento": 7,
         "idCarrinho": idCarrinho,
         "transfAgencia": transfAgencia,
         "transfAgenciaDigito": '',
         "transfConta": transfConta,
         "transfContaDigito": transfContaDigito,
-        "nomeCompletoTitular": Constant::NomeCompletoTitular
+        "nomeCompletoTitular": 'CARLOS'
 
       }
     }
@@ -66,7 +66,7 @@ class ApiTransferencia
 
     @TransfSantander = {
       "obj": {
-        "idFormaPagamento": Constant::IdFormaPagamentoTransfSantander,
+        "idFormaPagamento": 8,
         "idCarrinho": idCarrinho,
         "cpf": cpf
       }
@@ -86,13 +86,13 @@ class ApiTransferencia
 
     @TransfSucessoBrasil = {
       "obj": {
-        "idFormaPagamento": Constant::IdFormaPagamentoTransfBrasil,
+        "idFormaPagamento": 9,
         "idCarrinho": idCarrinho,
         "transfAgencia": transfAgencia,
         "transfAgenciaDigito": transfAgenciaDigito,
         "transfConta": transfConta,
         "transfContaDigito": transfContaDigito,
-        "nomeCompletoTitular": Constant::NomeCompletoTitular
+        "nomeCompletoTitular": 'CARLOS'
 
       }
     }

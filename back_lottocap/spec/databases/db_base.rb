@@ -11,6 +11,7 @@ class DbBase
       host: 'hmllottocap.database.windows.net',
       port: 1433,
       database: 'hmllottocaptests',
+      # database: 'hmllottocap',
       azure: true,
       timeout: 35
     }

@@ -164,18 +164,18 @@ context 'Comprar com Cartao de Credito e verificar se o título foi atribuído' 
     @carrinho = ApiCarrinho.post_adicionarItemCarrinho(
       1,
       Constant::IdProduto,
-      Constant::IdSerie,
+      Constant::IdSerieMaxRegular,
       @token
     )
     @idCarrinho = JSON.parse(@carrinho.response.body)['obj'][0]['idCarrinho']
     @result = ApiCartao.post_PagarCartaoDeCredito(
       @token,
       @idCarrinho,
-      Constant::NomeCompletoTitular,
-      Constant::NumeroCartao,
-      Constant::ValidadeMesCartao,
+      'CARLOS',
+      '5521884306233764',
+      '11',
       Constant::ValidadeAnoCartao,
-      Constant::CartaoCVV
+      '123'
     )
 
     @tituloDepoisCompra = ApiTitulos.get_GetQtdTitulosUsuario(@token)['obj'][0]['qtd']
@@ -207,7 +207,7 @@ context 'Comprar com CLottocap e verificar se o título foi atribuído' do
     @carrinho = ApiCarrinho.post_adicionarItemCarrinho(
       2,
       Constant::IdProduto,
-      Constant::IdSerie,
+      Constant::IdSerieMaxRegular,
       @token
     )
     @idCarrinho = JSON.parse(@carrinho.response.body)['obj'][0]['idCarrinho']

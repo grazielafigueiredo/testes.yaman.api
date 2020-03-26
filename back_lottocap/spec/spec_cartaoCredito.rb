@@ -13,7 +13,7 @@ describe 'Cartão de Crédito' do
       carrinho = ApiCarrinho.post_adicionarItemCarrinho(
         1,
         Constant::IdProduto,
-        Constant::IdSerie,
+        Constant::IdSerieMaxRegular,
         @token
       )
 
@@ -56,7 +56,7 @@ describe 'Cartão de Crédito' do
       @carrinho = ApiCarrinho.post_adicionarItemCarrinho(
         1,
         Constant::IdProduto,
-        Constant::IdSerie,
+        Constant::IdSerieMaxRegular,
         @token
       )
 
@@ -68,10 +68,10 @@ describe 'Cartão de Crédito' do
         @token,
         @idCarrinho,
         "CARLOS 111111",
-        Constant::NumeroCartao,
-        Constant::ValidadeMesCartao,
+        '5521884306233764',
+        '11',
         Constant::ValidadeAnoCartao,
-        Constant::CartaoCVV
+        '123'
       )
       puts @result
     end
@@ -93,7 +93,7 @@ describe 'Cartão de Crédito' do
       carrinho = ApiCarrinho.post_adicionarItemCarrinho(
         1,
         Constant::IdProduto,
-        Constant::IdSerie,
+        Constant::IdSerieMaxRegular,
         @token
       )
 
@@ -103,10 +103,10 @@ describe 'Cartão de Crédito' do
         @token,
         @idCarrinho,
         "",
-        Constant::NumeroCartao,
-        Constant::ValidadeMesCartao,
+        '5521884306233764',
+        '11',
         Constant::ValidadeAnoCartao,
-        Constant::CartaoCVV
+        '123'
       )
       puts @result
     end
@@ -128,7 +128,7 @@ describe 'Cartão de Crédito' do
       carrinho = ApiCarrinho.post_adicionarItemCarrinho(
         1,
         Constant::IdProduto,
-        Constant::IdSerie,
+        Constant::IdSerieMaxRegular,
         @token
       )
 
@@ -137,11 +137,11 @@ describe 'Cartão de Crédito' do
       @result = ApiCartao.post_PagarCartaoDeCredito(
         @token,
         @idCarrinho,
-        Constant::NomeCompletoTitular,
+        'CARLOS',
         "erty4567rt567",
-        Constant::ValidadeMesCartao,
+        '11',
         Constant::ValidadeAnoCartao,
-        Constant::CartaoCVV
+        '123'
       )
       puts @result
     end
@@ -163,7 +163,7 @@ describe 'Cartão de Crédito' do
       carrinho = ApiCarrinho.post_adicionarItemCarrinho(
         1,
         Constant::IdProduto,
-        Constant::IdSerie,
+        Constant::IdSerieMaxRegular,
         @token
       )
 
@@ -172,11 +172,11 @@ describe 'Cartão de Crédito' do
       @result = ApiCartao.post_PagarCartaoDeCredito(
         @token,
         @idCarrinho,
-        Constant::NomeCompletoTitular,
+        'CARLOS',
         "",
-        Constant::ValidadeMesCartao,
+        '11',
         Constant::ValidadeAnoCartao,
-        Constant::CartaoCVV
+        '123'
       )
       puts @result
     end
@@ -197,7 +197,7 @@ describe 'Cartão de Crédito' do
       carrinho = ApiCarrinho.post_adicionarItemCarrinho(
         1,
         Constant::IdProduto,
-        Constant::IdSerie,
+        Constant::IdSerieMaxRegular,
         @token
       )
 
@@ -206,11 +206,11 @@ describe 'Cartão de Crédito' do
       @result = ApiCartao.post_PagarCartaoDeCredito(
         @token,
         @idCarrinho,
-        Constant::NomeCompletoTitular,
-        Constant::NumeroCartao,
-        Constant::ValidadeMesCartao,
+        'CARLOS',
+        '5521884306233764',
+        '11',
         "11aa",
-        Constant::CartaoCVV
+        '123'
       )
       puts @result
     end
@@ -231,7 +231,7 @@ describe 'Cartão de Crédito' do
       carrinho = ApiCarrinho.post_adicionarItemCarrinho(
         1,
         Constant::IdProduto,
-        Constant::IdSerie,
+        Constant::IdSerieMaxRegular,
         @token
       )
 
@@ -240,11 +240,11 @@ describe 'Cartão de Crédito' do
       @result = ApiCartao.post_PagarCartaoDeCredito(
         @token,
         @idCarrinho,
-        Constant::NomeCompletoTitular,
-        Constant::NumeroCartao,
-        Constant::ValidadeMesCartao,
+        'CARLOS',
+        '5521884306233764',
+        '11',
         "11",
-        Constant::CartaoCVV
+        '123'
       )
       puts @result
     end
@@ -268,7 +268,7 @@ describe 'Cartão de Crédito' do
       carrinho = ApiCarrinho.post_adicionarItemCarrinho(
         1,
         Constant::IdProduto,
-        Constant::IdSerie,
+        Constant::IdSerieMaxRegular,
         @token
       )
 
@@ -277,11 +277,11 @@ describe 'Cartão de Crédito' do
       @result = ApiCartao.post_PagarCartaoDeCredito(
         @token, 
         @idCarrinho, 
-        Constant::NomeCompletoTitular, 
-        Constant::NumeroCartao, 
-        Constant::ValidadeMesCartao, 
+        'CARLOS', 
+        '5521884306233764', 
+        '11', 
         "", 
-        Constant::CartaoCVV
+        '123'
       )
       puts @result
     end
@@ -304,7 +304,7 @@ describe 'Cartão de Crédito' do
       carrinho = ApiCarrinho.post_adicionarItemCarrinho(
         1, 
         Constant::IdProduto, 
-        Constant::IdSerie, 
+        Constant::IdSerieMaxRegular, 
         @token
       )
 
@@ -313,11 +313,11 @@ describe 'Cartão de Crédito' do
       @result = ApiCartao.post_PagarCartaoDeCredito(
         @token, 
         @idCarrinho, 
-        Constant::NomeCompletoTitular, 
-        Constant::NumeroCartao, 
+        'CARLOS', 
+        '5521884306233764', 
         "14", 
         Constant::ValidadeAnoCartao, 
-        Constant::CartaoCVV
+        '123'
       )
       puts @result
     end
@@ -340,7 +340,7 @@ describe 'Cartão de Crédito' do
       carrinho = ApiCarrinho.post_adicionarItemCarrinho(
         1, 
         Constant::IdProduto, 
-        Constant::IdSerie, 
+        Constant::IdSerieMaxRegular, 
         @token
       )
 
@@ -349,11 +349,11 @@ describe 'Cartão de Crédito' do
       @result = ApiCartao.post_PagarCartaoDeCredito(
         @token, 
         @idCarrinho, 
-        Constant::NomeCompletoTitular, 
-        Constant::NumeroCartao, 
+        'CARLOS', 
+        '5521884306233764', 
         "", 
         Constant::ValidadeAnoCartao, 
-        Constant::CartaoCVV
+        '123'
       )
       puts @result
     end
@@ -376,7 +376,7 @@ describe 'Cartão de Crédito' do
       carrinho = ApiCarrinho.post_adicionarItemCarrinho(
         1, 
         Constant::IdProduto, 
-        Constant::IdSerie, 
+        Constant::IdSerieMaxRegular, 
         @token
       )
 
@@ -385,9 +385,9 @@ describe 'Cartão de Crédito' do
       @result = ApiCartao.post_PagarCartaoDeCredito(
         @token, 
         @idCarrinho, 
-        Constant::NomeCompletoTitular, 
-        Constant::NumeroCartao, 
-        Constant::ValidadeMesCartao, 
+        'CARLOS', 
+        '5521884306233764', 
+        '11', 
         Constant::ValidadeAnoCartao, 
         "123ss"
       )
@@ -411,7 +411,7 @@ describe 'Cartão de Crédito' do
       carrinho = ApiCarrinho.post_adicionarItemCarrinho(
         1, 
         Constant::IdProduto, 
-        Constant::IdSerie, 
+        Constant::IdSerieMaxRegular, 
         @token
       )
 
@@ -420,9 +420,9 @@ describe 'Cartão de Crédito' do
       @result = ApiCartao.post_PagarCartaoDeCredito(
         @token, 
         @idCarrinho, 
-        Constant::NomeCompletoTitular, 
-        Constant::NumeroCartao, 
-        Constant::ValidadeMesCartao, 
+        'CARLOS', 
+        '5521884306233764', 
+        '11', 
         Constant::ValidadeAnoCartao, 
         "112399999999"
       )
@@ -446,7 +446,7 @@ describe 'Cartão de Crédito' do
       carrinho = ApiCarrinho.post_adicionarItemCarrinho(
         1, 
         Constant::IdProduto, 
-        Constant::IdSerie, 
+        Constant::IdSerieMaxRegular, 
         @token
       )
 
@@ -455,9 +455,9 @@ describe 'Cartão de Crédito' do
       @result = ApiCartao.post_PagarCartaoDeCredito(
         @token, 
         @idCarrinho, 
-        Constant::NomeCompletoTitular, 
-        Constant::NumeroCartao, 
-        Constant::ValidadeMesCartao, 
+        'CARLOS', 
+        '5521884306233764', 
+        '11', 
         Constant::ValidadeAnoCartao, 
         ""
       )
@@ -483,7 +483,7 @@ describe 'Cartão de Crédito' do
       carrinho = ApiCarrinho.post_adicionarItemCarrinho(
         1, 
         Constant::IdProduto, 
-        Constant::IdSerie, 
+        Constant::IdSerieMaxRegular, 
         @token
       )
 
@@ -492,11 +492,11 @@ describe 'Cartão de Crédito' do
       @result = ApiCartao.post_PagarCartaoDeCredito(
         @token, 
         @idCarrinho, 
-        Constant::NomeCompletoTitular, 
-        Constant::NumeroCartao, 
-        Constant::ValidadeMesCartao, 
+        'CARLOS', 
+        '5521884306233764', 
+        '11', 
         Constant::ValidadeAnoCartao, 
-        Constant::CartaoCVV
+        '123'
       )
       puts @result
     end

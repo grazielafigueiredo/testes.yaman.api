@@ -38,7 +38,7 @@ class ApiCreditoLottocap
         "idFormaPagamento": 5,
         "idCarrinho": idCarrinho,
         "nomeCompletoTitular": "FGHJ FGHJKL",
-        "ccredNumero": Constant::NumeroCartao,
+        "ccredNumero": '5521884306233764',
         "ccredValidadeMes": "12",
         "ccredValidadeAno": "34",
         "ccredCVV": "123",

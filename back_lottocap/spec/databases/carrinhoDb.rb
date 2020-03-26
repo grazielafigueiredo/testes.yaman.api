@@ -13,7 +13,7 @@ class CarrinhoDb < DbBase
     end
 
     def update_dataFinalVendaVigente(dataFinalVenda)
-        t = @connection.execute("UPDATE Serie SET DataFinalVenda = '#{dataFinalVenda}' where IdSerie= #{Constant::IdSerie};")
+        t = @connection.execute("UPDATE Serie SET DataFinalVenda = '#{dataFinalVenda}' where IdSerie= #{Constant::IdSerieMaxRegular};")
         puts t.do
     end
 

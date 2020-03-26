@@ -7,7 +7,7 @@ context 'Comprar créditos Lottocap' do
     @carrinho = ApiCarrinho.post_adicionarItemCarrinho(
       1,
       Constant::IdProduto,
-      Constant::IdSerie,
+      Constant::IdSerieMaxRegular,
       @token
     )
     @idCarrinho = JSON.parse(@carrinho.response.body)['obj'][0]['idCarrinho']
@@ -34,7 +34,7 @@ context 'Pagar - Sucesso com Crédito Lottocap' do
     @carrinho = ApiCarrinho.post_adicionarItemCarrinho(
       1,
       Constant::IdProduto,
-      Constant::IdSerie,
+      Constant::IdSerieMaxRegular,
       @token
     )
     @idCarrinho = JSON.parse(@carrinho.response.body)['obj'][0]['idCarrinho']

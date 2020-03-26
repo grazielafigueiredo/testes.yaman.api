@@ -65,7 +65,7 @@ context 'escolha de dezenas nao pode trazer qndo a série nao estiver em pré ve
     @carrinho = ApiCarrinho.post_adicionarItemCarrinho(
       10, 
       Constant::IdProduto,
-      Constant::IdSerie,
+      Constant::IdSerieMaxRegular,
       @token
     )
      puts @token
@@ -131,22 +131,22 @@ context 'Concorrencia no pagamento Título já reservado' do
       @pagarCarrinho1 = ApiCartao.post_PagarCartaoDeCredito(
         @token1,
         @idCarrinhoUser1,
-        Constant::NomeCompletoTitular,
-        Constant::NumeroCartao,
-        Constant::ValidadeMesCartao,
+        'CARLOS',
+        '5521884306233764',
+        '11',
         Constant::ValidadeAnoCartao,
-        Constant::CartaoCVV
+        '123'
       )
       puts @pagarCarrinho1
 
       @pagarCarrinho2 = ApiCartao.post_PagarCartaoDeCredito(
         @token2,
         @idCarrinhoUser2,
-        Constant::NomeCompletoTitular,
-        Constant::NumeroCartao,
-        Constant::ValidadeMesCartao,
+        'CARLOS',
+        '5521884306233764',
+        '11',
         Constant::ValidadeAnoCartao,
-        Constant::CartaoCVV
+        '123'
       )
       puts @pagarCarrinho2
 

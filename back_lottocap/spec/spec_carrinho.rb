@@ -20,7 +20,7 @@ describe 'Carrinho - Reserva' do
   #       3000000,
   #       # 3,
   #       Constant::IdProduto,
-  #       Constant::IdSerie,
+  #       Constant::IdSerieMaxRegular,
   #       @token
   #     )
   #     puts @token
@@ -55,7 +55,7 @@ describe 'Carrinho - Reserva' do
       @carrinho = ApiCarrinho.post_adicionarItemCarrinho(
         1,
         Constant::IdProduto,
-        Constant::IdSerie,
+        Constant::IdSerieMaxRegular,
         @token
       )
       @idCarrinho = JSON.parse(@carrinho.response.body)['obj'][0]['idCarrinho']
@@ -85,7 +85,7 @@ describe 'Carrinho - Reserva' do
       ApiCarrinho.post_adicionarItemCarrinho(
         1,
         Constant::IdProduto,
-        Constant::IdSerie,
+        Constant::IdSerieMaxRegular,
         @token
       )
       @carrinho = ApiCarrinho.post_adicionarItemCarrinho(
@@ -99,11 +99,11 @@ describe 'Carrinho - Reserva' do
       @result = ApiCartao.post_PagarCartaoDeCredito(
         @token,
         @idCarrinho,
-        Constant::NomeCompletoTitular,
-        Constant::NumeroCartao,
-        Constant::ValidadeMesCartao,
+        'CARLOS',
+        '5521884306233764',
+        '11',
         Constant::ValidadeAnoCartao,
-        Constant::CartaoCVV
+        '123'
       )
       puts @result
     end
@@ -130,7 +130,7 @@ describe 'Carrinho - Reserva' do
       @carrinho = ApiCarrinho.post_adicionarItemCarrinho(
         1,
         Constant::IdProduto,
-        Constant::IdSerie,
+        Constant::IdSerieMaxRegular,
         @token
       )
       @idCarrinho = JSON.parse(@carrinho.response.body)['obj'][0]['idCarrinho']
@@ -150,8 +150,8 @@ describe 'Carrinho - Reserva' do
   #     @token = ApiUser.GetToken
   #     ApiUser.Login(@token, Constant::User1)
 
-  #     # ApiCarrinho.post_adicionarItemCarrinho(300, Constant::IdProduto, Constant::IdSerie, @token)
-  #     @carrinho = ApiCarrinho.post_SetQtdItemCarrinho(300, @token, Constant::IdSerie)
+  #     # ApiCarrinho.post_adicionarItemCarrinho(300, Constant::IdProduto, Constant::IdSerieMaxRegular, @token)
+  #     @carrinho = ApiCarrinho.post_SetQtdItemCarrinho(300, @token, Constant::IdSerieMaxRegular)
   #     puts @carrinho
   #   end
 
@@ -174,7 +174,7 @@ describe 'Carrinho - Reserva' do
       @carrinho = ApiCarrinho.post_adicionarItemCarrinho(
         300, 
         Constant::IdProduto,
-        Constant::IdSerie,
+        Constant::IdSerieMaxRegular,
         @token
       )
       @idCarrinho = JSON.parse(@carrinho.response.body)['obj'][0]['idCarrinho']
@@ -205,7 +205,7 @@ describe 'Carrinho - Reserva' do
       @result = ApiCarrinho.post_adicionarItemCarrinho(
         500,
         Constant::IdProduto,
-        Constant::IdSerie,
+        Constant::IdSerieMaxRegular,
         @token
       )
       puts @result
@@ -251,7 +251,7 @@ describe 'Carrinho - Sem Reserva - Tentar Pagar' do
       @carrinho = ApiCarrinho.post_adicionarItemCarrinho(
         1,
         Constant::IdProduto,
-        Constant::IdSerie,
+        Constant::IdSerieMaxRegular,
         @token
       )
       @idCarrinho = JSON.parse(@carrinho.response.body)['obj'][0]['idCarrinho']
@@ -261,11 +261,11 @@ describe 'Carrinho - Sem Reserva - Tentar Pagar' do
       @result = ApiCartao.post_PagarCartaoDeCredito(
         @token, 
         @idCarrinho, 
-        Constant::NomeCompletoTitular,
-        Constant::NumeroCartao,
-        Constant::ValidadeMesCartao,
+        'CARLOS',
+        '5521884306233764',
+        '11',
         Constant::ValidadeAnoCartao,
-        Constant::CartaoCVV
+        '123'
       )
       puts @result
     end
@@ -290,14 +290,14 @@ describe 'Carrinho - Sem Reserva - Tentar Pagar' do
       @carrinho = ApiCarrinho.post_adicionarItemCarrinho(
         1,
         Constant::IdProduto,
-        Constant::IdSerie,
+        Constant::IdSerieMaxRegular,
         @token
       )
       @idCarrinho = JSON.parse(@carrinho.response.body)['obj'][0]['idCarrinho']
 
       CarrinhoDb.new.update_dataFinalVendaVigente(dataVencida)
 
-      @result = ApiTransferencia.post_TransfBradesco(@token, @idCarrinho, Faker::Bank.account_number(digits: 4), Faker::Bank.account_number(digits: 4), Faker::Bank.account_number(digits: 1), Constant::NomeCompletoTitular)
+      @result = ApiTransferencia.post_TransfBradesco(@token, @idCarrinho, Faker::Bank.account_number(digits: 4), Faker::Bank.account_number(digits: 4), Faker::Bank.account_number(digits: 1), 'CARLOS')
       puts @result
     end
 
@@ -321,7 +321,7 @@ describe 'Carrinho - Sem Reserva - Tentar Pagar' do
       @carrinho = ApiCarrinho.post_adicionarItemCarrinho(
         1,
         Constant::IdProduto,
-        Constant::IdSerie,
+        Constant::IdSerieMaxRegular,
         @token
       )
       @idCarrinho = JSON.parse(@carrinho.response.body)['obj'][0]['idCarrinho']
@@ -354,7 +354,7 @@ describe 'Carrinho - Sem Reserva - Tentar Pagar' do
       @carrinho = ApiCarrinho.post_adicionarItemCarrinho(
         1,
         Constant::IdProduto,
-        Constant::IdSerie,
+        Constant::IdSerieMaxRegular,
         @token
       )
       @idCarrinho = JSON.parse(@carrinho.response.body)['obj'][0]['idCarrinho']
@@ -387,7 +387,7 @@ describe 'Carrinho - Sem Reserva - Tentar Pagar' do
       @carrinho = ApiCarrinho.post_adicionarItemCarrinho(
         1,
         Constant::IdProduto,
-        Constant::IdSerie,
+        Constant::IdSerieMaxRegular,
         @token
       )
       @idCarrinho = JSON.parse(@carrinho.response.body)['obj'][0]['idCarrinho']
@@ -419,7 +419,7 @@ describe 'Carrinho - Sem Reserva - Tentar Pagar' do
       ApiCarrinho.post_adicionarItemCarrinho(
         1,
         Constant::IdProduto,
-        Constant::IdSerie,
+        Constant::IdSerieMaxRegular,
         @token
       )
       @carrinho = ApiCarrinho.post_adicionarItemCarrinho(
@@ -442,11 +442,11 @@ describe 'Carrinho - Sem Reserva - Tentar Pagar' do
       @result = ApiCartao.post_PagarCartaoDeCredito(
         @token,
         @idCarrinho,
-        Constant::NomeCompletoTitular,
-        Constant::NumeroCartao,
-        Constant::ValidadeMesCartao,
+        'CARLOS',
+        '5521884306233764',
+        '11',
         Constant::ValidadeAnoCartao,
-        Constant::CartaoCVV
+        '123'
       )
       # puts @result
     end
@@ -468,7 +468,7 @@ describe 'Carrinho - Sem Reserva - Tentar Pagar' do
   #     @token = ApiUser.GetToken
   #     ApiUser.Login(@token, Constant::User1)
 
-  #     @carrinho = ApiCarrinho.post_adicionarItemCarrinho(300, Constant::IdProduto, Constant::IdSerie, @token)
+  #     @carrinho = ApiCarrinho.post_adicionarItemCarrinho(300, Constant::IdProduto, Constant::IdSerieMaxRegular, @token)
   #     @idCarrinho = JSON.parse(@carrinho.response.body)['obj'][0]['idCarrinho']
   #     puts @carrinho
   #     @result = ApiBoleto.post_SucessoBoleto(@token, @idCarrinho)
@@ -494,7 +494,7 @@ describe 'Carrinho - Sem Reserva - Tentar Pagar' do
       @carrinho = ApiCarrinho.post_adicionarItemCarrinho(
         5,
         Constant::IdProduto,
-        Constant::IdSerie,
+        Constant::IdSerieMaxRegular,
         @token
       )
       @idCarrinho = JSON.parse(@carrinho.response.body)['obj'][0]['idCarrinho']
@@ -509,11 +509,11 @@ describe 'Carrinho - Sem Reserva - Tentar Pagar' do
       @result = ApiCartao.post_PagarCartaoDeCredito(
         @token,
         @idCarrinho,
-        Constant::NomeCompletoTitular,
-        Constant::NumeroCartao,
-        Constant::ValidadeMesCartao,
+        'CARLOS',
+        '5521884306233764',
+        '11',
         Constant::ValidadeAnoCartao,
-        Constant::CartaoCVV
+        '123'
       )
       puts @endpointAfiliados
     end
@@ -537,7 +537,7 @@ describe 'Carrinho - Sem Reserva - Tentar Pagar' do
       @carrinho = ApiCarrinho.post_adicionarItemCarrinho(
         5,
         Constant::IdProduto,
-        Constant::IdSerie,
+        Constant::IdSerieMaxRegular,
         @token
       )
 
@@ -556,11 +556,11 @@ describe 'Carrinho - Sem Reserva - Tentar Pagar' do
       @result = ApiCartao.post_PagarCartaoDeCredito(
         @token,
         @idCarrinho,
-        Constant::NomeCompletoTitular,
-        Constant::NumeroCartao,
-        Constant::ValidadeMesCartao,
+        'CARLOS',
+        '5521884306233764',
+        '11',
         Constant::ValidadeAnoCartao,
-        Constant::CartaoCVV
+        '123'
       )
       puts @result
     end

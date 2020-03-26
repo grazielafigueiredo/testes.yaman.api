@@ -14,12 +14,12 @@ describe 'Bradesco' do
       @carrinho = ApiCarrinho.post_adicionarItemCarrinho(
         1,
         Constant::IdProduto,
-        Constant::IdSerie,
+        Constant::IdSerieMaxRegular,
         @token
       )
       puts @carrinho
       @idCarrinho = JSON.parse(@carrinho.response.body)['obj'][0]['idCarrinho']
-      @result = ApiTransferencia.post_TransfBradesco(@token, @idCarrinho, Faker::Bank.account_number(digits: 4), Faker::Bank.account_number(digits: 4), Faker::Bank.account_number(digits: 1), Constant::NomeCompletoTitular)
+      @result = ApiTransferencia.post_TransfBradesco(@token, @idCarrinho, Faker::Bank.account_number(digits: 4), Faker::Bank.account_number(digits: 4), Faker::Bank.account_number(digits: 1), 'CARLOS')
       puts @result
     end
 
@@ -44,7 +44,7 @@ describe 'Bradesco' do
       carrinho = ApiCarrinho.post_adicionarItemCarrinho(
         1,
         Constant::IdProduto,
-        Constant::IdSerie,
+        Constant::IdSerieMaxRegular,
         @token
       )
       @idCarrinho = JSON.parse(carrinho.response.body)['obj'][0]['idCarrinho']
@@ -55,7 +55,7 @@ describe 'Bradesco' do
         '1234', 
         '5678', 
         '9', 
-        Constant::NomeCompletoTitular
+        'CARLOS'
       )
       puts @result
     end
@@ -76,7 +76,7 @@ describe 'Bradesco' do
       carrinho = ApiCarrinho.post_adicionarItemCarrinho(
         1,
         Constant::IdProduto,
-        Constant::IdSerie,
+        Constant::IdSerieMaxRegular,
         @token
       )
       @idCarrinho = JSON.parse(carrinho.response.body)['obj'][0]['idCarrinho']
@@ -89,7 +89,7 @@ describe 'Bradesco' do
         Faker::Bank.account_number(digits: 4),
         Faker::Bank.account_number(digits: 4),
         Faker::Bank.account_number(digits: 1),
-        Constant::NomeCompletoTitular
+        'CARLOS'
       )
       puts @result
     end
@@ -116,7 +116,7 @@ describe 'Bradesco' do
       carrinho = ApiCarrinho.post_adicionarItemCarrinho(
         1,
         Constant::IdProduto,
-        Constant::IdSerie,
+        Constant::IdSerieMaxRegular,
         @token
       )
       @idCarrinho = JSON.parse(carrinho.response.body)['obj'][0]['idCarrinho']
@@ -127,7 +127,7 @@ describe 'Bradesco' do
         Faker::Bank.account_number(digits: 4),
         Faker::Bank.account_number(digits: 4),
         '',
-        Constant::NomeCompletoTitular
+        'CARLOS'
       )
       puts @result
     end
@@ -148,7 +148,7 @@ describe 'Bradesco' do
       carrinho = ApiCarrinho.post_adicionarItemCarrinho(
         1,
         Constant::IdProduto,
-        Constant::IdSerie,
+        Constant::IdSerieMaxRegular,
         @token
       )
       @idCarrinho = JSON.parse(carrinho.response.body)['obj'][0]['idCarrinho']
@@ -159,7 +159,7 @@ describe 'Bradesco' do
         Faker::Bank.account_number(digits: 4),
         Faker::Bank.account_number(digits: 4),
         Faker::Bank.account_number(digits: 3),
-        Constant::NomeCompletoTitular
+        'CARLOS'
       )
       puts @result
     end
@@ -183,7 +183,7 @@ describe 'Bradesco' do
       carrinho = ApiCarrinho.post_adicionarItemCarrinho(
         1, 
         Constant::IdProduto, 
-        Constant::IdSerie, 
+        Constant::IdSerieMaxRegular, 
         @token
       )
       @idCarrinho = JSON.parse(carrinho.response.body)['obj'][0]['idCarrinho']
@@ -217,7 +217,7 @@ describe 'Bradesco' do
       carrinho = ApiCarrinho.post_adicionarItemCarrinho(
         1, 
         Constant::IdProduto, 
-        Constant::IdSerie, 
+        Constant::IdSerieMaxRegular, 
         @token
       )
       @idCarrinho = JSON.parse(carrinho.response.body)['obj'][0]['idCarrinho']
@@ -228,7 +228,7 @@ describe 'Bradesco' do
         Faker::Bank.account_number(digits: 1), 
         Faker::Bank.account_number(digits: 4), 
         Faker::Bank.account_number(digits: 1), 
-        Constant::NomeCompletoTitular
+        'CARLOS'
       )
       puts @result
     end
@@ -249,7 +249,7 @@ describe 'Bradesco' do
       carrinho = ApiCarrinho.post_adicionarItemCarrinho(
         1, 
         Constant::IdProduto, 
-        Constant::IdSerie, 
+        Constant::IdSerieMaxRegular, 
         @token
       )
       @idCarrinho = JSON.parse(carrinho.response.body)['obj'][0]['idCarrinho']
@@ -260,7 +260,7 @@ describe 'Bradesco' do
         Faker::Bank.account_number(digits: 11), 
         Faker::Bank.account_number(digits: 4), 
         Faker::Bank.account_number(digits: 1), 
-        Constant::NomeCompletoTitular
+        'CARLOS'
       )
       puts @result
     end
@@ -283,7 +283,7 @@ describe 'Bradesco' do
       carrinho = ApiCarrinho.post_adicionarItemCarrinho(
         1, 
         Constant::IdProduto, 
-        Constant::IdSerie, 
+        Constant::IdSerieMaxRegular, 
         @token
       )
       @idCarrinho = JSON.parse(carrinho.response.body)['obj'][0]['idCarrinho']
@@ -294,7 +294,7 @@ describe 'Bradesco' do
         '', 
         Faker::Bank.account_number(digits: 4), 
         Faker::Bank.account_number(digits: 1), 
-        Constant::NomeCompletoTitular
+        'CARLOS'
       )
 
       puts @result
@@ -317,7 +317,7 @@ describe 'Bradesco' do
       carrinho = ApiCarrinho.post_adicionarItemCarrinho(
         1, 
         Constant::IdProduto, 
-        Constant::IdSerie, 
+        Constant::IdSerieMaxRegular, 
         @token
       )
       @idCarrinho = JSON.parse(carrinho.response.body)['obj'][0]['idCarrinho']
@@ -328,7 +328,7 @@ describe 'Bradesco' do
         Faker::Bank.account_number(digits: 4), 
         Faker::Bank.account_number(digits: 20), 
         Faker::Bank.account_number(digits: 1), 
-        Constant::NomeCompletoTitular
+        'CARLOS'
       )
       puts @result
     end
@@ -350,7 +350,7 @@ describe 'Bradesco' do
       carrinho = ApiCarrinho.post_adicionarItemCarrinho(
         1, 
         Constant::IdProduto, 
-        Constant::IdSerie, 
+        Constant::IdSerieMaxRegular, 
         @token
       )
       @idCarrinho = JSON.parse(carrinho.response.body)['obj'][0]['idCarrinho']
@@ -361,7 +361,7 @@ describe 'Bradesco' do
         Faker::Bank.account_number(digits: 4), 
         Faker::Bank.account_number(digits: 2), 
         Faker::Bank.account_number(digits: 1), 
-        Constant::NomeCompletoTitular
+        'CARLOS'
       )
       puts @result
     end
@@ -382,12 +382,12 @@ describe 'Bradesco' do
       carrinho = ApiCarrinho.post_adicionarItemCarrinho(
         1, 
         Constant::IdProduto, 
-        Constant::IdSerie, 
+        Constant::IdSerieMaxRegular, 
         @token
       )
       @idCarrinho = JSON.parse(carrinho.response.body)['obj'][0]['idCarrinho']
 
-      @result = ApiTransferencia.post_TransfBradesco(@token, @idCarrinho, Faker::Bank.account_number(digits: 4), '', Faker::Bank.account_number(digits: 1), Constant::NomeCompletoTitular)
+      @result = ApiTransferencia.post_TransfBradesco(@token, @idCarrinho, Faker::Bank.account_number(digits: 4), '', Faker::Bank.account_number(digits: 1), 'CARLOS')
       puts @result
     end
     it { expect(JSON.parse(@result.response.body)['sucesso']).to be true }
@@ -414,7 +414,7 @@ describe 'Itau' do
       carrinho = ApiCarrinho.post_adicionarItemCarrinho(
         1, 
         Constant::IdProduto, 
-        Constant::IdSerie, 
+        Constant::IdSerieMaxRegular, 
         @token
       )
       @idCarrinho = JSON.parse(carrinho.response.body)['obj'][0]['idCarrinho']
@@ -450,7 +450,7 @@ describe 'Itau' do
       carrinho = ApiCarrinho.post_adicionarItemCarrinho(
         1, 
         Constant::IdProduto, 
-        Constant::IdSerie, 
+        Constant::IdSerieMaxRegular, 
         @token
       )
       @idCarrinho = JSON.parse(carrinho.response.body)['obj'][0]['idCarrinho']
@@ -486,7 +486,7 @@ describe 'Santander' do
       carrinho = ApiCarrinho.post_adicionarItemCarrinho(
         1, 
         Constant::IdProduto, 
-        Constant::IdSerie, 
+        Constant::IdSerieMaxRegular, 
         @token
       )
       @idCarrinho = JSON.parse(carrinho.response.body)['obj'][0]['idCarrinho']
@@ -520,7 +520,7 @@ describe 'Santander' do
       carrinho = ApiCarrinho.post_adicionarItemCarrinho(
         1, 
         Constant::IdProduto, 
-        Constant::IdSerie, 
+        Constant::IdSerieMaxRegular, 
         @token
       )
       @idCarrinho = JSON.parse(carrinho.response.body)['obj'][0]['idCarrinho']
@@ -549,7 +549,7 @@ describe 'Santander' do
       carrinho = ApiCarrinho.post_adicionarItemCarrinho(
         1, 
         Constant::IdProduto, 
-        Constant::IdSerie, 
+        Constant::IdSerieMaxRegular, 
         @token
       )
       @idCarrinho = JSON.parse(carrinho.response.body)['obj'][0]['idCarrinho']
@@ -583,7 +583,7 @@ describe 'Brasil' do
       carrinho = ApiCarrinho.post_adicionarItemCarrinho(
         1, 
         Constant::IdProduto, 
-        Constant::IdSerie, 
+        Constant::IdSerieMaxRegular, 
         @token
       )
       @idCarrinho = JSON.parse(carrinho.response.body)['obj'][0]['idCarrinho']
@@ -619,7 +619,7 @@ describe 'Brasil' do
       carrinho = ApiCarrinho.post_adicionarItemCarrinho(
         1, 
         Constant::IdProduto, 
-        Constant::IdSerie, 
+        Constant::IdSerieMaxRegular, 
         @token
       )
       @idCarrinho = JSON.parse(carrinho.response.body)['obj'][0]['idCarrinho']

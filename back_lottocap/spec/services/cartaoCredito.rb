@@ -29,7 +29,7 @@ class ApiCartao
 
     @PagarCartaoDeCredito = {
       "obj": {
-        "idFormaPagamento": Constant::IdFormaPagamento,
+        "idFormaPagamento": 5,
         "idCarrinho": idCarrinho,
         "nomeCompletoTitular": nomeCompletoTitular,
         "ccredNumero": ccredNumero,
@@ -46,7 +46,7 @@ class ApiCartao
 
   #   @AdicionarCartaoDeCredito = {
   #     "obj": {
-  #       "idFormaPagamento": Constant::IdFormaPagamento,
+  #       "idFormaPagamento": 5,
   #       "idCarrinho": idCarrinho,
   #       "nomeCompletoTitular": nomeCompletoTitular,
   #       "ccredNumero": ccredNumero,

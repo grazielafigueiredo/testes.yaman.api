@@ -31,7 +31,7 @@
 #     carrinho = ApiCarrinho.post_AdicionarItemCarrinho(
 #       1,
 #       Constant::IdProduto,
-#       Constant::IdSerie,
+#       Constant::IdSerieMaxRegular,
 #       @token
 #     )
 
@@ -40,11 +40,11 @@
 #     @result = ApiCartao.post_PagarCartaoDeCredito(
 #       @token,
 #       @idCarrinho,
-#       Constant::NomeCompletoTitular,
-#       Constant::NumeroCartao,
-#       Constant::ValidadeMesCartao,
+#       'CARLOS',
+#       '5521884306233764',
+#       '11',
 #       Constant::ValidadeAnoCartao,
-#       Constant::CartaoCVV
+#       '123'
 #     )
 
 #     @tituloJa = ApiTitulos.post_GetTitulosNovos(@token)
