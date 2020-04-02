@@ -4,13 +4,14 @@ require 'time'
 require 'singleton'
 
 class Constant
-  Url = 'https://lottocap-hml-server01-api.azurewebsites.net/api'
+#   Url = 'https://lottocap-hml-server01-api.azurewebsites.net/api'
   # Url = "http://localhost:8080/api"
 
-#   Url = "https://lottocap-hml-server01-api-staging.azurewebsites.net/api"
+  Url = "https://prodlottocapapi-staging.azurewebsites.net/api"
 
-    IdSerieMaxRegular = 215
-    IdSerieMaxPreVenda = 218
+    # IdSerieMaxRegular = 215
+    IdSerieMaxRegular = 32
+    IdSerieMaxPreVenda = 108
     IdSerieJa17 = 88
     IdSerieJa18 = 89
     

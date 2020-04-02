@@ -1,7 +1,7 @@
 
 require_relative "db_base"
 
-class TituloMatrizDB < DbBase
+class TituloMatrizDEV < DbBase
   def select_count_matriz(idSerie)
     count_matriz = 
     @connection.execute("SELECT COUNT(*) FROM TituloMatriz WHERE idSerie = #{idSerie}")
@@ -92,7 +92,7 @@ class TituloMatrizDB < DbBase
       #{Faker::Bank.account_number(digits: 4)},
       '2020-#{month}-#{data}',
       '#{dezena_nova}',
-      1,
+      0,
       '#{today}',
       1
     )"
@@ -113,9 +113,7 @@ class TituloMatrizDB < DbBase
     t = @connection.execute(
       create_serie =
         "INSERT Serie(
-        IdProduto,
         Nome,
-        Preco,
         DataInicialVigencia,
         DataFinalVigencia,
         DataInicialVenda,
@@ -133,15 +131,12 @@ class TituloMatrizDB < DbBase
         IdUsuarioCriacao,
         PacoteTitulos,
         CorSerie,
-        porcDoacao,
         qtdMaxTitulosNaCompra,
         idSerieAplicap,
-        PercentualComissao
+        TemplateSerieId
       )
         VALUES (
-        1,
         'MAX - #{today}',
-        50.000,
         '2020-#{month}-01',
         '2020-#{month}-30',
         '#{today}',
@@ -159,10 +154,9 @@ class TituloMatrizDB < DbBase
         1,
         '1,3',
         '#000000',
-        2.00,
         100,
         12,
-        20.00
+        2
       )"
     )
     puts 'Affected rows'
@@ -199,6 +193,7 @@ class TituloMatrizDB < DbBase
     end
 
     valores = ['SEG', 'TER', 'QUA', 'QUI', 'SEX', 'SAB']
+    
 
     contador = 0
     dia_da_semana = 0

@@ -68,7 +68,7 @@
           </elementProp>
           <elementProp name="idSerieRegular" elementType="Argument">
             <stringProp name="Argument.name">idSerieRegular</stringProp>
-            <stringProp name="Argument.value">215</stringProp>
+            <stringProp name="Argument.value">229</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
         </collectionProp>
@@ -394,7 +394,7 @@
               </ResponseAssertion>
               <hashTree/>
             </hashTree>
-            <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="AdicionarItemCarrinho" enabled="true">
+            <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="AdicionarItemCarrinho" enabled="false">
               <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
               <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
                 <collectionProp name="Arguments.arguments">
@@ -477,6 +477,15 @@
                 <boolProp name="Assertion.assume_success">false</boolProp>
                 <intProp name="Assertion.test_type">2</intProp>
               </ResponseAssertion>
+              <hashTree/>
+              <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="Extractor de Expressão Regular" enabled="true">
+                <stringProp name="RegexExtractor.useHeaders">false</stringProp>
+                <stringProp name="RegexExtractor.refname">idCarrinho</stringProp>
+                <stringProp name="RegexExtractor.regex">{&quot;idCarrinho&quot;:(.+?)&quot;</stringProp>
+                <stringProp name="RegexExtractor.template">$1$</stringProp>
+                <stringProp name="RegexExtractor.default">idCarrinho nao encontrado</stringProp>
+                <stringProp name="RegexExtractor.match_number">0</stringProp>
+              </RegexExtractor>
               <hashTree/>
             </hashTree>
             <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="GetStatusCarrinho" enabled="true">

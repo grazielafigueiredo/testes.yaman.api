@@ -21,7 +21,7 @@ def gerar_body
     for signo in signosArray
       sequencial =  sprintf(("%.8d"), contador)
       
-      linha = "D#{sequencial}#{signo.join()}"
+      linha = "#{signo.join()}"
       filled_body = linha.ljust(100, ' ')
 
       arquivo += "\n#{filled_body}"

@@ -10,8 +10,8 @@ class DbBase
       password: 'L0ttocap19!12@',
       host: 'hmllottocap.database.windows.net',
       port: 1433,
-      database: 'hmllottocaptests',
-      # database: 'hmllottocap',
+      # database: 'hmllottocaptests',
+      database: 'hmllottocap',
       azure: true,
       timeout: 35
     }

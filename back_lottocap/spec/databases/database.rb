@@ -5,20 +5,6 @@ require 'tiny_tds'
 require 'timeout'
 
 class Database < DbBase
-  def initialize
-    conn = {
-      # username: 'graziela',
-      # password: '4KoNxOHqNtTd6zZ',
-      username: 'Lottocap',
-      password: 'L0ttocap19!12@',
-      host: 'hmllottocap.database.windows.net',
-      port: 1433,
-      database: 'hmllottocaptests',
-      azure: true,
-      timeout: 30
-    }
-    @connection = TinyTds::Client.new(conn)
-  end
 
   def update_TodosProdutosIndisponiveisVitrine(dataFinalVenda)
     @connection.execute("UPDATE Serie SET DataFinalVenda = '#{dataFinalVenda}';")
