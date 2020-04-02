@@ -3,25 +3,43 @@
 require 'utils/constant'
 require 'services/user'
 
-class ApiResultados
+class ApiRanking
   include HTTParty
   base_uri Constant::Url
   headers 'Content-Type' => 'application/json'
 
-  def self.get_seriesListResultados(token)
+  def self.get_rankingResultados(token)
     headers[:Authorization] = token
 
-    # get('Produto/GetSeriesListResultados', body: @GetSeriesListResultados.to_json)
-    get('/Produto/getSeriesListResultados')
+    get('/Produto/GetRankingResultados')
   end
 
-  def self.get_serieResultados(token, idSerie)
+  def self.post_rankingResultadosPorSerie(token)
     headers[:Authorization] = token
-        @getSerieResultados = {
-          "obj": {
-            "idSerie": "#{idSerie}"
-          }
-        }
-    post('/Produto/GetSerieResultados', body: @getSerieResultados.to_json)
+    @resultadosPorSerie = {
+      "obj": {
+        "idSerie": "#{Constant::IdSerieMaxRegular}"
+      }
+    }
+
+    post('/Produto/GetRankingResultadosPorSerie', body: @resultadosPorSerie.to_json)
+  end
+
+  def self.get_modalPremiado(token)
+    headers[:Authorization] = token
+
+    get("/Produto/GetModalPremiado?idSerie=#{Constant::IdSerieMaxRegular}&nmTituloFixo=2550&qtdPontos=15")
+  end
+
+  def self.get_sorteiosResultados(token)
+    headers[:Authorization] = token
+
+    get("/Produto/GetSorteiosResultados?idSerie=#{Constant::IdSerieMaxRegular}")
+  end
+
+  def self.get_modalRankingPorPontos(token)
+    headers[:Authorization] = token
+
+    get("/Produto/GetModalRankingPorPontos?idSerie=#{Constant::IdSerieMaxRegular}&qtdPontos=15")
   end
 end
