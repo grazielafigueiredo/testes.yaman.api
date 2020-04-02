@@ -11,7 +11,7 @@ class ApiRanking
   def self.get_rankingResultados(token)
     headers[:Authorization] = token
 
-    get('/Produto/GetRankingResultados')
+    get('/Produto/GetRankingResultados?offset=1')
   end
 
   def self.post_rankingResultadosPorSerie(token)
@@ -22,24 +22,24 @@ class ApiRanking
       }
     }
 
-    post('/Produto/GetRankingResultadosPorSerie', body: @resultadosPorSerie.to_json)
+    post('/Produto/GetRankingResultadosPorSerie?offset=1', body: @resultadosPorSerie.to_json)
   end
 
   def self.get_modalPremiado(token)
     headers[:Authorization] = token
 
-    get("/Produto/GetModalPremiado?idSerie=#{Constant::IdSerieMaxRegular}&nmTituloFixo=2550&qtdPontos=15")
+    get("/Produto/GetModalPremiado?idSerie=#{Constant::IdSerieMaxRegular}&nmTituloFixo=2550&qtdPontos=15&offset=1")
   end
 
   def self.get_sorteiosResultados(token)
     headers[:Authorization] = token
 
-    get("/Produto/GetSorteiosResultados?idSerie=#{Constant::IdSerieMaxRegular}")
+    get("/Produto/GetSorteiosResultados?idSerie=#{Constant::IdSerieMaxRegular}&offset=1")
   end
 
   def self.get_modalRankingPorPontos(token)
     headers[:Authorization] = token
 
-    get("/Produto/GetModalRankingPorPontos?idSerie=#{Constant::IdSerieMaxRegular}&qtdPontos=15")
+    get("/Produto/GetModalRankingPorPontos?idSerie=#{Constant::IdSerieMaxRegular}&qtdPontos=15&offset=1")
   end
 end
