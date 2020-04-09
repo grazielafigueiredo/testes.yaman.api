@@ -266,7 +266,7 @@ class TituloMatrizDB < DbBase
       #{Faker::Bank.account_number(digits: 4)},
       '2020-#{month}-#{data}',
       '#{dezena_nova}',
-      1,
+      0,
       '#{today}',
       1
     )"
@@ -342,9 +342,9 @@ class TituloMatrizDB < DbBase
     puts 'Affected rows'
     # puts t.do
 
-    result = @connection.execute('SELECT SCOPE_IDENTITY()')
+    conectaBanco = @connection.execute('SELECT SCOPE_IDENTITY()')
 
-    result.each do |row|
+    conectaBanco.each do |row|
       serie_inserida.push(row[''].to_i)
     end
     puts serie_inserida

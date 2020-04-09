@@ -6,7 +6,9 @@ class CarrinhoDb < DbBase
                                         SET reservado = #{reservado}
                                         FROM TituloMatriz as T
                                         INNER JOIN Serie as S ON T.idSerie = S.IdSerie
-                                        WHERE IdProduto = 1")
+                                        INNER JOIN TemplateSerie as TS ON TS.Id = S.TemplateSerieId
+                                        INNER JOIN Plano as P ON TS.PlanoId = P.Id
+                                        WHERE P.ProdutoId = 1")
         sleep 5
         puts 'Affected rows'
         puts res.do
@@ -18,7 +20,9 @@ class CarrinhoDb < DbBase
     end
 
     def update_maxNaVitrine(dataFinalVenda)
-        @connection.execute("UPDATE Serie SET DataFinalVenda = '#{dataFinalVenda}' where IdProduto = 1;")
-        # sleep 2
+        @connection.execute("UPDATE Serie SET DataFinalVenda = '#{dataFinalVenda}'
+            INNER JOIN TemplateSerie as TS ON TS.Id = S.TemplateSerieId
+            INNER JOIN Plano as P ON TS.PlanoId = P.Id
+            WHERE P.ProdutoId = 1")
     end
 end

@@ -27,7 +27,7 @@ describe 'Resgate' do
         )
         puts @pedidoResgate
         @statusResgate = ApiResgate.get_statusResgate(@token)
-        # puts @statusResgate
+        puts @statusResgate
       end
     # end 
       
@@ -70,7 +70,7 @@ describe 'Resgate' do
       )
       puts @pedidoResgate
       @statusResgate = ApiResgate.get_statusResgate(@token)
-      puts @token
+      puts @statusResgate
     end
 
     it 'Sucesso com verificação de valor sacado -  Santander' do 

@@ -19,7 +19,6 @@ describe 'Landing JÁ' do
       @landingJa = ApiLanding.get_landingPageJa(@token)
       puts @landingJa
     end
-    # it { expect(JSON.parse(@landingJa.response.body)['sucesso']).to be true }
     it { expect(JSON.parse(@landingJa.response.body)['sucesso']).to be true }
   end
 end

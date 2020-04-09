@@ -28,7 +28,7 @@ context 'Pagar - Sucesso com Crédito Lottocap' do
   before do
     @token = ApiUser.GetToken
     ApiUser.Login(@token, Constant::User1)
-
+    puts @token
     CreditoLotto.new.update_creditoLottocap(100)
 
     @carrinho = ApiCarrinho.post_adicionarItemCarrinho(
@@ -40,9 +40,10 @@ context 'Pagar - Sucesso com Crédito Lottocap' do
     @idCarrinho = JSON.parse(@carrinho.response.body)['obj'][0]['idCarrinho']
   
     @responseCarrinho = ApiCreditoLottocap.post_pagarCarrinhoComCreditoLottocap(@token, @idCarrinho)
+    puts @responseCarrinho
 
     @responseDadosUsuario = ApiCreateUser.get_buscarDadosUsuario(@token)
-    puts @responseDadosUsuario
+    # puts @responseDadosUsuario
   end
 
   it 'Pagar - Sucesso com Crédito Lottocap' do
@@ -73,6 +74,7 @@ context 'Pagar - Teste de compra com JÁ18' do
     @idCarrinho = JSON.parse(@carrinho.response.body)['obj'][0]['idCarrinho']
 
     @responseCarrinho = ApiCreditoLottocap.post_pagarCarrinhoComCreditoLottocap(@token, @idCarrinho)
+    puts @responseCarrinho
 
     @responseDadosUsuario = ApiCreateUser.get_buscarDadosUsuario(@token)
     puts @responseDadosUsuario

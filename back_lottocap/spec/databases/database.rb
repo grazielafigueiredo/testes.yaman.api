@@ -22,7 +22,11 @@ class Database < DbBase
   end
 
   def update_PremioResgate(valorBonus)
-    @connection.execute("BEGIN
+    @connection.execute("
+            DECLARE @id AS INTEGER=#{Constant::UserID}
+            DECLARE @insertsaldo AS INTEGER=#{valorBonus}
+
+            BEGIN
             DECLARE @saldoTotal decimal(18, 3);
             DECLARE @saldoPremio decimal(18, 3);
             DECLARE @saldoCredito decimal(18, 3);
@@ -35,7 +39,7 @@ class Database < DbBase
                 @saldoCapitalizacao = saldoCapitalizacao
             FROM USUARIO
             WHERE
-                idUsuario = #{Constant::UserID};
+                idUsuario = @id;
 
             INSERT INTO [dbo].[UsuarioCredito] (
                 [idUsuario],
@@ -71,10 +75,10 @@ class Database < DbBase
             )
             VALUES
             (
-                #{Constant::UserID},
+                @id,
                 --idUsuario
                 [dbo].fn_GETDATE(),
-                #{valorBonus},
+                @insertsaldo,
                 --vlTransação
                 0,
                 1,
@@ -92,11 +96,11 @@ class Database < DbBase
                 0,
                 0,
                 0,
-                @saldoTotal + #{valorBonus},
+                @saldoTotal + @insertsaldo,
                 --saldo
                 @saldoPremio,
-                --saldoPremio + #{valorBonus},
-                @saldoCredito + #{valorBonus},
+                --saldoPremio + @insertsaldo,
+                @saldoCredito + @insertsaldo,
                 --saldoCrédito
                 @saldoCapitalizacao,
                 --saldoCapitalização
@@ -113,11 +117,11 @@ class Database < DbBase
 
             UPDATE Usuario
             SET
-                SaldoCredito = #{valorBonus},
-                SaldoPremio = #{valorBonus},
-                SaldoTotal = #{valorBonus}
+                SaldoCredito = @insertsaldo,
+                SaldoPremio = @insertsaldo,
+                SaldoTotal = @insertsaldo
             WHERE
-                IdUsuario = #{Constant::UserID};
+                IdUsuario = @id;
         END;")
   end
 

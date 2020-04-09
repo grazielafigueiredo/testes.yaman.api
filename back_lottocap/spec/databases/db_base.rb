@@ -13,7 +13,7 @@ class DbBase
       # database: 'hmllottocaptests',
       database: 'hmllottocap',
       azure: true,
-      timeout: 35
+      timeout: 55
     }
     @connection = TinyTds::Client.new(conn)
   end

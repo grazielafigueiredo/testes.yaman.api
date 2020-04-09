@@ -67,7 +67,7 @@ describe 'Cartão de Crédito' do
       @result = ApiCartao.post_PagarCartaoDeCredito(
         @token,
         @idCarrinho,
-        "CARLOS 111111",
+        'CARLOS 111111',
         '5521884306233764',
         '11',
         Constant::ValidadeAnoCartao,

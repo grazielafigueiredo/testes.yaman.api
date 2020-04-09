@@ -1,3 +1,4 @@
+# Build without alpine because problems with lib.
 FROM ubuntu:18.04
 
 RUN apt-get update

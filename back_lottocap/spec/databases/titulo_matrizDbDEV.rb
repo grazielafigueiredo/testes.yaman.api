@@ -141,7 +141,7 @@ class TituloMatrizDEV < DbBase
         '2020-#{month}-30',
         '#{today}',
         '#{today_add_10_days}',
-        1,
+        0,
         250000.000,
         10,
         97.100,
@@ -235,7 +235,7 @@ class TituloMatrizDEV < DbBase
 
 
 
-  def relacionamento_serie_concurso_ja(month, idProduto_ja)
+  def relacionamento_serie_concurso_ja(month, templateSerieId)
     today = Date.today
     today_add_10_days = today + 10
 
@@ -246,7 +246,7 @@ class TituloMatrizDEV < DbBase
     concursos_inseridos = []
 
     datas_prevista_concurso.each do |data|
-      dezena_nova = ((0..14).map { Random.new.rand(1..25).to_s.rjust(2, "0") }).sort.join(' ')
+      dezena_nova = ["02 03 05 06 08 09 11 12 14 15 17 18 20 21 23"].sort.join(' ')
       query = "INSERT INTO Concurso(
       idLoteria,
       nmConcurso,
@@ -261,7 +261,7 @@ class TituloMatrizDEV < DbBase
       #{Faker::Bank.account_number(digits: 4)},
       '2020-#{month}-#{data}',
       '#{dezena_nova}',
-      1,
+      0,
       '#{today}',
       1
     )"
@@ -281,10 +281,8 @@ class TituloMatrizDEV < DbBase
 
     t = @connection.execute(
       create_serie =
-        "INSERT Serie(
-        #{idProduto_ja},
+      "INSERT Serie(
         Nome,
-        Preco,
         DataInicialVigencia,
         DataFinalVigencia,
         DataInicialVenda,
@@ -302,23 +300,20 @@ class TituloMatrizDEV < DbBase
         IdUsuarioCriacao,
         PacoteTitulos,
         CorSerie,
-        porcDoacao,
         qtdMaxTitulosNaCompra,
         idSerieAplicap,
-        PercentualComissao
+        TemplateSerieId
       )
         VALUES (
-        1,
-        'JA - #{today}',
-        1.000,
+        'JÁ - #{today}',
         '2020-#{month}-01',
         '2020-#{month}-30',
         '#{today}',
         '#{today_add_10_days}',
         1,
-        50000.000,
-        20,
-        80.000,
+        250000.000,
+        10,
+        97.100,
         2500.000,
         240000.000,
         3,
@@ -326,12 +321,11 @@ class TituloMatrizDEV < DbBase
         '#{today}',
         1,
         1,
-        '20,25',
+        '1,3',
         '#000000',
-        2.00,
         100,
         12,
-        20.00
+        #{templateSerieId}
       )"
     )
     puts 'Affected rows'

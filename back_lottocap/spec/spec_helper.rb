@@ -17,6 +17,7 @@ require_relative 'databases/carrinhoDb'
 require_relative 'databases/database'
 require_relative 'databases/pre_vendaDb'
 require_relative 'databases/titulo_matrizDb'
+require_relative 'databases/titulo_matrizDbDEV'
 require_relative 'factories'
 require_relative 'services/boleto'
 require_relative 'services/carrinho'
@@ -47,4 +48,9 @@ RSpec.configure do |config|
   config.include FactoryBot::Syntax::Methods
 
   timeout = default_max_wait_time = 5
+end
+
+
+RSpec.configure do |config|
+  config.example_status_persistence_file_path = 'some_file.txt'
 end
