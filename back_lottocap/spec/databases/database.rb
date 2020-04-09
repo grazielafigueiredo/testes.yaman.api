@@ -12,7 +12,7 @@ class Database < DbBase
 
   def update_bloquearPagamento
     time = Time.now.strftime('%F')
-    @connection.execute("UPDATE Serie SET DataFinalVenda = '#{time}' where idSerie = #{Constant::IdSerieMaxRegular};")
+    @connection.execute("UPDATE Serie SET DataFinalVenda = '#{time}' where IdSerie = #{Constant::IdSerieMaxRegular};")
   end
 
   def update_reservarSerie(reservado)

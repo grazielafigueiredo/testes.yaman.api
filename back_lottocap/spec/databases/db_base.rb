@@ -1,30 +1,19 @@
 require 'tiny_tds'
 require 'timeout'
+require 'dotenv'
 
 class DbBase
   def initialize
+    azure_bool = ENV['DATABASE_AZURE'].to_s.downcase == 'true'
     conn = {
-      # username: 'graziela',
-      # password: '4KoNxOHqNtTd6zZ',
-      username: 'Lottocap',
-      password: 'L0ttocap19!12@',
-      host: 'hmllottocap.database.windows.net',
-      port: 1433,
-      # database: 'hmllottocaptests',
-      database: 'hmllottocap',
-      azure: true,
-      timeout: 55
+      username: ENV['DATABASE_USERNAME'],
+      password: ENV['DATABASE_PASSWORD'],
+      host: ENV['DATABASE_HOST'],
+      port: ENV['DATABASE_PORT'],
+      database: ENV['DATABASE_DATABASE'],
+      azure: azure_bool,
+      timeout: ENV['DATABASE_TIMEOUT']
     }
     @connection = TinyTds::Client.new(conn)
   end
-  # def initialize
-  #   conn = {
-  #     username: 'sa',
-  #     password: 'L0ttocap19!',
-  #     host: 'localhost',
-  #     port: 1433,
-  #     database: 'master'
-  #   }
-  #   @connection = TinyTds::Client.new(conn)
-  # end
 end
