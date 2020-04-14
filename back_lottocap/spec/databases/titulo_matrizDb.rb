@@ -272,6 +272,8 @@ class TituloMatrizDB < DbBase
     )"
 
       result_insert = @connection.execute(query)
+      result_insert.do
+
       # puts 'Affected rows'
       results_concurso = @connection.execute('SELECT SCOPE_IDENTITY()')
 
