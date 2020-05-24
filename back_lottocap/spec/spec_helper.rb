@@ -12,13 +12,16 @@ require 'tiny_tds'
 require 'timeout'
 
 require_relative 'services/aplicap'
-require_relative 'databases/credito_lottocapDb'
 require_relative 'databases/carrinhoDb'
+require_relative 'databases/credito_lottocapDb'
+require_relative 'databases/create_user_DB'
 require_relative 'databases/database'
 require_relative 'databases/pre_vendaDb'
 require_relative 'databases/titulo_matrizDb'
 require_relative 'databases/titulo_matrizDbDEV'
-require_relative 'factories'
+require_relative 'factories/boleto_factory'
+require_relative 'factories/cart_factory'
+require_relative 'factories/user_factory'
 require_relative 'services/boleto'
 require_relative 'services/carrinho'
 require_relative 'services/criarUser'
@@ -32,7 +35,7 @@ require_relative 'services/ranking'
 require_relative 'services/transferencia'
 require_relative 'services/titulos'
 require_relative 'services/user'
-# require_relative "utils/hashes"
+
 
 RSpec.configure do |config|
   config.expect_with :rspec do |expectations|

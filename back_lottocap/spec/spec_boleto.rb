@@ -1,24 +1,22 @@
 # frozen_string_literal: true
 
 describe 'Boleto' do
-  context 'Fim da série acaba hoje e forma de pagamento deve ficar indisponível' do
+  context 'Apresentar forma de pagamento indisponível quando a série está no último dia de vigência' do
     before do
       @token = ApiUser.GetToken
       ApiUser.Login(@token, Constant::User1)
 
-      @carrinho = ApiCarrinho.post_adicionarItemCarrinho(
-        1,
-        Constant::IdProduto,
-        Constant::IdSerieMaxRegular,
-        @token
-      )
-      @idCarrinho = JSON.parse(@carrinho.response.body)['obj'][0]['idCarrinho']
+      @cart = build(:cart).to_hash
+      @carrinho = ApiCarrinho.post_add_item_cart(@token, @cart)
+      @idCarrinho = @carrinho.parsed_response['obj'][0]['idCarrinho']
 
       Database.new.update_bloquearPagamento
-      @boleto = ApiBoleto.post_pagarCarrinhoComBoleto(@token, @idCarrinho)
+
+      @payment_boleto = build(:boleto).to_hash
+      @result = ApiBoleto.post_payment_cart_boleto(@token, @payment_boleto, @idCarrinho)
     end
-    it { 
-      expect(JSON.parse(@boleto.response.body)['erros'][0]['mensagem']).to eql 'Esta forma de pagamento não está mais disponível, por favor. Selecione outra forma de pagamento.' 
+    it {
+      expect(@result.parsed_response['erros'][0]['mensagem']).to eql 'Esta forma de pagamento não está mais disponível, por favor. Selecione outra forma de pagamento.'
     }
 
     after do
