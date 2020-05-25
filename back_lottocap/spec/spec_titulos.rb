@@ -51,22 +51,6 @@ describe 'Verificar Premio Titulo' do
     end
   end
 
-  # context 'Título Null' do
-  #   before do
-  #     @token = ApiUser.GetToken
-  #     ApiUser.Login(@token, Constant::User1)
-
-  #     @result = ApiTitulos.post_VerificarPremioTitulo(@token, nil)
-  #     puts @result
-  #     end
-
-  #   it { expect(JSON.parse(@result.response.body)['obj.idTitulo'][0]).to eql "Unexpected character encountered while parsing value: }. Path 'obj.idTitulo', line 4, position 2."}
-
-  #   after do
-  #     ApiUser.get_deslogar(@token)
-  #   end
-  # end
-
   context 'Título ID passando maior de 10 inteiros' do
     before do
       @token = ApiUser.GetToken
@@ -100,22 +84,6 @@ describe 'Abrir Título' do
       ApiUser.get_deslogar(@token)
     end
   end
-
-  # context 'Título Null' do
-  #   before do
-  #     @token = ApiUser.GetToken
-  #     ApiUser.Login(@token, Constant::User1)
-
-  #     @result = ApiTitulos.post_AbrirTitulo(@token, nil)
-  #   end
-
-  #   it { expect(JSON.parse(@result.response.body)['obj.idTitulo'][0]).to eql "Unexpected character encountered while parsing value: }. Path 'obj.idTitulo', line 4, position 2."}
-  #   it { puts @result.response.body }
-
-  #   after do
-  #     ApiUser.get_deslogar(@token)
-  #   end
-  # end
 
   context 'Título ID passando maior de 10 inteiros' do
     before do

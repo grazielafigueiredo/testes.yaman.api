@@ -111,7 +111,18 @@ context 'Verificação de duplicidade do conjunto de dezenas' do
   }
 end
 
+# context 'Verificar quantidade de títulos gerados do Signos' do
+#   # parametros idserie
+#   # verificar quantidade de vezes que a dezena foi gerada
 
+#   #Signo
+#   idSerie_signo = Constant::IdSerieMaxPreVenda
+#   quantidade_matriz = TituloMatrizDB.new.select_count_matriz(idSerie_signo)
+  
+#   it 'Verificar quantidade de títulos gerados e dezena repetida' do
+#     expect(quantidade_matriz).to match 82_160 # max
+#   end
+# end
 # context 'Criação de série/concurso Ja' do
 #     #parametro para passar o mês da série/concurso
 
@@ -122,11 +133,11 @@ end
 #     TituloMatrizDEV.new.relacionamento_serie_concurso_ja(mes, templateSerieId)
 # end
 
-context 'Criação de série/concurso Ja' do
-    #parametro para passar o mês da série/concurso
+# context 'Criação de série/concurso Ja' do
+#     #parametro para passar o mês da série/concurso
 
-    mes = 06
-    idProduto_ja = 9  #17
-    # idProduto_ja = 10  #18
-    TituloMatrizDB.new.relacionamento_serie_concurso_ja(mes, idProduto_ja)
-end
+#     mes = 06
+#     idProduto_ja = 9  #17
+#     # idProduto_ja = 10  #18
+#     TituloMatrizDB.new.relacionamento_serie_concurso_ja(mes, idProduto_ja)
+# end

@@ -8,43 +8,44 @@ describe 'Carrinho - Reserva' do
 
 
 
-  # context 'Quantidade parcialmente indisponível' do
-  #   before do
-  #     @token = ApiUser.GetToken
-  #     ApiUser.Login(@token, Constant::User1)
+  context 'Atualizar carrinho com a quantidade disponível para compra' do
+    before do
+      @token = ApiUser.GetToken
+      ApiUser.Login(@token, Constant::User1)
 
-  #     # CarrinhoDb.new.update_dataFinalVendaVigente(dataVincenda)
-  #     # CarrinhoDb.new.update_maxReservados(naoReservado)
+      # CarrinhoDb.new.update_dataFinalVendaVigente(dataVincenda)
+      # CarrinhoDb.new.update_maxReservados(naoReservado)
 
-  #     @carrinho = ApiCarrinho.post_adicionarItemCarrinho(
-  #       3000000,
-  #       # 3,
-  #       Constant::IdProduto,
-  #       Constant::IdSerieMaxRegular,
-  #       @token
-  #     )
-  #     puts @token
-  #     puts @carrinho
-  #       @idCarrinho = JSON.parse(@carrinho.response.body)['obj'][0]['idCarrinho']
+      @carrinho = ApiCarrinho.post_adicionarItemCarrinho(
+        3000000,
+        # 3,
+        Constant::IdProduto,
+        Constant::IdSerieMaxRegular,
+        @token
+      )
+      puts @token
+      puts @carrinho
+        @idCarrinho = JSON.parse(@carrinho.response.body)['obj'][0]['idCarrinho']
 
-  #       @nomeProduto = JSON.parse(@carrinho.response.body)['obj'][0]['nomeProduto']
-  #       puts @nomeProduto
-  #       @descricaoSerie = JSON.parse(@carrinho.response.body)['obj'][0]['descricaoSerie']
-  #     puts @descricaoSerie
-  #       @result = ApiCarrinho.get_GetStatusCarrinho
-  #     puts @result
-  #   end
+        @nomeProduto = JSON.parse(@carrinho.response.body)['obj'][0]['nomeProduto']
+        puts @nomeProduto
+        @descricaoSerie = JSON.parse(@carrinho.response.body)['obj'][0]['descricaoSerie']
+      puts @descricaoSerie
+        @result = ApiCarrinho.get_GetStatusCarrinho
+      puts @result
+    end
 
-  #   it 'Quantidade parcialmente indisponível' do
-  #     expect(JSON.parse(@result.response.body)['erros'][0]['mensagem']).to eql "A quantidade de títulos que você deseja para o #{@nomeProduto} - #{@descricaoSerie} não está mais disponível. Atualizamos seu carrinho com a quantidade disponível!"
-  #   end
+    it 'Atualizar carrinho com a quantidade disponível para compra' do
+      expect(JSON.parse(@result.response.body)['erros'][0]['mensagem']).to eql "A quantidade de títulos que você deseja para o #{@nomeProduto} - #{@descricaoSerie} não está mais disponível. Atualizamos seu carrinho com a quantidade disponível!"
+    end
 
-  #   after do
-  #     ApiCarrinho.post_SetRemoverItemCarrinho(@token, @idCarrinho)
-  #     ApiUser.get_deslogar(@token)
-  #   end
-  # end
-  context 'Atualizar carrinho com outra série em andamento' do
+    after do
+      ApiCarrinho.post_SetRemoverItemCarrinho(@token, @idCarrinho)
+      ApiUser.get_deslogar(@token)
+    end
+  end
+
+  context 'Carrinho com série indisponível para venda, então deve atualizar com a série nova em andamentoo' do
     before do
       @token = ApiUser.GetToken
       ApiUser.Login(@token, Constant::User1)
@@ -74,7 +75,7 @@ describe 'Carrinho - Reserva' do
     end
   end
 
-  context 'Pagar 2 produtos no carrinho' do
+  context 'Validar se o carrinho comporta 2 produtos diferentes' do
     before do
       @token = ApiUser.GetToken
       ApiUser.Login(@token, Constant::User1)
@@ -108,7 +109,7 @@ describe 'Carrinho - Reserva' do
       puts @result
     end
 
-    it 'verificando se o carrinho tem 2 produtos para pagamento' do
+    it 'Validar se o carrinho comporta 2 produtos diferentes' do
      expect(JSON.parse(@carrinho.response.body)['obj'][0]['idCarrinho']).to be_a Integer
      expect(JSON.parse(@carrinho.response.body)['obj'][1]['idCarrinho']).to be_a Integer
     end
@@ -119,7 +120,7 @@ describe 'Carrinho - Reserva' do
     end 
   end
 
-  context 'Quando o produto estiver na vigência' do
+  context 'Validar se vigência do produto tem data diferente de "0001-01-01T00:00:00"' do
     before do
       @token = ApiUser.GetToken
       ApiUser.Login(@token, Constant::User1)
@@ -145,7 +146,7 @@ describe 'Carrinho - Reserva' do
     end 
   end
 
-  # context 'Enviar quantidade acima de 299 para pagamento' do
+  # context 'Colocar no carrinho quantidade acima permitida ' do
   #   before do
   #     @token = ApiUser.GetToken
   #     ApiUser.Login(@token, Constant::User1)
@@ -163,7 +164,7 @@ describe 'Carrinho - Reserva' do
   #   end 
   # end
 
-  context 'Nenhum produto na vitrine' do
+  context 'Validar quando não existe nenhum produto disponível na vitrine' do
     before do
       @token = ApiUser.GetToken
       ApiUser.Login(@token, Constant::User1)
@@ -194,13 +195,13 @@ describe 'Carrinho - Reserva' do
     end
   end
   # TESTE COM TIMEOUT
-  context 'Quantidade total indisponível ' do
+  context 'Produto não está mais disponível, então deve indicar outro produto para comprar' do
     before do
       @token = ApiUser.GetToken
         ApiUser.Login(@token, Constant::User1)
 
         CarrinhoDb.new.update_dataFinalVendaVigente(dataVincenda)
-        CarrinhoDb.new.update_maxReservados(naoReservado)
+        # CarrinhoDb.new.update_maxReservados(naoReservado)
 
       @result = ApiCarrinho.post_adicionarItemCarrinho(
         500,
@@ -214,7 +215,8 @@ describe 'Carrinho - Reserva' do
         @descricaoSerie = JSON.parse(@result.response.body)['obj'][0]['descricaoSerie']
 
       CarrinhoDb.new.update_maxNaVitrine(dataVencida)
-      CarrinhoDb.new.update_maxReservados(reservado)
+      CarrinhoDb.new.get_titulos_reservados
+      # CarrinhoDb.new.update_maxReservados(reservado)
 
       @carrinho = ApiCarrinho.get_GetStatusCarrinho
       puts @carrinho
@@ -232,7 +234,7 @@ describe 'Carrinho - Reserva' do
   end
 end
 
-describe 'Carrinho - Sem Reserva - Tentar Pagar' do
+describe '[/Pagamento] Produtos fora da vigência' do
 
   reservado = 1
   naoReservado = 0
@@ -240,7 +242,7 @@ describe 'Carrinho - Sem Reserva - Tentar Pagar' do
   dataVincenda = '2020-12-25'
 
 
-  context 'série indisponível com Cartão de Crédito ' do
+  context 'Tentar pagar uma série fora data vigente com cartão de crédito' do
     before do
       @token = ApiUser.GetToken
       ApiUser.Login(@token, Constant::User1)
@@ -279,7 +281,7 @@ describe 'Carrinho - Sem Reserva - Tentar Pagar' do
     end
   end
 
-  context 'Tentar pagar série indisponível com Transferencia' do
+  context 'Tentar pagar uma série fora data vigente com Transferencia' do
     before do
       @token = ApiUser.GetToken
       ApiUser.Login(@token, Constant::User1)
@@ -310,7 +312,7 @@ describe 'Carrinho - Sem Reserva - Tentar Pagar' do
     end
   end
 
-  context 'Tentar pagar série indisponível com Boleto' do
+  context 'Tentar pagar uma série fora data vigente com Boleto' do
     before do
       @token = ApiUser.GetToken
       ApiUser.Login(@token, Constant::User1)
@@ -342,7 +344,7 @@ describe 'Carrinho - Sem Reserva - Tentar Pagar' do
     end
   end
 
-  context 'série indisponível com Crédito Lottocap' do
+  context 'Tentar pagar uma série fora data vigente com Crédito Lottocap' do
     before do
       @token = ApiUser.GetToken
       ApiUser.Login(@token, Constant::User1)
@@ -376,7 +378,7 @@ describe 'Carrinho - Sem Reserva - Tentar Pagar' do
     end
   end
 
-  context 'Atualizar carrinho com outra série em andamento' do
+  context 'Adicionar no carrinho uma série vigente, mas no pagamento ela fico fora de vigência, então deve impedir o pagamento' do
     before do
       @token = ApiUser.GetToken
       ApiUser.Login(@token, Constant::User1)
@@ -408,7 +410,7 @@ describe 'Carrinho - Sem Reserva - Tentar Pagar' do
     end
   end
 
-  context 'Cache no carrinho, após confirmação de compra' do
+  context 'Validar se no carrinho não ficou nenhum cache da última compra' do
     before do
       @token = ApiUser.GetToken
       ApiUser.Login(@token, Constant::User1)
@@ -451,7 +453,7 @@ describe 'Carrinho - Sem Reserva - Tentar Pagar' do
       # puts @result
     end
 
-    it 'Cache no carrinho, após confirmação de compra' do
+    it 'Validar se no carrinho não ficou nenhum cache da última compra' do
       expect(JSON.parse(@resultGetCarrinho.response.body)['erros'][0]['mensagem']).to eql "Atualizamos o carrinho mantendo apenas as série em andamento"
     end
     after do
@@ -463,27 +465,27 @@ describe 'Carrinho - Sem Reserva - Tentar Pagar' do
 
     # TESTE COM TIMEOUT
 
-  # context 'Quantidade parcialmente indisponível' do
-  #   before do
-  #     @token = ApiUser.GetToken
-  #     ApiUser.Login(@token, Constant::User1)
+  context 'No momento do pagamento a quantidade total de títulos não está mais disponível, então deve impedir o pagamento' do
+    before do
+      @token = ApiUser.GetToken
+      ApiUser.Login(@token, Constant::User1)
 
-  #     @carrinho = ApiCarrinho.post_adicionarItemCarrinho(300, Constant::IdProduto, Constant::IdSerieMaxRegular, @token)
-  #     @idCarrinho = JSON.parse(@carrinho.response.body)['obj'][0]['idCarrinho']
-  #     puts @carrinho
-  #     @result = ApiBoleto.post_SucessoBoleto(@token, @idCarrinho)
-  #     puts @result
-  #   end
+      @carrinho = ApiCarrinho.post_adicionarItemCarrinho(300, Constant::IdProduto, Constant::IdSerieMaxRegular, @token)
+      @idCarrinho = JSON.parse(@carrinho.response.body)['obj'][0]['idCarrinho']
+      puts @carrinho
+      @result = ApiBoleto.post_SucessoBoleto(@token, @idCarrinho)
+      puts @result
+    end
 
-  #   it { expect(JSON.parse(@result.response.body)['erros'][0]['mensagem']).to eql "Não foi possível Reservar os Titulos Solicitados!"}
+    it { expect(JSON.parse(@result.response.body)['erros'][0]['mensagem']).to eql "Não foi possível Reservar os Titulos Solicitados!"}
     
-  #   after do
-  #     ApiCarrinho.post_SetRemoverItemCarrinho(@token, @idCarrinho)
-  #     ApiUser.get_deslogar(@token)
-  #   end
-  # end
+    after do
+      ApiCarrinho.post_SetRemoverItemCarrinho(@token, @idCarrinho)
+      ApiUser.get_deslogar(@token)
+    end
+  end
 
-  context 'Limpar produtos no carrinho quando o cliente vier pela endpoint de Afiliados -  usuário logado' do
+  context 'Limpar carrinho quando o usuário já logado navegar pelo endpoint /afiliados' do
     before do
       @token = ApiUser.GetToken
       ApiUser.Login(@token, Constant::User1)
@@ -518,7 +520,7 @@ describe 'Carrinho - Sem Reserva - Tentar Pagar' do
       puts @endpointAfiliados
     end
 
-    it 'validando série e quantidade de itens no carrinho' do
+    it 'Limpar carrinho quando o usuário já logado navegar pelo endpoint /afiliados' do
       expect(JSON.parse(@endpointAfiliados.response.body)['obj'][0]['descricaoSerie']).to eql "17test (grazi não me mata - by wes)"
       expect(JSON.parse(@endpointAfiliados.response.body)['obj'][0]['idCarrinho']).to be_a Integer
       expect(JSON.parse(@endpointAfiliados.response.body)['obj'].count).to eq(1)
@@ -565,7 +567,7 @@ describe 'Carrinho - Sem Reserva - Tentar Pagar' do
       puts @result
     end
 
-    it 'validando série e quantidade de itens no carrinho' do
+    it 'Limpar carrinho quando o usuário deslogado navegar pelo endpoint /afiliados' do
       expect(JSON.parse(@endpointAfiliados.response.body)['obj'][0]['descricaoSerie']).to eql "17test (grazi não me mata - by wes)"
       expect(JSON.parse(@endpointAfiliados.response.body)['obj'][0]['idCarrinho']).to be_a Integer
       expect(JSON.parse(@endpointAfiliados.response.body)['obj'].count).to eq(1)

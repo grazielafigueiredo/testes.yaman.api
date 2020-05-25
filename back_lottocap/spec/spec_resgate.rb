@@ -2,7 +2,7 @@
 
 describe 'Resgate' do
 
-  context 'Sucesso com verificação de valor sacado' do
+  context 'Regatar valor pelo banco Bradesco e validar saldo restante   ' do
     valor = 10.000
     idBanco = 1
     agenciaNumero = Faker::Bank.account_number(digits: 4)
@@ -86,7 +86,7 @@ describe 'Resgate' do
     end
   end
 
-  context 'Sacar saldo insuficiente' do
+  context 'Resgatar valor acima do valor disponível' do
     valor = 100.000
     idBanco = 1
     agenciaNumero = Faker::Bank.account_number(digits: 4)
@@ -121,7 +121,7 @@ describe 'Resgate' do
     end
   end
 
-  context 'Conta existente para saca' do
+  context 'Resgatar valor inserindo outros dados bancários  ' do
     valor = 10.000
     idBanco = 1
     agenciaNumero = 123

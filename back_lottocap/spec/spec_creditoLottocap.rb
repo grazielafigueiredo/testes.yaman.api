@@ -1,5 +1,5 @@
 # criar teste para sacar valor além do saldo
-context 'Comprar créditos Lottocap' do
+context 'Comprar créditos com valor mínimo de R$20,00' do
   before do
     @token = ApiUser.GetToken
     ApiUser.Login(@token, Constant::User1)
@@ -24,7 +24,7 @@ context 'Comprar créditos Lottocap' do
   end
 end
 
-context 'Pagar - Sucesso com Crédito Lottocap' do
+context 'Pagar com créditos produto MAX' do
   before do
     @token = ApiUser.GetToken
     ApiUser.Login(@token, Constant::User1)
@@ -46,7 +46,7 @@ context 'Pagar - Sucesso com Crédito Lottocap' do
     # puts @responseDadosUsuario
   end
 
-  it 'Pagar - Sucesso com Crédito Lottocap' do
+  it 'Pagar com créditos produto MAX' do
      expect(JSON.parse(@responseCarrinho.response.body)['sucesso']).to be true
      expect(JSON.parse(@responseDadosUsuario.response.body)['obj'][0]['dadosUsuario']['creditosDisponiveis']).to eql 50.000
     end
@@ -58,7 +58,7 @@ context 'Pagar - Sucesso com Crédito Lottocap' do
   end
 end 
 
-context 'Pagar - Teste de compra com JÁ18' do
+context 'Pagar com créditos produto Já 18' do
   before do
     @token = ApiUser.GetToken
     ApiUser.Login(@token, Constant::User1)
@@ -80,7 +80,7 @@ context 'Pagar - Teste de compra com JÁ18' do
     puts @responseDadosUsuario
   end
   
-  it 'Pagar - Teste de compra com JÁ18' do
+  it 'Pagar com créditos produto Já 18' do
    expect(JSON.parse(@responseCarrinho.response.body)['sucesso']).to be true
    expect(JSON.parse(@responseDadosUsuario.response.body)['obj'][0]['dadosUsuario']['creditosDisponiveis']).to eql 99.000
   end

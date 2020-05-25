@@ -57,7 +57,7 @@ context 'Config pré-venda' do
   end
 end
 
-context 'escolha de dezenas nao pode trazer qndo a série nao estiver em pré venda' do
+context 'Quando a série não estiver em pre venda, então o contrato do endpoint não pode exibir conjunto de dezenas' do
   before do
     @token = ApiUser.GetToken
     ApiUser.Login(@token, Constant::User1)
@@ -78,7 +78,7 @@ context 'escolha de dezenas nao pode trazer qndo a série nao estiver em pré ve
     puts @exibirDezenas
   end
 
-  it 'não exibirDezenas' do
+  it 'Quando a série não estiver em pre venda, então o contrato do endpoint não pode exibir conjunto de dezenas' do
     expect(JSON.parse(@exibirDezenas.response.body)['obj']).to eql []
   end
 
@@ -87,7 +87,7 @@ context 'escolha de dezenas nao pode trazer qndo a série nao estiver em pré ve
   end
 end
 
-context 'Colocar no carrinho Título já reservado' do
+context 'Adicionar ao carrinho conjunto de dezenas que já foi reservado/comprado' do
   before do
     PreVenda.new.update_reservar_titulo
 
@@ -99,7 +99,7 @@ context 'Colocar no carrinho Título já reservado' do
     puts @preVenda
   end
 
-  it 'Comprar um Título reservado' do
+  it 'Adicionar ao carrinho conjunto de dezenas que já foi reservado/comprado' do
     expect(JSON.parse(@preVenda.response.body)['sucesso']).to eql false
     expect(JSON.parse(@preVenda.response.body)['erros'][0]['mensagem']).to eql "Não foi possível adicionar o título escolhido ao carrinho."
   end
@@ -152,7 +152,7 @@ context 'Concorrencia no pagamento Título já reservado' do
 
   end
 
-  it 'Concorrencia no pagamento Título já reservado' do
+  it 'Pagar conjunto de dezenas que já foi reservado/comprado' do
     expect(JSON.parse(@pagarCarrinho2.response.body)['sucesso']).to eql false
     expect(JSON.parse(@pagarCarrinho2.response.body)['erros'][0]['mensagem']).to eql "Reserva de titulos já foi solicitada para as dezenas #{@conjuntosDezenas}"
   end

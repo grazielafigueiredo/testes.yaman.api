@@ -5,7 +5,7 @@ describe 'Cartão de Crédito' do
   
   dataVincenda = '2020-12-25'
 
-  context 'Obter Formas Pagamento Disponiveis' do
+  context 'validar se todas as formas de pagamento estão disponíveis seguindo regra de valor mínimo para compra' do
     before do
       @token = ApiUser.GetToken
       ApiUser.Login(@token, Constant::User1)
@@ -22,7 +22,7 @@ describe 'Cartão de Crédito' do
       @result = ApiCartao.post_ObterFormasPagamentoDisponiveis(@token, @idCarrinho)
       puts @result
     end
-    it 'tipo de pagamentos e valores mínimos para cada modalidade' do
+    it 'validar se todas as formas de pagamento estão disponíveis seguindo regra de valor mínimo para compra' do
         expect(JSON.parse(@result.response.body)['obj'][0]['formasPai'][0]['tipo']).to eql 'cartao_credito' 
         expect(JSON.parse(@result.response.body)['obj'][0]['formasPai'][0]['nome']).to eql 'Cartão de Crédito' 
         expect(JSON.parse(@result.response.body)['obj'][0]['formasPai'][0]['idFormaPagamento'][0]).to be 1 
@@ -46,7 +46,7 @@ describe 'Cartão de Crédito' do
     end 
   end
 
-  context 'Nome Inválido Cartão de Crédito ' do
+  context 'Input no campo ‘nome’ com dados inválidos' do
     before do
 
       @token = ApiUser.GetToken
@@ -83,7 +83,7 @@ describe 'Cartão de Crédito' do
     end
   end
 
-  context 'Nome Vazio Cartão de Crédito' do
+  context 'Input no campo ‘nome’ com dados vazio' do
     before do
 
       @token = ApiUser.GetToken
@@ -119,19 +119,20 @@ describe 'Cartão de Crédito' do
   end 
 
 
-  context 'Número Inválido Cartão de Crédito' do
+  context 'Input no campo ‘número do cartão’ com letras e números' do
     before do
       @token = ApiUser.GetToken
-      ApiUser.Login(@token, Constant::User1)
+      @t = ApiUser.Login(@token, Constant::User1)
       CarrinhoDb.new.update_dataFinalVendaVigente(dataVincenda)
-
+      puts @token
+      puts @t
       carrinho = ApiCarrinho.post_adicionarItemCarrinho(
         1,
         Constant::IdProduto,
         Constant::IdSerieMaxRegular,
         @token
       )
-
+      puts @carrinho
       @idCarrinho = JSON.parse(carrinho.response.body)['obj'][0]['idCarrinho']
 
       @result = ApiCartao.post_PagarCartaoDeCredito(
@@ -154,7 +155,7 @@ describe 'Cartão de Crédito' do
   end
 
 
-  context 'Número Vazio Cartão de Crédito' do
+  context 'Input no campo ‘número do cartão’ dados vazio' do
     before do
       @token = ApiUser.GetToken
       ApiUser.Login(@token, Constant::User1)
@@ -188,7 +189,7 @@ describe 'Cartão de Crédito' do
     end
   end 
 
-  context 'Ano Inválido Cartão de Crédito' do
+  context ' Input no campo ‘vencimento/ano’ com letras e números' do
     before do
       @token = ApiUser.GetToken
       ApiUser.Login(@token, Constant::User1)
@@ -222,7 +223,7 @@ describe 'Cartão de Crédito' do
     end
   end
 
-  context 'Ano Menor que o atual' do
+  context '- Input no campo ‘vencimento/ano’ com data menor que o ano atual' do
     before do
       @token = ApiUser.GetToken
       ApiUser.Login(@token, Constant::User1)
@@ -258,7 +259,7 @@ describe 'Cartão de Crédito' do
   end
 
 
-  context 'Ano Vazio Cartão de Crédito' do
+  context 'Input no campo ‘vencimento/ano’  dados vazio' do
     before do
 
       @token = ApiUser.GetToken
@@ -294,7 +295,7 @@ describe 'Cartão de Crédito' do
     end 
   end 
 
-  context 'Mês Inválido Cartão de Crédito' do
+  context 'Input no campo ‘vencimento/mês’ fora do intervalo de 1 a 12' do
     before do
 
       @token = ApiUser.GetToken
@@ -330,7 +331,7 @@ describe 'Cartão de Crédito' do
     end
   end
 
-  context 'Mês Vazio Cartão de Crédito' do
+  context 'Input no campo ‘vencimento/mês’ dados vazio' do
     before do
 
       @token = ApiUser.GetToken
@@ -366,7 +367,7 @@ describe 'Cartão de Crédito' do
     end
   end
 
-  context 'CVV Inválido Cartão de Crédito' do
+  context 'Input no campo ‘cvv’ com letras e números' do
     before do
 
       @token = ApiUser.GetToken
@@ -401,7 +402,7 @@ describe 'Cartão de Crédito' do
     end
   end
 
-  context 'CVV > 10 Cartão de Crédito' do
+  context '- Input no campo ‘cvv’ com 10 casa decimal' do
     before do
 
       @token = ApiUser.GetToken
@@ -436,7 +437,7 @@ describe 'Cartão de Crédito' do
     end
   end
 
-  context 'CVV Vazio Cartão de Crédito' do
+  context ' Input no campo ‘cvv’ dados vazio  ' do
     before do
 
       @token = ApiUser.GetToken
@@ -473,7 +474,7 @@ describe 'Cartão de Crédito' do
   end
 
 
-  context 'Adicionar Cartão de Crédito Sucesso' do
+  context 'Input no campo ‘nome, número do cartão, ano, mês, cvv’ com dados válidos  ' do
     before do
       @token = ApiUser.GetToken
       ApiUser.Login(@token, Constant::User1)
