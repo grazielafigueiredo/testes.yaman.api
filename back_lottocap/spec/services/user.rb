@@ -39,7 +39,7 @@ class ApiUser
         return token
     end
 
-    def self.get_deslogar(token)
+    def self.get_logout(token)
         headers[:Authorization] = token
 
         get("/Usuario/DeslogarUsuario", :headers => headers)

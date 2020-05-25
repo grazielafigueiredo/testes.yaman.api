@@ -1,8 +1,7 @@
 # frozen_string_literal: true
 
-describe 'Bradesco' do
-  dataVincenda = '2020-12-25'
-  CarrinhoDb.new.update_dataFinalVendaVigente(dataVincenda)
+describe 'Realizar transferência com Bradesco/Itau/Santander/BBrasil e input/output exploratório' do
+  CartDB.new.update_dataFinalVendaVigente('2020-12-25')
   @token = ApiUser.GetToken
   @login = ApiUser.Login(@token, Constant::User1)
   @idUsuario = @login.parsed_response['obj'][0]['idUsuario']
@@ -34,13 +33,10 @@ describe 'Bradesco' do
     end
   end
 
-  context '[Bradesco] Realizar transferência com uma conta já salva do Bradesco' do
+  context '[Bradesco] Realizar transferência com uma conta já salva' do
     before do
       @token = ApiUser.GetToken
       @login = ApiUser.Login(@token, Constant::User1)
-      # @idUsuario = @login.parsed_response['obj'][0]['idUsuario']
-      # TransferDB.new.delete_account(@idUsuario)
-      # TransferDB.new.insert_account(@idUsuario)
 
       @cart = build(:cart).to_hash
       @carrinho = ApiCart.post_add_item_cart(@token, @cart)
@@ -64,7 +60,7 @@ describe 'Bradesco' do
   #   before do
   #     @token = ApiUser.GetToken
   #     ApiUser.Login(@token, Constant::User1)
-  #     CarrinhoDb.new.update_dataFinalVendaVigente(dataVincenda)
+  #     CartDB.new.update_dataFinalVendaVigente(dataVincenda)
 
   #     @cart = build(:cart).to_hash
   #     @carrinho = ApiCart.post_add_item_cart(@token, @cart)
@@ -93,7 +89,6 @@ describe 'Bradesco' do
     before do
       @token = ApiUser.GetToken
       ApiUser.Login(@token, Constant::User1)
-      # CarrinhoDb.new.update_dataFinalVendaVigente(dataVincenda)
 
       @cart = build(:cart).to_hash
       @carrinho = ApiCart.post_add_item_cart(@token, @cart)
@@ -116,7 +111,6 @@ describe 'Bradesco' do
     before do
       @token = ApiUser.GetToken
       ApiUser.Login(@token, Constant::User1)
-      # CarrinhoDb.new.update_dataFinalVendaVigente(dataVincenda)
 
       @cart = build(:cart).to_hash
       @carrinho = ApiCart.post_add_item_cart(@token, @cart)
@@ -144,7 +138,6 @@ describe 'Bradesco' do
     before do
       @token = ApiUser.GetToken
       ApiUser.Login(@token, Constant::User1)
-      # CarrinhoDb.new.update_dataFinalVendaVigente(dataVincenda)
 
       @cart = build(:cart).to_hash
       @carrinho = ApiCart.post_add_item_cart(@token, @cart)
@@ -165,11 +158,10 @@ describe 'Bradesco' do
 
   # ----------------------Agencia Bancaria------------------------------
 
-  context '[Bradesco] Input no campo ‘agência’ com menos de 4 casa decimais' do
+  context '[Bradesco] Input no campo ‘agência’ com menos de 4 casas decimais' do
     before do
       @token = ApiUser.GetToken
       ApiUser.Login(@token, Constant::User1)
-      # CarrinhoDb.new.update_dataFinalVendaVigente(dataVincenda)
 
       @cart = build(:cart).to_hash
       @carrinho = ApiCart.post_add_item_cart(@token, @cart)
@@ -192,7 +184,6 @@ describe 'Bradesco' do
     before do
       @token = ApiUser.GetToken
       ApiUser.Login(@token, Constant::User1)
-      # CarrinhoDb.new.update_dataFinalVendaVigente(dataVincenda)
 
       @cart = build(:cart).to_hash
       @carrinho = ApiCart.post_add_item_cart(@token, @cart)
@@ -203,7 +194,7 @@ describe 'Bradesco' do
       @result = ApiTransfer.post_transfer(@token, @idCarrinho, @transfer)
     end
 
-    it '[Bradesco] Input no campo ‘agência’ com mais de 10 casas decimais' do
+    it 'Input no campo ‘agência’ com mais de 10 casas decimais' do
       expect(@result.response.code).to eql '400'
       expect(JSON.parse(@result.response.body)['obj.transfAgencia'][0]).to eql "The field transfAgencia must be a string or array type with a maximum length of '10'."
     end
@@ -218,7 +209,6 @@ describe 'Bradesco' do
     before do
       @token = ApiUser.GetToken
       ApiUser.Login(@token, Constant::User1)
-      # CarrinhoDb.new.update_dataFinalVendaVigente(dataVincenda)
 
       @cart = build(:cart).to_hash
       @carrinho = ApiCart.post_add_item_cart(@token, @cart)
@@ -238,11 +228,10 @@ describe 'Bradesco' do
   end
 
   # ----------------------Conta Corrente------------------------------
-  context '[Bradesco] Input no campo ‘conta corrente’ com mais de 10 casa decimal  ' do
+  context '[Bradesco] Input no campo ‘conta corrente’ com mais de 10 casas decimais' do
     before do
       @token = ApiUser.GetToken
       ApiUser.Login(@token, Constant::User1)
-      # CarrinhoDb.new.update_dataFinalVendaVigente(dataVincenda)
 
       @cart = build(:cart).to_hash
       @carrinho = ApiCart.post_add_item_cart(@token, @cart)
@@ -253,7 +242,7 @@ describe 'Bradesco' do
       @result = ApiTransfer.post_transfer(@token, @idCarrinho, @transfer)
     end
 
-    it '[Bradesco] Input no campo ‘conta corrente’ com mais de 10 casa decimal    ' do
+    it 'Input no campo ‘conta corrente’ com mais de 10 casas decimais' do
       expect(@result.response.code).to eql '400'
       expect(JSON.parse(@result.response.body)['obj.transfConta'][0]).to eql "The field transfConta must be a string or array type with a maximum length of '10'."
     end
@@ -264,11 +253,10 @@ describe 'Bradesco' do
     end
   end
 
-  context '[Bradesco] Input no campo ‘conta corrente’ com menos de 4 casa decimal' do
+  context '[Bradesco] Input no campo ‘conta corrente’ com menos de 4 casas decimais' do
     before do
       @token = ApiUser.GetToken
       ApiUser.Login(@token, Constant::User1)
-      # CarrinhoDb.new.update_dataFinalVendaVigente(dataVincenda)
 
       @cart = build(:cart).to_hash
       @carrinho = ApiCart.post_add_item_cart(@token, @cart)
@@ -291,7 +279,6 @@ describe 'Bradesco' do
     before do
       @token = ApiUser.GetToken
       ApiUser.Login(@token, Constant::User1)
-      # CarrinhoDb.new.update_dataFinalVendaVigente(dataVincenda)
 
       @cart = build(:cart).to_hash
       @carrinho = ApiCart.post_add_item_cart(@token, @cart)
@@ -309,16 +296,11 @@ describe 'Bradesco' do
       ApiUser.get_logout(@token)
     end
   end
-end
 
-describe 'Itau' do
-  dataVincenda = '2020-12-25'
-
-  context '[Itaú] Realizar transferência com banco Itaú' do
+  context '[Itau] Realizar transferência com banco Itau' do
     before do
       @token = ApiUser.GetToken
       ApiUser.Login(@token, Constant::User1)
-      CarrinhoDb.new.update_dataFinalVendaVigente(dataVincenda)
 
       @cart = build(:cart).to_hash
       @carrinho = ApiCart.post_add_item_cart(@token, @cart)
@@ -328,7 +310,7 @@ describe 'Itau' do
       @result = ApiTransfer.post_transfer(@token, @idCarrinho, @transfer)
     end
 
-    it 'Realizar transferência com banco Itaú' do
+    it 'Realizar transferência com banco Itau' do
       expect(JSON.parse(@result.response.body)['sucesso']).to be true
       expect(JSON.parse(@result.response.body)['obj'][0]['nomeBanco']).to eql 'Itaú'
       expect(JSON.parse(@result.response.body)['obj'][0]['idTipoFormaPagamentoFeito']).to be 7
@@ -340,15 +322,10 @@ describe 'Itau' do
     end
   end
 
-  context '[Itaú] Realizar transferência com uma conta já salva do Itaú' do
+  context '[Itaú] Realizar transferência com uma conta já salva' do
     before do
       @token = ApiUser.GetToken
       @login = ApiUser.Login(@token, Constant::User1)
-      @idUsuario = @login.parsed_response['obj'][0]['idUsuario']
-      TransferDB.new.delete_account(@idUsuario)
-      TransferDB.new.insert_account(@idUsuario)
-
-      CarrinhoDb.new.update_dataFinalVendaVigente(dataVincenda)
 
       @cart = build(:cart).to_hash
       @carrinho = ApiCart.post_add_item_cart(@token, @cart)
@@ -360,10 +337,6 @@ describe 'Itau' do
       @transfer[:transfConta] = '1120'
       @transfer[:transfContaDigito] = '7'
       @result = ApiTransfer.post_transfer(@token, @idCarrinho, @transfer)
-
-      puts @carrinho
-      puts @idCarrinho
-      puts @result
     end
     it { expect(JSON.parse(@result.response.body)['erros'][0]['mensagem']).to eql 'Essa conta bancária já foi adicionada anteriormente.' }
 
@@ -372,16 +345,11 @@ describe 'Itau' do
       ApiUser.get_logout(@token)
     end
   end
-end
-
-describe 'Santander' do
-  dataVincenda = '2020-12-25'
 
   context '[Santander] Realizar transferência com banco Santander' do
     before do
       @token = ApiUser.GetToken
       ApiUser.Login(@token, Constant::User1)
-      CarrinhoDb.new.update_dataFinalVendaVigente(dataVincenda)
 
       @cart = build(:cart).to_hash
       @carrinho = ApiCart.post_add_item_cart(@token, @cart)
@@ -404,15 +372,10 @@ describe 'Santander' do
     end
   end
 
-  context '[Santander] Realizar transferência com uma conta já salva do Santander' do
+  context '[Santander] Realizar transferência com uma conta já salva' do
     before do
       @token = ApiUser.GetToken
       @login = ApiUser.Login(@token, Constant::User1)
-      @idUsuario = @login.parsed_response['obj'][0]['idUsuario']
-      TransferDB.new.delete_account(@idUsuario)
-      TransferDB.new.insert_account(@idUsuario)
-
-      CarrinhoDb.new.update_dataFinalVendaVigente(dataVincenda)
 
       @cart = build(:cart).to_hash
       @carrinho = ApiCart.post_add_item_cart(@token, @cart)
@@ -431,11 +394,10 @@ describe 'Santander' do
     end
   end
 
-  context '[Santander] Input no campo ‘cpf’ com dados numéricos aleatórios - Santander' do
+  context '[Santander] Input no campo ‘cpf’ com dados numéricos aleatórios' do
     before do
       @token = ApiUser.GetToken
       ApiUser.Login(@token, Constant::User1)
-      CarrinhoDb.new.update_dataFinalVendaVigente(dataVincenda)
 
       @cart = build(:cart).to_hash
       @carrinho = ApiCart.post_add_item_cart(@token, @cart)
@@ -453,16 +415,11 @@ describe 'Santander' do
       ApiUser.get_logout(@token)
     end
   end
-end
-
-describe 'Brasil' do
-  dataVincenda = '2020-12-25'
 
   context '[BBrasil] Realizar transferência com Banco do Brasil' do
     before do
       @token = ApiUser.GetToken
       ApiUser.Login(@token, Constant::User1)
-      CarrinhoDb.new.update_dataFinalVendaVigente(dataVincenda)
 
       @cart = build(:cart).to_hash
       @carrinho = ApiCart.post_add_item_cart(@token, @cart)
@@ -471,6 +428,7 @@ describe 'Brasil' do
       @transfer = build(:transfer_bbrasil).to_hash
       @result = ApiTransfer.post_transfer(@token, @idCarrinho, @transfer)
     end
+
     it '[BBrasil] Realizar transferência com banco Brasil' do
       expect(JSON.parse(@result.response.body)['sucesso']).to be true
       expect(JSON.parse(@result.response.body)['obj'][0]['nomeBanco']).to eql 'Banco do Brasil'
@@ -488,10 +446,6 @@ describe 'Brasil' do
       @token = ApiUser.GetToken
       @login = ApiUser.Login(@token, Constant::User1)
       @idUsuario = @login.parsed_response['obj'][0]['idUsuario']
-      TransferDB.new.delete_account(@idUsuario)
-      TransferDB.new.insert_account(@idUsuario)
-
-      CarrinhoDb.new.update_dataFinalVendaVigente(dataVincenda)
 
       @cart = build(:cart).to_hash
       @carrinho = ApiCart.post_add_item_cart(@token, @cart)

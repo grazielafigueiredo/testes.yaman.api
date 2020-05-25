@@ -41,7 +41,7 @@ describe 'Resgate' do
       
       after do
         Database.new.update_PremioResgate(0)
-        ApiUser.get_deslogar(@token)
+        ApiUser.get_logout(@token)
       end
   end
 
@@ -82,7 +82,7 @@ describe 'Resgate' do
 
     after do
       Database.new.update_PremioResgate(0)
-      ApiUser.get_deslogar(@token)
+      ApiUser.get_logout(@token)
     end
   end
 
@@ -117,7 +117,7 @@ describe 'Resgate' do
 
     after do
       Database.new.update_PremioResgate(0)
-      ApiUser.get_deslogar(@token)
+      ApiUser.get_logout(@token)
     end
   end
 
@@ -150,7 +150,7 @@ describe 'Resgate' do
 
     after do
       Database.new.update_PremioResgate(0.000)
-      ApiUser.get_deslogar(@token)
+      ApiUser.get_logout(@token)
     end
   end
 end

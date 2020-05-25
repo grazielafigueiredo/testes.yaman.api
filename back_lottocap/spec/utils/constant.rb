@@ -17,7 +17,7 @@ class Constant
 
   User1 = { "usuario": ENV['USER_1_NAME'], "senha": ENV['USER_1_PASSWORD'] }.freeze
   UserID = ENV['USER_1_ID']
-  print(UserID)
+  # print(UserID)
   User2 = { "usuario": ENV['USER_2_NAME'], "senha": ENV['USER_2_PASSWORD'] }.freeze
   # UserID2 = USER_2_ID
 

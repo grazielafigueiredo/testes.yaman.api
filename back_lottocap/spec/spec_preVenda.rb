@@ -7,7 +7,7 @@ context 'Config pré-venda' do
 
     PreVenda.new.update_preVenda
 
-    @carrinho = ApiCarrinho.post_adicionarItemCarrinho(
+    @carrinho = ApiCart.post_adicionarItemCarrinho(
       10, 
       Constant::IdProduto, 
       Constant::IdSerieMaxPreVenda, 
@@ -53,7 +53,7 @@ context 'Config pré-venda' do
   end
 
   after do
-    ApiUser.get_deslogar(@token)
+    ApiUser.get_logout(@token)
   end
 end
 
@@ -62,7 +62,7 @@ context 'Quando a série não estiver em pre venda, então o contrato do endpoin
     @token = ApiUser.GetToken
     ApiUser.Login(@token, Constant::User1)
 
-    @carrinho = ApiCarrinho.post_adicionarItemCarrinho(
+    @carrinho = ApiCart.post_adicionarItemCarrinho(
       10, 
       Constant::IdProduto,
       Constant::IdSerieMaxRegular,
@@ -83,7 +83,7 @@ context 'Quando a série não estiver em pre venda, então o contrato do endpoin
   end
 
   after do
-    ApiUser.get_deslogar(@token)
+    ApiUser.get_logout(@token)
   end
 end
 
@@ -105,7 +105,7 @@ context 'Adicionar ao carrinho conjunto de dezenas que já foi reservado/comprad
   end
 
   after do
-    ApiUser.get_deslogar(@token)
+    ApiUser.get_logout(@token)
   end
 end
 
@@ -158,6 +158,6 @@ context 'Concorrencia no pagamento Título já reservado' do
   end
 
   after do
-    ApiUser.get_deslogar(@token)
+    ApiUser.get_logout(@token)
   end
 end

@@ -26,6 +26,6 @@ context 'Erro 400 API Logar Usuário - só resolveu limpando service worker' do
     expect(JSON.parse(@loginNovamente.response.code)).to be 200
   end
   after do
-    ApiUser.get_deslogar(@token)
+    ApiUser.get_logout(@token)
   end
 end

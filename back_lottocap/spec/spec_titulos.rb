@@ -13,7 +13,7 @@ describe 'Títulos' do
     it { expect(JSON.parse(@result.response.body)['sucesso']).to be true }
 
     after do
-      ApiUser.get_deslogar(@token)
+      ApiUser.get_logout(@token)
     end
   end
 
@@ -29,7 +29,7 @@ describe 'Títulos' do
     it { expect(JSON.parse(@result.response.body)['sucesso']).to be true }
 
     after do
-      ApiUser.get_deslogar(@token)
+      ApiUser.get_logout(@token)
     end
   end
 end
@@ -47,7 +47,7 @@ describe 'Verificar Premio Titulo' do
     it { expect(JSON.parse(@result.response.body)['erros'][0]['mensagem']).to eql 'Este título não pertence ao usuário!' }
 
     after do
-      ApiUser.get_deslogar(@token)
+      ApiUser.get_logout(@token)
     end
   end
 
@@ -63,7 +63,7 @@ describe 'Verificar Premio Titulo' do
     it { expect(JSON.parse(@result.response.body)['obj.idTitulo'][0]).to eql "JSON integer 12345678901 is too large or small for an Int32. Path 'obj.idTitulo', line 1, position 30." }
 
     after do
-      ApiUser.get_deslogar(@token)
+      ApiUser.get_logout(@token)
     end
   end
 end
@@ -81,7 +81,7 @@ describe 'Abrir Título' do
     it { expect(JSON.parse(@result.response.body)['erros'][0]['mensagem']).to eql 'Título não pertence ao usuário!' }
 
     after do
-      ApiUser.get_deslogar(@token)
+      ApiUser.get_logout(@token)
     end
   end
 
@@ -97,7 +97,7 @@ describe 'Abrir Título' do
     it { expect(JSON.parse(@result.response.body)['obj.idTitulo'][0]).to eql "JSON integer 12345678901 is too large or small for an Int32. Path 'obj.idTitulo', line 1, position 30." }
 
     after do
-      ApiUser.get_deslogar(@token)
+      ApiUser.get_logout(@token)
     end
   end
 end
@@ -115,7 +115,7 @@ describe 'BuscarTitulosNaoAbertosUsuario' do
     it { expect(JSON.parse(@result.response.body)['sucesso']).to be true }
 
     after do
-      ApiUser.get_deslogar(@token)
+      ApiUser.get_logout(@token)
     end
   end
 end
@@ -129,7 +129,7 @@ context 'Comprar com Cartao de Credito e verificar se o título foi atribuído' 
     puts('tituloAntesCompra', @tituloAntesCompra)
 
     # Pagando o carrinho com cartao de credito
-    @carrinho = ApiCarrinho.post_adicionarItemCarrinho(
+    @carrinho = ApiCart.post_adicionarItemCarrinho(
       1,
       Constant::IdProduto,
       Constant::IdSerieMaxRegular,
@@ -158,7 +158,7 @@ context 'Comprar com Cartao de Credito e verificar se o título foi atribuído' 
   it { expect(@compararTituloCompraComSelectBanco).to be_truthy }
 
   after do
-    ApiUser.get_deslogar(@token)
+    ApiUser.get_logout(@token)
   end
 end
 
@@ -172,7 +172,7 @@ context 'Comprar com CLottocap e verificar se o título foi atribuído' do
     # Atribuindo credito lottocap e pagando o carrinho
     @rs = CreditoLotto.new.update_creditoLottocap(100)
     puts @rs
-    @carrinho = ApiCarrinho.post_adicionarItemCarrinho(
+    @carrinho = ApiCart.post_adicionarItemCarrinho(
       2,
       Constant::IdProduto,
       Constant::IdSerieMaxRegular,
@@ -196,6 +196,6 @@ context 'Comprar com CLottocap e verificar se o título foi atribuído' do
 
   after do
     CreditoLotto.new.update_creditoLottocap(0)
-    ApiUser.get_deslogar(@token)
+    ApiUser.get_logout(@token)
   end
 end

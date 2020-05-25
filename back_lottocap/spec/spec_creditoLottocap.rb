@@ -4,7 +4,7 @@ context 'Comprar créditos com valor mínimo de R$20,00' do
     @token = ApiUser.GetToken
     ApiUser.Login(@token, Constant::User1)
 
-    @carrinho = ApiCarrinho.post_adicionarItemCarrinho(
+    @carrinho = ApiCart.post_adicionarItemCarrinho(
       1,
       Constant::IdProduto,
       Constant::IdSerieMaxRegular,
@@ -19,8 +19,8 @@ context 'Comprar créditos com valor mínimo de R$20,00' do
  
   after do
     CreditoLotto.new.update_creditoLottocap(0.000)
-    ApiCarrinho.post_SetRemoverItemCarrinho(@token, @idCarrinho)
-    ApiUser.get_deslogar(@token)
+    ApiCart.post_set_remover_item_cart(@token, @idCarrinho)
+    ApiUser.get_logout(@token)
   end
 end
 
@@ -31,7 +31,7 @@ context 'Pagar com créditos produto MAX' do
     puts @token
     CreditoLotto.new.update_creditoLottocap(100)
 
-    @carrinho = ApiCarrinho.post_adicionarItemCarrinho(
+    @carrinho = ApiCart.post_adicionarItemCarrinho(
       1,
       Constant::IdProduto,
       Constant::IdSerieMaxRegular,
@@ -53,8 +53,8 @@ context 'Pagar com créditos produto MAX' do
   
   after do
     CreditoLotto.new.update_creditoLottocap(0)
-    ApiCarrinho.post_SetRemoverItemCarrinho(@token, @idCarrinho)
-    ApiUser.get_deslogar(@token)
+    ApiCart.post_set_remover_item_cart(@token, @idCarrinho)
+    ApiUser.get_logout(@token)
   end
 end 
 
@@ -65,7 +65,7 @@ context 'Pagar com créditos produto Já 18' do
 
     CreditoLotto.new.update_creditoLottocap(100.000)
 
-    @carrinho = ApiCarrinho.post_adicionarItemCarrinho(
+    @carrinho = ApiCart.post_adicionarItemCarrinho(
       1,
       Constant::IdProdutoJa18,
       Constant::IdSerieJa18,
@@ -87,8 +87,8 @@ context 'Pagar com créditos produto Já 18' do
   
   after do
     CreditoLotto.new.update_creditoLottocap(0.000)
-    ApiCarrinho.post_SetRemoverItemCarrinho(@token, @idCarrinho)
-    ApiUser.get_deslogar(@token)
+    ApiCart.post_set_remover_item_cart(@token, @idCarrinho)
+    ApiUser.get_logout(@token)
   end
 end
 

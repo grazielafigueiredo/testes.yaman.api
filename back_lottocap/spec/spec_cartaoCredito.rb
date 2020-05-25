@@ -11,7 +11,7 @@ describe 'Cartão de Crédito' do
       ApiUser.Login(@token, Constant::User1)
 
       @cart = build(:cart).to_hash
-      @carrinho = ApiCarrinho.post_add_item_cart(@token, @cart)
+      @carrinho = ApiCart.post_add_item_cart(@token, @cart)
       @idCarrinho = @carrinho.parsed_response['obj'][0]['idCarrinho']
 
       @result = ApiCartao.post_ObterFormasPagamentoDisponiveis(@token, @idCarrinho)
@@ -35,8 +35,8 @@ describe 'Cartão de Crédito' do
       expect(JSON.parse(@result.response.body)['obj'][0]['formasPai'][3]['vlMinimo']).to be >= 0.0
     end
     after do
-      ApiCarrinho.post_SetRemoverItemCarrinho(@token, @idCarrinho)
-      ApiUser.get_deslogar(@token)
+      ApiCart.post_set_remover_item_cart(@token, @idCarrinho)
+      ApiUser.get_logout(@token)
     end
   end
 
@@ -44,10 +44,10 @@ describe 'Cartão de Crédito' do
     before do
       @token = ApiUser.GetToken
       ApiUser.Login(@token, Constant::User1)
-      CarrinhoDb.new.update_dataFinalVendaVigente(dataVincenda)
+      CartDB.new.update_dataFinalVendaVigente(dataVincenda)
 
       @cart = build(:cart).to_hash
-      @carrinho = ApiCarrinho.post_add_item_cart(@token, @cart)
+      @carrinho = ApiCart.post_add_item_cart(@token, @cart)
       @idCarrinho = @carrinho.parsed_response['obj'][0]['idCarrinho']
 
       @credit_card = build(:credit_card).to_hash
@@ -58,8 +58,8 @@ describe 'Cartão de Crédito' do
     it { expect(JSON.parse(@result.response.body)['sucesso']).to be true }
 
     after do
-      ApiCarrinho.post_SetRemoverItemCarrinho(@token, @idCarrinho)
-      ApiUser.get_deslogar(@token)
+      ApiCart.post_set_remover_item_cart(@token, @idCarrinho)
+      ApiUser.get_logout(@token)
     end
   end
 
@@ -67,10 +67,10 @@ describe 'Cartão de Crédito' do
     before do
       @token = ApiUser.GetToken
       ApiUser.Login(@token, Constant::User1)
-      CarrinhoDb.new.update_dataFinalVendaVigente(dataVincenda)
+      CartDB.new.update_dataFinalVendaVigente(dataVincenda)
 
       @cart = build(:cart).to_hash
-      @carrinho = ApiCarrinho.post_add_item_cart(@token, @cart)
+      @carrinho = ApiCart.post_add_item_cart(@token, @cart)
       @idCarrinho = @carrinho.parsed_response['obj'][0]['idCarrinho']
 
       @credit_card = build(:credit_card).to_hash
@@ -81,8 +81,8 @@ describe 'Cartão de Crédito' do
     it { expect(JSON.parse(@result.response.body)['sucesso']).to be true }
 
     after do
-      ApiCarrinho.post_SetRemoverItemCarrinho(@token, @idCarrinho)
-      ApiUser.get_deslogar(@token)
+      ApiCart.post_set_remover_item_cart(@token, @idCarrinho)
+      ApiUser.get_logout(@token)
     end
   end
 
@@ -90,10 +90,10 @@ describe 'Cartão de Crédito' do
     before do
       @token = ApiUser.GetToken
       ApiUser.Login(@token, Constant::User1)
-      CarrinhoDb.new.update_dataFinalVendaVigente(dataVincenda)
+      CartDB.new.update_dataFinalVendaVigente(dataVincenda)
 
       @cart = build(:cart).to_hash
-      @carrinho = ApiCarrinho.post_add_item_cart(@token, @cart)
+      @carrinho = ApiCart.post_add_item_cart(@token, @cart)
       @idCarrinho = @carrinho.parsed_response['obj'][0]['idCarrinho']
 
       @credit_card = build(:credit_card).to_hash
@@ -104,8 +104,8 @@ describe 'Cartão de Crédito' do
     it { expect(JSON.parse(@result.response.body)['erros'][0]['mensagem']).to eql 'Tipo de cartão inválido.' }
 
     after do
-      ApiCarrinho.post_SetRemoverItemCarrinho(@token, @idCarrinho)
-      ApiUser.get_deslogar(@token)
+      ApiCart.post_set_remover_item_cart(@token, @idCarrinho)
+      ApiUser.get_logout(@token)
     end
   end
 
@@ -113,10 +113,10 @@ describe 'Cartão de Crédito' do
     before do
       @token = ApiUser.GetToken
       ApiUser.Login(@token, Constant::User1)
-      CarrinhoDb.new.update_dataFinalVendaVigente(dataVincenda)
+      CartDB.new.update_dataFinalVendaVigente(dataVincenda)
 
       @cart = build(:cart).to_hash
-      @carrinho = ApiCarrinho.post_add_item_cart(@token, @cart)
+      @carrinho = ApiCart.post_add_item_cart(@token, @cart)
       @idCarrinho = @carrinho.parsed_response['obj'][0]['idCarrinho']
 
       @credit_card = build(:credit_card).to_hash
@@ -127,8 +127,8 @@ describe 'Cartão de Crédito' do
     it { expect(JSON.parse(@result.response.body)['erros'][0]['mensagem']).to eql 'Tipo de cartão inválido.' }
 
     after do
-      ApiCarrinho.post_SetRemoverItemCarrinho(@token, @idCarrinho)
-      ApiUser.get_deslogar(@token)
+      ApiCart.post_set_remover_item_cart(@token, @idCarrinho)
+      ApiUser.get_logout(@token)
     end
   end
 
@@ -136,10 +136,10 @@ describe 'Cartão de Crédito' do
     before do
       @token = ApiUser.GetToken
       ApiUser.Login(@token, Constant::User1)
-      CarrinhoDb.new.update_dataFinalVendaVigente(dataVincenda)
+      CartDB.new.update_dataFinalVendaVigente(dataVincenda)
 
       @cart = build(:cart).to_hash
-      @carrinho = ApiCarrinho.post_add_item_cart(@token, @cart)
+      @carrinho = ApiCart.post_add_item_cart(@token, @cart)
       @idCarrinho = @carrinho.parsed_response['obj'][0]['idCarrinho']
 
       @credit_card = build(:credit_card).to_hash
@@ -150,8 +150,8 @@ describe 'Cartão de Crédito' do
     it { expect(@result.response.code).to eql '400' }
 
     after do
-      ApiCarrinho.post_SetRemoverItemCarrinho(@token, @idCarrinho)
-      ApiUser.get_deslogar(@token)
+      ApiCart.post_set_remover_item_cart(@token, @idCarrinho)
+      ApiUser.get_logout(@token)
     end
   end
 
@@ -159,10 +159,10 @@ describe 'Cartão de Crédito' do
     before do
       @token = ApiUser.GetToken
       ApiUser.Login(@token, Constant::User1)
-      CarrinhoDb.new.update_dataFinalVendaVigente(dataVincenda)
+      CartDB.new.update_dataFinalVendaVigente(dataVincenda)
 
       @cart = build(:cart).to_hash
-      @carrinho = ApiCarrinho.post_add_item_cart(@token, @cart)
+      @carrinho = ApiCart.post_add_item_cart(@token, @cart)
       @idCarrinho = @carrinho.parsed_response['obj'][0]['idCarrinho']
 
       @credit_card = build(:credit_card).to_hash
@@ -173,8 +173,8 @@ describe 'Cartão de Crédito' do
     it { expect(JSON.parse(@result.response.body)['erros'][0]['mensagem']).to eql 'Erro na confirmação do pagamento: 400 - Data de vencimento do cartão expirada. ' }
 
     after do
-      ApiCarrinho.post_SetRemoverItemCarrinho(@token, @idCarrinho)
-      ApiUser.get_deslogar(@token)
+      ApiCart.post_set_remover_item_cart(@token, @idCarrinho)
+      ApiUser.get_logout(@token)
     end
   end
 
@@ -182,10 +182,10 @@ describe 'Cartão de Crédito' do
     before do
       @token = ApiUser.GetToken
       ApiUser.Login(@token, Constant::User1)
-      CarrinhoDb.new.update_dataFinalVendaVigente(dataVincenda)
+      CartDB.new.update_dataFinalVendaVigente(dataVincenda)
 
       @cart = build(:cart).to_hash
-      @carrinho = ApiCarrinho.post_add_item_cart(@token, @cart)
+      @carrinho = ApiCart.post_add_item_cart(@token, @cart)
       @idCarrinho = @carrinho.parsed_response['obj'][0]['idCarrinho']
 
       @credit_card = build(:credit_card).to_hash
@@ -199,8 +199,8 @@ describe 'Cartão de Crédito' do
     end
 
     after do
-      ApiCarrinho.post_SetRemoverItemCarrinho(@token, @idCarrinho)
-      ApiUser.get_deslogar(@token)
+      ApiCart.post_set_remover_item_cart(@token, @idCarrinho)
+      ApiUser.get_logout(@token)
     end
   end
 
@@ -208,10 +208,10 @@ describe 'Cartão de Crédito' do
     before do
       @token = ApiUser.GetToken
       ApiUser.Login(@token, Constant::User1)
-      CarrinhoDb.new.update_dataFinalVendaVigente(dataVincenda)
+      CartDB.new.update_dataFinalVendaVigente(dataVincenda)
 
       @cart = build(:cart).to_hash
-      @carrinho = ApiCarrinho.post_add_item_cart(@token, @cart)
+      @carrinho = ApiCart.post_add_item_cart(@token, @cart)
       @idCarrinho = @carrinho.parsed_response['obj'][0]['idCarrinho']
 
       @credit_card = build(:credit_card).to_hash
@@ -222,8 +222,8 @@ describe 'Cartão de Crédito' do
     it { expect(JSON.parse(@result.response.body)['erros'][0]['mensagem']).to eql 'Erro na confirmação do pagamento: 400 - O mês de expiração do cartão deve ser maior que 0 e menor que 13. 400 - Data de vencimento do cartão inválida. ' }
 
     after do
-      ApiCarrinho.post_SetRemoverItemCarrinho(@token, @idCarrinho)
-      ApiUser.get_deslogar(@token)
+      ApiCart.post_set_remover_item_cart(@token, @idCarrinho)
+      ApiUser.get_logout(@token)
     end
   end
 
@@ -231,10 +231,10 @@ describe 'Cartão de Crédito' do
     before do
       @token = ApiUser.GetToken
       ApiUser.Login(@token, Constant::User1)
-      CarrinhoDb.new.update_dataFinalVendaVigente(dataVincenda)
+      CartDB.new.update_dataFinalVendaVigente(dataVincenda)
 
       @cart = build(:cart).to_hash
-      @carrinho = ApiCarrinho.post_add_item_cart(@token, @cart)
+      @carrinho = ApiCart.post_add_item_cart(@token, @cart)
       @idCarrinho = @carrinho.parsed_response['obj'][0]['idCarrinho']
 
       @credit_card = build(:credit_card).to_hash
@@ -249,8 +249,8 @@ describe 'Cartão de Crédito' do
     end
 
     after do
-      ApiCarrinho.post_SetRemoverItemCarrinho(@token, @idCarrinho)
-      ApiUser.get_deslogar(@token)
+      ApiCart.post_set_remover_item_cart(@token, @idCarrinho)
+      ApiUser.get_logout(@token)
     end
   end
 
@@ -258,10 +258,10 @@ describe 'Cartão de Crédito' do
     before do
       @token = ApiUser.GetToken
       ApiUser.Login(@token, Constant::User1)
-      CarrinhoDb.new.update_dataFinalVendaVigente(dataVincenda)
+      CartDB.new.update_dataFinalVendaVigente(dataVincenda)
 
       @cart = build(:cart).to_hash
-      @carrinho = ApiCarrinho.post_add_item_cart(@token, @cart)
+      @carrinho = ApiCart.post_add_item_cart(@token, @cart)
       @idCarrinho = @carrinho.parsed_response['obj'][0]['idCarrinho']
 
       @credit_card = build(:credit_card).to_hash
@@ -272,8 +272,8 @@ describe 'Cartão de Crédito' do
     it { expect(JSON.parse(@result.response.body)['erros'][0]['mensagem']).to eql 'Input string was not in a correct format.' }
 
     after do
-      ApiCarrinho.post_SetRemoverItemCarrinho(@token, @idCarrinho)
-      ApiUser.get_deslogar(@token)
+      ApiCart.post_set_remover_item_cart(@token, @idCarrinho)
+      ApiUser.get_logout(@token)
     end
   end
 
@@ -281,10 +281,10 @@ describe 'Cartão de Crédito' do
     before do
       @token = ApiUser.GetToken
       ApiUser.Login(@token, Constant::User1)
-      CarrinhoDb.new.update_dataFinalVendaVigente(dataVincenda)
+      CartDB.new.update_dataFinalVendaVigente(dataVincenda)
 
       @cart = build(:cart).to_hash
-      @carrinho = ApiCarrinho.post_add_item_cart(@token, @cart)
+      @carrinho = ApiCart.post_add_item_cart(@token, @cart)
       @idCarrinho = @carrinho.parsed_response['obj'][0]['idCarrinho']
 
       @credit_card = build(:credit_card).to_hash
@@ -295,8 +295,8 @@ describe 'Cartão de Crédito' do
     it { expect(JSON.parse(@result.response.body)['erros'][0]['mensagem']).to eql 'Value was either too large or too small for an Int32.' }
 
     after do
-      ApiCarrinho.post_SetRemoverItemCarrinho(@token, @idCarrinho)
-      ApiUser.get_deslogar(@token)
+      ApiCart.post_set_remover_item_cart(@token, @idCarrinho)
+      ApiUser.get_logout(@token)
     end
   end
 
@@ -304,10 +304,10 @@ describe 'Cartão de Crédito' do
     before do
       @token = ApiUser.GetToken
       ApiUser.Login(@token, Constant::User1)
-      CarrinhoDb.new.update_dataFinalVendaVigente(dataVincenda)
+      CartDB.new.update_dataFinalVendaVigente(dataVincenda)
 
       @cart = build(:cart).to_hash
-      @carrinho = ApiCarrinho.post_add_item_cart(@token, @cart)
+      @carrinho = ApiCart.post_add_item_cart(@token, @cart)
       @idCarrinho = @carrinho.parsed_response['obj'][0]['idCarrinho']
 
       @credit_card = build(:credit_card).to_hash
@@ -318,8 +318,8 @@ describe 'Cartão de Crédito' do
     it { expect(JSON.parse(@result.response.body)['erros'][0]['mensagem']).to eql 'Input string was not in a correct format.' }
 
     after do
-      ApiCarrinho.post_SetRemoverItemCarrinho(@token, @idCarrinho)
-      ApiUser.get_deslogar(@token)
+      ApiCart.post_set_remover_item_cart(@token, @idCarrinho)
+      ApiUser.get_logout(@token)
     end
   end
 
@@ -328,10 +328,10 @@ describe 'Cartão de Crédito' do
       @token = ApiUser.GetToken
       ApiUser.Login(@token, Constant::User1)
 
-      CarrinhoDb.new.update_dataFinalVendaVigente(dataVincenda)
+      CartDB.new.update_dataFinalVendaVigente(dataVincenda)
 
       @cart = build(:cart).to_hash
-      @carrinho = ApiCarrinho.post_add_item_cart(@token, @cart)
+      @carrinho = ApiCart.post_add_item_cart(@token, @cart)
       @idCarrinho = @carrinho.parsed_response['obj'][0]['idCarrinho']
 
       @credit_card = build(:credit_card).to_hash
@@ -341,8 +341,8 @@ describe 'Cartão de Crédito' do
     it { expect(JSON.parse(@result.response.body)['sucesso']).to be true }
 
     after do
-      ApiCarrinho.post_SetRemoverItemCarrinho(@token, @idCarrinho)
-      ApiUser.get_deslogar(@token)
+      ApiCart.post_set_remover_item_cart(@token, @idCarrinho)
+      ApiUser.get_logout(@token)
     end
   end
 end

@@ -12,16 +12,22 @@ require 'tiny_tds'
 require 'timeout'
 
 require_relative 'services/aplicap'
-require_relative 'databases/carrinhoDb'
+
+require_relative 'databases/cart_DB'
 require_relative 'databases/credito_lottocapDb'
 require_relative 'databases/create_user_DB'
 require_relative 'databases/database'
 require_relative 'databases/pre_vendaDb'
+require_relative 'databases/transfer_DB'
 require_relative 'databases/titulo_matrizDb'
 require_relative 'databases/titulo_matrizDbDEV'
+
 require_relative 'factories/boleto_factory'
 require_relative 'factories/cart_factory'
+require_relative 'factories/credit_card_factory'
+require_relative 'factories/transfer_factory'
 require_relative 'factories/user_factory'
+
 require_relative 'services/boleto'
 require_relative 'services/carrinho'
 require_relative 'services/criarUser'
