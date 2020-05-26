@@ -17,8 +17,8 @@ describe 'Realizar transferência com Bradesco/Itau/Santander/BBrasil e input/ou
       @carrinho = ApiCart.post_add_item_cart(@token, @cart)
       @idCarrinho = @carrinho.parsed_response['obj'][0]['idCarrinho']
 
-      @transfer = build(:transfer_bradesco).to_hash
-      @result = ApiTransfer.post_transfer(@token, @idCarrinho, @transfer)
+      @payment_transfer = build(:transfer_bradesco).to_hash
+      @result = ApiTransfer.post_transfer(@token, @idCarrinho, @payment_transfer)
     end
 
     it 'Realizar transferência com banco Bradesco' do
@@ -46,9 +46,9 @@ describe 'Realizar transferência com Bradesco/Itau/Santander/BBrasil e input/ou
       @transfer[:transfAgencia] = '4242'
       @transfer[:transfConta] = '1120'
       @transfer[:transfContaDigito] = '0'
-      @result = ApiTransfer.post_transfer(@token, @idCarrinho, @transfer)
+      @payment_transfer = ApiTransfer.post_transfer(@token, @idCarrinho, @transfer)
     end
-    it { expect(JSON.parse(@result.response.body)['erros'][0]['mensagem']).to eql 'Essa conta bancária já foi adicionada anteriormente.' }
+    it { expect(JSON.parse(@payment_transfer.response.body)['erros'][0]['mensagem']).to eql 'Essa conta bancária já foi adicionada anteriormente.' }
 
     after do
       ApiCart.post_set_remover_item_cart(@token, @idCarrinho)
@@ -96,10 +96,10 @@ describe 'Realizar transferência com Bradesco/Itau/Santander/BBrasil e input/ou
 
       @transfer = build(:transfer_bradesco).to_hash
       @transfer[:transfContaDigito] = ''
-      @result = ApiTransfer.post_transfer(@token, @idCarrinho, @transfer)
+      @payment_transfer = ApiTransfer.post_transfer(@token, @idCarrinho, @transfer)
     end
 
-    it { expect(JSON.parse(@result.response.body)['obj'][0]['digitoAgencia']).to eql '' }
+    it { expect(JSON.parse(@payment_transfer.response.body)['obj'][0]['digitoAgencia']).to eql '' }
 
     after do
       ApiCart.post_set_remover_item_cart(@token, @idCarrinho)
@@ -118,12 +118,12 @@ describe 'Realizar transferência com Bradesco/Itau/Santander/BBrasil e input/ou
 
       @transfer = build(:transfer_bradesco).to_hash
       @transfer[:transfContaDigito] = '23'
-      @result = ApiTransfer.post_transfer(@token, @idCarrinho, @transfer)
+      @payment_transfer = ApiTransfer.post_transfer(@token, @idCarrinho, @transfer)
     end
 
     it '[Bradesco] Input no campo ‘digito da conta’ acima de 1 casa decimal' do
-      expect(@result.response.code).to eql '400'
-      expect(JSON.parse(@result.response.body)['obj.transfContaDigito'][0]).to eql "The field transfContaDigito must be a string or array type with a maximum length of '1'."
+      expect(@payment_transfer.response.code).to eql '400'
+      expect(JSON.parse(@payment_transfer.response.body)['obj.transfContaDigito'][0]).to eql "The field transfContaDigito must be a string or array type with a maximum length of '1'."
     end
 
     after do
@@ -145,10 +145,10 @@ describe 'Realizar transferência com Bradesco/Itau/Santander/BBrasil e input/ou
 
       @transfer = build(:transfer_bradesco).to_hash
       @transfer[:nomeCompletoTitular] = ''
-      @result = ApiTransfer.post_transfer(@token, @idCarrinho, @transfer)
+      @payment_transfer = ApiTransfer.post_transfer(@token, @idCarrinho, @transfer)
     end
 
-    it { expect(JSON.parse(@result.response.body)['erros'][0]['mensagem']).to eql 'Bradesco: Agencia e Nome do Titular são obrigatórios' }
+    it { expect(JSON.parse(@payment_transfer.response.body)['erros'][0]['mensagem']).to eql 'Bradesco: Agencia e Nome do Titular são obrigatórios' }
 
     after do
       ApiCart.post_set_remover_item_cart(@token, @idCarrinho)
@@ -169,10 +169,10 @@ describe 'Realizar transferência com Bradesco/Itau/Santander/BBrasil e input/ou
 
       @transfer = build(:transfer_bradesco).to_hash
       @transfer[:transfAgencia] = '1'
-      @result = ApiTransfer.post_transfer(@token, @idCarrinho, @transfer)
+      @payment_transfer = ApiTransfer.post_transfer(@token, @idCarrinho, @transfer)
     end
 
-    it { expect(JSON.parse(@result.response.body)['sucesso']).to be true }
+    it { expect(JSON.parse(@payment_transfer.response.body)['sucesso']).to be true }
 
     after do
       ApiCart.post_set_remover_item_cart(@token, @idCarrinho)
@@ -191,12 +191,12 @@ describe 'Realizar transferência com Bradesco/Itau/Santander/BBrasil e input/ou
 
       @transfer = build(:transfer_bradesco).to_hash
       @transfer[:transfAgencia] = '23456789123'
-      @result = ApiTransfer.post_transfer(@token, @idCarrinho, @transfer)
+      @payment_transfer = ApiTransfer.post_transfer(@token, @idCarrinho, @transfer)
     end
 
     it 'Input no campo ‘agência’ com mais de 10 casas decimais' do
-      expect(@result.response.code).to eql '400'
-      expect(JSON.parse(@result.response.body)['obj.transfAgencia'][0]).to eql "The field transfAgencia must be a string or array type with a maximum length of '10'."
+      expect(@payment_transfer.response.code).to eql '400'
+      expect(JSON.parse(@payment_transfer.response.body)['obj.transfAgencia'][0]).to eql "The field transfAgencia must be a string or array type with a maximum length of '10'."
     end
 
     after do
@@ -216,10 +216,10 @@ describe 'Realizar transferência com Bradesco/Itau/Santander/BBrasil e input/ou
 
       @transfer = build(:transfer_bradesco).to_hash
       @transfer[:transfAgencia] = ''
-      @result = ApiTransfer.post_transfer(@token, @idCarrinho, @transfer)
+      @payment_transfer = ApiTransfer.post_transfer(@token, @idCarrinho, @transfer)
     end
 
-    it { expect(JSON.parse(@result.response.body)['erros'][0]['mensagem']).to eql 'Bradesco: Agencia e Nome do Titular são obrigatórios' }
+    it { expect(JSON.parse(@payment_transfer.response.body)['erros'][0]['mensagem']).to eql 'Bradesco: Agencia e Nome do Titular são obrigatórios' }
 
     after do
       ApiCart.post_set_remover_item_cart(@token, @idCarrinho)
@@ -239,12 +239,12 @@ describe 'Realizar transferência com Bradesco/Itau/Santander/BBrasil e input/ou
 
       @transfer = build(:transfer_bradesco).to_hash
       @transfer[:transfConta] = '123456789123'
-      @result = ApiTransfer.post_transfer(@token, @idCarrinho, @transfer)
+      @payment_transfer = ApiTransfer.post_transfer(@token, @idCarrinho, @transfer)
     end
 
     it 'Input no campo ‘conta corrente’ com mais de 10 casas decimais' do
-      expect(@result.response.code).to eql '400'
-      expect(JSON.parse(@result.response.body)['obj.transfConta'][0]).to eql "The field transfConta must be a string or array type with a maximum length of '10'."
+      expect(@payment_transfer.response.code).to eql '400'
+      expect(JSON.parse(@payment_transfer.response.body)['obj.transfConta'][0]).to eql "The field transfConta must be a string or array type with a maximum length of '10'."
     end
 
     after do
@@ -264,10 +264,10 @@ describe 'Realizar transferência com Bradesco/Itau/Santander/BBrasil e input/ou
 
       @transfer = build(:transfer_bradesco).to_hash
       @transfer[:transfConta] = '12'
-      @result = ApiTransfer.post_transfer(@token, @idCarrinho, @transfer)
+      @payment_transfer = ApiTransfer.post_transfer(@token, @idCarrinho, @transfer)
     end
 
-    it { expect(JSON.parse(@result.response.body)['sucesso']).to be true }
+    it { expect(JSON.parse(@payment_transfer.response.body)['sucesso']).to be true }
 
     after do
       ApiCart.post_set_remover_item_cart(@token, @idCarrinho)
@@ -286,10 +286,10 @@ describe 'Realizar transferência com Bradesco/Itau/Santander/BBrasil e input/ou
 
       @transfer = build(:transfer_bradesco).to_hash
       @transfer[:transfConta] = ''
-      @result = ApiTransfer.post_transfer(@token, @idCarrinho, @transfer)
+      @payment_transfer = ApiTransfer.post_transfer(@token, @idCarrinho, @transfer)
     end
 
-    it { expect(JSON.parse(@result.response.body)['sucesso']).to be true }
+    it { expect(JSON.parse(@payment_transfer.response.body)['sucesso']).to be true }
 
     after do
       ApiCart.post_set_remover_item_cart(@token, @idCarrinho)
@@ -307,13 +307,13 @@ describe 'Realizar transferência com Bradesco/Itau/Santander/BBrasil e input/ou
       @idCarrinho = @carrinho.parsed_response['obj'][0]['idCarrinho']
 
       @transfer = build(:transfer_itau).to_hash
-      @result = ApiTransfer.post_transfer(@token, @idCarrinho, @transfer)
+      @payment_transfer = ApiTransfer.post_transfer(@token, @idCarrinho, @transfer)
     end
 
     it 'Realizar transferência com banco Itau' do
-      expect(JSON.parse(@result.response.body)['sucesso']).to be true
-      expect(JSON.parse(@result.response.body)['obj'][0]['nomeBanco']).to eql 'Itaú'
-      expect(JSON.parse(@result.response.body)['obj'][0]['idTipoFormaPagamentoFeito']).to be 7
+      expect(JSON.parse(@payment_transfer.response.body)['sucesso']).to be true
+      expect(JSON.parse(@payment_transfer.response.body)['obj'][0]['nomeBanco']).to eql 'Itaú'
+      expect(JSON.parse(@payment_transfer.response.body)['obj'][0]['idTipoFormaPagamentoFeito']).to be 7
     end
 
     after do
@@ -336,9 +336,9 @@ describe 'Realizar transferência com Bradesco/Itau/Santander/BBrasil e input/ou
       @transfer[:transfAgenciaDigito] = '4'
       @transfer[:transfConta] = '1120'
       @transfer[:transfContaDigito] = '7'
-      @result = ApiTransfer.post_transfer(@token, @idCarrinho, @transfer)
+      @payment_transfer = ApiTransfer.post_transfer(@token, @idCarrinho, @transfer)
     end
-    it { expect(JSON.parse(@result.response.body)['erros'][0]['mensagem']).to eql 'Essa conta bancária já foi adicionada anteriormente.' }
+    it { expect(JSON.parse(@payment_transfer.response.body)['erros'][0]['mensagem']).to eql 'Essa conta bancária já foi adicionada anteriormente.' }
 
     after do
       ApiCart.post_set_remover_item_cart(@token, @idCarrinho)
@@ -357,13 +357,13 @@ describe 'Realizar transferência com Bradesco/Itau/Santander/BBrasil e input/ou
 
       @transfer = build(:transfer_santander).to_hash
       @transfer[:cpf] = Faker::CPF.numeric
-      @result = ApiTransfer.post_transfer(@token, @idCarrinho, @transfer)
+      @payment_transfer = ApiTransfer.post_transfer(@token, @idCarrinho, @transfer)
     end
 
     it 'Realizar transferência com banco Santander' do
-      expect(JSON.parse(@result.response.body)['sucesso']).to be true
-      expect(JSON.parse(@result.response.body)['obj'][0]['nomeBanco']).to eql 'Banco Santander'
-      expect(JSON.parse(@result.response.body)['obj'][0]['idTipoFormaPagamentoFeito']).to be 8
+      expect(JSON.parse(@payment_transfer.response.body)['sucesso']).to be true
+      expect(JSON.parse(@payment_transfer.response.body)['obj'][0]['nomeBanco']).to eql 'Banco Santander'
+      expect(JSON.parse(@payment_transfer.response.body)['obj'][0]['idTipoFormaPagamentoFeito']).to be 8
     end
 
     after do
@@ -383,10 +383,10 @@ describe 'Realizar transferência com Bradesco/Itau/Santander/BBrasil e input/ou
 
       @transfer = build(:transfer_santander).to_hash
       @transfer[:cpf] = '66530420061'
-      @result = ApiTransfer.post_transfer(@token, @idCarrinho, @transfer)
+      @payment_transfer = ApiTransfer.post_transfer(@token, @idCarrinho, @transfer)
     end
 
-    it { expect(JSON.parse(@result.response.body)['erros'][0]['mensagem']).to eql 'Essa conta bancária já foi adicionada anteriormente.' }
+    it { expect(JSON.parse(@payment_transfer.response.body)['erros'][0]['mensagem']).to eql 'Essa conta bancária já foi adicionada anteriormente.' }
 
     after do
       ApiCart.post_set_remover_item_cart(@token, @idCarrinho)
@@ -405,10 +405,10 @@ describe 'Realizar transferência com Bradesco/Itau/Santander/BBrasil e input/ou
 
       @transfer = build(:transfer_santander).to_hash
       @transfer[:cpf] = '12345678912'
-      @result = ApiTransfer.post_transfer(@token, @idCarrinho, @transfer)
+      @payment_transfer = ApiTransfer.post_transfer(@token, @idCarrinho, @transfer)
     end
 
-    it { expect(JSON.parse(@result.response.body)['sucesso']).to be true }
+    it { expect(JSON.parse(@payment_transfer.response.body)['sucesso']).to be true }
 
     after do
       ApiCart.post_set_remover_item_cart(@token, @idCarrinho)
@@ -426,13 +426,13 @@ describe 'Realizar transferência com Bradesco/Itau/Santander/BBrasil e input/ou
       @idCarrinho = @carrinho.parsed_response['obj'][0]['idCarrinho']
 
       @transfer = build(:transfer_bbrasil).to_hash
-      @result = ApiTransfer.post_transfer(@token, @idCarrinho, @transfer)
+      @payment_transfer = ApiTransfer.post_transfer(@token, @idCarrinho, @transfer)
     end
 
     it '[BBrasil] Realizar transferência com banco Brasil' do
-      expect(JSON.parse(@result.response.body)['sucesso']).to be true
-      expect(JSON.parse(@result.response.body)['obj'][0]['nomeBanco']).to eql 'Banco do Brasil'
-      expect(JSON.parse(@result.response.body)['obj'][0]['idTipoFormaPagamentoFeito']).to be 9
+      expect(JSON.parse(@payment_transfer.response.body)['sucesso']).to be true
+      expect(JSON.parse(@payment_transfer.response.body)['obj'][0]['nomeBanco']).to eql 'Banco do Brasil'
+      expect(JSON.parse(@payment_transfer.response.body)['obj'][0]['idTipoFormaPagamentoFeito']).to be 9
     end
 
     after do
@@ -456,10 +456,10 @@ describe 'Realizar transferência com Bradesco/Itau/Santander/BBrasil e input/ou
       @transfer[:transfAgenciaDigito] = '7'
       @transfer[:transfConta] = '5966'
       @transfer[:transfContaDigito] = '8'
-      @result = ApiTransfer.post_transfer(@token, @idCarrinho, @transfer)
+      @payment_transfer = ApiTransfer.post_transfer(@token, @idCarrinho, @transfer)
     end
 
-    it { expect(JSON.parse(@result.response.body)['erros'][0]['mensagem']).to eql 'Essa conta bancária já foi adicionada anteriormente.' }
+    it { expect(JSON.parse(@payment_transfer.response.body)['erros'][0]['mensagem']).to eql 'Essa conta bancária já foi adicionada anteriormente.' }
 
     after do
       ApiCart.post_set_remover_item_cart(@token, @idCarrinho)

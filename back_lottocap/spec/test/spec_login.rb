@@ -21,8 +21,8 @@ context 'Erro 400 API Logar Usuário - só resolveu limpando service worker' do
   end
 
   it 'validacao de login' do
-    expect(JSON.parse(@loginNovamente.response.body)['erros']).to eql []
-    expect(JSON.parse(@loginNovamente.response.body)['sucesso']).to eql true
+    expect((@loginNovamente.parsed_response)['erros']).to eql []
+    expect((@loginNovamente.parsed_response)['sucesso']).to eql true
     expect(JSON.parse(@loginNovamente.response.code)).to be 200
   end
   after do

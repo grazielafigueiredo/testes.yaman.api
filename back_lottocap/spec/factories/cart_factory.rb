@@ -7,6 +7,6 @@ FactoryBot.define do
     idCarrinho { 0 }
     idProduto { Constant::IdProduto }
     idSerie { Constant::IdSerieMaxRegular }
-    qtdItens { 0 }
+    qtdItens { 1 }
   end
 end

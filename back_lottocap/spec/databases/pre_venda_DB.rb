@@ -1,33 +1,37 @@
 # frozen_string_literal: true
 
-class PreVenda < DbBase
-  def update_preVenda
+class Pre_vendaDB < DbBase
+  def update_pre_venda
     today = Date.today
     today_add_3_days = today + 4
     today_add_6_days = today + 6
-    today_add_9_days = today + 9
+    today_add_9_days = today + 10
 
-    ta = @connection.execute(
+    @connection.execute(
       "UPDATE Serie SET DataInicialPreVenda= '#{today}',
             DataFinalPreVenda= '#{today_add_3_days}',
             DataInicialVenda= '#{today_add_6_days}',
             DataFinalVenda= '#{today_add_9_days}'
-            WHERE IdSerie= #{Constant::IdSerieMaxPreVenda};"
+            WHERE IdSerie= #{Constant::IdSerieMaxPreVenda}"
     )
-    puts ta.do
-
-    puts today
-    puts today_add_3_days
-    puts today_add_6_days
-    puts today_add_9_days
+    # puts today
+    # puts today_add_3_days
+    # puts today_add_6_days
+    # puts today_add_9_days
   end
 
   def update_reservar_titulo
-    t = @connection.execute(
+    @connection.execute(
       "UPDATE TituloMatriz set reservado = 1
             where idSerie = #{Constant::IdSerieMaxPreVenda}
             and dezenas = '01 02 03'"
     )
-    puts t.do
+  end
+  def update_reservar_group_dezenas(group_dezenas)
+    @connection.execute(
+      "UPDATE TituloMatriz set reservado = 1
+            where idSerie = #{Constant::IdSerieMaxPreVenda}
+            and dezenas = '#{group_dezenas}'"
+    )
   end
 end

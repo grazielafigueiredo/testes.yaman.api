@@ -7,16 +7,15 @@ describe 'Boleto' do
       ApiUser.Login(@token, Constant::User1)
 
       @cart = build(:cart).to_hash
-      @cart[:qtdItens] = 3000000
       @carrinho = ApiCart.post_add_item_cart(@token, @cart)
-      puts @carrinho
       @idCarrinho = @carrinho.parsed_response['obj'][0]['idCarrinho']
 
-      Database.new.update_bloquearPagamento
+      BoletoDB.new.update_final_date
 
       @payment_boleto = build(:boleto).to_hash
       @result = ApiBoleto.post_payment_cart_boleto(@token, @idCarrinho, @payment_boleto)
     end
+
     it {
       expect(@result.parsed_response['erros'][0]['mensagem']).to eql 'Esta forma de pagamento não está mais disponível, por favor. Selecione outra forma de pagamento.'
     }

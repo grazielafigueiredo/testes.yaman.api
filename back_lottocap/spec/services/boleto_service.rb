@@ -9,13 +9,11 @@ class ApiBoleto
   base_uri Constant::Url
   headers 'Content-Type' => 'application/json'
 
-  def self.post_payment_cart_boleto(token, payload, idCarrinho)
+  def self.post_payment_cart_boleto(token, idCarrinho, payment_boleto)
     headers[:Authorization] = token
+    payment_boleto[:idCarrinho] = idCarrinho
+    payload = { "obj": payment_boleto }
 
-    puts payload
-    puts idCarrinho
-    payload[:idCarrinho] = idCarrinho
-    r = { "obj": payload }
-    post('/Pagamento/PagarCarrinho', body: r.to_json)
+    post('/Pagamento/PagarCarrinho', body: payload.to_json)
   end
 end

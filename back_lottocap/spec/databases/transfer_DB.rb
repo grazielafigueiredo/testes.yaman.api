@@ -47,4 +47,17 @@ class TransferDB < DbBase
     )
     puts ta.do
   end
+
+  def delete_account(idUsuario)
+    ta = @connection.execute(
+      "DECLARE @idUsuario AS INTEGER=#{idUsuario}
+      DELETE
+      FROM Resgate
+      WHERE idUsuario
+      IN (
+      SELECT idUsuario FROM UsuarioContaCorrente WHERE idUsuario = @idUsuario
+      )
+      DELETE FROM UsuarioContaCorrente WHERE idUsuario = @idUsuario"
+    )
+  end
 end

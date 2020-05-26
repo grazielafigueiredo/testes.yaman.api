@@ -17,7 +17,7 @@
 #   it { expect(JSON.parse(@result.response.body)['sucesso']).to be true }
 
 #   after do
-#     ApiUser.get_deslogar(@token)
+#     ApiUser.get_logout(@token)
 #   end
 # end
 
@@ -28,7 +28,7 @@
 
 #     Database.new.update_DataFinalVendaVigente('2020-12-25')
 
-#     carrinho = ApiCarrinho.post_AdicionarItemCarrinho(
+#     carrinho = ApiCart.post_AdicionarItemCarrinho(
 #       1,
 #       Constant::IdProduto,
 #       Constant::IdSerieMaxRegular,
@@ -68,6 +68,6 @@
 #   }
 
 #   after do
-#     ApiUser.get_deslogar(@token)
+#     ApiUser.get_logout(@token)
 #   end
 # end

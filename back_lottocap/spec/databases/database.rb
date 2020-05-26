@@ -1,18 +1,13 @@
 # frozen_string_literal: true
-require_relative "db_base"
+
+require_relative 'db_base'
 
 require 'tiny_tds'
 require 'timeout'
 
 class Database < DbBase
-
   def update_TodosProdutosIndisponiveisVitrine(dataFinalVenda)
     @connection.execute("UPDATE Serie SET DataFinalVenda = '#{dataFinalVenda}';")
-  end
-
-  def update_bloquearPagamento
-    time = Time.now.strftime('%F')
-    @connection.execute("UPDATE Serie SET DataFinalVenda = '#{time}' where IdSerie = #{Constant::IdSerieMaxRegular};")
   end
 
   def update_reservarSerie(reservado)
@@ -211,10 +206,9 @@ class Database < DbBase
     puts @serie_inserida
   end
 
-
   def select_count_matriz(idSerie)
-    count_matriz = 
-    @connection.execute("SELECT COUNT(*) FROM TituloMatriz WHERE idSerie = #{idSerie}")
+    count_matriz =
+      @connection.execute("SELECT COUNT(*) FROM TituloMatriz WHERE idSerie = #{idSerie}")
 
     count_matriz.each do |row|
       return row['']
@@ -223,8 +217,8 @@ class Database < DbBase
   end
 
   def quantidade_vezes_dezena_gerada(idSerie, dezena)
-    quantidade_vezes_dezena_gerada = 
-    @connection.execute("SELECT COUNT(1) FROM TituloMatriz WHERE idSerie = #{idSerie} and dezenas like '%#{dezena}%'")
+    quantidade_vezes_dezena_gerada =
+      @connection.execute("SELECT COUNT(1) FROM TituloMatriz WHERE idSerie = #{idSerie} and dezenas like '%#{dezena}%'")
 
     quantidade_vezes_dezena_gerada.each do |row|
       return row['']
@@ -232,5 +226,3 @@ class Database < DbBase
     end
   end
 end
-
-
