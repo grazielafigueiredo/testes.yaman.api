@@ -8,10 +8,10 @@ class ApiLanding
   headers 'Content-Type' => 'application/json', 'Authorization' => ApiUser.GetToken
 
   def self.get_landing_page_max
-    get('/Produto/LandingPageMax', body: @landingPageMax.to_json)
+    get('/Produto/LandingPageMax')
   end
 
   def self.get_landing_page_ja
-    get('/Produto/LandingPageJa', body: @landingPageJa.to_json)
+    get('/Produto/LandingPageJa')
   end
 end
