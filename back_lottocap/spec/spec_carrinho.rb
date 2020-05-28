@@ -49,7 +49,7 @@ describe 'Carrinho - Reserva' do
       puts @result
     end
 
-    it { expect(JSON.parse(@result.response.body)['erros'][0]['mensagem']).to eql 'Atualizamos o carrinho mantendo apenas as série em andamento' }
+    it { expect((@result.parsed_response)['erros'][0]['mensagem']).to eql 'Atualizamos o carrinho mantendo apenas as série em andamento' }
 
     after do
       CartDB.new.update_dataFinalVendaVigente(dataVincenda)
@@ -81,8 +81,8 @@ describe 'Carrinho - Reserva' do
     end
 
     it 'Validar se o carrinho comporta 2 produtos diferentes' do
-      expect(JSON.parse(@carrinho.response.body)['obj'][0]['idCarrinho']).to be_a Integer
-      expect(JSON.parse(@carrinho.response.body)['obj'][1]['idCarrinho']).to be_a Integer
+      expect((@carrinho.parsed_response)['obj'][0]['idCarrinho']).to be_a Integer
+      expect((@carrinho.parsed_response)['obj'][1]['idCarrinho']).to be_a Integer
     end
 
     after do
@@ -121,7 +121,7 @@ describe 'Carrinho - Reserva' do
   #     puts @carrinho
   #   end
 
-  #   it { expect(JSON.parse(@carrinho.response.body)['erros'][0]['mensagem']).to eql 'Quantidade limite de titulos para compra atingida!' }
+  #   it { expect((@carrinho.parsed_response)['erros'][0]['mensagem']).to eql 'Quantidade limite de titulos para compra atingida!' }
 
   #   after do
   #     ApiCart.post_set_remover_item_cart(@token, @idCarrinho)
@@ -147,7 +147,7 @@ describe 'Carrinho - Reserva' do
       puts @result
     end
 
-    it { expect(JSON.parse(@result.response.body)['erros'][0]['mensagem']).to eql 'Atualizamos o carrinho mantendo apenas as série em andamento' }
+    it { expect((@result.parsed_response)['erros'][0]['mensagem']).to eql 'Atualizamos o carrinho mantendo apenas as série em andamento' }
 
     after do
       Database.new.update_TodosProdutosIndisponiveisVitrine('2020-12-25')
@@ -167,8 +167,8 @@ describe 'Carrinho - Reserva' do
       @cart[:qtdItens] = 500
       @carrinho = ApiCart.post_add_item_cart(@token, @cart)
       @idCarrinho = @carrinho.parsed_response['obj'][0]['idCarrinho']
-      @nomeProduto = JSON.parse(@result.response.body)['obj'][0]['nomeProduto']
-      @descricaoSerie = JSON.parse(@result.response.body)['obj'][0]['descricaoSerie']
+      @nomeProduto = (@result.parsed_response)['obj'][0]['nomeProduto']
+      @descricaoSerie = (@result.parsed_response)['obj'][0]['descricaoSerie']
 
       CartDB.new.update_maxNaVitrine(dataVencida)
       CartDB.new.get_titulos_reservados
@@ -178,7 +178,7 @@ describe 'Carrinho - Reserva' do
       puts @carrinho
     end
 
-    it { expect(JSON.parse(@carrinho.response.body)['erros'][0]['mensagem']).to eql "Não há mais títulos disponíveis para o #{@nomeProduto} - #{@descricaoSerie}. Tente adicionar um novo produto ao carrinho." }
+    it { expect((@carrinho.parsed_response)['erros'][0]['mensagem']).to eql "Não há mais títulos disponíveis para o #{@nomeProduto} - #{@descricaoSerie}. Tente adicionar um novo produto ao carrinho." }
 
     after do
       CartDB.new.update_maxNaVitrine(dataVincenda)
@@ -216,7 +216,7 @@ describe '[/Pagamento] Produtos fora da vigência' do
       puts @result
     end
 
-    it { expect(JSON.parse(@result.response.body)['erros'][0]['mensagem']).to eql 'Esta forma de pagamento não está mais disponível, por favor. Selecione outra forma de pagamento.' }
+    it { expect((@result.parsed_response)['erros'][0]['mensagem']).to eql 'Esta forma de pagamento não está mais disponível, por favor. Selecione outra forma de pagamento.' }
 
     after do
       CartDB.new.update_dataFinalVendaVigente(dataVincenda)
@@ -242,7 +242,7 @@ describe '[/Pagamento] Produtos fora da vigência' do
       puts @result
     end
 
-    it { expect(JSON.parse(@result.response.body)['erros'][0]['mensagem']).to eql 'Esta forma de pagamento não está mais disponível, por favor. Selecione outra forma de pagamento.' }
+    it { expect((@result.parsed_response)['erros'][0]['mensagem']).to eql 'Esta forma de pagamento não está mais disponível, por favor. Selecione outra forma de pagamento.' }
 
     after do
       CartDB.new.update_dataFinalVendaVigente(dataVincenda)
@@ -268,7 +268,7 @@ describe '[/Pagamento] Produtos fora da vigência' do
       puts @result
     end
 
-    it { expect(JSON.parse(@result.response.body)['erros'][0]['mensagem']).to eql 'Esta forma de pagamento não está mais disponível, por favor. Selecione outra forma de pagamento.' }
+    it { expect((@result.parsed_response)['erros'][0]['mensagem']).to eql 'Esta forma de pagamento não está mais disponível, por favor. Selecione outra forma de pagamento.' }
 
     after do
       CartDB.new.update_dataFinalVendaVigente(dataVincenda)
@@ -295,7 +295,7 @@ describe '[/Pagamento] Produtos fora da vigência' do
       puts @result
     end
 
-    it { expect(JSON.parse(@result.response.body)['erros'][0]['mensagem']).to eql 'Esta forma de pagamento não está mais disponível, por favor. Selecione outra forma de pagamento.' }
+    it { expect((@result.parsed_response)['erros'][0]['mensagem']).to eql 'Esta forma de pagamento não está mais disponível, por favor. Selecione outra forma de pagamento.' }
 
     after do
       CreditoLotto.new.update_creditoLottocap(0.000)
@@ -322,7 +322,7 @@ describe '[/Pagamento] Produtos fora da vigência' do
       puts @result
     end
 
-    it { expect(JSON.parse(@result.response.body)['erros'][0]['mensagem']).to eql 'Esta forma de pagamento não está mais disponível, por favor. Selecione outra forma de pagamento.' }
+    it { expect((@result.parsed_response)['erros'][0]['mensagem']).to eql 'Esta forma de pagamento não está mais disponível, por favor. Selecione outra forma de pagamento.' }
 
     after do
       ApiCart.post_set_remover_item_cart(@token, @idCarrinho)
@@ -364,7 +364,7 @@ describe '[/Pagamento] Produtos fora da vigência' do
     end
 
     it 'Validar se no carrinho não ficou nenhum cache da última compra' do
-      expect(JSON.parse(@resultGetCarrinho.response.body)['erros'][0]['mensagem']).to eql 'Atualizamos o carrinho mantendo apenas as série em andamento'
+      expect((@resultGetCarrinho.parsed_response)['erros'][0]['mensagem']).to eql 'Atualizamos o carrinho mantendo apenas as série em andamento'
     end
     after do
       ApiCart.post_set_remover_item_cart(@token, @idCarrinho)
@@ -388,7 +388,7 @@ describe '[/Pagamento] Produtos fora da vigência' do
       puts @result
     end
 
-    it { expect(JSON.parse(@result.response.body)['erros'][0]['mensagem']).to eql 'Não foi possível Reservar os Titulos Solicitados!' }
+    it { expect((@result.parsed_response)['erros'][0]['mensagem']).to eql 'Não foi possível Reservar os Titulos Solicitados!' }
 
     after do
       ApiCart.post_set_remover_item_cart(@token, @idCarrinho)
@@ -423,9 +423,9 @@ describe '[/Pagamento] Produtos fora da vigência' do
     end
 
     it 'Limpar carrinho quando o usuário já logado navegar pelo endpoint /afiliados' do
-      expect(JSON.parse(@endpointAfiliados.response.body)['obj'][0]['descricaoSerie']).to eql '17test (grazi não me mata - by wes)'
-      expect(JSON.parse(@endpointAfiliados.response.body)['obj'][0]['idCarrinho']).to be_a Integer
-      expect(JSON.parse(@endpointAfiliados.response.body)['obj'].count).to eq(1)
+      expect((@endpointAfiliados.parsed_response)['obj'][0]['descricaoSerie']).to eql '17test (grazi não me mata - by wes)'
+      expect((@endpointAfiliados.parsed_response)['obj'][0]['idCarrinho']).to be_a Integer
+      expect((@endpointAfiliados.parsed_response)['obj'].count).to eq(1)
     end
 
     after do
@@ -460,9 +460,9 @@ describe '[/Pagamento] Produtos fora da vigência' do
     end
 
     it 'Limpar carrinho quando o usuário deslogado navegar pelo endpoint /afiliados' do
-      expect(JSON.parse(@endpointAfiliados.response.body)['obj'][0]['descricaoSerie']).to eql '17test (grazi não me mata - by wes)'
-      expect(JSON.parse(@endpointAfiliados.response.body)['obj'][0]['idCarrinho']).to be_a Integer
-      expect(JSON.parse(@endpointAfiliados.response.body)['obj'].count).to eq(1)
+      expect((@endpointAfiliados.parsed_response)['obj'][0]['descricaoSerie']).to eql '17test (grazi não me mata - by wes)'
+      expect((@endpointAfiliados.parsed_response)['obj'][0]['idCarrinho']).to be_a Integer
+      expect((@endpointAfiliados.parsed_response)['obj'].count).to eq(1)
     end
 
     after do

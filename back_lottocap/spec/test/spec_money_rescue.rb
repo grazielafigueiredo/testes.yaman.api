@@ -14,9 +14,9 @@ describe 'Resgate' do
     end
 
     it '[Bradesco] - Resgate e verificação de saldo restante' do
-      expect(JSON.parse(@status_rescue.response.body)['obj'][0]['saldoPremio']).to be 40.0
-      expect(JSON.parse(@status_rescue.response.body)['sucesso']).to be true
-      expect(JSON.parse(@status_rescue.response.body)['sucesso']).to be true
+      expect((@status_rescue.parsed_response)['obj'][0]['saldoPremio']).to be 40.0
+      expect((@status_rescue.parsed_response)['sucesso']).to be true
+      expect((@status_rescue.parsed_response)['sucesso']).to be true
     end
 
     after do
@@ -39,9 +39,9 @@ describe 'Resgate' do
     end
 
     it '[Santander] - Resgate e verificação de saldo restante' do
-      expect(JSON.parse(@status_rescue.response.body)['obj'][0]['saldoPremio']).to be 40.0
-      expect(JSON.parse(@status_rescue.response.body)['sucesso']).to be true
-      expect(JSON.parse(@status_rescue.response.body)['sucesso']).to be true
+      expect((@status_rescue.parsed_response)['obj'][0]['saldoPremio']).to be 40.0
+      expect((@status_rescue.parsed_response)['sucesso']).to be true
+      expect((@status_rescue.parsed_response)['sucesso']).to be true
     end
 
     after do
@@ -61,7 +61,7 @@ describe 'Resgate' do
       @rescue = ApiRescue.post_set_rescue(@token, @date_rescue)
     end
 
-    it { expect(JSON.parse(@rescue.response.body)['erros'][0]['mensagem']).to eql 'Não é possível resgatar o valor solicitado (saldo insuficiente)' }
+    it { expect((@rescue.parsed_response)['erros'][0]['mensagem']).to eql 'Não é possível resgatar o valor solicitado (saldo insuficiente)' }
 
     after do
       ApiUser.get_logout(@token)
@@ -80,7 +80,7 @@ describe 'Resgate' do
       @rescue = ApiRescue.post_set_rescue(@token, @date_rescue)
     end
 
-    it { expect(JSON.parse(@rescue.response.body)['erros'][0]['mensagem']).to eql 'Não é possível resgatar o valor solicitado (valor menor que taxa de resgate)' }
+    it { expect((@rescue.parsed_response)['erros'][0]['mensagem']).to eql 'Não é possível resgatar o valor solicitado (valor menor que taxa de resgate)' }
 
     after do
       ApiUser.get_logout(@token)
@@ -101,7 +101,7 @@ describe 'Resgate' do
       @rescue = ApiRescue.post_set_rescue(@token, @date_rescue)
     end
 
-    it { expect(JSON.parse(@rescue.response.body)['sucesso']).to be true }
+    it { expect((@rescue.parsed_response)['sucesso']).to be true }
 
     after do
       ApiUser.get_logout(@token)
@@ -123,7 +123,7 @@ describe 'Resgate' do
       @rescue = ApiRescue.post_set_rescue(@token, @date_rescue)
     end
 
-    it { expect(JSON.parse(@rescue.response.body)['sucesso']).to be true }
+    it { expect((@rescue.parsed_response)['sucesso']).to be true }
 
     after do
       ApiUser.get_logout(@token)

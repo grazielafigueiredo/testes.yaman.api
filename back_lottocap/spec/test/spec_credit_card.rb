@@ -17,22 +17,22 @@ describe 'Cartão de Crédito' do
       @result = ApiCartao.post_ObterFormasPagamentoDisponiveis(@token, @idCarrinho)
     end
     it 'validar se todas as formas de pagamento estão disponíveis seguindo regra de valor mínimo para compra' do
-      expect(JSON.parse(@result.response.body)['obj'][0]['formasPai'][0]['tipo']).to eql 'cartao_credito'
-      expect(JSON.parse(@result.response.body)['obj'][0]['formasPai'][0]['nome']).to eql 'Cartão de Crédito'
-      expect(JSON.parse(@result.response.body)['obj'][0]['formasPai'][0]['idFormaPagamento'][0]).to be 1
-      expect(JSON.parse(@result.response.body)['obj'][0]['formasPai'][0]['vlMinimo']).to be >= 5.0
+      expect((@result.parsed_response)['obj'][0]['formasPai'][0]['tipo']).to eql 'cartao_credito'
+      expect((@result.parsed_response)['obj'][0]['formasPai'][0]['nome']).to eql 'Cartão de Crédito'
+      expect((@result.parsed_response)['obj'][0]['formasPai'][0]['idFormaPagamento'][0]).to be 1
+      expect((@result.parsed_response)['obj'][0]['formasPai'][0]['vlMinimo']).to be >= 5.0
 
-      expect(JSON.parse(@result.response.body)['obj'][0]['formasPai'][1]['tipo']).to eql 'transf_bancaria'
-      expect(JSON.parse(@result.response.body)['obj'][0]['formasPai'][1]['idFormaPagamento']).to be 2
-      expect(JSON.parse(@result.response.body)['obj'][0]['formasPai'][1]['vlMinimo']).to be >= 5.0
+      expect((@result.parsed_response)['obj'][0]['formasPai'][1]['tipo']).to eql 'transf_bancaria'
+      expect((@result.parsed_response)['obj'][0]['formasPai'][1]['idFormaPagamento']).to be 2
+      expect((@result.parsed_response)['obj'][0]['formasPai'][1]['vlMinimo']).to be >= 5.0
 
-      expect(JSON.parse(@result.response.body)['obj'][0]['formasPai'][2]['tipo']).to eql 'boleto'
-      expect(JSON.parse(@result.response.body)['obj'][0]['formasPai'][2]['idFormaPagamento']).to be 3
-      expect(JSON.parse(@result.response.body)['obj'][0]['formasPai'][2]['vlMinimo']).to be >= 20.0
+      expect((@result.parsed_response)['obj'][0]['formasPai'][2]['tipo']).to eql 'boleto'
+      expect((@result.parsed_response)['obj'][0]['formasPai'][2]['idFormaPagamento']).to be 3
+      expect((@result.parsed_response)['obj'][0]['formasPai'][2]['vlMinimo']).to be >= 20.0
 
-      expect(JSON.parse(@result.response.body)['obj'][0]['formasPai'][3]['tipo']).to eql 'credito'
-      expect(JSON.parse(@result.response.body)['obj'][0]['formasPai'][3]['idFormaPagamento']).to be 4
-      expect(JSON.parse(@result.response.body)['obj'][0]['formasPai'][3]['vlMinimo']).to be >= 0.0
+      expect((@result.parsed_response)['obj'][0]['formasPai'][3]['tipo']).to eql 'credito'
+      expect((@result.parsed_response)['obj'][0]['formasPai'][3]['idFormaPagamento']).to be 4
+      expect((@result.parsed_response)['obj'][0]['formasPai'][3]['vlMinimo']).to be >= 0.0
     end
     after do
       ApiCart.post_set_remover_item_cart(@token, @idCarrinho)
@@ -55,7 +55,7 @@ describe 'Cartão de Crédito' do
       @result = ApiCartao.post_credit_card(@token, @idCarrinho, @credit_card)
     end
 
-    it { expect(JSON.parse(@result.response.body)['sucesso']).to be true }
+    it { expect((@result.parsed_response)['sucesso']).to be true }
 
     after do
       ApiCart.post_set_remover_item_cart(@token, @idCarrinho)
@@ -78,7 +78,7 @@ describe 'Cartão de Crédito' do
       @result = ApiCartao.post_credit_card(@token, @idCarrinho, @credit_card)
     end
 
-    it { expect(JSON.parse(@result.response.body)['sucesso']).to be true }
+    it { expect((@result.parsed_response)['sucesso']).to be true }
 
     after do
       ApiCart.post_set_remover_item_cart(@token, @idCarrinho)
@@ -101,7 +101,7 @@ describe 'Cartão de Crédito' do
       @result = ApiCartao.post_credit_card(@token, @idCarrinho, @credit_card)
     end
 
-    it { expect(JSON.parse(@result.response.body)['erros'][0]['mensagem']).to eql 'Tipo de cartão inválido.' }
+    it { expect((@result.parsed_response)['erros'][0]['mensagem']).to eql 'Tipo de cartão inválido.' }
 
     after do
       ApiCart.post_set_remover_item_cart(@token, @idCarrinho)
@@ -124,7 +124,7 @@ describe 'Cartão de Crédito' do
       @result = ApiCartao.post_credit_card(@token, @idCarrinho, @credit_card)
     end
 
-    it { expect(JSON.parse(@result.response.body)['erros'][0]['mensagem']).to eql 'Tipo de cartão inválido.' }
+    it { expect((@result.parsed_response)['erros'][0]['mensagem']).to eql 'Tipo de cartão inválido.' }
 
     after do
       ApiCart.post_set_remover_item_cart(@token, @idCarrinho)
@@ -170,7 +170,7 @@ describe 'Cartão de Crédito' do
       @result = ApiCartao.post_credit_card(@token, @idCarrinho, @credit_card)
     end
 
-    it { expect(JSON.parse(@result.response.body)['erros'][0]['mensagem']).to eql 'Erro na confirmação do pagamento: 400 - Data de vencimento do cartão expirada. ' }
+    it { expect((@result.parsed_response)['erros'][0]['mensagem']).to eql 'Erro na confirmação do pagamento: 400 - Data de vencimento do cartão expirada. ' }
 
     after do
       ApiCart.post_set_remover_item_cart(@token, @idCarrinho)
@@ -195,7 +195,7 @@ describe 'Cartão de Crédito' do
 
     it 'Input no campo ‘vencimento/ano’ dados vazio' do
       expect(@result.response.code).to eql '400'
-      expect(JSON.parse(@result.response.body)['obj.ccredValidadeAno'][0]).to eql "Error converting value {null} to type 'System.Int32'. Path 'obj.ccredValidadeAno', line 1, position 164."
+      expect((@result.parsed_response)['obj.ccredValidadeAno'][0]).to eql "Error converting value {null} to type 'System.Int32'. Path 'obj.ccredValidadeAno', line 1, position 164."
     end
 
     after do
@@ -219,7 +219,7 @@ describe 'Cartão de Crédito' do
       @result = ApiCartao.post_credit_card(@token, @idCarrinho, @credit_card)
     end
 
-    it { expect(JSON.parse(@result.response.body)['erros'][0]['mensagem']).to eql 'Erro na confirmação do pagamento: 400 - O mês de expiração do cartão deve ser maior que 0 e menor que 13. 400 - Data de vencimento do cartão inválida. ' }
+    it { expect((@result.parsed_response)['erros'][0]['mensagem']).to eql 'Erro na confirmação do pagamento: 400 - O mês de expiração do cartão deve ser maior que 0 e menor que 13. 400 - Data de vencimento do cartão inválida. ' }
 
     after do
       ApiCart.post_set_remover_item_cart(@token, @idCarrinho)
@@ -245,7 +245,7 @@ describe 'Cartão de Crédito' do
     end
     it 'Input no campo ‘vencimento/mês’ dados vazio' do
       expect(@result.response.code).to eql '400'
-      expect(JSON.parse(@result.response.body)['obj.ccredValidadeMes'][0]).to eql "Error converting value {null} to type 'System.Int32'. Path 'obj.ccredValidadeMes', line 1, position 140."
+      expect((@result.parsed_response)['obj.ccredValidadeMes'][0]).to eql "Error converting value {null} to type 'System.Int32'. Path 'obj.ccredValidadeMes', line 1, position 140."
     end
 
     after do
@@ -269,7 +269,7 @@ describe 'Cartão de Crédito' do
       @result = ApiCartao.post_credit_card(@token, @idCarrinho, @credit_card)
     end
 
-    it { expect(JSON.parse(@result.response.body)['erros'][0]['mensagem']).to eql 'Input string was not in a correct format.' }
+    it { expect((@result.parsed_response)['erros'][0]['mensagem']).to eql 'Input string was not in a correct format.' }
 
     after do
       ApiCart.post_set_remover_item_cart(@token, @idCarrinho)
@@ -292,7 +292,7 @@ describe 'Cartão de Crédito' do
       @result = ApiCartao.post_credit_card(@token, @idCarrinho, @credit_card)
     end
 
-    it { expect(JSON.parse(@result.response.body)['erros'][0]['mensagem']).to eql 'Value was either too large or too small for an Int32.' }
+    it { expect((@result.parsed_response)['erros'][0]['mensagem']).to eql 'Value was either too large or too small for an Int32.' }
 
     after do
       ApiCart.post_set_remover_item_cart(@token, @idCarrinho)
@@ -315,7 +315,7 @@ describe 'Cartão de Crédito' do
       @result = ApiCartao.post_credit_card(@token, @idCarrinho, @credit_card)
     end
 
-    it { expect(JSON.parse(@result.response.body)['erros'][0]['mensagem']).to eql 'Input string was not in a correct format.' }
+    it { expect((@result.parsed_response)['erros'][0]['mensagem']).to eql 'Input string was not in a correct format.' }
 
     after do
       ApiCart.post_set_remover_item_cart(@token, @idCarrinho)
@@ -338,7 +338,7 @@ describe 'Cartão de Crédito' do
       @result = ApiCartao.post_credit_card(@token, @idCarrinho, @credit_card)
     end
 
-    it { expect(JSON.parse(@result.response.body)['sucesso']).to be true }
+    it { expect((@result.parsed_response)['sucesso']).to be true }
 
     after do
       ApiCart.post_set_remover_item_cart(@token, @idCarrinho)

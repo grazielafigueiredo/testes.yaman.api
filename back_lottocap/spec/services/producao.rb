@@ -79,7 +79,7 @@ class ApiProducao
 
     @user = { "obj": { "usuario": 'graziela@lottocap.com.br', "senha": 'lottocap' } }
 
-    response_in_json = JSON.parse(get('/Usuario/GerarToken').response.body)
+    response_in_json = (get('/Usuario/GerarToken').parsed_response)
     token = response_in_json['dadosUsuario']['token']
 
     headers[:Authorization] = token
@@ -97,7 +97,7 @@ class ApiProducao
   end
 
   def self.GetToken
-    response_in_json = JSON.parse(get('/Usuario/GerarToken').response.body)
+    response_in_json = (get('/Usuario/GerarToken').parsed_response)
 
     token = response_in_json['obj'][0]['token']
 

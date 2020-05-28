@@ -6,7 +6,7 @@
 
 #       900.times do
 #         @tituloJa = ApiTitulos.post_GetTitulosNovos(@token)
-#         @idTitulo = JSON.parse(@tituloJa.response.body)['obj'][0]['novosTitulos'][0]['idTitulo']
+#         @idTitulo = (@tituloJa.parsed_response)['obj'][0]['novosTitulos'][0]['idTitulo']
 #         @result = ApiTitulos.post_VerificarPremioTitulo(@token, @idTitulo)
 #         ApiTitulos.post_AbrirTitulo(@token, @idTitulo)
 #         puts @idTitulo
@@ -14,7 +14,7 @@
 #       end
 #   end
 
-#   it { expect(JSON.parse(@result.response.body)['sucesso']).to be true }
+#   it { expect((@result.parsed_response)['sucesso']).to be true }
 
 #   after do
 #     ApiUser.get_logout(@token)
@@ -35,7 +35,7 @@
 #       @token
 #     )
 
-#     @idCarrinho = JSON.parse(carrinho.response.body)['obj'][0]['idCarrinho']
+#     @idCarrinho = (carrinho.parsed_response)['obj'][0]['idCarrinho']
 
 #     @result = ApiCartao.post_PagarCartaoDeCredito(
 #       @token,
@@ -48,12 +48,12 @@
 #     )
 
 #     @tituloJa = ApiTitulos.post_GetTitulosNovos(@token)
-#     idTitulo = expect(JSON.parse(@tituloJa.response.body)['obj'][0]['novosTitulos'][0]['idTitulo']).to be_a Integer
+#     idTitulo = expect((@tituloJa.parsed_response)['obj'][0]['novosTitulos'][0]['idTitulo']).to be_a Integer
 
 #     while idTitulo # variável para rodar o loop, enqto a variável retornar Integer
 
 #       @tituloJa = ApiTitulos.post_GetTitulosNovos(@token)
-#       @idTitulo = JSON.parse(@tituloJa.response.body)['obj'][0]['novosTitulos'][0]['idTitulo']
+#       @idTitulo = (@tituloJa.parsed_response)['obj'][0]['novosTitulos'][0]['idTitulo']
 #       @result = ApiTitulos.post_VerificarPremioTitulo(@token, @idTitulo)
 
 #       ApiTitulos.post_AbrirTitulo(@token, @idTitulo)
@@ -64,7 +64,7 @@
 #   end
 
 #   it {
-#     expect(JSON.parse(@result.response.body)['sucesso']).to be true
+#     expect((@result.parsed_response)['sucesso']).to be true
 #   }
 
 #   after do

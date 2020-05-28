@@ -13,7 +13,7 @@ context 'Validar se há dezenas repetidas' do
     @idCarrinhoItem = @carrinho.parsed_response['obj'][0]['idCarrinhoItem']
 
     @show_dezenas = ApiPreVenda.get_show_dezenas(@token, @idCarrinhoItem)
-    conjuntos = JSON.parse(@show_dezenas.response.body)['obj']
+    conjuntos = (@show_dezenas.parsed_response)['obj']
     puts @show_dezenas
 
     def obtem_conjuntos_repetidos(conjuntos)
@@ -41,9 +41,9 @@ context 'Validar se há dezenas repetidas' do
   end
 
   it 'exibirDezenas' do
-    expect(JSON.parse(@show_dezenas.response.body)['obj'][0]['idDezenas']).to be_a Integer
-    expect(JSON.parse(@show_dezenas.response.body)['obj'][0]['dezenas']).to be_a String
-    expect(JSON.parse(@show_dezenas.response.body)['sucesso']).to be true
+    expect((@show_dezenas.parsed_response)['obj'][0]['idDezenas']).to be_a Integer
+    expect((@show_dezenas.parsed_response)['obj'][0]['dezenas']).to be_a String
+    expect((@show_dezenas.parsed_response)['sucesso']).to be true
   end
 end
 
@@ -60,7 +60,7 @@ context 'Quando a série não estiver em pre venda, então o contrato do endpoin
   end
 
   it 'Quando a série não estiver em pre venda, então o contrato do endpoint não pode exibir conjunto de dezenas' do
-    expect(JSON.parse(@show_dezenas.response.body)['obj']).to eql []
+    expect((@show_dezenas.parsed_response)['obj']).to eql []
   end
 end
 
@@ -73,8 +73,8 @@ context 'Adicionar ao carrinho conjunto de dezenas que já foi reservado/comprad
   end
 
   it 'Adicionar ao carrinho conjunto de dezenas que já foi reservado/comprado' do
-    expect(JSON.parse(@preVenda.response.body)['sucesso']).to eql false
-    expect(JSON.parse(@preVenda.response.body)['erros'][0]['mensagem']).to eql 'Não foi possível adicionar o título escolhido ao carrinho.'
+    expect((@preVenda.parsed_response)['sucesso']).to eql false
+    expect((@preVenda.parsed_response)['erros'][0]['mensagem']).to eql 'Não foi possível adicionar o título escolhido ao carrinho.'
   end
 end
 
@@ -85,12 +85,12 @@ context 'Concorrencia no pagamento Título já reservado' do
 
     @dezenas = build(:search_dezenas).to_hash
     @search_dezenas = ApiPreVenda.post_search_dezenas(@token, @dezenas)
-    @group_dezenas = JSON.parse(@search_dezenas.response.body)['obj'][0]
+    @group_dezenas = (@search_dezenas.parsed_response)['obj'][0]
 
     @cart = build(:cart_dezenas).to_hash
     @cart[:lstDezenas] = [@group_dezenas]
     @cart_pre = ApiPreVenda.post_add_item_cart_prevenda(@token, @cart)
-    @id_cart = JSON.parse(@cart_pre.response.body)['obj'][0]['idCarrinho']
+    @id_cart = (@cart_pre.parsed_response)['obj'][0]['idCarrinho']
 
     Pre_vendaDB.new.update_reservar_group_dezenas(@group_dezenas)
 
@@ -99,8 +99,8 @@ context 'Concorrencia no pagamento Título já reservado' do
   end
 
   it 'Pagar conjunto de dezenas que já foi reservado/comprado' do
-    expect(JSON.parse(@result.response.body)['sucesso']).to eql false
-    expect(JSON.parse(@result.response.body)['erros'][0]['mensagem']).to eql "Reserva de titulos já foi solicitada para as dezenas #{@group_dezenas}"
+    expect((@result.parsed_response)['sucesso']).to eql false
+    expect((@result.parsed_response)['erros'][0]['mensagem']).to eql "Reserva de titulos já foi solicitada para as dezenas #{@group_dezenas}"
   end
 
   after do

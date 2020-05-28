@@ -10,7 +10,7 @@ describe 'Títulos' do
       puts @result
     end
     sleep 5
-    it { expect(JSON.parse(@result.response.body)['sucesso']).to be true }
+    it { expect((@result.parsed_response)['sucesso']).to be true }
 
     after do
       ApiUser.get_logout(@token)
@@ -26,7 +26,7 @@ describe 'Títulos' do
       puts @result
     end
 
-    it { expect(JSON.parse(@result.response.body)['sucesso']).to be true }
+    it { expect((@result.parsed_response)['sucesso']).to be true }
 
     after do
       ApiUser.get_logout(@token)
@@ -44,7 +44,7 @@ describe 'Verificar Premio Titulo' do
       puts @result
     end
 
-    it { expect(JSON.parse(@result.response.body)['erros'][0]['mensagem']).to eql 'Este título não pertence ao usuário!' }
+    it { expect((@result.parsed_response)['erros'][0]['mensagem']).to eql 'Este título não pertence ao usuário!' }
 
     after do
       ApiUser.get_logout(@token)
@@ -60,7 +60,7 @@ describe 'Verificar Premio Titulo' do
       puts @result
     end
 
-    it { expect(JSON.parse(@result.response.body)['obj.idTitulo'][0]).to eql "JSON integer 12345678901 is too large or small for an Int32. Path 'obj.idTitulo', line 1, position 30." }
+    it { expect((@result.parsed_response)['obj.idTitulo'][0]).to eql "JSON integer 12345678901 is too large or small for an Int32. Path 'obj.idTitulo', line 1, position 30." }
 
     after do
       ApiUser.get_logout(@token)
@@ -78,7 +78,7 @@ describe 'Abrir Título' do
       puts @result
     end
 
-    it { expect(JSON.parse(@result.response.body)['erros'][0]['mensagem']).to eql 'Título não pertence ao usuário!' }
+    it { expect((@result.parsed_response)['erros'][0]['mensagem']).to eql 'Título não pertence ao usuário!' }
 
     after do
       ApiUser.get_logout(@token)
@@ -94,7 +94,7 @@ describe 'Abrir Título' do
       puts @result
     end
 
-    it { expect(JSON.parse(@result.response.body)['obj.idTitulo'][0]).to eql "JSON integer 12345678901 is too large or small for an Int32. Path 'obj.idTitulo', line 1, position 30." }
+    it { expect((@result.parsed_response)['obj.idTitulo'][0]).to eql "JSON integer 12345678901 is too large or small for an Int32. Path 'obj.idTitulo', line 1, position 30." }
 
     after do
       ApiUser.get_logout(@token)
@@ -112,7 +112,7 @@ describe 'BuscarTitulosNaoAbertosUsuario' do
       puts @result
     end
 
-    it { expect(JSON.parse(@result.response.body)['sucesso']).to be true }
+    it { expect((@result.parsed_response)['sucesso']).to be true }
 
     after do
       ApiUser.get_logout(@token)
@@ -135,7 +135,7 @@ context 'Comprar com Cartao de Credito e verificar se o título foi atribuído' 
       Constant::IdSerieMaxRegular,
       @token
     )
-    @idCarrinho = JSON.parse(@carrinho.response.body)['obj'][0]['idCarrinho']
+    @idCarrinho = (@carrinho.parsed_response)['obj'][0]['idCarrinho']
     @result = ApiCartao.post_PagarCartaoDeCredito(
       @token,
       @idCarrinho,
@@ -178,18 +178,18 @@ context 'Comprar com CLottocap e verificar se o título foi atribuído' do
       Constant::IdSerieMaxRegular,
       @token
     )
-    @idCarrinho = JSON.parse(@carrinho.response.body)['obj'][0]['idCarrinho']
+    @idCarrinho = (@carrinho.parsed_response)['obj'][0]['idCarrinho']
     @result = ApiCreditoLottocap.post_pagarCarrinhoComCreditoLottocap(@token, @idCarrinho)
 
     sleep 3
     @tituloDepoisCompra = ApiTitulos.get_GetQtdTitulosUsuario(@token)
-    @tituloDepois = JSON.parse(@tituloDepoisCompra.response.body)['obj'][0]['qtd']
+    @tituloDepois = (@tituloDepoisCompra.parsed_response)['obj'][0]['qtd']
 
     @compararTituloCompraComSelectBanco = (@tituloDepois == Database.new.select_GetQtdTitulosUsuario)
   end
-  # it { puts @tituloAntesCompra.response.body }
-  # it { puts @tituloDepoisCompra.response.body }
-  # # it { puts @result.response.body }
+  # it { puts @tituloAntesCompra.parsed_response }
+  # it { puts @tituloDepoisCompra.parsed_response }
+  # # it { puts @result.parsed_response }
   # it { puts @compararTituloCompraComSelectBanco}
   # it { expect(@compararTituloCompraComSelectBanco).to be_truthy }
   it { puts @rs }

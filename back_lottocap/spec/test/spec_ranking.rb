@@ -70,7 +70,7 @@ context 'Resultados por Serie' do
   end
 
   it 'Resultados por Serie' do
-    # expect(JSON.parse(@rankingResultadosPorSerie)['obj'][0]['listaSeries']).to be_nil
+    # expect((@rankingResultadosPorSerie)['obj'][0]['listaSeries']).to be_nil
     @titulosPorSerie.each do |serie|
       expect(serie['idSerie']).to be_a_kind_of(Integer)
       expect(serie['idSerie']).to be >= 1.0

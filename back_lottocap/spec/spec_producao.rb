@@ -10,7 +10,7 @@ describe 'Criar usuário' do
         puts @token
         end
   
-        it { expect(JSON.parse(@create.response.body)['erros'][0]['mensagem']).to eql "Este CPF já está cadastrado. Informe um outro CPF ou clique em 'Esqueci a minha senha'."}
+        it { expect((@create.parsed_response)['erros'][0]['mensagem']).to eql "Este CPF já está cadastrado. Informe um outro CPF ou clique em 'Esqueci a minha senha'."}
   
         after do
           ApiProducao.get_logout(@token)
@@ -23,7 +23,7 @@ describe 'Criar usuário' do
           @create = ApiProducao.post_CadastrarUsuario(@token, Faker::Name.name, "00000000000", Faker::Internet.email)
         end
   
-        it { expect(JSON.parse(@create.response.body)['obj.CPF'][0]).to eql "O campo CPF contém dados inválidos."}
+        it { expect((@create.parsed_response)['obj.CPF'][0]).to eql "O campo CPF contém dados inválidos."}
   
         after do
           ApiProducao.get_logout(@token)
@@ -36,7 +36,7 @@ describe 'Criar usuário' do
           @create = ApiProducao.post_CadastrarUsuario(@token, Faker::Name.name, Faker::CPF.numeric, "graziela@lottocap.com.br")
         end
   
-        it { expect(JSON.parse(@create.response.body)['erros'][0]['mensagem']).to eql "Este e-mail já está cadastrado. Informe um outro e-mail ou clique em 'Esqueci a minha senha'."}
+        it { expect((@create.parsed_response)['erros'][0]['mensagem']).to eql "Este e-mail já está cadastrado. Informe um outro e-mail ou clique em 'Esqueci a minha senha'."}
   
         after do
           ApiProducao.get_logout(@token)
@@ -51,7 +51,7 @@ describe 'Validador - 1 passo de criação de usuário' do
             @create = ApiProducao.post_validarDadosUsuarioCriacao(@token, Faker::Name.name, "00000009652", Faker::Internet.email)
         end
   
-        it { expect(JSON.parse(@create.response.body)['erros'][0]['mensagem']).to eql "Este CPF já está cadastrado. Informe um outro CPF ou clique em 'Esqueci a minha senha'."}
+        it { expect((@create.parsed_response)['erros'][0]['mensagem']).to eql "Este CPF já está cadastrado. Informe um outro CPF ou clique em 'Esqueci a minha senha'."}
   
         after do
           ApiProducao.get_logout(@token)
@@ -64,7 +64,7 @@ describe 'Validador - 1 passo de criação de usuário' do
           @create = ApiProducao.post_validarDadosUsuarioCriacao(@token, Faker::Name.name, "00000000000", Faker::Internet.email)
         end
   
-        it { expect(JSON.parse(@create.response.body)['obj.CPF'][0]).to eql "O campo CPF contém dados inválidos."}
+        it { expect((@create.parsed_response)['obj.CPF'][0]).to eql "O campo CPF contém dados inválidos."}
   
         after do
           ApiProducao.get_logout(@token)
@@ -77,7 +77,7 @@ describe 'Validador - 1 passo de criação de usuário' do
           @create = ApiProducao.post_validarDadosUsuarioCriacao(@token, Faker::Name.name, Faker::CPF.numeric, "graziela@lottocap.com.br")
         end
   
-        it { expect(JSON.parse(@create.response.body)['erros'][0]['mensagem']).to eql "Este e-mail já está cadastrado. Informe um outro e-mail ou clique em 'Esqueci a minha senha'."}
+        it { expect((@create.parsed_response)['erros'][0]['mensagem']).to eql "Este e-mail já está cadastrado. Informe um outro e-mail ou clique em 'Esqueci a minha senha'."}
   
         after do
           ApiProducao.get_logout(@token)
@@ -96,7 +96,7 @@ describe 'Alterar dados Usuário' do
       puts @create
     end 
 
-    it { expect(JSON.parse(@create.response.body)['obj.cpf'][0]).to eql "O campo cpf contém dados inválidos."}
+    it { expect((@create.parsed_response)['obj.cpf'][0]).to eql "O campo cpf contém dados inválidos."}
   end
   after do
     ApiProducao.get_logout(@token)
@@ -108,12 +108,12 @@ end
 #   before do 
 #     @token = ApiUser.GetToken
 #     @rankingResultados = ApiRanking.get_rankingResultados(@token)
-#     @totalPremiados = JSON.parse(@rankingResultados.response.body)['obj']
-#     @bodyListaSeries = JSON.parse(@rankingResultados.response.body)['obj'][0]['listaSeries']
-#     @bodyTitulosPorSerie = JSON.parse(@rankingResultados.response.body)['obj'][0]['titulosPorSerie']
-#     @detalhesTitulosPorSerie = JSON.parse(@rankingResultados.response.body)['obj'][0]['detalhesTitulosPorSerie']
-#     @contemplacao = JSON.parse(@rankingResultados.response.body)['obj'][0]['contemplacao']
-#     @concursos = JSON.parse(@rankingResultados.response.body)['obj'][0]['concursos']
+#     @totalPremiados = (@rankingResultados.parsed_response)['obj']
+#     @bodyListaSeries = (@rankingResultados.parsed_response)['obj'][0]['listaSeries']
+#     @bodyTitulosPorSerie = (@rankingResultados.parsed_response)['obj'][0]['titulosPorSerie']
+#     @detalhesTitulosPorSerie = (@rankingResultados.parsed_response)['obj'][0]['detalhesTitulosPorSerie']
+#     @contemplacao = (@rankingResultados.parsed_response)['obj'][0]['contemplacao']
+#     @concursos = (@rankingResultados.parsed_response)['obj'][0]['concursos']
 #     puts @bodyListaSeries.count
 #   end
 #   it 'home - GetRankingResultados' do 
@@ -172,15 +172,15 @@ end
 #   before do 
 #     @token = ApiUser.GetToken
 #     @rankingResultadosPorSerie = ApiRanking.post_rankingResultadosPorSerie(@token)
-#     @totalPremiados = JSON.parse(@rankingResultadosPorSerie.response.body)['obj']
-#     @titulosPorSerie = JSON.parse(@rankingResultadosPorSerie.response.body)['obj'][0]['titulosPorSerie']
-#     @detalhesTitulosPorSerie = JSON.parse(@rankingResultadosPorSerie.response.body)['obj'][0]['detalhesTitulosPorSerie']
-#     @contemplacao = JSON.parse(@rankingResultadosPorSerie.response.body)['obj'][0]['contemplacao']
-#     @concursos = JSON.parse(@rankingResultadosPorSerie.response.body)['obj'][0]['concursos']
+#     @totalPremiados = (@rankingResultadosPorSerie.parsed_response)['obj']
+#     @titulosPorSerie = (@rankingResultadosPorSerie.parsed_response)['obj'][0]['titulosPorSerie']
+#     @detalhesTitulosPorSerie = (@rankingResultadosPorSerie.parsed_response)['obj'][0]['detalhesTitulosPorSerie']
+#     @contemplacao = (@rankingResultadosPorSerie.parsed_response)['obj'][0]['contemplacao']
+#     @concursos = (@rankingResultadosPorSerie.parsed_response)['obj'][0]['concursos']
 #   end
 
 #   it 'Resultados por Serie' do 
-#     # expect(JSON.parse(@rankingResultadosPorSerie)['obj'][0]['listaSeries']).to be_nil
+#     # expect((@rankingResultadosPorSerie)['obj'][0]['listaSeries']).to be_nil
 #     @titulosPorSerie.each do |serie|
 #       expect(serie['idSerie']).to be_a_kind_of(Integer)
 #       expect(serie['idSerie']).to be >= 1.0
@@ -223,7 +223,7 @@ end
 #   before do 
 #     @token = ApiUser.GetToken
 #     @modalPremiado = ApiRanking.get_modalPremiado(@token)
-#     @outrosTitulosMesmaPontuacao = JSON.parse(@modalPremiado.response.body)['obj'][0]['outrosTitulosMesmaPontuacao']
+#     @outrosTitulosMesmaPontuacao = (@modalPremiado.parsed_response)['obj'][0]['outrosTitulosMesmaPontuacao']
 #   end
 #  it 'Modal 5 melhores premiado' do
 #   @outrosTitulosMesmaPontuacao.each do |outroTitulo|
@@ -245,7 +245,7 @@ end
 #   before do 
 #     @token = ApiUser.GetToken
 #     @sorteiosResultados = ApiRanking.get_sorteiosResultados(@token)
-#     @resultadosConcursos = JSON.parse(@sorteiosResultados.response.body)['obj'][0]['resultadosConcursos']
+#     @resultadosConcursos = (@sorteiosResultados.parsed_response)['obj'][0]['resultadosConcursos']
 #   end
 #  it 'Sorteios' do
 #   @resultadosConcursos.each do |resultado|
@@ -275,7 +275,7 @@ end
 #   before do 
 #     @token = ApiUser.GetToken
 #     @modalRankingPorPontos = ApiRanking.get_modalRankingPorPontos(@token)
-#     @outrosTitulosMesmaPontuacao = JSON.parse(@modalRankingPorPontos.response.body)['obj'][0]['outrosTitulosMesmaPontuacao']
+#     @outrosTitulosMesmaPontuacao = (@modalRankingPorPontos.parsed_response)['obj'][0]['outrosTitulosMesmaPontuacao']
 #   end
 #   it 'Modal 5 melhores premiado' do
 #     @outrosTitulosMesmaPontuacao.each do |outroTitulo|

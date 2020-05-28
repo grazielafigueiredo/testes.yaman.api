@@ -10,7 +10,7 @@ context 'Comprar créditos com valor mínimo de R$20,00' do
     @buy_credit = ApiCreditoLottocap.post_buy_credit(@token, @credit)
   end
 
-  it { expect(JSON.parse(@buy_credit.response.body)['sucesso']).to be true }
+  it { expect((@buy_credit.parsed_response)['sucesso']).to be true }
 
   after do
     ApiUser.get_logout(@token)
@@ -35,8 +35,8 @@ context 'Pagar com créditos produto MAX' do
   end
 
   it 'Pagar com créditos produto MAX' do
-    expect(JSON.parse(@payment_credit.response.body)['sucesso']).to be true
-    expect(JSON.parse(@responseDadosUsuario.response.body)['obj'][0]['dadosUsuario']['creditosDisponiveis']).to eql 50.000
+    expect((@payment_credit.parsed_response)['sucesso']).to be true
+    expect((@responseDadosUsuario.parsed_response)['obj'][0]['dadosUsuario']['creditosDisponiveis']).to eql 50.000
   end
 
   after do
@@ -65,8 +65,8 @@ context 'Pagar com créditos produto Já 18' do
   end
 
   it 'Pagar com créditos produto Já 18' do
-    expect(JSON.parse(@payment_credit.response.body)['sucesso']).to be true
-    expect(JSON.parse(@responseDadosUsuario.response.body)['obj'][0]['dadosUsuario']['creditosDisponiveis']).to eql 99.000
+    expect((@payment_credit.parsed_response)['sucesso']).to be true
+    expect((@responseDadosUsuario.parsed_response)['obj'][0]['dadosUsuario']['creditosDisponiveis']).to eql 99.000
   end
 
   after do
