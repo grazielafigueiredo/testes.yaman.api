@@ -1,49 +1,26 @@
+# frozen_string_literal: true
+
 require 'utils/constant'
 
-
-
 class ApiUser
-    include HTTParty
-    base_uri Constant::Url
-    headers "Content-Type" => "application/json"
+  include HTTParty
+  base_uri Constant::Url
+  headers 'Content-Type' => 'application/json'
 
-    # def self.find()
-    #     # headers[:Authorization] = self.GetToken()
-        
-    #     @user = {"obj": {"usuario": "user22@gmail.com", "senha": "1234"}}
+  def self.Login(token, user)
+    payload = { "obj": user }
+    post('/Usuario/LogarUsuario', body: payload.to_json, headers: { 'Authorization' => token })
+    # result.parsed_response['obj'][0]['token']
+  end
 
-    #     response_in_json = JSON.parse(get("/Usuario/GerarToken").response.body)
-    #     token = response_in_json['dadosUsuario']['token']
+  def self.GetToken
+    token = get('/Usuario/GerarToken')
+    token.parsed_response['obj'][0]['token']
+  end
 
-
-    #     headers[:Authorization] = token
-    #     post("/Usuario/LogarUsuario", body: @user.to_json, :headers => headers)
-
-    #     return token
-
-    # end
-
-    def self.Login(token, user)
-        @user = {"obj": user}
-
-        headers[:Authorization] = token
-        
-        post("/Usuario/LogarUsuario", body: @user.to_json, :headers => headers)
-    end
-
-    def self.GetToken()
-        response_in_json = JSON.parse(get("/Usuario/GerarToken").response.body)
-
-        token = response_in_json['obj'][0]['token'] 
-    
-        return token
-    end
-
-    def self.get_logout(token)
-        headers[:Authorization] = token
-
-        get("/Usuario/DeslogarUsuario", :headers => headers)
-    end
+  def self.get_logout(token)
+    get('/Usuario/DeslogarUsuario', headers: { 'Authorization' => token })
+  end
 end
 
 # class Token

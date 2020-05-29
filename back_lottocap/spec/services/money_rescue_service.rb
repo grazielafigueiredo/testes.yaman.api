@@ -9,13 +9,11 @@ class ApiRescue
   headers 'Content-Type' => 'application/json'
 
   def self.post_set_rescue(token, date_rescue)
-    headers['Authorization'] = token
     payload = { "obj": date_rescue }
-    post('/Pagamento/SetResgate', body: payload.to_json)
+    post('/Pagamento/SetResgate', body: payload.to_json, headers: { 'Authorization' => token })
   end
 
   def self.get_status_rescue(token)
-    headers['Authorization'] = token
-    get('/Usuario/GetDadosUsuarioParaResgate')
+    get('/Usuario/GetDadosUsuarioParaResgate', headers: { 'Authorization' => token })
   end
 end

@@ -38,7 +38,7 @@ class ApiTitulos
     post('/Titulo/GetMultiplicador', body: payload.to_json, headers: { 'Authorization' => token })
   end
 
-  def self.get_GetQtdTitulosUsuario(token)
+  def self.get_amount_titulo(token)
     get('/Usuario/GetQtdTitulosUsuario', headers: { 'Authorization' => token })
   end
 end

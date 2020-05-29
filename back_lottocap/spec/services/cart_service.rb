@@ -13,7 +13,6 @@ class ApiCart
   end
 
   def self.post_SetQtdItemCarrinho(qtdItens, token, idSerie)
-    headers[:Authorization] = token
 
     @SetQtdItemCarrinho = { "obj": {
       "novaQtdItem": qtdItens,
@@ -22,17 +21,15 @@ class ApiCart
     },
                             "atualPagina": 1,
                             "tamanhoPagina": 999 }
-    post('/Carrinho/SetQtdItemCarrinho', body: @SetQtdItemCarrinho.to_json)
+    post('/Carrinho/SetQtdItemCarrinho', body: @SetQtdItemCarrinho.to_json, headers: { 'Authorization' => token })
   end
 
   def self.post_add_item_cart(token, cart)
-    headers['Authorization'] = token
     payload = { "obj": cart }
-    post('/Carrinho/AdicionarItemCarrinho', body: payload.to_json)
+    post('/Carrinho/AdicionarItemCarrinho', body: payload.to_json, headers: { 'Authorization' => token })
   end
 
   def self.post_set_remover_item_cart(token, idCarrinho)
-    headers['Authorization'] = token
 
     @SetRemoverItemCarrinho = {
       "obj": {
@@ -42,11 +39,10 @@ class ApiCart
       "atualPagina": 1,
       "tamanhoPagina": 999
     }
-    post('/Carrinho/SetRemoverItemCarrinho', body: @SetRemoverItemCarrinho.to_json)
+    post('/Carrinho/SetRemoverItemCarrinho', body: @SetRemoverItemCarrinho.to_json, headers: { 'Authorization' => token })
   end
 
   def self.post_adicionarItemCarrinhoAfiliados(token, idProduto, idSerie87, qtdItens)
-    headers['Authorization'] = token
 
     @adicionarItemCarrinhoAfiliados =
       {
@@ -60,17 +56,16 @@ class ApiCart
         "atualPagina": 1,
         "tamanhoPagina": 999
       }
-    post('/Carrinho/AdicionarItemCarrinhoAfiliados', body: @adicionarItemCarrinhoAfiliados.to_json)
+    post('/Carrinho/AdicionarItemCarrinhoAfiliados', body: @adicionarItemCarrinhoAfiliados.to_json, headers: { 'Authorization' => token })
   end
 
   def self.post_GetCarrinhoItens(token)
-    headers['Authorization'] = token
 
     @GetCarrinhoItens = {
       "obj": {
         "flPromoAtiva": false
       }
     }
-    post('Carrinho/GetCarrinhoItens', body: @GetCarrinhoItens.to_json)
+    post('Carrinho/GetCarrinhoItens', body: @GetCarrinhoItens.to_json, headers: { 'Authorization' => token })
   end
 end

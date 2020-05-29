@@ -1,15 +1,13 @@
 # frozen_string_literal: true
 
 describe 'Títulos' do
-  context 'Agrupador por série' do
+  context 'Buscar por títulos agrupados por série' do
     before do
       @token = ApiUser.GetToken
-      ApiUser.Login(@token, Constant::User1)
-
-      @result = ApiTitulos.post_BuscarTitulosAgrupadosPorSerie(@token)
-      puts @result
+      ApiUser.Login(@token, build(:login).to_hash)
+      @result = ApiTitulos.post_group_titulos_serie(@token)
     end
-    sleep 5
+
     it { expect((@result.parsed_response)['sucesso']).to be true }
 
     after do
@@ -17,13 +15,11 @@ describe 'Títulos' do
     end
   end
 
-  context 'Títulos novos' do
+  context 'Buscar por títulos novos' do
     before do
       @token = ApiUser.GetToken
-      ApiUser.Login(@token, Constant::User1)
-
-      @result = ApiTitulos.post_GetTitulosNovos(@token)
-      puts @result
+      ApiUser.Login(@token, build(:login).to_hash)
+      @result = ApiTitulos.post_get_new_titulo(@token)
     end
 
     it { expect((@result.parsed_response)['sucesso']).to be true }
@@ -35,13 +31,13 @@ describe 'Títulos' do
 end
 
 describe 'Verificar Premio Titulo' do
-  context 'Título outro usuário' do
+  context 'Verificar título premiado de outro usuário' do
     before do
       @token = ApiUser.GetToken
-      ApiUser.Login(@token, Constant::User1)
-
-      @result = ApiTitulos.post_VerificarPremioTitulo(@token, 89)
-      puts @result
+      ApiUser.Login(@token, build(:login).to_hash)
+      idTitulo = build(:titulo).to_hash
+      idTitulo[:idTitulo] = 89
+      @result = ApiTitulos.post_premium_titulo(@token, idTitulo)
     end
 
     it { expect((@result.parsed_response)['erros'][0]['mensagem']).to eql 'Este título não pertence ao usuário!' }
@@ -51,13 +47,13 @@ describe 'Verificar Premio Titulo' do
     end
   end
 
-  context 'Título ID passando maior de 10 inteiros' do
+  context 'Passando id inexistente no Json' do
     before do
       @token = ApiUser.GetToken
-      ApiUser.Login(@token, Constant::User1)
-
-      @result = ApiTitulos.post_VerificarPremioTitulo(@token, 12_345_678_901)
-      puts @result
+      ApiUser.Login(@token, build(:login).to_hash)
+      idTitulo = build(:titulo).to_hash
+      idTitulo[:idTitulo] = 12_345_678_901
+      @result = ApiTitulos.post_premium_titulo(@token, idTitulo)
     end
 
     it { expect((@result.parsed_response)['obj.idTitulo'][0]).to eql "JSON integer 12345678901 is too large or small for an Int32. Path 'obj.idTitulo', line 1, position 30." }
@@ -69,13 +65,13 @@ describe 'Verificar Premio Titulo' do
 end
 
 describe 'Abrir Título' do
-  context 'Título outro usuário' do
+  context 'Abrir título de outro usuário' do
     before do
       @token = ApiUser.GetToken
-      ApiUser.Login(@token, Constant::User1)
-
-      @result = ApiTitulos.post_AbrirTitulo(@token, 89)
-      puts @result
+      ApiUser.Login(@token, build(:login).to_hash)
+      idTitulo = build(:titulo).to_hash
+      idTitulo[:idTitulo] = 89
+      @result = ApiTitulos.post_open_titulo(@token, idTitulo)
     end
 
     it { expect((@result.parsed_response)['erros'][0]['mensagem']).to eql 'Título não pertence ao usuário!' }
@@ -88,9 +84,10 @@ describe 'Abrir Título' do
   context 'Título ID passando maior de 10 inteiros' do
     before do
       @token = ApiUser.GetToken
-      ApiUser.Login(@token, Constant::User1)
-
-      @result = ApiTitulos.post_AbrirTitulo(@token, 12_345_678_901)
+      ApiUser.Login(@token, build(:login).to_hash)
+      idTitulo = build(:titulo).to_hash
+      idTitulo[:idTitulo] = 12_345_678_901
+      @result = ApiTitulos.post_open_titulo(@token, idTitulo)
       puts @result
     end
 
@@ -102,14 +99,12 @@ describe 'Abrir Título' do
   end
 end
 
-describe 'BuscarTitulosNaoAbertosUsuario' do
+describe 'Buscar titulos nao abertos pelo usuario' do
   context 'Sucesso' do
     before do
       @token = ApiUser.GetToken
-      ApiUser.Login(@token, Constant::User1)
-
-      @result = ApiTitulos.post_BuscarTitulosNaoAbertosUsuario(@token)
-      puts @result
+      ApiUser.Login(@token, build(:login).to_hash)
+      @result = ApiTitulos.post_closed_titulo(@token)
     end
 
     it { expect((@result.parsed_response)['sucesso']).to be true }
@@ -123,79 +118,50 @@ end
 context 'Comprar com Cartao de Credito e verificar se o título foi atribuído' do
   before do
     @token = ApiUser.GetToken
-    ApiUser.Login(@token, Constant::User1)
-
-    @tituloAntesCompra = ApiTitulos.get_GetQtdTitulosUsuario(@token)['obj'][0]['qtd']
-    puts('tituloAntesCompra', @tituloAntesCompra)
+    login = ApiUser.Login(@token, build(:login).to_hash)
+    idUsuario = login.parsed_response['obj'][0]['idUsuario']
+    TituloDB.new.delete_titulo_buy(idUsuario)
 
     # Pagando o carrinho com cartao de credito
-    @carrinho = ApiCart.post_adicionarItemCarrinho(
-      1,
-      Constant::IdProduto,
-      Constant::IdSerieMaxRegular,
-      @token
-    )
-    @idCarrinho = (@carrinho.parsed_response)['obj'][0]['idCarrinho']
-    @result = ApiCartao.post_PagarCartaoDeCredito(
-      @token,
-      @idCarrinho,
-      'CARLOS',
-      '5521884306233764',
-      '11',
-      Constant::ValidadeAnoCartao,
-      '123'
-    )
+    cart = build(:cart).to_hash
+    carrinho = ApiCart.post_add_item_cart(@token, cart)
+    idCarrinho = carrinho.parsed_response['obj'][0]['idCarrinho']
 
-    @tituloDepoisCompra = ApiTitulos.get_GetQtdTitulosUsuario(@token)['obj'][0]['qtd']
-    puts('tituloDepoisCompra', @tituloDepoisCompra)
+    credit_card = build(:credit_card).to_hash
+    result = ApiCartao.post_credit_card(@token, idCarrinho, credit_card)
 
-    @tituloDentroDoBanco = Database.new.select_GetQtdTitulosUsuario.first['TOTAL']
-    puts('tituloDentroDoBanco', @tituloDentroDoBanco)
-
-    @compararTituloCompraComSelectBanco = (@tituloDepoisCompra == @tituloDentroDoBanco)
+    @total_titulos_user = TituloDB.new.select_get_amount_titulo(idUsuario)
   end
 
-  it { expect(@compararTituloCompraComSelectBanco).to be_truthy }
+  it { expect(@total_titulos_user['TOTAL']).to eql 1 }
 
   after do
     ApiUser.get_logout(@token)
   end
 end
 
-context 'Comprar com CLottocap e verificar se o título foi atribuído' do
+context 'Comprar com crédito lottocap e verificar se o título foi atribuído' do
   before do
     @token = ApiUser.GetToken
-    ApiUser.Login(@token, Constant::User1)
+    login = ApiUser.Login(@token, build(:login).to_hash)
+    idUsuario = login.parsed_response['obj'][0]['idUsuario']
+    CreditoLotto.new.update_creditoLottocap(100, idUsuario)
+    TituloDB.new.delete_titulo_buy(idUsuario)
 
-    @tituloAntesCompra = ApiTitulos.get_GetQtdTitulosUsuario(@token)
+    # Pagando o carrinho com credito lottocap
+    cart = build(:cart).to_hash
+    carrinho = ApiCart.post_add_item_cart(@token, cart)
+    idCarrinho = carrinho.parsed_response['obj'][0]['idCarrinho']
 
-    # Atribuindo credito lottocap e pagando o carrinho
-    @rs = CreditoLotto.new.update_creditoLottocap(100)
-    puts @rs
-    @carrinho = ApiCart.post_adicionarItemCarrinho(
-      2,
-      Constant::IdProduto,
-      Constant::IdSerieMaxRegular,
-      @token
-    )
-    @idCarrinho = (@carrinho.parsed_response)['obj'][0]['idCarrinho']
-    @result = ApiCreditoLottocap.post_pagarCarrinhoComCreditoLottocap(@token, @idCarrinho)
+    credit = build(:payment_credit).to_hash
+    @payment_credit = ApiCreditoLottocap.post_payment_credit_lottocap(@token, idCarrinho, credit)
 
-    sleep 3
-    @tituloDepoisCompra = ApiTitulos.get_GetQtdTitulosUsuario(@token)
-    @tituloDepois = (@tituloDepoisCompra.parsed_response)['obj'][0]['qtd']
-
-    @compararTituloCompraComSelectBanco = (@tituloDepois == Database.new.select_GetQtdTitulosUsuario)
+    @total_titulos_user = TituloDB.new.select_get_amount_titulo(idUsuario)
   end
-  # it { puts @tituloAntesCompra.parsed_response }
-  # it { puts @tituloDepoisCompra.parsed_response }
-  # # it { puts @result.parsed_response }
-  # it { puts @compararTituloCompraComSelectBanco}
-  # it { expect(@compararTituloCompraComSelectBanco).to be_truthy }
-  it { puts @rs }
+
+  it { expect(@total_titulos_user['TOTAL']).to eql 1 }
 
   after do
-    CreditoLotto.new.update_creditoLottocap(0)
     ApiUser.get_logout(@token)
   end
 end

@@ -20,6 +20,17 @@ class UserModel
   end
 end
 
+class LoginModel
+  attr_accessor :id, :usuario, :senha
+
+  def to_hash
+    {
+      usuario: @usuario,
+      senha: @senha
+    }
+  end
+end
+
 class ValidationUserModel
   attr_accessor :nomeCompleto, :cpf, :email
 

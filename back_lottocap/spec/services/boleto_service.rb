@@ -10,10 +10,9 @@ class ApiBoleto
   headers 'Content-Type' => 'application/json'
 
   def self.post_payment_cart_boleto(token, idCarrinho, payment_boleto)
-    headers[:Authorization] = token
+    # headers[:Authorization] = token
     payment_boleto[:idCarrinho] = idCarrinho
     payload = { "obj": payment_boleto }
-
-    post('/Pagamento/PagarCarrinho', body: payload.to_json)
+    post('/Pagamento/PagarCarrinho', body: payload.to_json, headers: { 'Authorization' => token })
   end
 end

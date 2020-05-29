@@ -10,15 +10,13 @@ class ApiCreditoLottocap
   headers 'Content-Type' => 'application/json'
 
   def self.post_payment_credit_lottocap(token, idCarrinho, credit)
-    headers[:Authorization] = token
     credit[:idCarrinho] = idCarrinho
     payload = { "obj": credit }
-    post('/Pagamento/PagarCarrinho', body: payload.to_json)
+    post('/Pagamento/PagarCarrinho', body: payload.to_json, headers: { 'Authorization' => token })
   end
 
   def self.post_buy_credit(token, credit)
-    headers[:Authorization] = token
     payload = { "obj": credit }
-    post('/Pagamento/PagarCarrinho', body: payload.to_json)
+    post('/Pagamento/PagarCarrinho', body: payload.to_json, headers: { 'Authorization' => token })
   end
 end

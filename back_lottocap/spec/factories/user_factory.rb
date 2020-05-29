@@ -164,4 +164,9 @@ FactoryBot.define do
     cargoPEP { '' }
     parentescoPEP { '' }
   end
+
+  factory :login, class: LoginModel do
+    usuario { 'user22@gmail.com' }
+    senha { '1234' }
+  end
 end

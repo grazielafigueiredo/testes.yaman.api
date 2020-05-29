@@ -9,7 +9,6 @@ class ApiCartao
   headers 'Content-Type' => 'application/json'
 
   def self.post_ObterFormasPagamentoDisponiveis(token, idCarrinho)
-    headers['Authorization'] = token
 
     @ObterFormasPagamentoDisponiveis = {
       "obj": {
@@ -18,15 +17,14 @@ class ApiCartao
       }
     }
 
-    post('/Pagamento/ObterFormasPagamentoDisponiveis', body: @ObterFormasPagamentoDisponiveis.to_json)
+    post('/Pagamento/ObterFormasPagamentoDisponiveis', body: @ObterFormasPagamentoDisponiveis.to_json, headers: { 'Authorization' => token })
   end
 
   # ------------ Cartão de Crédito -----------------------
 
   def self.post_credit_card(token, idCarrinho, credit_card)
-    headers['Authorization'] = token
     credit_card[:idCarrinho] = idCarrinho
     payload = { "obj": credit_card }
-    post('/Pagamento/PagarCarrinho', body: payload.to_json)
+    post('/Pagamento/PagarCarrinho', body: payload.to_json, headers: { 'Authorization' => token })
   end
 end
