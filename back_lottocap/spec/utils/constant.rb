@@ -5,6 +5,7 @@ Dotenv.load
 
 class Constant
   Url = ENV['URL']
+  URLPROD = ENV['URLPROD']
 
   IdSerieMaxRegular = ENV['ID_SERIE_MAX_REGULAR']
   IdSerieMaxPreVenda = ENV['ID_SERIE_MAX_PRE_VENDA']

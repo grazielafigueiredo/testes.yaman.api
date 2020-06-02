@@ -80,19 +80,14 @@ end
 
 describe 'Alterar dados do usuário' do
   context 'Alterar e-mail do usuário e verificar se a mudança ocorreu com sucesso' do
-    # before do
-    #   token = ApiUser.GetToken
-    #   ApiUser.Login(token, build(:login).to_hash)
-    #   change_user = build(:change_user).to_hash
-    #   @result = ApiCreateUser.post_change_user_data(token, change_user)
-    # end
-    v = let(:token) { ApiUser.GetToken }
-    puts v
-    let(:login) { ApiUser.Login(token, build(:login).to_hash) }
-    # let(:change) {build(:change_user).to_hash}
-    let(:result) { ApiCreateUser.post_change_user_data(token, build(:change_user).to_hash) }
-
-    it { expect(result.parsed_response['sucesso']).to be true }
+    before do
+      token = ApiUser.GetToken
+      ApiUser.Login(token, build(:login).to_hash)
+      change_user = build(:change_user).to_hash
+      @result = ApiCreateUser.post_change_user_data(token, change_user)
+    end
+  
+    it { expect(@result.parsed_response['sucesso']).to be true }
 
     after do
       User.new.update_user_email('otto@gmail.com')

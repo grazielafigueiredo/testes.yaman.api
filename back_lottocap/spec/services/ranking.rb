@@ -5,31 +5,32 @@ require 'services/user'
 
 class ApiRanking
   include HTTParty
-  base_uri Constant::Url
-  headers 'Content-Type' => 'application/json', 'Authorization' => ApiUser.GetToken
+  base_uri Constant::URLPROD
+  headers 'Content-Type' => 'application/json'
 
-  def self.get_rankingResultados
-    get('/Produto/GetRankingResultados?offset=1')
+  def self.get_rankingResultados(token)
+    get('/Produto/GetRankingResultados?offset=1', headers: { 'Authorization' => token })
   end
 
-  def self.post_rankingResultadosPorSerie
-    @resultadosPorSerie = {
+  def self.post_rankingResultadosPorSerie(token, idSerie)
+    payload = {
       "obj": {
-        "idSerie": Constant::IdSerieMaxRegular.to_s
+        "idSerie": idSerie.to_s,
+        "offset": 1
       }
     }
-    post('/Produto/GetRankingResultadosPorSerie?offset=1', body: @resultadosPorSerie.to_json)
+    post('/Produto/GetRankingResultadosPorSerie', body: payload.to_json, headers: { 'Authorization' => token })
   end
 
-  def self.get_modalPremiado
-    get("/Produto/GetModalPremiado?idSerie=#{Constant::IdSerieMaxRegular}&nmTituloFixo=2550&qtdPontos=15&offset=1")
+  def self.get_modalPremiado(token, idSerie)
+    get("/Produto/GetModalPremiado?idSerie=#{idSerie}&nmTituloFixo=2550&qtdPontos=15&offset=1", headers: { 'Authorization' => token })
   end
 
-  def self.get_sorteiosResultados
-    get("/Produto/GetSorteiosResultados?idSerie=#{Constant::IdSerieMaxRegular}&offset=1")
+  def self.get_sorteiosResultados(token, idSerie)
+    get("/Produto/GetSorteiosResultados?idSerie=#{idSerie}&offset=1", headers: { 'Authorization' => token })
   end
 
-  def self.get_modalRankingPorPontos
-    get("/Produto/GetModalRankingPorPontos?idSerie=#{Constant::IdSerieMaxRegular}&qtdPontos=15&offset=1")
+  def self.get_modalRankingPorPontos(token, idSerie)
+    get("/Produto/GetModalRankingPorPontos?idSerie=#{idSerie}&qtdPontos=15&offset=1", headers: { 'Authorization' => token })
   end
 end

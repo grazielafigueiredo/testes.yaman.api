@@ -4,7 +4,7 @@ context 'Validar se há dezenas repetidas' do
   before do
     @token = ApiUser.GetToken
 
-    # Pre_vendaDB.new.update_pre_venda
+    Pre_vendaDB.new.update_pre_venda
 
     @cart = build(:cart).to_hash
     @cart[:qtdItens] = 10
@@ -14,7 +14,6 @@ context 'Validar se há dezenas repetidas' do
 
     @show_dezenas = ApiPreVenda.get_show_dezenas(@token, @idCarrinhoItem)
     conjuntos = (@show_dezenas.parsed_response)['obj']
-    puts @show_dezenas
 
     def obtem_conjuntos_repetidos(conjuntos)
       conjuntos_repetidos = {}
@@ -81,21 +80,21 @@ end
 context 'Concorrencia no pagamento Título já reservado' do
   before do
     @token = ApiUser.GetToken
-    ApiUser.Login(@token, Constant::User1)
+    ApiUser.Login(@token, build(:login).to_hash)
 
-    @dezenas = build(:search_dezenas).to_hash
-    @search_dezenas = ApiPreVenda.post_search_dezenas(@token, @dezenas)
-    @group_dezenas = (@search_dezenas.parsed_response)['obj'][0]
+    dezenas = build(:search_dezenas).to_hash
+    search_dezenas = ApiPreVenda.post_search_dezenas(@token, dezenas)
+    @group_dezenas = (search_dezenas.parsed_response)['obj'][0]
 
-    @cart = build(:cart_dezenas).to_hash
-    @cart[:lstDezenas] = [@group_dezenas]
-    @cart_pre = ApiPreVenda.post_add_item_cart_prevenda(@token, @cart)
-    @id_cart = (@cart_pre.parsed_response)['obj'][0]['idCarrinho']
+    cart = build(:cart_dezenas).to_hash
+    cart[:lstDezenas] = [@group_dezenas]
+    cart_pre = ApiPreVenda.post_add_item_cart_prevenda(@token, cart)
+    id_cart = (cart_pre.parsed_response)['obj'][0]['idCarrinho']
 
     Pre_vendaDB.new.update_reservar_group_dezenas(@group_dezenas)
 
-    @payment_cart = build(:credit_card).to_hash
-    @result = ApiCartao.post_credit_card(@token, @id_cart, @payment_cart)
+    payment_cart = build(:credit_card).to_hash
+    @result = ApiCartao.post_credit_card(@token, id_cart, payment_cart)
   end
 
   it 'Pagar conjunto de dezenas que já foi reservado/comprado' do

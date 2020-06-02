@@ -9,4 +9,16 @@ FactoryBot.define do
     idSerie { Constant::IdSerieMaxRegular }
     qtdItens { 1 }
   end
+  factory :cart_afiliados, class: CartModel do
+    idCarrinho { 0 }
+    idProduto { Constant::IdProdutoJa }
+    idSerie { Constant::IdSerieJa17 }
+    qtdItens { 1 }
+  end
+  factory :cart_remove, class: CartModel do
+    idCarrinho { 0 }
+    idProduto { Constant::IdProdutoJa }
+    idSerie { Constant::IdSerieJa17 }
+    qtdItens { 1 }
+  end
 end

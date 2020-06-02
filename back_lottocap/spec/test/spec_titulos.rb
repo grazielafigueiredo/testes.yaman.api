@@ -88,7 +88,6 @@ describe 'Abrir Título' do
       idTitulo = build(:titulo).to_hash
       idTitulo[:idTitulo] = 12_345_678_901
       @result = ApiTitulos.post_open_titulo(@token, idTitulo)
-      puts @result
     end
 
     it { expect((@result.parsed_response)['obj.idTitulo'][0]).to eql "JSON integer 12345678901 is too large or small for an Int32. Path 'obj.idTitulo', line 1, position 30." }

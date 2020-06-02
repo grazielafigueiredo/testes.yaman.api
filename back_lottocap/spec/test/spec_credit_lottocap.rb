@@ -4,7 +4,7 @@
 context 'Comprar créditos com valor mínimo de R$20,00' do
   before do
     @token = ApiUser.GetToken
-    ApiUser.Login(@token, Constant::User1)
+    ApiUser.Login(@token, build(:login).to_hash)
 
     @credit = build(:buy_credit).to_hash
     @buy_credit = ApiCreditoLottocap.post_buy_credit(@token, @credit)
@@ -20,7 +20,7 @@ end
 context 'Pagar com créditos produto MAX' do
   before do
     @token = ApiUser.GetToken
-    @login = ApiUser.Login(@token, Constant::User1)
+    @login = ApiUser.Login(@token, build(:login).to_hash)
     @idUsuario = @login.parsed_response['obj'][0]['idUsuario']
     CreditoLotto.new.update_creditoLottocap(100, @idUsuario)
 
@@ -48,7 +48,7 @@ end
 context 'Pagar com créditos produto Já 18' do
   before do
     @token = ApiUser.GetToken
-    @login = ApiUser.Login(@token, Constant::User1)
+    @login = ApiUser.Login(@token, build(:login).to_hash)
     @idUsuario = @login.parsed_response['obj'][0]['idUsuario']
     CreditoLotto.new.update_creditoLottocap(100, @idUsuario)
 

@@ -103,6 +103,5 @@ class CreditoLotto < DbBase
             WHERE
                 IdUsuario = @idUsuario;
         END;")
-    # end        puts rs
   end
 end

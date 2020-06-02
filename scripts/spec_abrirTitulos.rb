@@ -2,7 +2,7 @@
 # context 'Loop' do
 #   before do
 #     @token = ApiUser.GetToken
-#     ApiUser.Login(@token, Constant::User1)
+#     ApiUser.Login(@token, build(:login).to_hash)
 
 #       900.times do
 #         @tituloJa = ApiTitulos.post_GetTitulosNovos(@token)
@@ -24,7 +24,7 @@
 # context 'loops' do
 #   before do
 #     @token = ApiUser.GetToken
-#     ApiUser.Login(@token, Constant::User1)
+#     ApiUser.Login(@token, build(:login).to_hash)
 
 #     Database.new.update_DataFinalVendaVigente('2020-12-25')
 

@@ -111,7 +111,7 @@ class RescueDB < DbBase
   end
 
   def insert_account(idUsuario)
-    ta = @connection.execute(
+    @connection.execute(
       "DECLARE @idUsuario AS INTEGER=#{idUsuario}
 
         INSERT INTO UsuarioContaCorrente( idUsuario, idBanco, agenciaNumero, agenciaDigito,
@@ -126,7 +126,7 @@ class RescueDB < DbBase
   end
 
   def delete_account(id_user)
-    ta = @connection.execute(
+    @connection.execute(
       "DECLARE @idUsuario AS INTEGER=#{id_user}
 
       DELETE
@@ -150,6 +150,5 @@ class RescueDB < DbBase
 
       DELETE FROM UsuarioContaCorrente WHERE idUsuarioCriacao = @idUsuario"
     )
-    ta.do
   end
 end

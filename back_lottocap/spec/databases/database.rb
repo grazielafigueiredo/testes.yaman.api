@@ -6,9 +6,6 @@ require 'tiny_tds'
 require 'timeout'
 
 class Database < DbBase
-  def update_TodosProdutosIndisponiveisVitrine(dataFinalVenda)
-    @connection.execute("UPDATE Serie SET DataFinalVenda = '#{dataFinalVenda}';")
-  end
 
   def update_reservarSerie(reservado)
     t = @connection.execute("UPDATE TituloMatriz SET reservado = #{reservado} where idSerie = #{Constant::IdSerieMaxRegular};")

@@ -9,7 +9,6 @@ class ApiTransfer
   headers 'Content-Type' => 'application/json'
 
   def self.post_transfer(token, idCarrinho, transfer)
-    # headers['Authorization'] = token
     transfer[:idCarrinho] = idCarrinho
     payload = { "obj": transfer }
     post('/Pagamento/PagarCarrinho', body: payload.to_json, headers: { 'Authorization' => token })
