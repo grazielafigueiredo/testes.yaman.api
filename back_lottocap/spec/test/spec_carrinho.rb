@@ -126,7 +126,7 @@ describe 'Carrinho - Reserva' do
 
       cart = build(:cart).to_hash
       ApiCart.post_add_item_cart(@token, cart)
-      @products.each { |id_serie| ApiCart.new.update_products_vitrine('2018-12-25', id_serie) }
+      @products.each { |id_serie| CartDB.new.update_products_vitrine('2018-12-25', id_serie) }
 
       result = ApiCart.get_status_cart(@token)
       @error_message = result.parsed_response['erros'][0]['mensagem']
@@ -135,7 +135,7 @@ describe 'Carrinho - Reserva' do
     it { expect(@error_message).to eql 'Atualizamos o carrinho mantendo apenas as série em andamento' }
 
     after do
-      @products.each { |id_serie| ApiCart.new.update_products_vitrine('2020-12-25', id_serie) }
+      @products.each { |id_serie| CartDB.new.update_products_vitrine('2020-12-25', id_serie) }
       ApiUser.get_logout(@token)
     end
   end

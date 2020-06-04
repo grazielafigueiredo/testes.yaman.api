@@ -53,7 +53,7 @@ context 'Pagar com créditos produto Já 18' do
     CreditoLotto.new.update_creditoLottocap(100, @idUsuario)
 
     @cart = build(:cart).to_hash
-    @cart[:idProduto] = Constant::IdProdutoJa18
+    @cart[:idProduto] = 10
     @cart[:idSerie] = Constant::IdSerieJa18
     @carrinho = ApiCart.post_add_item_cart(@token, @cart)
     @idCarrinho = @carrinho.parsed_response['obj'][0]['idCarrinho']

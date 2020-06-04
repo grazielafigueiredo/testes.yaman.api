@@ -3,122 +3,52 @@
 require 'utils/constant'
 require 'services/user'
 
-class ApiProducao
+class ApiUserPROD
   include HTTParty
-  base_uri "https://api.lottocap.com.br/api"
+  base_uri Constant::URLPROD
   headers 'Content-Type' => 'application/json'
 
-  def self.post_CadastrarUsuario(token, nomeCompleto, cpf, email)
-    headers['Authorization'] = token
-
-    @createUser = {
-      "obj": {
-        "nomeCompleto": nomeCompleto,
-        "dataNascimento": '1997-01-01T00:00:00-03:00',
-        "cpf": cpf,
-        "email": email,
-        "aceitaReceberMensagemDeMarketingPorEmail": false,
-        "aceitaOsTermosECondicoesDeUso": true,
-        # "cdPromocaoUsuario": null,
-        "senha": '1234',
-        "metodo_de_cadastro": 'email'
-      }
-    }
-    post('/Usuario/CadastrarUsuario', body: @createUser.to_json)
-  end
-
-  def self.post_validarDadosUsuarioCriacao(token, nomeCompleto, cpf, email)
-    headers['Authorization'] = token
-
-    @validarUser = {
-      "obj": {
-        "nomeCompleto": nomeCompleto,
-        "email": email,
-        "cpf": cpf
-      },
-      "atualPagina": 0,
-      "tamanhoPagina": 0
-    }
-    post('/Usuario/ValidarDadosUsuarioCriacao', body: @validarUser.to_json)
-  end
-
-  def self.post_alterarDadosUsuario(token, email, cpf)
-    headers['Authorization'] = token
-
-    @alterarDadosUsuario = {
-      "obj": {
-        "apelido": 'grazi',
-        "nomeCompleto": 'grazi a',
-        "email": email,
-        "cpf": cpf,
-        "idNacionalidade": 32,
-        "sexo": 3,
-        "telefoneDDD": '11',
-        "telefoneNumero": '23456789',
-        "cep": '06160000',
-        "dataNascimento": '1995-01-01T00:00:00-02:00',
-        "enderecoLogradouro": 'Avenida Benedito Alves Turíbio',
-        "enderecoNumero": '7777',
-        "enderecoComplemento": 'até 501/502',
-        "enderecoBairro": 'Padroeira',
-        "enderecoCidade": 'Osasco',
-        "enderecoEstado": 'SP',
-        "PEP": false,
-        "nmPEP": '',
-        "cargoPEP": '',
-        "parentescoPEP": ''
-      },
-      "atualPagina": 0,
-      "tamanhoPagina": 0
-    }
-    post('/Usuario/AlterarDadosUsuario', body: @alterarDadosUsuario.to_json)
-  end
-
-  def self.find
-    # headers[:Authorization] = self.GetToken()
-
-    @user = { "obj": { "usuario": 'graziela@lottocap.com.br', "senha": 'lottocap' } }
-
-    response_in_json = (get('/Usuario/GerarToken').parsed_response)
-    token = response_in_json['dadosUsuario']['token']
-
-    headers[:Authorization] = token
-    post('/Usuario/LogarUsuario', body: @user.to_json, headers: headers)
-
-    token
-  end
-
   def self.Login(token, user)
-    @user = { "obj": user }
-
-    headers[:Authorization] = token
-
-    post('/Usuario/LogarUsuario', body: @user.to_json, headers: headers)
+    payload = { "obj": user }
+    post('/Usuario/LogarUsuario', body: payload.to_json, headers: { 'Authorization' => token })
   end
 
   def self.GetToken
-    response_in_json = (get('/Usuario/GerarToken').parsed_response)
-
-    token = response_in_json['obj'][0]['token']
-
-    token
+    token = get('/Usuario/GerarToken')
+    token.parsed_response['obj'][0]['token']
   end
 
   def self.get_logout(token)
-    headers[:Authorization] = token
+    get('/Usuario/DeslogarUsuario', headers: { 'Authorization' => token })
+  end
 
-    get('/Usuario/DeslogarUsuario', headers: headers)
+  def self.post_create_new_user(new_user)
+    payload = { "obj": new_user }
+    post('/Usuario/CadastrarUsuario', body: payload.to_json)
+  end
+
+  def self.post_validation_data_user(new_user)
+    payload = { "obj": new_user }
+    post('/Usuario/ValidarDadosUsuarioCriacao', body: payload.to_json)
+  end
+
+  def self.post_change_user_data(token, change_user)
+    payload = { "obj": change_user }
+    post('/Usuario/AlterarDadosUsuario', body: payload.to_json, headers: { 'Authorization' => token })
   end
 end
 
-class Token
-  include Singleton
+class ApiLandingPROD
+  include HTTParty
+  base_uri Constant::URLPROD
+  headers 'Content-Type' => 'application/json', 'Authorization' => ApiUser.GetToken
 
-  def initialize
-    @token = ApiProducao.GetToken()
+  def self.get_landing_page_max
+    get('/Produto/LandingPageMax')
   end
 
-  def get
-    @token
+  def self.get_landing_page_ja
+    get('/Produto/LandingPageJa')
   end
 end
+

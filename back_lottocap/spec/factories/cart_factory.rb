@@ -11,7 +11,7 @@ FactoryBot.define do
   end
   factory :cart_afiliados, class: CartModel do
     idCarrinho { 0 }
-    idProduto { Constant::IdProdutoJa }
+    idProduto { 9 }
     idSerie { Constant::IdSerieJa17 }
     qtdItens { 1 }
   end

@@ -26,7 +26,7 @@ class ApiCart
 
     # @SetRemoverItemCarrinho = {
     #   "obj": {
-    #     "idCarrinhoItem": idCarrinho,
+    #     "idCarrinhoItem": idCarrinhoItem,
     #     "flPromoAtiva": false
     #   },
     #   "atualPagina": 1,

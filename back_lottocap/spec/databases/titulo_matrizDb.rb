@@ -1,5 +1,6 @@
 
 require_relative "db_base"
+require "date"
 
 class TituloMatrizDB < DbBase
   def select_count_matriz(idSerie)
@@ -251,7 +252,7 @@ class TituloMatrizDB < DbBase
     concursos_inseridos = []
 
     datas_prevista_concurso.each do |data|
-      dezena_nova = ((0..14).map { Random.new.rand(1..25).to_s.rjust(2, "0") }).sort.join(' ')
+      dezena_nova = ["02 03 05 06 08 09 11 12 14 15 17 18 20 21 23"].sort.join(' ')
       query = "INSERT INTO Concurso(
       idLoteria,
       nmConcurso,
@@ -289,7 +290,7 @@ class TituloMatrizDB < DbBase
     t = @connection.execute(
       create_serie =
         "INSERT Serie(
-        #{idProduto_ja},
+        IdProduto,
         Nome,
         Preco,
         DataInicialVigencia,
@@ -315,7 +316,7 @@ class TituloMatrizDB < DbBase
         PercentualComissao
       )
         VALUES (
-        1,
+        #{idProduto_ja},
         'JA - #{today}',
         1.000,
         '2020-#{month}-01',
@@ -342,7 +343,7 @@ class TituloMatrizDB < DbBase
       )"
     )
     puts 'Affected rows'
-    # puts t.do
+    puts t.do
 
     conectaBanco = @connection.execute('SELECT SCOPE_IDENTITY()')
 
