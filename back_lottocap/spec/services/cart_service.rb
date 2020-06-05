@@ -5,7 +5,7 @@ require 'services/user'
 
 class ApiCart
   include HTTParty
-  base_uri Constant::Url
+  base_uri Constant::URI_HOMOLOG
   headers 'Content-Type' => 'application/json', 'Authorization' => ApiUser.GetToken
 
   def self.get_status_cart(token)
@@ -15,7 +15,7 @@ class ApiCart
   def self.post_set_qtd_item_carrinho(token)
     payload = { "obj": {
       "novaQtdItem": 299,
-      "idSerie": Constant::IdSerieMaxRegular,
+      "idSerie": Constant::ID_SERIE_MAX_REGULAR,
       "flPromoAtiva": false
     }}
     post('/Carrinho/SetQtdItemCarrinho', body: payload.to_json, headers: { 'Authorization' => token })

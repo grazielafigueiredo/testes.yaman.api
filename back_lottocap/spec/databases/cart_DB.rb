@@ -58,7 +58,7 @@ class CartDB < DbBase
     def update_dataFinalVendaVigente(dataFinalVenda)
         t = @connection.execute(
             "UPDATE Serie SET DataFinalVenda = '#{dataFinalVenda}' 
-            WHERE IdSerie= #{Constant::IdSerieMaxRegular};"
+            WHERE IdSerie= #{Constant::ID_SERIE_MAX_REGULAR};"
         )
         puts t.do
     end

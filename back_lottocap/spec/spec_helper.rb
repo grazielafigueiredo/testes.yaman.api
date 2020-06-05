@@ -62,8 +62,13 @@ RSpec.configure do |config|
   config.shared_context_metadata_behavior = :apply_to_host_groups
 
   config.include FactoryBot::Syntax::Methods
-
-  timeout = default_max_wait_time = 5
+  
+  config.before :all do
+    CartDB.new.update_dataFinalVendaVigente('2020-12-25')
+  end
+  config.after :all do
+    CartDB.new.update_dataFinalVendaVigente('2020-12-25')
+  end
 end
 
 

@@ -43,15 +43,14 @@ describe 'Cartão de Crédito' do
     before do
       @token = ApiUser.GetToken
       ApiUser.Login(@token, build(:login).to_hash)
-      CartDB.new.update_dataFinalVendaVigente(dataVincenda)
 
-      @cart = build(:cart).to_hash
-      @carrinho = ApiCart.post_add_item_cart(@token, @cart)
-      @idCarrinho = @carrinho.parsed_response['obj'][0]['idCarrinho']
+      cart = build(:cart).to_hash
+      carrinho = ApiCart.post_add_item_cart(@token, cart)
+      idCarrinho = carrinho.parsed_response['obj'][0]['idCarrinho']
 
-      @credit_card = build(:credit_card).to_hash
-      @credit_card[:nomeCompletoTitular] = 'CARLOS 111111'
-      @result = ApiCartao.post_credit_card(@token, @idCarrinho, @credit_card)
+      credit_card = build(:credit_card).to_hash
+      credit_card[:nomeCompletoTitular] = 'CARLOS 111111'
+      @result = ApiCartao.post_credit_card(@token, idCarrinho, credit_card)
     end
 
     it { expect((@result.parsed_response)['sucesso']).to be true }
@@ -65,7 +64,6 @@ describe 'Cartão de Crédito' do
     before do
       @token = ApiUser.GetToken
       ApiUser.Login(@token, build(:login).to_hash)
-      CartDB.new.update_dataFinalVendaVigente(dataVincenda)
 
       @cart = build(:cart).to_hash
       @carrinho = ApiCart.post_add_item_cart(@token, @cart)
@@ -87,7 +85,6 @@ describe 'Cartão de Crédito' do
     before do
       @token = ApiUser.GetToken
       ApiUser.Login(@token, build(:login).to_hash)
-      CartDB.new.update_dataFinalVendaVigente(dataVincenda)
 
       @cart = build(:cart).to_hash
       @carrinho = ApiCart.post_add_item_cart(@token, @cart)
@@ -109,7 +106,6 @@ describe 'Cartão de Crédito' do
     before do
       @token = ApiUser.GetToken
       ApiUser.Login(@token, build(:login).to_hash)
-      CartDB.new.update_dataFinalVendaVigente(dataVincenda)
 
       @cart = build(:cart).to_hash
       @carrinho = ApiCart.post_add_item_cart(@token, @cart)
@@ -131,7 +127,6 @@ describe 'Cartão de Crédito' do
     before do
       @token = ApiUser.GetToken
       ApiUser.Login(@token, build(:login).to_hash)
-      CartDB.new.update_dataFinalVendaVigente(dataVincenda)
 
       @cart = build(:cart).to_hash
       @carrinho = ApiCart.post_add_item_cart(@token, @cart)
@@ -153,7 +148,6 @@ describe 'Cartão de Crédito' do
     before do
       @token = ApiUser.GetToken
       ApiUser.Login(@token, build(:login).to_hash)
-      CartDB.new.update_dataFinalVendaVigente(dataVincenda)
 
       @cart = build(:cart).to_hash
       @carrinho = ApiCart.post_add_item_cart(@token, @cart)
@@ -175,7 +169,6 @@ describe 'Cartão de Crédito' do
     before do
       @token = ApiUser.GetToken
       ApiUser.Login(@token, build(:login).to_hash)
-      CartDB.new.update_dataFinalVendaVigente(dataVincenda)
 
       @cart = build(:cart).to_hash
       @carrinho = ApiCart.post_add_item_cart(@token, @cart)
@@ -200,7 +193,6 @@ describe 'Cartão de Crédito' do
     before do
       @token = ApiUser.GetToken
       ApiUser.Login(@token, build(:login).to_hash)
-      CartDB.new.update_dataFinalVendaVigente(dataVincenda)
 
       @cart = build(:cart).to_hash
       @carrinho = ApiCart.post_add_item_cart(@token, @cart)
@@ -222,7 +214,6 @@ describe 'Cartão de Crédito' do
     before do
       @token = ApiUser.GetToken
       ApiUser.Login(@token, build(:login).to_hash)
-      CartDB.new.update_dataFinalVendaVigente(dataVincenda)
 
       @cart = build(:cart).to_hash
       @carrinho = ApiCart.post_add_item_cart(@token, @cart)
@@ -246,7 +237,6 @@ describe 'Cartão de Crédito' do
     before do
       @token = ApiUser.GetToken
       ApiUser.Login(@token, build(:login).to_hash)
-      CartDB.new.update_dataFinalVendaVigente(dataVincenda)
 
       @cart = build(:cart).to_hash
       @carrinho = ApiCart.post_add_item_cart(@token, @cart)
@@ -268,7 +258,6 @@ describe 'Cartão de Crédito' do
     before do
       @token = ApiUser.GetToken
       ApiUser.Login(@token, build(:login).to_hash)
-      CartDB.new.update_dataFinalVendaVigente(dataVincenda)
 
       @cart = build(:cart).to_hash
       @carrinho = ApiCart.post_add_item_cart(@token, @cart)
@@ -290,7 +279,6 @@ describe 'Cartão de Crédito' do
     before do
       @token = ApiUser.GetToken
       ApiUser.Login(@token, build(:login).to_hash)
-      CartDB.new.update_dataFinalVendaVigente(dataVincenda)
 
       @cart = build(:cart).to_hash
       @carrinho = ApiCart.post_add_item_cart(@token, @cart)
@@ -312,8 +300,6 @@ describe 'Cartão de Crédito' do
     before do
       @token = ApiUser.GetToken
       ApiUser.Login(@token, build(:login).to_hash)
-
-      CartDB.new.update_dataFinalVendaVigente(dataVincenda)
 
       @cart = build(:cart).to_hash
       @carrinho = ApiCart.post_add_item_cart(@token, @cart)

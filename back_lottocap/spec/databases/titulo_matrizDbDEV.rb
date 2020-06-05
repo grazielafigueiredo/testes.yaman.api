@@ -22,33 +22,6 @@ class TituloMatrizDEV < DbBase
     end
   end
 
-  def get_by_idserie(idSerie)
-    query = "SELECT * FROM TituloMatriz WHERE idSerie = #{idSerie} and idTituloMatriz in (76193880,	76193881	,76193882	,76193883	,76193884	,76193885	)"
-  
-    result = @connection.execute(query)
-
-    titulos = []
-    result.each do |row|
-      titulos.push(row)
-    end
-
-    return titulos
-  end
-
-  def get_by_idserie_dezenas(idSerie, dezena)
-    query = "SELECT * FROM TituloMatriz WHERE idSerie = #{idSerie} and dezenas = '#{dezena}' and idTituloMatriz in (76193880,	76193881	,76193882	,76193883	,76193884	,76193885	)"
-
-    result = @connection.execute(query)
-    @connection.close()
-
-    titulos = []
-    result.each do |row|
-      titulos.push(row)
-    end
-
-    return titulos
-  end
-
   def get_titulos_duplicados_by_idserie(idSerie)
     query = "SELECT count(*), dezenas FROM TituloMatriz WHERE idSerie = #{idSerie} GROUP BY dezenas HAVING count(*) > 1"
     result = @connection.execute(query)

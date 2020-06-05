@@ -5,7 +5,7 @@ require 'services/user'
 
 class ApiUserPROD
   include HTTParty
-  base_uri Constant::URLPROD
+  base_uri Constant::URIPROD
   headers 'Content-Type' => 'application/json'
 
   def self.Login(token, user)
@@ -40,7 +40,7 @@ end
 
 class ApiLandingPROD
   include HTTParty
-  base_uri Constant::URLPROD
+  base_uri Constant::URIPROD
   headers 'Content-Type' => 'application/json', 'Authorization' => ApiUser.GetToken
 
   def self.get_landing_page_max

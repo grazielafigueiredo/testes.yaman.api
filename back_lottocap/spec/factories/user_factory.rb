@@ -20,6 +20,17 @@ FactoryBot.define do
       User.new.delete_user(user.email)
     end
   end
+  factory :user_create, class: UserModel do
+    nomeCompleto { 'Otto Oliveira' }
+    dataNascimento { '1997-01-01T00:00:00-03:00' }
+    cpf { '00000002054' }
+    email { 'user22@gmail.com' }
+    aceitaReceberMensagemDeMarketingPorEmail { false }
+    aceitaOsTermosECondicoesDeUso { true }
+    cdPromocaoUsuario { nil }
+    senha { '1234' }
+    metodo_de_cadastro { 'email' }
+  end
 
   factory :user_wrong_email, class: UserModel do
     nomeCompleto { 'Otto Oliveira' }

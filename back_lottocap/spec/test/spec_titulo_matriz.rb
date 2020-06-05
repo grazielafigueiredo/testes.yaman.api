@@ -8,7 +8,7 @@
 # end
 
 context 'Verificar quantidade de títulos gerados do MAX, JA17, JA18' do
-  quantidade_matriz = TituloMatrizDB.new.select_count_matriz(Constant::IdSerieMaxPreVenda)
+  quantidade_matriz = TituloMatrizDB.new.select_count_matriz(Constant::ID_SERIE_MAX_PRE_VENDA)
 
   dezena_concurso = [
     '01', '02', '03', '04', '05', '06', '07', '08', '09', 10,
@@ -22,7 +22,7 @@ context 'Verificar quantidade de títulos gerados do MAX, JA17, JA18' do
   ]
   quantidade_dezenas = []
   dezena_concurso.each do |data|
-    quantidade_dezenas.push(TituloMatrizDB.new.quantidade_vezes_dezena_gerada(Constant::IdSerieMaxPreVenda, data))
+    quantidade_dezenas.push(TituloMatrizDB.new.quantidade_vezes_dezena_gerada(Constant::ID_SERIE_MAX_PRE_VENDA, data))
   end
 
   it 'Verificar quantidade de títulos gerados e dezena repetida' do
@@ -33,7 +33,7 @@ context 'Verificar quantidade de títulos gerados do MAX, JA17, JA18' do
   end
 
   # JA17
-  quantidade_matriz_ja17 = TituloMatrizDB.new.select_count_matriz(Constant::IdSerieJa17)
+  quantidade_matriz_ja17 = TituloMatrizDB.new.select_count_matriz(Constant::ID_SERIE_JA_17)
   dezena_concurso = [
     '01', '02', '03', '04', '05', '06', '07', '08', '09', 10,
     11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
@@ -41,7 +41,7 @@ context 'Verificar quantidade de títulos gerados do MAX, JA17, JA18' do
   ]
   quantidade_dezenas = []
   dezena_concurso.each do |data|
-    quantidade_dezenas.push(TituloMatrizDB.new.quantidade_vezes_dezena_gerada(Constant::IdSerieMaxPreVenda, data))
+    quantidade_dezenas.push(TituloMatrizDB.new.quantidade_vezes_dezena_gerada(Constant::ID_SERIE_MAX_PRE_VENDA, data))
   end
 
   it 'Verificar quantidade de títulos gerados e dezena repetida' do
@@ -52,7 +52,7 @@ context 'Verificar quantidade de títulos gerados do MAX, JA17, JA18' do
   end
 
   # JA18
-  quantidade_matriz_ja18 = TituloMatrizDB.new.select_count_matriz(Constant::IdSerieJa18)
+  quantidade_matriz_ja18 = TituloMatrizDB.new.select_count_matriz(Constant::ID_SERIE_JA_18)
   dezena_concurso = [
     '01', '02', '03', '04', '05', '06', '07', '08', '09', 10,
     11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
@@ -60,7 +60,7 @@ context 'Verificar quantidade de títulos gerados do MAX, JA17, JA18' do
   ]
   quantidade_dezenas = []
   dezena_concurso.each do |data|
-    quantidade_dezenas.push(TituloMatrizDB.new.quantidade_vezes_dezena_gerada(Constant::IdSerieMaxPreVenda, data))
+    quantidade_dezenas.push(TituloMatrizDB.new.quantidade_vezes_dezena_gerada(Constant::ID_SERIE_MAX_PRE_VENDA, data))
   end
 
   it 'Verificar quantidade de títulos gerados e dezena repetida' do
@@ -72,13 +72,13 @@ context 'Verificar quantidade de títulos gerados do MAX, JA17, JA18' do
 end
 
 context 'Verificação de duplicidade do conjunto de dezenas' do
-  titulos_duplicados_max = TituloMatrizDB.new.get_titulos_duplicados_by_idserie(Constant::IdSerieMaxPreVenda)
+  titulos_duplicados_max = TituloMatrizDB.new.get_titulos_duplicados_by_idserie(Constant::ID_SERIE_MAX_PRE_VENDA)
   it { expect(titulos_duplicados_max).to match 0 }
 
-  titulos_duplicados_ja17 = TituloMatrizDB.new.get_titulos_duplicados_by_idserie(Constant::IdSerieJa17)
+  titulos_duplicados_ja17 = TituloMatrizDB.new.get_titulos_duplicados_by_idserie(Constant::ID_SERIE_JA_17)
   it { expect(titulos_duplicados_ja17).to match 0 }
 
-  titulos_duplicados_ja18 = TituloMatrizDB.new.get_titulos_duplicados_by_idserie(Constant::IdSerieJa18)
+  titulos_duplicados_ja18 = TituloMatrizDB.new.get_titulos_duplicados_by_idserie(Constant::ID_SERIE_JA_18)
   it { expect(titulos_duplicados_ja18).to match 0 }
 end
 
@@ -87,7 +87,7 @@ end
 #   # verificar quantidade de vezes que a dezena foi gerada
 
 #   #Signo
-#   idSerie_signo = Constant::IdSerieMaxPreVenda
+#   idSerie_signo = Constant::ID_SERIE_MAX_PRE_VENDA
 #   quantidade_matriz = TituloMatrizDB.new.select_count_matriz(idSerie_signo)
 
 #   it 'Verificar quantidade de títulos gerados e dezena repetida' do

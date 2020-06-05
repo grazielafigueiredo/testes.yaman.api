@@ -5,7 +5,7 @@ require 'services/user'
 
 class ApiRescue
   include HTTParty
-  base_uri Constant::Url
+  base_uri Constant::URI_HOMOLOG
   headers 'Content-Type' => 'application/json'
 
   def self.post_set_rescue(token, date_rescue)

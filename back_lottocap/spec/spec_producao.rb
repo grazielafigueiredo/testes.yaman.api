@@ -90,7 +90,7 @@ describe 'Alterar dados Usuário' do
   context 'Alterar cpf para número inválido' do
     before do
       @token = ApiProducao.GetToken
-      ApiProducao.Login(@token, Constant::User1)
+      ApiProducao.Login(@token, Constant::USER)
 
       @create = ApiProducao.post_alterarDadosUsuario(@token, "graziela@lottocap.com.br", "00000000000")
       puts @create

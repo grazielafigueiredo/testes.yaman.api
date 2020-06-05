@@ -50,12 +50,12 @@ context 'home - GetRankingResultados' do
       expect(concurso['vlPremios']).to be_a_kind_of(Float)
       expect(concurso['flagMaisPontos']).to be(true).or be(false)
     end
-    expect(@concursos.count).to be >= 23
+    expect(@concursos.count).to be >= 15
 
     expect(@totalPremiados[0]['flContemplacaoObrigatoria']).to be(true).or be(false)
     expect(@totalPremiados[0]['qtdeSubscritoresMaisPontosVendidos']).to be_a_kind_of(Integer)
     expect(@totalPremiados[0]['vlTotalPremiado']).to be >= 1.0
-    expect(@totalPremiados[0]['qtdeTotalSorteios']).to be >= 23
+    expect(@totalPremiados[0]['qtdeTotalSorteios']).to be >= 15
     expect(@totalPremiados[0]['qtdeSorteiosRealizados']).to be >= 1.0
   end
 end

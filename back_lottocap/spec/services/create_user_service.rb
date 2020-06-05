@@ -5,7 +5,7 @@ require 'services/user'
 
 class ApiCreateUser
   include HTTParty
-  base_uri Constant::Url
+  base_uri Constant::URI_HOMOLOG
   headers 'Content-Type' => 'application/json', 'Authorization' => ApiUser.GetToken
 
   def self.post_create_new_user(new_user)

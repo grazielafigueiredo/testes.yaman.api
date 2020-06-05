@@ -1,13 +1,6 @@
 # frozen_string_literal: true
 
 describe 'Realizar transferência com Bradesco/Itau/Santander/BBrasil e input/output exploratório' do
-  CartDB.new.update_dataFinalVendaVigente('2020-12-25')
-  # @token = ApiUser.GetToken
-  # @login = ApiUser.Login(@token, build(:login).to_hash)
-  # @idUsuario = @login.parsed_response['obj'][0]['idUsuario']
-  # TransferDB.new.delete_account(@idUsuario)
-  # TransferDB.new.insert_account(@idUsuario)
-
   context '[Bradesco] Realizar transferência com banco Bradesco' do
     before do
       @token = ApiUser.GetToken
@@ -16,9 +9,9 @@ describe 'Realizar transferência com Bradesco/Itau/Santander/BBrasil e input/ou
       cart = build(:cart).to_hash
       carrinho = ApiCart.post_add_item_cart(@token, cart)
       idCarrinho = carrinho.parsed_response['obj'][0]['idCarrinho']
-
       payment_transfer = build(:transfer_bradesco).to_hash
       @result = ApiTransfer.post_transfer(@token, idCarrinho, payment_transfer)
+      # puts @result
     end
 
     it 'Realizar transferência com banco Bradesco' do
@@ -35,7 +28,10 @@ describe 'Realizar transferência com Bradesco/Itau/Santander/BBrasil e input/ou
   context '[Bradesco] Realizar transferência com uma conta já salva' do
     before do
       @token = ApiUser.GetToken
-      ApiUser.Login(@token, build(:login).to_hash)
+      login = ApiUser.Login(@token, build(:login).to_hash)
+      idUsuario = login.parsed_response['obj'][0]['idUsuario']
+      TransferDB.new.delete_account(idUsuario)
+      TransferDB.new.insert_account(idUsuario)
 
       cart = build(:cart).to_hash
       carrinho = ApiCart.post_add_item_cart(@token, cart)
@@ -58,7 +54,6 @@ describe 'Realizar transferência com Bradesco/Itau/Santander/BBrasil e input/ou
   #   before do
   #     @token = ApiUser.GetToken
   #     ApiUser.Login(@token, build(:login).to_hash)
-  #     CartDB.new.update_dataFinalVendaVigente(dataVincenda)
 
   #     @cart = build(:cart).to_hash
   #     @carrinho = ApiCart.post_add_item_cart(@token, @cart)
@@ -90,7 +85,7 @@ describe 'Realizar transferência com Bradesco/Itau/Santander/BBrasil e input/ou
       carrinho = ApiCart.post_add_item_cart(@token, cart)
       idCarrinho = carrinho.parsed_response['obj'][0]['idCarrinho']
 
-      transfer = build(:transfer_bradesco).to_hash      
+      transfer = build(:transfer_bradesco).to_hash
       transfer[:transfContaDigito] = ''
       @payment_transfer = ApiTransfer.post_transfer(@token, idCarrinho, transfer)
     end
@@ -313,6 +308,9 @@ describe 'Realizar transferência com Bradesco/Itau/Santander/BBrasil e input/ou
     before do
       @token = ApiUser.GetToken
       login = ApiUser.Login(@token, build(:login).to_hash)
+      idUsuario = login.parsed_response['obj'][0]['idUsuario']
+      TransferDB.new.delete_account(idUsuario)
+      TransferDB.new.insert_account(idUsuario)
 
       cart = build(:cart).to_hash
       carrinho = ApiCart.post_add_item_cart(@token, cart)
@@ -361,6 +359,9 @@ describe 'Realizar transferência com Bradesco/Itau/Santander/BBrasil e input/ou
     before do
       @token = ApiUser.GetToken
       login = ApiUser.Login(@token, build(:login).to_hash)
+      idUsuario = login.parsed_response['obj'][0]['idUsuario']
+      TransferDB.new.delete_account(idUsuario)
+      TransferDB.new.insert_account(idUsuario)
 
       cart = build(:cart).to_hash
       carrinho = ApiCart.post_add_item_cart(@token, cart)
@@ -426,7 +427,10 @@ describe 'Realizar transferência com Bradesco/Itau/Santander/BBrasil e input/ou
   context '[BBrasil] Realizar transferência com uma conta já salva do Brasil' do
     before do
       @token = ApiUser.GetToken
-      ApiUser.Login(@token, build(:login).to_hash)
+      login = ApiUser.Login(@token, build(:login).to_hash)
+      idUsuario = login.parsed_response['obj'][0]['idUsuario']
+      TransferDB.new.delete_account(idUsuario)
+      TransferDB.new.insert_account(idUsuario)
 
       cart = build(:cart).to_hash
       carrinho = ApiCart.post_add_item_cart(@token, cart)

@@ -30,8 +30,6 @@ context 'loops' do
     @token = ApiUser.GetToken
     ApiUser.Login(@token, build(:login).to_hash)
 
-    # Database.new.update_DataFinalVendaVigente('2020-12-25')
-
     cart = build(:cart).to_hash
     carrinho = ApiCart.post_add_item_cart(@token, cart)
     idCarrinho = (carrinho.parsed_response)['obj'][0]['idCarrinho']

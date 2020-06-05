@@ -5,7 +5,7 @@ require 'services/user'
 
 class ApiRanking
   include HTTParty
-  base_uri Constant::URLPROD
+  base_uri Constant::URIPROD
   headers 'Content-Type' => 'application/json'
 
   def self.get_rankingResultados(token)

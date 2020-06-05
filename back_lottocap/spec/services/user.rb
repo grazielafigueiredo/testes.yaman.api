@@ -4,7 +4,7 @@ require 'utils/constant'
 
 class ApiUser
   include HTTParty
-  base_uri Constant::Url
+  base_uri Constant::URI_HOMOLOG
   headers 'Content-Type' => 'application/json'
 
   def self.Login(token, user)
@@ -25,7 +25,7 @@ end
 
 class ApiUserPROD
   include HTTParty
-  base_uri Constant::URLPROD
+  base_uri Constant::URIPROD
   headers 'Content-Type' => 'application/json'
 
   def self.Login(token, user)

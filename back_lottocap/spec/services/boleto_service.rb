@@ -6,7 +6,7 @@ require 'services/user'
 
 class ApiBoleto
   include HTTParty
-  base_uri Constant::Url
+  base_uri Constant::URI_HOMOLOG
   headers 'Content-Type' => 'application/json'
 
   def self.post_payment_cart_boleto(token, idCarrinho, payment_boleto)

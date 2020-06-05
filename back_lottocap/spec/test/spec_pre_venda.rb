@@ -8,7 +8,7 @@ context 'Validar se há dezenas repetidas' do
 
     @cart = build(:cart).to_hash
     @cart[:qtdItens] = 10
-    @cart[:idSerie] = Constant::IdSerieMaxPreVenda
+    @cart[:idSerie] = Constant::ID_SERIE_MAX_PRE_VENDA
     @carrinho = ApiCart.post_add_item_cart(@token, @cart)
     @idCarrinhoItem = @carrinho.parsed_response['obj'][0]['idCarrinhoItem']
 

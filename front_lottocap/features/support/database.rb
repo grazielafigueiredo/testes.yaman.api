@@ -126,7 +126,7 @@ class Database
                                               DataFinalPreVenda= '#{today_add_3_days}', 
                                               DataInicialVenda= '#{today_add_6_days}',
                                               DataFinalVenda= '#{today_add_9_days}' 
-                            WHERE IdSerie= #{Constant::IdSerieMaxPreVenda};")
+                            WHERE IdSerie= #{Constant::ID_SERIE_MAX_PRE_VENDA};")
     puts ta.do
 
     puts today

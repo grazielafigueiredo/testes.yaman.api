@@ -1,6 +1,6 @@
 class Constant
 
     UserID = 3661
-    IdSerieMaxPreVenda = 93
+    ID_SERIE_MAX_PRE_VENDA = 93
 
 end

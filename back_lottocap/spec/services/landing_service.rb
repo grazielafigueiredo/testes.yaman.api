@@ -4,7 +4,7 @@ require 'utils/constant'
 
 class ApiLanding
   include HTTParty
-  base_uri Constant::Url
+  base_uri Constant::URI_HOMOLOG
   headers 'Content-Type' => 'application/json', 'Authorization' => ApiUser.GetToken
 
   def self.get_landing_page_max

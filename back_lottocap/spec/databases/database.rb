@@ -8,7 +8,7 @@ require 'timeout'
 class Database < DbBase
 
   def update_reservarSerie(reservado)
-    t = @connection.execute("UPDATE TituloMatriz SET reservado = #{reservado} where idSerie = #{Constant::IdSerieMaxRegular};")
+    t = @connection.execute("UPDATE TituloMatriz SET reservado = #{reservado} where idSerie = #{Constant::ID_SERIE_MAX_REGULAR};")
     sleep 5
     puts t.do
   end

@@ -5,7 +5,7 @@ require 'services/user'
 
 class ApiTransfer
   include HTTParty
-  base_uri Constant::Url
+  base_uri Constant::URI_HOMOLOG
   headers 'Content-Type' => 'application/json'
 
   def self.post_transfer(token, idCarrinho, transfer)
