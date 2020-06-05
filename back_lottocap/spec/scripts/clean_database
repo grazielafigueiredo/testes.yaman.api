@@ -1,0 +1,70 @@
+DECLARE @email AS VARCHAR(50) = 'user22@gmail.com'
+
+DELETE 
+FROM LogTransacao WHERE idUsuarioCriacao
+IN (
+    SELECT idUsuario FROM Usuario WHERE Email = @email
+)
+
+DELETE
+FROM Pessoa WHERE idUsuario
+IN (
+    SELECT idUsuario FROM Usuario WHERE Email = @email
+)
+
+DELETE 
+FROM ReservaTituloToken WHERE IdToken
+IN (
+    SELECT IdToken FROM TokenUsuario WHERE IdUsuario
+    IN (
+        SELECT idUsuario FROM Usuario WHERE Email = @email
+    )
+)
+
+DELETE 
+FROM ReservaTokenTituloMatriz WHERE IdToken
+IN (
+    SELECT IdToken FROM TokenUsuario WHERE IdUsuario
+    IN (
+        SELECT IdUsuario FROM TokenUsuario WHERE IdUsuario
+        IN (
+            SELECT idUsuario FROM Usuario WHERE Email = @email
+        )
+    )
+)
+
+DELETE 
+FROM TokenUsuario WHERE IdUsuario
+IN (
+    SELECT IdUsuario FROM CarrinhoToken WHERE IdToken
+    IN (
+        SELECT IdToken FROM TokenUsuario WHERE IdUsuario
+        IN (
+            SELECT idUsuario FROM Usuario WHERE Email = @email
+        )
+    )
+)
+
+DELETE 
+FROM TokenUsuario WHERE IdUsuario
+IN (
+    SELECT idUsuario FROM Usuario WHERE Email = @email
+)
+
+DELETE 
+FROM CarrinhoItem WHERE IdCarrinho
+IN (
+SELECT IdCarrinho FROM Carrinho WHERE IdUsuarioCriacao
+    IN(
+        SELECT idUsuario FROM Usuario WHERE Email = @email
+    )   
+)
+
+DELETE 
+FROM Carrinho WHERE IdUsuarioCriacao
+IN(
+    SELECT idUsuario FROM Usuario WHERE Email = @email
+)
+
+DELETE 
+FROM Usuario WHERE Email = @email
