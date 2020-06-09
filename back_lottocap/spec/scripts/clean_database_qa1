@@ -1,0 +1,129 @@
+DECLARE @email AS VARCHAR(50) = 'user22@gmail.com'
+
+DELETE FROM Pessoa WHERE idUsuario
+    IN (
+        SELECT idUsuario FROM Usuario WHERE Email = @email
+    )
+
+DELETE FROM ResgateStatus WHERE idResgate
+    IN (
+        SELECT idResgate FROM Resgate WHERE idUsuario
+        IN (
+            SELECT idUsuario FROM Usuario WHERE Email = @email
+        )
+    )
+
+DELETE FROM Resgate WHERE idUsuario
+    IN (
+        SELECT idUsuario FROM Usuario WHERE Email = @email
+    )
+
+DELETE FROM ResgateStatus WHERE idResgate
+    IN (
+        SELECT idResgate FROM Resgate WHERE idUsuario
+        IN (
+            SELECT idUsuario FROM Usuario  WHERE Email = @email
+        )
+    )
+
+DELETE FROM ReservaTokenTituloMatriz WHERE IdToken
+    IN (
+        SELECT IdToken FROM TokenUsuario WHERE IdUsuario
+        IN (
+            SELECT idUsuario FROM Usuario WHERE Email = @email
+        )
+    )
+
+DELETE FROM ReservaTituloToken WHERE IdToken
+    IN (
+        SELECT IdToken FROM TokenUsuario WHERE IdUsuario
+       IN (        
+            SELECT idUsuario FROM Usuario WHERE Email = @email
+        )
+    )
+
+DELETE FROM Resgate WHERE idUsuario
+    IN (
+        SELECT idUsuario FROM Usuario WHERE Email = @email
+    )
+
+DELETE FROM CarrinhoToken WHERE IdToken
+    IN (
+        SELECT IdToken FROM TokenUsuario WHERE IdUsuario
+        IN (
+            SELECT idUsuario FROM Usuario WHERE Email = @email
+        )
+    )
+
+DELETE FROM TokenUsuario WHERE IdUsuario
+    IN (
+        SELECT idUsuario FROM Usuario WHERE Email = @email
+    )
+
+DELETE FROM UsuarioContaCorrente WHERE idUsuario
+    IN (
+        SELECT idUsuario FROM Usuario WHERE Email = @email
+    )
+
+
+DELETE FROM Titulo WHERE IdCarrinhoItem 
+    IN (
+        SELECT IdCarrinhoItem FROM CarrinhoItem WHERE IdCarrinho 
+        IN (
+            SELECT IdCarrinho FROM Carrinho WHERE IdUsuarioCriacao 
+            IN (        
+                SELECT idUsuario FROM Usuario WHERE Email = @email
+            )
+        )
+    )
+
+DELETE FROM CarrinhoItem WHERE IdCarrinho 
+    IN (
+        SELECT IdCarrinho FROM Carrinho WHERE IdUsuarioCriacao 
+        IN (        
+            SELECT idUsuario FROM Usuario WHERE Email = @email
+        )
+    )
+
+DELETE FROM CompraItem WHERE idCompra
+    IN (
+        SELECT idCompra FROM Compra WHERE idCarrinho
+        IN (
+            SELECT idCarrinho FROM Carrinho WHERE IdUsuarioCriacao
+            IN (
+                SELECT idUsuario FROM Usuario WHERE Email = @email
+            )
+        )
+    )
+
+DELETE FROM Compra WHERE idCarrinho
+    IN (
+        SELECT idCarrinho FROM Carrinho WHERE IdUsuarioCriacao
+        IN (
+            SELECT idUsuario FROM Usuario WHERE Email = @email
+        )
+    )
+
+DELETE FROM Carrinho WHERE IdUsuarioCriacao
+    IN (
+        SELECT idUsuario FROM Usuario WHERE Email = @email
+    )
+
+DELETE FROM ResgateStatus WHERE idResgate
+    IN (
+        SELECT idResgate FROM Resgate WHERE idUsuario
+        IN (
+            SELECT idUsuario FROM Usuario WHERE Email = @email
+        )
+    )
+DELETE FROM Resgate WHERE idUsuario
+    IN (
+        SELECT idUsuario FROM Usuario WHERE Email = @email
+    )
+
+DELETE FROM LogTransacao WHERE idUsuarioCriacao
+    IN (
+        SELECT idUsuario FROM Usuario WHERE Email = @email
+    )
+
+DELETE FROM Usuario WHERE Email = @email
