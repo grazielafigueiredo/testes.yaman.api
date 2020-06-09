@@ -9,7 +9,7 @@ FactoryBot.define do
     nomeCompletoTitular { 'Otto Oliveira' }
     ccredNumero { '5521884306233764' }
     ccredValidadeMes { '11' }
-    ccredValidadeAno { Constant::ValidadeAnoCartao }
+    ccredValidadeAno { Constant::VALIDADE_ANO_CARTAO }
     ccredCVV { '123' }
     flCompraDeCredito { true }
     valorCreditos { 20 }

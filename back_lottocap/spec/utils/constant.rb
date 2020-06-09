@@ -14,7 +14,5 @@ class Constant
 
   ID_PRODUTO_MAX = ENV['ID_PRODUTO_MAX']
 
-  USER = { "usuario": ENV['USER_1_NAME'], "senha": ENV['USER_1_PASSWORD'] }.freeze
-
-  ValidadeAnoCartao = ENV['VALIDADE_ANO_CARTAO']
+  VALIDADE_ANO_CARTAO = ENV['VALIDADE_ANO_CARTAO']
 end
