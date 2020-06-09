@@ -65,9 +65,22 @@ RSpec.configure do |config|
 
   config.include FactoryBot::Syntax::Methods
   
+  config.before :each do
+    @token = ApiUser.GetToken
+    @login = ApiUser.Login(@token, build(:login).to_hash)
+    @idUsuario = @login.parsed_response['obj'][0]['idUsuario']
+
+  end
+
   config.before :all do
     CartDB.new.update_dataFinalVendaVigente('2020-12-25')
   end
+
+
+  config.after :each do
+    ApiUser.get_logout(@token)
+  end
+
   config.after :all do
     CartDB.new.update_dataFinalVendaVigente('2020-12-25')
   end

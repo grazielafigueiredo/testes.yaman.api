@@ -14,8 +14,8 @@ class ApiUser
   end
 
   def self.GetToken
-    token = get('/Usuario/GerarToken')
-    token.parsed_response['obj'][0]['token']
+    generate_token = get('/Usuario/GerarToken')
+    token = generate_token.parsed_response['obj'][0]['token']
   end
 
   def self.get_logout(token)
@@ -31,12 +31,14 @@ class ApiUserPROD
   def self.Login(token, user)
     payload = { "obj": user }
     post('/Usuario/LogarUsuario', body: payload.to_json, headers: { 'Authorization' => token })
-    # result.parsed_response['obj'][0]['token']
   end
 
   def self.GetToken
     token = get('/Usuario/GerarToken')
-    token.parsed_response['obj'][0]['token']
+    meutoken = token.parsed_response['obj'][0]['token']
+    return meutoken
+    # meutoken.tgsub!(/\A"|"\Z/, '')
+    # puts meutoken
   end
 
   def self.get_logout(token)

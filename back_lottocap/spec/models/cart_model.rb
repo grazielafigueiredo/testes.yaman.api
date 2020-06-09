@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class CartModel
-  attr_accessor :idCarrinho, :idProduto, :idSerie, :qtdItens
+  attr_accessor :token, :idCarrinho, :idProduto, :idSerie, :qtdItens
 
   def to_hash
     {

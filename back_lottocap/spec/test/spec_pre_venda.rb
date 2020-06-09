@@ -79,9 +79,6 @@ end
 
 context 'Concorrencia no pagamento Título já reservado' do
   before do
-    @token = ApiUser.GetToken
-    ApiUser.Login(@token, build(:login).to_hash)
-
     dezenas = build(:search_dezenas).to_hash
     search_dezenas = ApiPreVenda.post_search_dezenas(@token, dezenas)
     @group_dezenas = search_dezenas.parsed_response['obj'][0]
@@ -100,9 +97,5 @@ context 'Concorrencia no pagamento Título já reservado' do
   it 'Pagar conjunto de dezenas que já foi reservado/comprado' do
     expect(@result.parsed_response['sucesso']).to eql false
     expect(@result.parsed_response['erros'][0]['mensagem']).to eql "Reserva de titulos já foi solicitada para as dezenas #{@group_dezenas}"
-  end
-
-  after do
-    ApiUser.get_logout(@token)
   end
 end

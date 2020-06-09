@@ -6,11 +6,11 @@ context 'Criar usuário para rodar nos testes' do
 
     @result = ApiCreateUser.post_create_new_user(build(:user_create).to_hash)
 
-    @token = ApiUser.GetToken
-    login = ApiUser.Login(@token, build(:login).to_hash)
-    idUsuario = login.parsed_response['obj'][0]['idUsuario']
+    # @token = ApiUser.GetToken
+    # login = ApiUser.Login(@token, build(:login).to_hash)
+    # idUsuario = login.parsed_response['obj'][0]['idUsuario']
 
-    User.new.insert_first_access_user(idUsuario)
+    User.new.insert_first_access_user(@idUsuario)
   end
 
   it { expect(@result.parsed_response['sucesso']).to be true }

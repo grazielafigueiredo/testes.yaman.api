@@ -5,9 +5,6 @@ describe 'Carrinho - Reserva' do
 
   # context 'Atualizar carrinho com a quantidade disponível para compra' do
   #   before do
-  #     @token = ApiUser.GetToken
-  #     ApiUser.Login(@token, build(:login).to_hash)
-
   #     @titulo_nao_reservados = CartDB.new.get_titulos_reservados(0, Constant::ID_SERIE_MAX_REGULAR)
 
   #     CartDB.new.disponibiliza_titulos(@titulo_nao_reservados)
@@ -32,15 +29,11 @@ describe 'Carrinho - Reserva' do
 
   #   after do
   #     CartDB.new.disponibiliza_titulos(@titulo_nao_reservados)
-  #     ApiUser.get_logout(@token)
   #   end
   # end
 
   context 'Carrinho com série indisponível para venda, então deve atualizar com a série nova em andamentoo' do
     before do
-      @token = ApiUser.GetToken
-      ApiUser.Login(@token, build(:login).to_hash)
-
       ApiCart.post_add_item_cart(@token, build(:cart).to_hash)
 
       CartDB.new.update_dataFinalVendaVigente(dataVencida)
@@ -48,17 +41,10 @@ describe 'Carrinho - Reserva' do
     end
 
     it { expect(@result.parsed_response['erros'][0]['mensagem']).to eql 'Atualizamos o carrinho mantendo apenas as série em andamento' }
-
-    after do
-      ApiUser.get_logout(@token)
-    end
   end
 
   context 'Validar se o carrinho comporta 2 produtos diferentes' do
     before do
-      @token = ApiUser.GetToken
-      ApiUser.Login(@token, build(:login).to_hash)
-
       ApiCart.post_add_item_cart(@token, build(:cart).to_hash)
 
       cart = build(:cart).to_hash
@@ -73,47 +59,27 @@ describe 'Carrinho - Reserva' do
       expect(@carrinho.parsed_response['obj'][0]['idCarrinho']).to be_a Integer
       expect(@carrinho.parsed_response['obj'][1]['idCarrinho']).to be_a Integer
     end
-
-    after do
-      ApiUser.get_logout(@token)
-    end
   end
 
   context 'Validar se vigência do produto tem data diferente de "0001-01-01T00:00:00"' do
     before do
-      @token = ApiUser.GetToken
-      ApiUser.Login(@token, build(:login).to_hash)
-
       carrinho = ApiCart.post_add_item_cart(@token, build(:cart).to_hash)
       @dtFimConcurso = carrinho.parsed_response['obj'][0]['dtFimConcurso']
     end
     it { expect(@dtFimConcurso).not_to be '0001-01-01T00:00:00' }
-
-    after do
-      ApiUser.get_logout(@token)
-    end
   end
 
   context 'Colocar no carrinho quantidade acima permitida ' do
     before do
-      @token = ApiUser.GetToken
-      ApiUser.Login(@token, build(:login).to_hash)
-
       @carrinho = ApiCart.post_set_qtd_item_carrinho(@token)
     end
 
     it { expect(@carrinho.parsed_response['erros'][0]['mensagem']).to eql 'Quantidade limite de titulos para compra atingida!' }
 
-    after do
-      ApiUser.get_logout(@token)
-    end
   end
 
   context 'Validar quando não existe nenhum produto disponível na vitrine' do
     before do
-      @token = ApiUser.GetToken
-      ApiUser.Login(@token, build(:login).to_hash)
-
       vitrine_itens = ApiCart.get_product_vitrine(@token)
       @products = vitrine_itens.parsed_response['obj'].map { |obj| obj['idSerie'] }
 
@@ -128,15 +94,11 @@ describe 'Carrinho - Reserva' do
 
     after do
       @products.each { |id_serie| CartDB.new.update_products_vitrine('2020-12-25', id_serie) }
-      ApiUser.get_logout(@token)
     end
   end
 
   context '[/Pagamento] Tentar pagar uma série fora data vigente com cartão de crédito' do
     before do
-      @token = ApiUser.GetToken
-      ApiUser.Login(@token, build(:login).to_hash)
-
       carrinho = ApiCart.post_add_item_cart(@token, build(:cart).to_hash)
       idCarrinho = carrinho.parsed_response['obj'][0]['idCarrinho']
 
@@ -148,17 +110,10 @@ describe 'Carrinho - Reserva' do
     end
 
     it { expect(@result.parsed_response['erros'][0]['mensagem']).to eql 'Esta forma de pagamento não está mais disponível, por favor. Selecione outra forma de pagamento.' }
-
-    after do
-      ApiUser.get_logout(@token)
-    end
   end
 
   context '[/Pagamento] Tentar pagar uma série fora data vigente com Transferencia' do
     before do
-      @token = ApiUser.GetToken
-      ApiUser.Login(@token, build(:login).to_hash)
-
       carrinho = ApiCart.post_add_item_cart(@token, build(:cart).to_hash)
       idCarrinho = carrinho.parsed_response['obj'][0]['idCarrinho']
 
@@ -168,17 +123,10 @@ describe 'Carrinho - Reserva' do
     end
 
     it { expect(@result.parsed_response['erros'][0]['mensagem']).to eql 'Esta forma de pagamento não está mais disponível, por favor. Selecione outra forma de pagamento.' }
-
-    after do
-      ApiUser.get_logout(@token)
-    end
   end
 
   context '[/Pagamento] Tentar pagar uma série fora data vigente com Boleto' do
     before do
-      @token = ApiUser.GetToken
-      ApiUser.Login(@token, build(:login).to_hash)
-
       carrinho = ApiCart.post_add_item_cart(@token, build(:cart).to_hash)
       idCarrinho = carrinho.parsed_response['obj'][0]['idCarrinho']
 
@@ -189,17 +137,10 @@ describe 'Carrinho - Reserva' do
 
     it { expect(@result.parsed_response['erros'][0]['mensagem']).to eql 'Esta forma de pagamento não está mais disponível, por favor. Selecione outra forma de pagamento.' }
 
-    after do
-      ApiUser.get_logout(@token)
-    end
   end
 
   context '[/Pagamento] Tentar pagar uma série fora data vigente com Crédito Lottocap' do
     before do
-      @token = ApiUser.GetToken
-      login = ApiUser.Login(@token, build(:login).to_hash)
-      @idUsuario = login.parsed_response['obj'][0]['idUsuario']
-
       CreditoLotto.new.update_creditoLottocap(100, @idUsuario)
 
       carrinho = ApiCart.post_add_item_cart(@token, build(:cart).to_hash)
@@ -214,15 +155,11 @@ describe 'Carrinho - Reserva' do
 
     after do
       CreditoLotto.new.update_creditoLottocap(100, @idUsuario)
-      ApiUser.get_logout(@token)
     end
   end
 
   context '[/Pagamento] Validar se no carrinho não ficou nenhum cache da última compra' do
     before do
-      @token = ApiUser.GetToken
-      ApiUser.Login(@token, build(:login).to_hash)
-
       carrinho = ApiCart.post_add_item_cart(@token, build(:cart).to_hash)
       idCarrinho = carrinho.parsed_response['obj'][0]['idCarrinho']
 
@@ -233,16 +170,10 @@ describe 'Carrinho - Reserva' do
 
     it { expect(@result.parsed_response['obj']).to eql [] }
 
-    after do
-      ApiUser.get_logout(@token)
-    end
   end
 
   context '[/Pagamento] Adicionar no carrinho uma série vigente, mas no pagamento ela deve ficar fora de vigência, então deve impedir o pagamento' do
     before do
-      @token = ApiUser.GetToken
-      ApiUser.Login(@token, build(:login).to_hash)
-
       carrinho = ApiCart.post_add_item_cart(@token, build(:cart).to_hash)
       idCarrinho = carrinho.parsed_response['obj'][0]['idCarrinho']
 
@@ -253,18 +184,12 @@ describe 'Carrinho - Reserva' do
 
     it { expect(@result.parsed_response['erros'][0]['mensagem']).to eql 'Esta forma de pagamento não está mais disponível, por favor. Selecione outra forma de pagamento.' }
 
-    after do
-      ApiUser.get_logout(@token)
-    end
   end
 
   # TESTE COM TIMEOUT
 
   # context '[/Pagamento] No momento do pagamento a quantidade total de títulos não está mais disponível, então deve impedir o pagamento' do
   #   before do
-  #     @token = ApiUser.GetToken
-  #     ApiUser.Login(@token, build(:login).to_hash)
-
   #     @cart = build(:cart).to_hash
   #     @cart[:qtdItens] = 300
   #     @carrinho = ApiCart.post_add_item_cart(@token, @cart)
@@ -277,29 +202,17 @@ describe 'Carrinho - Reserva' do
   #   end
 
   #   it { expect(@result.parsed_response['erros'][0]['mensagem']).to eql 'Não foi possível Reservar os Titulos Solicitados!' }
-
-  #   after do
-  #     ApiUser.get_logout(@token)
-  #   end
   # end
 
   context 'Limpar carrinho quando o usuário já logado navegar pelo endpoint /afiliados' do
     before do
-      @token = ApiUser.GetToken
-      ApiUser.Login(@token, build(:login).to_hash)
-
       ApiCart.post_add_item_cart(@token, build(:cart).to_hash)
-
       @carrinho = ApiCart.post_add_item_cart_afiliados(@token, build(:cart_afiliados).to_hash)
     end
 
     it 'Verificar se existe apenas 1 produto no carrinho, e se é um Lottocap Já 17' do
       expect(@carrinho.parsed_response['obj'][0]['nomeProduto']).to eql 'LottoCap Já 17'
       expect(@carrinho.parsed_response['obj'].count).to eq(1)
-    end
-
-    after do
-      ApiUser.get_logout(@token)
     end
   end
 
@@ -317,10 +230,6 @@ describe 'Carrinho - Reserva' do
     it 'Verificar se existe apenas 1 produto no carrinho, e se é um Lottocap Já 17' do
       expect(@carrinho.parsed_response['obj'][0]['nomeProduto']).to eql 'LottoCap Já 17'
       expect(@carrinho.parsed_response['obj'].count).to eq(1)
-    end
-
-    after do
-      ApiUser.get_logout(@token)
     end
   end
 end
