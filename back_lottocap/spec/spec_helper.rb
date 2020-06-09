@@ -69,11 +69,15 @@ RSpec.configure do |config|
     @token = ApiUser.GetToken
     @login = ApiUser.Login(@token, build(:login).to_hash)
     @idUsuario = @login.parsed_response['obj'][0]['idUsuario']
-
   end
 
   config.before :all do
     CartDB.new.update_dataFinalVendaVigente('2020-12-25')
+
+    # @token = ApiUser.GetToken
+    # @login = ApiUser.Login(@token, build(:login).to_hash)
+    # @idUsuario = @login.parsed_response['obj'][0]['idUsuario']
+    # User.new.insert_first_access_user(@idUsuario)
   end
 
 
