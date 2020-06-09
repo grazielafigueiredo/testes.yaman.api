@@ -86,7 +86,7 @@ describe 'Alterar dados do usuário' do
       change_user = build(:change_user).to_hash
       @result = ApiCreateUser.post_change_user_data(token, change_user)
     end
-  
+
     it { expect(@result.parsed_response['sucesso']).to be true }
 
     after do

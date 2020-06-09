@@ -11,8 +11,8 @@ context 'Erro 400 API Logar Usuário - só resolveu limpando service worker' do
       expect(token).to eql 'false'
     end
 
-    @login = ApiUser.Login(@token, build(:login).to_hash)
-    expect(JSON.parse(@login.response.code)).to be 401
+    login = ApiUser.Login(@token, build(:login).to_hash)
+    expect(JSON.parse(login.response.code)).to be 401
 
     @token = ApiUser.GetToken
     @loginNovamente = ApiUser.Login(@token, build(:login).to_hash)

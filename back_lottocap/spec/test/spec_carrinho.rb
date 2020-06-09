@@ -41,8 +41,7 @@ describe 'Carrinho - Reserva' do
       @token = ApiUser.GetToken
       ApiUser.Login(@token, build(:login).to_hash)
 
-      @cart = build(:cart).to_hash
-      @carrinho = ApiCart.post_add_item_cart(@token, @cart)
+      ApiCart.post_add_item_cart(@token, build(:cart).to_hash)
 
       CartDB.new.update_dataFinalVendaVigente(dataVencida)
       @result = ApiCart.get_status_cart(@token)
@@ -60,16 +59,14 @@ describe 'Carrinho - Reserva' do
       @token = ApiUser.GetToken
       ApiUser.Login(@token, build(:login).to_hash)
 
-      @cart = build(:cart).to_hash
-      @carrinho = ApiCart.post_add_item_cart(@token, @cart)
+      ApiCart.post_add_item_cart(@token, build(:cart).to_hash)
 
-      @cart = build(:cart).to_hash
-      @cart[:idSerie] = Constant::ID_SERIE_JA_17
-      @carrinho = ApiCart.post_add_item_cart(@token, @cart)
-      @idCarrinho = @carrinho.parsed_response['obj'][0]['idCarrinho']
+      cart = build(:cart).to_hash
+      cart[:idSerie] = Constant::ID_SERIE_JA_17
+      @carrinho = ApiCart.post_add_item_cart(@token, cart)
+      idCarrinho = @carrinho.parsed_response['obj'][0]['idCarrinho']
 
-      @credit_card = build(:credit_card).to_hash
-      @result = ApiCartao.post_credit_card(@token, @idCarrinho, @credit_card)
+      ApiCartao.post_credit_card(@token, idCarrinho, build(:credit_card).to_hash)
     end
 
     it 'Validar se o carrinho comporta 2 produtos diferentes' do
@@ -87,10 +84,8 @@ describe 'Carrinho - Reserva' do
       @token = ApiUser.GetToken
       ApiUser.Login(@token, build(:login).to_hash)
 
-      @cart = build(:cart).to_hash
-      @carrinho = ApiCart.post_add_item_cart(@token, @cart)
-      @idCarrinho = @carrinho.parsed_response['obj'][0]['idCarrinho']
-      @dtFimConcurso = @carrinho.parsed_response['obj'][0]['dtFimConcurso']
+      carrinho = ApiCart.post_add_item_cart(@token, build(:cart).to_hash)
+      @dtFimConcurso = carrinho.parsed_response['obj'][0]['dtFimConcurso']
     end
     it { expect(@dtFimConcurso).not_to be '0001-01-01T00:00:00' }
 
@@ -122,8 +117,7 @@ describe 'Carrinho - Reserva' do
       vitrine_itens = ApiCart.get_product_vitrine(@token)
       @products = vitrine_itens.parsed_response['obj'].map { |obj| obj['idSerie'] }
 
-      cart = build(:cart).to_hash
-      ApiCart.post_add_item_cart(@token, cart)
+      ApiCart.post_add_item_cart(@token, build(:cart).to_hash)
       @products.each { |id_serie| CartDB.new.update_products_vitrine('2018-12-25', id_serie) }
 
       result = ApiCart.get_status_cart(@token)
@@ -143,15 +137,14 @@ describe 'Carrinho - Reserva' do
       @token = ApiUser.GetToken
       ApiUser.Login(@token, build(:login).to_hash)
 
-      @cart = build(:cart).to_hash
-      @carrinho = ApiCart.post_add_item_cart(@token, @cart)
-      @idCarrinho = @carrinho.parsed_response['obj'][0]['idCarrinho']
+      carrinho = ApiCart.post_add_item_cart(@token, build(:cart).to_hash)
+      idCarrinho = carrinho.parsed_response['obj'][0]['idCarrinho']
 
       CartDB.new.update_dataFinalVendaVigente(dataVencida)
 
-      @credit_card = build(:credit_card).to_hash
-      @credit_card[:ccredCVV] = '112399999999'
-      @result = ApiCartao.post_credit_card(@token, @idCarrinho, @credit_card)
+      credit_card = build(:credit_card).to_hash
+      credit_card[:ccredCVV] = '112399999999'
+      @result = ApiCartao.post_credit_card(@token, idCarrinho, credit_card)
     end
 
     it { expect(@result.parsed_response['erros'][0]['mensagem']).to eql 'Esta forma de pagamento não está mais disponível, por favor. Selecione outra forma de pagamento.' }
@@ -166,14 +159,12 @@ describe 'Carrinho - Reserva' do
       @token = ApiUser.GetToken
       ApiUser.Login(@token, build(:login).to_hash)
 
-      @cart = build(:cart).to_hash
-      @carrinho = ApiCart.post_add_item_cart(@token, @cart)
-      @idCarrinho = @carrinho.parsed_response['obj'][0]['idCarrinho']
+      carrinho = ApiCart.post_add_item_cart(@token, build(:cart).to_hash)
+      idCarrinho = carrinho.parsed_response['obj'][0]['idCarrinho']
 
       CartDB.new.update_dataFinalVendaVigente(dataVencida)
 
-      @payment_transfer = build(:transfer_bradesco).to_hash
-      @result = ApiTransfer.post_transfer(@token, @idCarrinho, @payment_transfer)
+      @result = ApiTransfer.post_transfer(@token, idCarrinho, build(:transfer_bradesco).to_hash)
     end
 
     it { expect(@result.parsed_response['erros'][0]['mensagem']).to eql 'Esta forma de pagamento não está mais disponível, por favor. Selecione outra forma de pagamento.' }
@@ -188,14 +179,12 @@ describe 'Carrinho - Reserva' do
       @token = ApiUser.GetToken
       ApiUser.Login(@token, build(:login).to_hash)
 
-      @cart = build(:cart).to_hash
-      @carrinho = ApiCart.post_add_item_cart(@token, @cart)
-      @idCarrinho = @carrinho.parsed_response['obj'][0]['idCarrinho']
+      carrinho = ApiCart.post_add_item_cart(@token, build(:cart).to_hash)
+      idCarrinho = carrinho.parsed_response['obj'][0]['idCarrinho']
 
       CartDB.new.update_dataFinalVendaVigente(dataVencida)
 
-      @payment_boleto = build(:boleto).to_hash
-      @result = ApiBoleto.post_payment_cart_boleto(@token, @idCarrinho, @payment_boleto)
+      @result = ApiBoleto.post_payment_cart_boleto(@token, idCarrinho, build(:boleto).to_hash)
     end
 
     it { expect(@result.parsed_response['erros'][0]['mensagem']).to eql 'Esta forma de pagamento não está mais disponível, por favor. Selecione outra forma de pagamento.' }
@@ -213,14 +202,12 @@ describe 'Carrinho - Reserva' do
 
       CreditoLotto.new.update_creditoLottocap(100, @idUsuario)
 
-      @cart = build(:cart).to_hash
-      @carrinho = ApiCart.post_add_item_cart(@token, @cart)
-      @idCarrinho = @carrinho.parsed_response['obj'][0]['idCarrinho']
+      carrinho = ApiCart.post_add_item_cart(@token, build(:cart).to_hash)
+      idCarrinho = carrinho.parsed_response['obj'][0]['idCarrinho']
 
       CartDB.new.update_dataFinalVendaVigente(dataVencida)
 
-      @credit = build(:payment_credit).to_hash
-      @payment_credit = ApiCreditoLottocap.post_payment_credit_lottocap(@token, @idCarrinho, @credit)
+      @payment_credit = ApiCreditoLottocap.post_payment_credit_lottocap(@token, idCarrinho, build(:payment_credit).to_hash)
     end
 
     it { expect(@payment_credit.parsed_response['erros'][0]['mensagem']).to eql 'Esta forma de pagamento não está mais disponível, por favor. Selecione outra forma de pagamento.' }
@@ -236,12 +223,10 @@ describe 'Carrinho - Reserva' do
       @token = ApiUser.GetToken
       ApiUser.Login(@token, build(:login).to_hash)
 
-      cart = build(:cart).to_hash
-      carrinho = ApiCart.post_add_item_cart(@token, cart)
+      carrinho = ApiCart.post_add_item_cart(@token, build(:cart).to_hash)
       idCarrinho = carrinho.parsed_response['obj'][0]['idCarrinho']
-      puts carrinho
-      credit_card = build(:credit_card).to_hash
-      v = ApiCartao.post_credit_card(@token, idCarrinho, credit_card)
+
+      v = ApiCartao.post_credit_card(@token, idCarrinho, build(:credit_card).to_hash)
       puts v
       @result = ApiCart.post_cart_itens(@token)
     end
@@ -258,15 +243,12 @@ describe 'Carrinho - Reserva' do
       @token = ApiUser.GetToken
       ApiUser.Login(@token, build(:login).to_hash)
 
-      @cart = build(:cart).to_hash
-      @carrinho = ApiCart.post_add_item_cart(@token, @cart)
-      @idCarrinho = @carrinho.parsed_response['obj'][0]['idCarrinho']
+      carrinho = ApiCart.post_add_item_cart(@token, build(:cart).to_hash)
+      idCarrinho = carrinho.parsed_response['obj'][0]['idCarrinho']
 
       CartDB.new.update_dataFinalVendaVigente(dataVencida)
 
-      @payment_boleto = build(:boleto).to_hash
-      @result = ApiBoleto.post_payment_cart_boleto(@token, @idCarrinho, @payment_boleto)
-      puts @result
+      @result = ApiBoleto.post_payment_cart_boleto(@token, idCarrinho, build(:boleto).to_hash)
     end
 
     it { expect(@result.parsed_response['erros'][0]['mensagem']).to eql 'Esta forma de pagamento não está mais disponível, por favor. Selecione outra forma de pagamento.' }
@@ -306,11 +288,9 @@ describe 'Carrinho - Reserva' do
       @token = ApiUser.GetToken
       ApiUser.Login(@token, build(:login).to_hash)
 
-      cart = build(:cart).to_hash
-      ApiCart.post_add_item_cart(@token, cart)
+      ApiCart.post_add_item_cart(@token, build(:cart).to_hash)
 
-      cart_afiliados = build(:cart_afiliados).to_hash
-      @carrinho = ApiCart.post_add_item_cart_afiliados(@token, cart_afiliados)
+      @carrinho = ApiCart.post_add_item_cart_afiliados(@token, build(:cart_afiliados).to_hash)
     end
 
     it 'Verificar se existe apenas 1 produto no carrinho, e se é um Lottocap Já 17' do
@@ -327,13 +307,11 @@ describe 'Carrinho - Reserva' do
     before do
       @token = ApiUser.GetToken
 
-      cart = build(:cart).to_hash
-      ApiCart.post_add_item_cart(@token, cart)
+      ApiCart.post_add_item_cart(@token, build(:cart).to_hash)
 
       ApiUser.Login(@token, build(:login).to_hash)
 
-      cart_afiliados = build(:cart_afiliados).to_hash
-      @carrinho = ApiCart.post_add_item_cart_afiliados(@token, cart_afiliados)
+      @carrinho = ApiCart.post_add_item_cart_afiliados(@token, build(:cart_afiliados).to_hash)
     end
 
     it 'Verificar se existe apenas 1 produto no carrinho, e se é um Lottocap Já 17' do

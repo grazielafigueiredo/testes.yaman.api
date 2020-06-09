@@ -38,7 +38,6 @@ describe 'RGN' do
       rng[:numeroMaximo] = '1234ABC'
       rng[:qtdDezenasSorteadas] = '1234ABC'
       @result = ApiRNG.post_rng(rng)
-      puts @result
     end
     it '' do
       expect(JSON.parse(@result.response.code)).to be 400
@@ -51,7 +50,6 @@ describe 'RGN' do
       rng[:numeroMaximo] = 0
       rng[:qtdDezenasSorteadas] = 0
       @result = ApiRNG.post_rng(rng)
-      puts @result
     end
     it '' do
       expect(@result.parsed_response['mensagem']).to eql 'Dados para geração de número aleatório inválidos.'

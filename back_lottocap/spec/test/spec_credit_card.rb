@@ -65,13 +65,13 @@ describe 'Cartão de Crédito' do
       @token = ApiUser.GetToken
       ApiUser.Login(@token, build(:login).to_hash)
 
-      @cart = build(:cart).to_hash
-      @carrinho = ApiCart.post_add_item_cart(@token, @cart)
-      @idCarrinho = @carrinho.parsed_response['obj'][0]['idCarrinho']
+      cart = build(:cart).to_hash
+      carrinho = ApiCart.post_add_item_cart(@token, cart)
+      idCarrinho = carrinho.parsed_response['obj'][0]['idCarrinho']
 
-      @credit_card = build(:credit_card).to_hash
-      @credit_card[:nomeCompletoTitular] = ''
-      @result = ApiCartao.post_credit_card(@token, @idCarrinho, @credit_card)
+      credit_card = build(:credit_card).to_hash
+      credit_card[:nomeCompletoTitular] = ''
+      @result = ApiCartao.post_credit_card(@token, idCarrinho, credit_card)
     end
 
     it { expect((@result.parsed_response)['sucesso']).to be true }
@@ -86,13 +86,13 @@ describe 'Cartão de Crédito' do
       @token = ApiUser.GetToken
       ApiUser.Login(@token, build(:login).to_hash)
 
-      @cart = build(:cart).to_hash
-      @carrinho = ApiCart.post_add_item_cart(@token, @cart)
-      @idCarrinho = @carrinho.parsed_response['obj'][0]['idCarrinho']
+      cart = build(:cart).to_hash
+      carrinho = ApiCart.post_add_item_cart(@token, cart)
+      idCarrinho = carrinho.parsed_response['obj'][0]['idCarrinho']
 
-      @credit_card = build(:credit_card).to_hash
-      @credit_card[:ccredNumero] = 'erty4567rt567'
-      @result = ApiCartao.post_credit_card(@token, @idCarrinho, @credit_card)
+      credit_card = build(:credit_card).to_hash
+      credit_card[:ccredNumero] = 'erty4567rt567'
+      @result = ApiCartao.post_credit_card(@token, idCarrinho, credit_card)
     end
 
     it { expect((@result.parsed_response)['erros'][0]['mensagem']).to eql 'Tipo de cartão inválido.' }
@@ -107,13 +107,13 @@ describe 'Cartão de Crédito' do
       @token = ApiUser.GetToken
       ApiUser.Login(@token, build(:login).to_hash)
 
-      @cart = build(:cart).to_hash
-      @carrinho = ApiCart.post_add_item_cart(@token, @cart)
-      @idCarrinho = @carrinho.parsed_response['obj'][0]['idCarrinho']
+      cart = build(:cart).to_hash
+      carrinho = ApiCart.post_add_item_cart(@token, cart)
+      idCarrinho = carrinho.parsed_response['obj'][0]['idCarrinho']
 
-      @credit_card = build(:credit_card).to_hash
-      @credit_card[:ccredNumero] = ''
-      @result = ApiCartao.post_credit_card(@token, @idCarrinho, @credit_card)
+      credit_card = build(:credit_card).to_hash
+      credit_card[:ccredNumero] = ''
+      @result = ApiCartao.post_credit_card(@token, idCarrinho, credit_card)
     end
 
     it { expect((@result.parsed_response)['erros'][0]['mensagem']).to eql 'Tipo de cartão inválido.' }
@@ -128,13 +128,13 @@ describe 'Cartão de Crédito' do
       @token = ApiUser.GetToken
       ApiUser.Login(@token, build(:login).to_hash)
 
-      @cart = build(:cart).to_hash
-      @carrinho = ApiCart.post_add_item_cart(@token, @cart)
-      @idCarrinho = @carrinho.parsed_response['obj'][0]['idCarrinho']
+      cart = build(:cart).to_hash
+      carrinho = ApiCart.post_add_item_cart(@token, cart)
+      idCarrinho = carrinho.parsed_response['obj'][0]['idCarrinho']
 
-      @credit_card = build(:credit_card).to_hash
-      @credit_card[:ccredValidadeAno] = '11aa'
-      @result = ApiCartao.post_credit_card(@token, @idCarrinho, @credit_card)
+      credit_card = build(:credit_card).to_hash
+      credit_card[:ccredValidadeAno] = '11aa'
+      @result = ApiCartao.post_credit_card(@token, idCarrinho, credit_card)
     end
 
     it { expect(@result.response.code).to eql '400' }
@@ -149,13 +149,13 @@ describe 'Cartão de Crédito' do
       @token = ApiUser.GetToken
       ApiUser.Login(@token, build(:login).to_hash)
 
-      @cart = build(:cart).to_hash
-      @carrinho = ApiCart.post_add_item_cart(@token, @cart)
-      @idCarrinho = @carrinho.parsed_response['obj'][0]['idCarrinho']
+      cart = build(:cart).to_hash
+      carrinho = ApiCart.post_add_item_cart(@token, cart)
+      idCarrinho = carrinho.parsed_response['obj'][0]['idCarrinho']
 
-      @credit_card = build(:credit_card).to_hash
-      @credit_card[:ccredValidadeAno] = '11'
-      @result = ApiCartao.post_credit_card(@token, @idCarrinho, @credit_card)
+      credit_card = build(:credit_card).to_hash
+      credit_card[:ccredValidadeAno] = '11'
+      @result = ApiCartao.post_credit_card(@token, idCarrinho, credit_card)
     end
 
     it { expect((@result.parsed_response)['erros'][0]['mensagem']).to eql 'Erro na confirmação do pagamento: 400 - Data de vencimento do cartão expirada. ' }
@@ -170,13 +170,13 @@ describe 'Cartão de Crédito' do
       @token = ApiUser.GetToken
       ApiUser.Login(@token, build(:login).to_hash)
 
-      @cart = build(:cart).to_hash
-      @carrinho = ApiCart.post_add_item_cart(@token, @cart)
-      @idCarrinho = @carrinho.parsed_response['obj'][0]['idCarrinho']
+      cart = build(:cart).to_hash
+      carrinho = ApiCart.post_add_item_cart(@token, cart)
+      idCarrinho = carrinho.parsed_response['obj'][0]['idCarrinho']
 
-      @credit_card = build(:credit_card).to_hash
-      @credit_card[:ccredValidadeAno] = ''
-      @result = ApiCartao.post_credit_card(@token, @idCarrinho, @credit_card)
+      credit_card = build(:credit_card).to_hash
+      credit_card[:ccredValidadeAno] = ''
+      @result = ApiCartao.post_credit_card(@token, idCarrinho, credit_card)
     end
 
     it 'Input no campo ‘vencimento/ano’ dados vazio' do
@@ -194,13 +194,13 @@ describe 'Cartão de Crédito' do
       @token = ApiUser.GetToken
       ApiUser.Login(@token, build(:login).to_hash)
 
-      @cart = build(:cart).to_hash
-      @carrinho = ApiCart.post_add_item_cart(@token, @cart)
-      @idCarrinho = @carrinho.parsed_response['obj'][0]['idCarrinho']
+      cart = build(:cart).to_hash
+      carrinho = ApiCart.post_add_item_cart(@token, cart)
+      idCarrinho = carrinho.parsed_response['obj'][0]['idCarrinho']
 
-      @credit_card = build(:credit_card).to_hash
-      @credit_card[:ccredValidadeMes] = '14'
-      @result = ApiCartao.post_credit_card(@token, @idCarrinho, @credit_card)
+      credit_card = build(:credit_card).to_hash
+      credit_card[:ccredValidadeMes] = '14'
+      @result = ApiCartao.post_credit_card(@token, idCarrinho, credit_card)
     end
 
     it { expect((@result.parsed_response)['erros'][0]['mensagem']).to eql 'Erro na confirmação do pagamento: 400 - O mês de expiração do cartão deve ser maior que 0 e menor que 13. 400 - Data de vencimento do cartão inválida. ' }
@@ -215,13 +215,13 @@ describe 'Cartão de Crédito' do
       @token = ApiUser.GetToken
       ApiUser.Login(@token, build(:login).to_hash)
 
-      @cart = build(:cart).to_hash
-      @carrinho = ApiCart.post_add_item_cart(@token, @cart)
-      @idCarrinho = @carrinho.parsed_response['obj'][0]['idCarrinho']
+      cart = build(:cart).to_hash
+      carrinho = ApiCart.post_add_item_cart(@token, cart)
+      idCarrinho = carrinho.parsed_response['obj'][0]['idCarrinho']
 
-      @credit_card = build(:credit_card).to_hash
-      @credit_card[:ccredValidadeMes] = ''
-      @result = ApiCartao.post_credit_card(@token, @idCarrinho, @credit_card)
+      credit_card = build(:credit_card).to_hash
+      credit_card[:ccredValidadeMes] = ''
+      @result = ApiCartao.post_credit_card(@token, idCarrinho, credit_card)
     end
     it 'Input no campo ‘vencimento/mês’ dados vazio' do
       expect(@result.response.code).to eql '400'
@@ -238,13 +238,13 @@ describe 'Cartão de Crédito' do
       @token = ApiUser.GetToken
       ApiUser.Login(@token, build(:login).to_hash)
 
-      @cart = build(:cart).to_hash
-      @carrinho = ApiCart.post_add_item_cart(@token, @cart)
-      @idCarrinho = @carrinho.parsed_response['obj'][0]['idCarrinho']
+      cart = build(:cart).to_hash
+      carrinho = ApiCart.post_add_item_cart(@token, cart)
+      idCarrinho = carrinho.parsed_response['obj'][0]['idCarrinho']
 
-      @credit_card = build(:credit_card).to_hash
-      @credit_card[:ccredCVV] = '123ss'
-      @result = ApiCartao.post_credit_card(@token, @idCarrinho, @credit_card)
+      credit_card = build(:credit_card).to_hash
+      credit_card[:ccredCVV] = '123ss'
+      @result = ApiCartao.post_credit_card(@token, idCarrinho, credit_card)
     end
 
     it { expect((@result.parsed_response)['erros'][0]['mensagem']).to eql 'Input string was not in a correct format.' }
@@ -259,13 +259,13 @@ describe 'Cartão de Crédito' do
       @token = ApiUser.GetToken
       ApiUser.Login(@token, build(:login).to_hash)
 
-      @cart = build(:cart).to_hash
-      @carrinho = ApiCart.post_add_item_cart(@token, @cart)
-      @idCarrinho = @carrinho.parsed_response['obj'][0]['idCarrinho']
+      cart = build(:cart).to_hash
+      carrinho = ApiCart.post_add_item_cart(@token, cart)
+      idCarrinho = carrinho.parsed_response['obj'][0]['idCarrinho']
 
-      @credit_card = build(:credit_card).to_hash
-      @credit_card[:ccredCVV] = '112399999999'
-      @result = ApiCartao.post_credit_card(@token, @idCarrinho, @credit_card)
+      credit_card = build(:credit_card).to_hash
+      credit_card[:ccredCVV] = '112399999999'
+      @result = ApiCartao.post_credit_card(@token, idCarrinho, credit_card)
     end
 
     it { expect((@result.parsed_response)['erros'][0]['mensagem']).to eql 'Value was either too large or too small for an Int32.' }
@@ -280,13 +280,13 @@ describe 'Cartão de Crédito' do
       @token = ApiUser.GetToken
       ApiUser.Login(@token, build(:login).to_hash)
 
-      @cart = build(:cart).to_hash
-      @carrinho = ApiCart.post_add_item_cart(@token, @cart)
-      @idCarrinho = @carrinho.parsed_response['obj'][0]['idCarrinho']
+      cart = build(:cart).to_hash
+      carrinho = ApiCart.post_add_item_cart(@token, cart)
+      idCarrinho = carrinho.parsed_response['obj'][0]['idCarrinho']
 
-      @credit_card = build(:credit_card).to_hash
-      @credit_card[:ccredCVV] = ''
-      @result = ApiCartao.post_credit_card(@token, @idCarrinho, @credit_card)
+      credit_card = build(:credit_card).to_hash
+      credit_card[:ccredCVV] = ''
+      @result = ApiCartao.post_credit_card(@token, idCarrinho, credit_card)
     end
 
     it { expect((@result.parsed_response)['erros'][0]['mensagem']).to eql 'Input string was not in a correct format.' }
@@ -301,12 +301,12 @@ describe 'Cartão de Crédito' do
       @token = ApiUser.GetToken
       ApiUser.Login(@token, build(:login).to_hash)
 
-      @cart = build(:cart).to_hash
-      @carrinho = ApiCart.post_add_item_cart(@token, @cart)
-      @idCarrinho = @carrinho.parsed_response['obj'][0]['idCarrinho']
+      cart = build(:cart).to_hash
+      carrinho = ApiCart.post_add_item_cart(@token, cart)
+      idCarrinho = carrinho.parsed_response['obj'][0]['idCarrinho']
 
-      @credit_card = build(:credit_card).to_hash
-      @result = ApiCartao.post_credit_card(@token, @idCarrinho, @credit_card)
+      credit_card = build(:credit_card).to_hash
+      @result = ApiCartao.post_credit_card(@token, idCarrinho, credit_card)
     end
 
     it { expect((@result.parsed_response)['sucesso']).to be true }

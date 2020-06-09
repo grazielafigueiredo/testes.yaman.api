@@ -12,7 +12,7 @@ class Constant
   ID_SERIE_JA_17 = ENV['ID_SERIE_JA_17']
   ID_SERIE_JA_18 = ENV['ID_SERIE_JA_18']
 
-  IdProduto = ENV['ID_PRODUTO_MAX']
+  ID_PRODUTO_MAX = ENV['ID_PRODUTO_MAX']
 
   USER = { "usuario": ENV['USER_1_NAME'], "senha": ENV['USER_1_PASSWORD'] }.freeze
 
