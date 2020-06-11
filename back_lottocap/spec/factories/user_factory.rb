@@ -4,7 +4,7 @@ require_relative '../models/user_model'
 
 FactoryBot.define do
   factory :user, class: UserModel do
-    nomeCompleto { 'Otto Oliveira' }
+    nomeCompleto { 'Otto Oliveira Junior' }
     dataNascimento { '1997-01-01T00:00:00-03:00' }
     # cpf { '00000002054' }
     # email { 'alo@gmail.com' }
@@ -21,9 +21,9 @@ FactoryBot.define do
     end
   end
   factory :user_create, class: UserModel do
-    nomeCompleto { 'Otto Oliveira' }
+    nomeCompleto { 'Otto Oliveira Junior' }
     dataNascimento { '1997-01-01T00:00:00-03:00' }
-    cpf { '00000002054' }
+    cpf { '66530420061' }
     email { 'user22@gmail.com' }
     aceitaReceberMensagemDeMarketingPorEmail { false }
     aceitaOsTermosECondicoesDeUso { true }
@@ -33,7 +33,7 @@ FactoryBot.define do
   end
 
   factory :user_wrong_email, class: UserModel do
-    nomeCompleto { 'Otto Oliveira' }
+    nomeCompleto { 'Otto Oliveira Junior' }
     dataNascimento { '1997-01-01T00:00:00-03:00' }
     cpf { Faker::CPF.numeric }
     email { 'alo@gmail.com' }
@@ -45,7 +45,7 @@ FactoryBot.define do
   end
 
   factory :user_wrong_cpf, class: UserModel do
-    nomeCompleto { 'Otto Oliveira' }
+    nomeCompleto { 'Otto Oliveira Junior' }
     dataNascimento { '1997-01-01T00:00:00-03:00' }
     cpf { '00000000000' }
     email { 'alo@gmail.com' }
@@ -57,7 +57,7 @@ FactoryBot.define do
   end
 
   factory :user_validation, class: ValidationUserModel do
-    nomeCompleto { 'Otto Oliveira' }
+    nomeCompleto { 'Otto Oliveira Junior' }
     email { Faker::Internet.email }
     cpf { Faker::CPF.numeric }
 
@@ -67,19 +67,19 @@ FactoryBot.define do
   end
 
   factory :user_validation_wrong_cpf, class: ValidationUserModel do
-    nomeCompleto { 'Otto Oliveira' }
+    nomeCompleto { 'Otto Oliveira Junior' }
     email { Faker::Internet.email }
     cpf { '00000000000' }
   end
 
   factory :user_validation_register_cpf, class: ValidationUserModel do
-    nomeCompleto { 'Otto Oliveira' }
+    nomeCompleto { 'Otto Oliveira Junior' }
     email { Faker::Internet.email }
     cpf { '00000009652' }
   end
 
   factory :user_validation_register_email, class: ValidationUserModel do
-    nomeCompleto { 'Otto Oliveira' }
+    nomeCompleto { 'Otto Oliveira Junior' }
     email { 'alo@gmail.com' }
     cpf { Faker::CPF.numeric }
   end

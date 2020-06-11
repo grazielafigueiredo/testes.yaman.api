@@ -6,7 +6,7 @@ FactoryBot.define do
   factory :credit_card, class: CreditCardModel do
     idFormaPagamento { 5 }
     idCarrinho { 0 }
-    nomeCompletoTitular { 'Otto Oliveira' }
+    nomeCompletoTitular { 'Otto Oliveira Junior' }
     ccredNumero { '5521884306233764' }
     ccredValidadeMes { '11' }
     ccredValidadeAno { Constant::VALIDADE_ANO_CARTAO }

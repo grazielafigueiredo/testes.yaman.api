@@ -6,7 +6,7 @@ FactoryBot.define do
   factory :buy_credit, class: CreditBuyModel do
     idFormaPagamento { 5 }
     idCarrinho { 0 }
-    nomeCompletoTitular { 'Otto Oliveira' }
+    nomeCompletoTitular { 'Otto Oliveira Junior' }
     ccredNumero { '5521884306233764' }
     ccredValidadeMes { '11' }
     ccredValidadeAno { Constant::VALIDADE_ANO_CARTAO }
