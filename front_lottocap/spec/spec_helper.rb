@@ -24,8 +24,10 @@ RSpec.configure do |config|
   config.after(:example) do |e|
     nome = e.description.gsub(/[ˆA-Za-z0-9 ]/, '').tr('', '_')
     page.save_screenshot('screenshot/' + nome + '.png') if e.exception
+  end
 end
 
 Capybara.configure do |config|
   config.default_driver = :selenium_chrome
+  config.default_max_wait_time = 5
 end
