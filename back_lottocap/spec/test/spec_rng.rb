@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+
+#criar teste validando que o retorno dos numeros nao se repete
 describe 'RGN' do
   context 'Validar se estrutura retorna corretamente' do
     let(:result) { ApiRNG.post_rng(build(:rng).to_hash) }

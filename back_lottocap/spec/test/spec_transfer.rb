@@ -305,6 +305,7 @@ describe 'Realizar transferência com Bradesco/Itau/Santander/BBrasil e input/ou
       TransferDB.new.delete_account(@idUsuario)
       TransferDB.new.insert_account(@idUsuario)
 
+      sleep 5 
       cart = build(:cart).to_hash
       carrinho = ApiCart.post_add_item_cart(@token, cart)
       idCarrinho = carrinho.parsed_response['obj'][0]['idCarrinho']
