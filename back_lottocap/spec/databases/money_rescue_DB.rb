@@ -116,11 +116,11 @@ class RescueDB < DbBase
 
         INSERT INTO UsuarioContaCorrente( idUsuario, idBanco, agenciaNumero, agenciaDigito,
         contaNumero, contaDigito, cpf, nomeTitular,
-        idTipoConta, ativo, favorito,  idUsuarioCriacao
+        idTipoConta, ativo, favorito, dtCriacao, idUsuarioCriacao
         )
         VALUES(@idUsuario, 1, 1234, 1,
         '0987654328', 1, 66530420061, 'Otto Oliveira Junior',
-        1, 1, 0,  @idUsuario
+        1, 1, 0, 1, @idUsuario
         )"
     )
   end
@@ -148,7 +148,7 @@ class RescueDB < DbBase
       SELECT idUsuario FROM UsuarioContaCorrente WHERE idUsuario = @idUsuario
       )
 
-      DELETE FROM UsuarioContaCorrente WHERE idUsuarioCriacao = @idUsuario"
+      DELETE FROM UsuarioContaCorrente WHERE idUsuario = @idUsuario"
     )
   end
 end

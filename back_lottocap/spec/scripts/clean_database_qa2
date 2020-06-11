@@ -58,5 +58,4 @@ DELETE FROM Carrinho WHERE IdUsuarioCriacao
         SELECT idUsuario FROM Usuario WHERE Email = @email
     )
 
-DELETE 
-FROM Usuario WHERE Email = @email
+DELETE FROM Usuario WHERE Email = @email
