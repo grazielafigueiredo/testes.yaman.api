@@ -2,20 +2,13 @@
 
 describe 'Títulos' do
   context 'Buscar por títulos agrupados por série' do
-    before do
-      @result = ApiTitulos.post_group_titulos_serie(@token)
-    end
-
-    it { expect((@result.parsed_response)['sucesso']).to be true }
-
+    let(:result) { ApiTitulos.post_group_titulos_serie(@token) }
+    it { expect(result.parsed_response['sucesso']).to be true }
   end
 
   context 'Buscar por títulos novos' do
-    before do
-      @result = ApiTitulos.post_get_new_titulo(@token)
-    end
-
-    it { expect((@result.parsed_response)['sucesso']).to be true }
+    let(:result) { ApiTitulos.post_get_new_titulo(@token) }
+    it { expect(result.parsed_response['sucesso']).to be true }
   end
 end
 
@@ -27,7 +20,7 @@ describe 'Verificar Premio Titulo' do
       @result = ApiTitulos.post_premium_titulo(@token, idTitulo)
     end
 
-    it { expect((@result.parsed_response)['erros'][0]['mensagem']).to eql 'Este título não pertence ao usuário!' }
+    it { expect(@result.parsed_response['erros'][0]['mensagem']).to eql 'Este título não pertence ao usuário!' }
   end
 
   context 'Passando id inexistente no Json' do
@@ -37,7 +30,7 @@ describe 'Verificar Premio Titulo' do
       @result = ApiTitulos.post_premium_titulo(@token, idTitulo)
     end
 
-    it { expect((@result.parsed_response)['obj.idTitulo'][0]).to eql "JSON integer 12345678901 is too large or small for an Int32. Path 'obj.idTitulo', line 1, position 30." }
+    it { expect(@result.parsed_response['obj.idTitulo'][0]).to eql "JSON integer 12345678901 is too large or small for an Int32. Path 'obj.idTitulo', line 1, position 30." }
   end
 end
 
@@ -49,7 +42,7 @@ describe 'Abrir Título' do
       @result = ApiTitulos.post_open_titulo(@token, idTitulo)
     end
 
-    it { expect((@result.parsed_response)['erros'][0]['mensagem']).to eql 'Título não pertence ao usuário!' }
+    it { expect(@result.parsed_response['erros'][0]['mensagem']).to eql 'Título não pertence ao usuário!' }
   end
 
   context 'Título ID passando maior de 10 inteiros' do
@@ -59,17 +52,14 @@ describe 'Abrir Título' do
       @result = ApiTitulos.post_open_titulo(@token, idTitulo)
     end
 
-    it { expect((@result.parsed_response)['obj.idTitulo'][0]).to eql "JSON integer 12345678901 is too large or small for an Int32. Path 'obj.idTitulo', line 1, position 30." }
+    it { expect(@result.parsed_response['obj.idTitulo'][0]).to eql "JSON integer 12345678901 is too large or small for an Int32. Path 'obj.idTitulo', line 1, position 30." }
   end
 end
 
 describe 'Buscar titulos nao abertos pelo usuario' do
   context 'Sucesso' do
-    before do
-      @result = ApiTitulos.post_closed_titulo(@token)
-    end
-
-    it { expect((@result.parsed_response)['sucesso']).to be true }
+    let(:result) { ApiTitulos.post_closed_titulo(@token) }
+    it { expect(result.parsed_response['sucesso']).to be true }
   end
 end
 
@@ -83,7 +73,7 @@ context 'Comprar com Cartao de Credito e verificar se o título foi atribuído' 
     idCarrinho = carrinho.parsed_response['obj'][0]['idCarrinho']
 
     credit_card = build(:credit_card).to_hash
-    result = ApiCartao.post_credit_card(@token, idCarrinho, credit_card)
+    ApiCartao.post_credit_card(@token, idCarrinho, credit_card)
 
     @total_titulos_user = TituloDB.new.select_get_amount_titulo(@idUsuario)
   end
