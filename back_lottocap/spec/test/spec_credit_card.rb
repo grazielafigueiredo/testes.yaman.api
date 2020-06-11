@@ -130,7 +130,7 @@ describe 'Cartão de Crédito' do
 
     it 'Input no campo ‘vencimento/ano’ dados vazio' do
       expect(@result.response.code).to eql '400'
-      expect((@result.parsed_response)['obj.ccredValidadeAno'][0]).to eql "Error converting value {null} to type 'System.Int32'. Path 'obj.ccredValidadeAno', line 1, position 164."
+      expect((@result.parsed_response)['obj.ccredValidadeAno'][0]).to include "Error converting value {null} to type 'System.Int32'. Path 'obj.ccredValidadeAno'"
     end
   end
 
@@ -160,7 +160,7 @@ describe 'Cartão de Crédito' do
     end
     it 'Input no campo ‘vencimento/mês’ dados vazio' do
       expect(@result.response.code).to eql '400'
-      expect((@result.parsed_response)['obj.ccredValidadeMes'][0]).to eql "Error converting value {null} to type 'System.Int32'. Path 'obj.ccredValidadeMes', line 1, position 140."
+      expect((@result.parsed_response)['obj.ccredValidadeMes'][0]).to include "Error converting value {null} to type 'System.Int32'. Path 'obj.ccredValidadeMes'"
     end
   end
 

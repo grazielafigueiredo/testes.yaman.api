@@ -4,8 +4,7 @@ describe 'Resgate' do
   context '[Bradesco] - Resgate e verificação de saldo restante' do
     before do
       RescueDB.new.update_premium_rescue(@idUsuario, 50.000)
-      date_rescue = build(:rescue).to_hash
-      ApiRescue.post_set_rescue(@token, date_rescue)
+      ApiRescue.post_set_rescue(@token, build(:rescue).to_hash)
       @status_rescue = ApiRescue.get_status_rescue(@token)
     end
 
@@ -59,9 +58,8 @@ describe 'Resgate' do
       RescueDB.new.delete_account(@idUsuario)
       RescueDB.new.insert_account(@idUsuario)
       RescueDB.new.update_premium_rescue(@idUsuario, 50.750)
-
-      date_rescue = build(:rescue).to_hash
-      @rescue = ApiRescue.post_set_rescue(@token, date_rescue)
+      sleep 5
+      @rescue = ApiRescue.post_set_rescue(@token, build(:rescue).to_hash)
     end
 
     it { expect((@rescue.parsed_response)['sucesso']).to be true }
