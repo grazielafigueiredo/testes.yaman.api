@@ -31,7 +31,10 @@ describe 'RGN' do
       rng[:objetivo] = nil
       @result = ApiRNG.post_rng(rng)
     end
-    it { expect(JSON.parse(@result.response.code)).to be 500 }
+    it '' do
+      expect(JSON.parse(@result.response.code)).to be 200
+      expect(@result.parsed_response['mensagem']).to eql 'Dados para geração de número aleatório inválidos.'
+    end
   end
 
   context 'Trocar tipagem numérica para alfanumérico' do
@@ -55,7 +58,7 @@ describe 'RGN' do
     end
     it '' do
       expect(@result.parsed_response['mensagem']).to eql 'Dados para geração de número aleatório inválidos.'
-      expect(@result.parsed_response['dados']).to eql ['Numero máximo precisa ser informado', 'Numero maximo menor do que a quantidade de dezenas à serem sorteadas']
+      expect(@result.parsed_response['dados']).to include "Numero máximo precisa ser informado", "Numero maximo menor do que a quantidade de dezenas à serem sorteadas"
     end
   end
 end

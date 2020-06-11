@@ -3,10 +3,10 @@
 require 'utils/constant'
 require 'services/user'
 
-class ApiUserPROD
+class PROD
   include HTTParty
   base_uri Constant::URIPROD
-  headers 'Content-Type' => 'application/json'
+  headers 'Content-Type' => 'application/json,'
 
   def self.Login(token, user)
     payload = { "obj": user }
@@ -24,12 +24,12 @@ class ApiUserPROD
 
   def self.post_create_new_user(new_user)
     payload = { "obj": new_user }
-    post('/Usuario/CadastrarUsuario', body: payload.to_json)
+    post('/Usuario/CadastrarUsuario', body: payload.to_json, headers: { 'Authorization' => self.GetToken } )
   end
 
   def self.post_validation_data_user(new_user)
     payload = { "obj": new_user }
-    post('/Usuario/ValidarDadosUsuarioCriacao', body: payload.to_json)
+    post('/Usuario/ValidarDadosUsuarioCriacao', body: payload.to_json, headers: { 'Authorization' => self.GetToken })
   end
 
   def self.post_change_user_data(token, change_user)
