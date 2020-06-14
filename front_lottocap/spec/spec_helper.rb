@@ -17,7 +17,7 @@ RSpec.configure do |config|
 
   config.include Capybara::DSL
 
-  config.before(:exemple) do 
+  config.before(:example) do 
     page.current_windown.resize_to(1280, 800)
   end
 
