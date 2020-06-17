@@ -30,20 +30,24 @@ stages:
 #           $(tag)
 
 - stage: Run
-  displayName: Build image
+  displayName: Run image
   jobs:  
-  - job: Build
-    displayName: Build
+  - job: Run
+    displayName: Run
     pool:
       vmImage: 'ubuntu-latest'
     steps:
-    - task: Docker@2
-      displayName: Build an image
+    - task: CmdLine@2
       inputs:
-        command: build
-        dockerfile: '$(Build.SourcesDirectory)/Dockerfile'
-        tags: |
-          $(tag)
+        script: 'docker run hello-world' 
+    # - task: Docker@2
+    #   displayName: Build an image
+      
+    #   inputs:
+    #     command: build
+    #     dockerfile: '$(Build.SourcesDirectory)/Dockerfile'
+    #     tags: |
+    #       $(tag)
 
 # - stage: Run
 #   displayName: Build image
