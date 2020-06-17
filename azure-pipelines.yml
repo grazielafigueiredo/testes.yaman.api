@@ -36,25 +36,43 @@ stages:
 #         tags: |
 #           $(tag)
 
-
-- stage: Run
-  displayName: Run image
-  jobs:  
-  - job: Run
-    displayName: Run
+    
+- stage: BuildAndPush
+  displayName: Build image
+  jobs: 
+  - job: Build
+    displayName: Build
     pool:
       vmImage: 'ubuntu-latest'
-    steps:
-    - task: CmdLine@2
-      condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/test'))
-      displayName: Building image
+      steps:
+      - task: Docker@2
+      displayName: Build and Push
       inputs:
-        script: 'docker build -t lottocap-qa-docker .' 
-    - task: CmdLine@2
-      condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
-      displayName: Running tests
-      inputs:
-        script: 'docker run -it lottocap-qa-docker rspec spec/test/spec_tituloMatriz.rb -fd'
+        repository: $(imageName)
+        command: buildAndPush
+        Dockerfile: '$(Build.SourcesDirectory)/Dockerfile'
+        tags: |
+          $(tag)
+
+
+# - stage: Run
+#   displayName: Run image
+#   jobs:  
+#   - job: Run
+#     displayName: Run
+#     pool:
+#       vmImage: 'ubuntu-latest'
+#     steps:
+#     - task: CmdLine@2
+#       condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/test'))
+#       displayName: Building image
+#       inputs:
+#         script: 'docker build -t lottocap-qa-docker .' 
+#     - task: CmdLine@2
+#       condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
+#       displayName: Running tests
+#       inputs:
+#         script: 'docker run -it lottocap-qa-docker rspec spec/test/spec_tituloMatriz.rb -fd'
      
     # - task: Docker@2
     #   displayName: Build an image
