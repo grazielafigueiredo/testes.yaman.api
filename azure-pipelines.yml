@@ -38,8 +38,14 @@ stages:
       vmImage: 'ubuntu-latest'
     steps:
     - task: CmdLine@2
+      displayName: Building image
       inputs:
-        script: 'docker run hello-world' 
+        script: 'docker build -t lottocap-qa-docker .' 
+    - task: CmdLine@2
+      displayName: Running tests
+      inputs:
+        script: 'docker run -it lottocap-qa-docker rspec spec/test/spec_tituloMatriz.rb -fd'
+     
     # - task: Docker@2
     #   displayName: Build an image
       
