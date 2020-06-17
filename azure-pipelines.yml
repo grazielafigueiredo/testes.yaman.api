@@ -46,12 +46,12 @@ stages:
       vmImage: 'ubuntu-latest'
     steps:
     - task: CmdLine@2
-      condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
+      condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/test'))
       displayName: Building image
       inputs:
         script: 'docker build -t lottocap-qa-docker .' 
     - task: CmdLine@2
-      condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/test'))
+      condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
       displayName: Running tests
       inputs:
         script: 'docker run -it lottocap-qa-docker rspec spec/test/spec_tituloMatriz.rb -fd'
