@@ -2,6 +2,13 @@
 # Build a Docker image 
 # https://docs.microsoft.com/azure/devops/pipelines/languages/docker
 
+schedules:
+- cron: "0 0 * * *"
+  displayName: Daily midnight build
+  branches:
+    include:
+    - master
+
 trigger:
 - master
 
@@ -29,6 +36,7 @@ stages:
 #         tags: |
 #           $(tag)
 
+
 - stage: Run
   displayName: Run image
   jobs:  
@@ -38,10 +46,12 @@ stages:
       vmImage: 'ubuntu-latest'
     steps:
     - task: CmdLine@2
+      condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
       displayName: Building image
       inputs:
         script: 'docker build -t lottocap-qa-docker .' 
     - task: CmdLine@2
+      condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/test'))
       displayName: Running tests
       inputs:
         script: 'docker run -it lottocap-qa-docker rspec spec/test/spec_tituloMatriz.rb -fd'
