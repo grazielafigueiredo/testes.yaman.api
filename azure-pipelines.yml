@@ -69,7 +69,7 @@ stages:
         inputs:
           script: |
           docker run -it \
-          -e URI_HOMOLOG=https://api-qa2.lottocap.com.br/api \
+          -e URI_HOMOLOG="https://api-qa2.lottocap.com.br/api" \
           -e URIPROD="https://api.lottocap.com.br/api" \
           -e DATABASE_USERNAME='Lottocap' \
           -e DATABASE_PASSWORD='L0ttocap19!12@' \
