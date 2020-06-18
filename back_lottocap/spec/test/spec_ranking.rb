@@ -2,7 +2,7 @@
 
 context 'home - GetRankingResultados' do
   before do
-    @token = ApiUserPROD.GetToken
+    @token = PROD.GetToken
 
     @rankingResultados = ApiRanking.get_rankingResultados(@token)
     @totalPremiados = @rankingResultados.parsed_response['obj']
@@ -62,7 +62,7 @@ end
 
 context 'Resultados por Serie' do
   before do
-    token = ApiUserPROD.GetToken
+    token = PROD.GetToken
 
     rankingResultados = ApiRanking.get_rankingResultados(token)
     idSerie = rankingResultados.parsed_response['obj'][0]['listaSeries'][-1]['idSerie']
@@ -113,7 +113,7 @@ end
 
 context 'Modal Premiado' do
   before do
-    token = ApiUserPROD.GetToken
+    token = PROD.GetToken
 
     rankingResultados = ApiRanking.get_rankingResultados(token)
     idSerie = rankingResultados.parsed_response['obj'][0]['listaSeries'][-1]['idSerie']
@@ -135,7 +135,7 @@ end
 
 context 'Sorteios resultados' do
   before do
-    token = ApiUserPROD.GetToken
+    token = PROD.GetToken
 
     rankingResultados = ApiRanking.get_rankingResultados(token)
     idSerie = rankingResultados.parsed_response['obj'][0]['listaSeries'][-1]['idSerie']
@@ -165,7 +165,7 @@ end
 
 context 'Sorteios resultados' do
   before do
-    token = ApiUserPROD.GetToken
+    token = PROD.GetToken
 
     rankingResultados = ApiRanking.get_rankingResultados(token)
     idSerie = rankingResultados.parsed_response['obj'][0]['listaSeries'][-1]['idSerie']

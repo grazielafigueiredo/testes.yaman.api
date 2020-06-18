@@ -66,11 +66,11 @@ example_id                                | status | run_time        |
 ./spec/test/spec_pre_venda.rb[2:1]        | passed | 3.09 seconds    |
 ./spec/test/spec_pre_venda.rb[3:1]        | passed | 4.51 seconds    |
 ./spec/test/spec_pre_venda.rb[4:1]        | passed | 6.3 seconds     |
-./spec/test/spec_ranking.rb[1:1]          | passed | 2.96 seconds    |
-./spec/test/spec_ranking.rb[2:1]          | passed | 17.14 seconds   |
-./spec/test/spec_ranking.rb[3:1]          | passed | 2.04 seconds    |
-./spec/test/spec_ranking.rb[4:1]          | passed | 4.15 seconds    |
-./spec/test/spec_ranking.rb[5:1]          | passed | 5.1 seconds     |
+./spec/test/spec_ranking.rb[1:1]          | passed | 1.71 seconds    |
+./spec/test/spec_ranking.rb[2:1]          | passed | 4.86 seconds    |
+./spec/test/spec_ranking.rb[3:1]          | passed | 2.27 seconds    |
+./spec/test/spec_ranking.rb[4:1]          | passed | 4.45 seconds    |
+./spec/test/spec_ranking.rb[5:1]          | passed | 3.81 seconds    |
 ./spec/test/spec_rng.rb[1:1:1]            | failed | 2.81 seconds    |
 ./spec/test/spec_rng.rb[1:2:1]            | passed | 1.67 seconds    |
 ./spec/test/spec_rng.rb[1:3:1]            | passed | 1.64 seconds    |
