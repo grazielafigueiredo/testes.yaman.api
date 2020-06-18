@@ -42,6 +42,7 @@ stages:
     displayName: Build image
     jobs: 
     - job: Build
+      condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/test'))
       displayName: Build
       pool:
         vmImage: 'ubuntu-latest'
@@ -72,7 +73,6 @@ stages:
         inputs:
           script: 'docker pull graziela.azurecr.io/1.0:latest' 
       - task: CmdLine@2
-        condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
         displayName: Running tests
         inputs:
           script: 'docker run -it graziela.azurecr.io/1.0:latest rspec spec/test/* -fd'
