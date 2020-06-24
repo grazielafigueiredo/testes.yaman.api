@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 Quando('faço uma requisição GET para o serviço') do
-  @request = ApiGet.api_get
+  @request = ApiGet.api_get(ids)
 end
 
 Então('o serviço deve responder com status code {int}') do |status_code|
