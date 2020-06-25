@@ -16,6 +16,8 @@ RUN gem install bundler
 
 WORKDIR /app
 
+COPY Gemfile /app/Gemfile
+
 COPY . /app
 
 RUN bundle install

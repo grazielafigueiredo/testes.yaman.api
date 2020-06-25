@@ -1,1 +1,8 @@
-report: --format pretty -f html -o reports/features_reports.html
+# report: --format pretty -f html -o reports/features_reports.html
+report: --format html --out reports/features_reports.html
+
+
+# --format html
+# --out log/report.html
+# --format RspecJunitFormatter
+# --out log/report.xml
